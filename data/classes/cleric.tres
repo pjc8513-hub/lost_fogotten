@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ClassData" format=3 uid="uid://b06c0rq8ae7ps"]
+
+[ext_resource type="Script" uid="uid://dt5hef65gemqo" path="res://resources/ClassData.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cgl0vkifi7ss4" path="res://assets/portraits/cleric_p.png" id="2"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1")
+name = "Cleric"
+member_name = "Christmas"
+max_hp = 50
+max_mp = 30
+current_hp = 50
+current_mp = 30
+armor_class = 5
+might = 11
+critical_chance = 3
+attack_speed = 70
+sprite_texture = ExtResource("2")

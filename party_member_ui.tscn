@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c2osn80j6saxq"]
+
+[ext_resource type="Texture2D" uid="uid://cy21m677h31mg" path="res://assets/portraits/knight_p.png" id="1_bhaq4"]
+[ext_resource type="Script" uid="uid://bhdj7ejekuvtb" path="res://party_member_ui.gd" id="1_t3qfy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qui0h"]
+bg_color = Color(0.08078333, 0.08078336, 0.08078327, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27c8x"]
+bg_color = Color(0.043137256, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1vam"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q77pa"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8582"]
+bg_color = Color(0.21568628, 0.1764706, 0.95686275, 1)
+
+[node name="MemberPanel1" type="PanelContainer" unique_id=1532612420]
+custom_minimum_size = Vector2(0, 100)
+offset_right = 193.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qui0h")
+script = ExtResource("1_t3qfy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1055544252]
+layout_mode = 2
+
+[node name="PortraitOne" type="TextureRect" parent="HBoxContainer" unique_id=2061576124]
+custom_minimum_size = Vector2(69, 60)
+layout_mode = 2
+texture = ExtResource("1_bhaq4")
+expand_mode = 1
+flip_h = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=323270362]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1432678078]
+layout_mode = 2
+text = "Power Chord"
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1425417927]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_27c8x")
+theme_override_styles/fill = SubResource("StyleBoxFlat_i1vam")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1937807228]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_q77pa")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n8582")
+value = 100.0
+show_percentage = false

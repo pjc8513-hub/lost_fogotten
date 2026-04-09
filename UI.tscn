@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://cgvt8cu42nhyt"]
+
+[ext_resource type="PackedScene" uid="uid://c2osn80j6saxq" path="res://party_member_ui.tscn" id="1_qui0h"]
+[ext_resource type="Texture2D" uid="uid://cgl0vkifi7ss4" path="res://assets/portraits/cleric_p.png" id="2_3b2b5"]
+[ext_resource type="Texture2D" uid="uid://dn281jmyot2g7" path="res://assets/portraits/rogue_p.png" id="3_g6l6n"]
+[ext_resource type="Texture2D" uid="uid://hnc2vmc5dltd" path="res://assets/portraits/sorcerer_p.png" id="4_qui0h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrfts"]
+bg_color = Color(0.06879826, 0.06879829, 0.06879823, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6dx3"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqn02"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taqas"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5rvm"]
+bg_color = Color(0.21568628, 0.1764706, 0.95686275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mc3e"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_foiwe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ujc7"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qo1pa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40r0a"]
+bg_color = Color(0.21568628, 0.1764706, 0.95686275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2n5f6"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5xurb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ly2lw"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mirh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coxox"]
+bg_color = Color(0.21568628, 0.1764706, 0.95686275, 1)
+
+[node name="Control" type="Control" unique_id=168762481]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=764247541]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 340.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1624502353]
+layout_mode = 2
+
+[node name="MemberPanel1" parent="MarginContainer/VBoxContainer" unique_id=1532612420 instance=ExtResource("1_qui0h")]
+layout_mode = 2
+
+[node name="MemberPanel2" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=62383718]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vrfts")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel2" unique_id=651115435]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+
+[node name="PortraitTwo" type="TextureRect" parent="MarginContainer/VBoxContainer/MemberPanel2/HBoxContainer" unique_id=1069898735]
+custom_minimum_size = Vector2(69, 0)
+layout_mode = 2
+texture = ExtResource("2_3b2b5")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel2/HBoxContainer" unique_id=1604025023]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MemberPanel2/HBoxContainer/VBoxContainer" unique_id=413797671]
+layout_mode = 2
+text = "Christmas"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel2/HBoxContainer/VBoxContainer" unique_id=1451022089]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_c6dx3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jqn02")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel2/HBoxContainer/VBoxContainer" unique_id=116875208]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_taqas")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d5rvm")
+value = 100.0
+show_percentage = false
+
+[node name="MemberPanel3" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=634526356]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0mc3e")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel3" unique_id=572186188]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+
+[node name="PortraitTwo" type="TextureRect" parent="MarginContainer/VBoxContainer/MemberPanel3/HBoxContainer" unique_id=1873137641]
+custom_minimum_size = Vector2(69, 0)
+layout_mode = 2
+texture = ExtResource("3_g6l6n")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel3/HBoxContainer" unique_id=31586844]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MemberPanel3/HBoxContainer/VBoxContainer" unique_id=502388829]
+layout_mode = 2
+text = "Sting"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel3/HBoxContainer/VBoxContainer" unique_id=385476990]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_foiwe")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ujc7")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel3/HBoxContainer/VBoxContainer" unique_id=1379096507]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qo1pa")
+theme_override_styles/fill = SubResource("StyleBoxFlat_40r0a")
+value = 100.0
+show_percentage = false
+
+[node name="MemberPanel4" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1406783813]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2n5f6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel4" unique_id=220615797]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+
+[node name="PortraitTwo" type="TextureRect" parent="MarginContainer/VBoxContainer/MemberPanel4/HBoxContainer" unique_id=1639947575]
+custom_minimum_size = Vector2(69, 0)
+layout_mode = 2
+texture = ExtResource("4_qui0h")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MemberPanel4/HBoxContainer" unique_id=1195735757]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MemberPanel4/HBoxContainer/VBoxContainer" unique_id=1357477502]
+layout_mode = 2
+text = "Maynard"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel4/HBoxContainer/VBoxContainer" unique_id=931240332]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_5xurb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ly2lw")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="MarginContainer/VBoxContainer/MemberPanel4/HBoxContainer/VBoxContainer" unique_id=845700884]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_3mirh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_coxox")
+value = 100.0
+show_percentage = false

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bylr8vui74rgh"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_k7sx2"]
+[ext_resource type="Resource" uid="uid://bu13t8noo60mp" path="res://data/enemies/dungeon_cat.tres" id="2_k7sx2"]
+
+[node name="CatEnemy" unique_id=1077348863 instance=ExtResource("1_k7sx2")]
+enemy_data = ExtResource("2_k7sx2")
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

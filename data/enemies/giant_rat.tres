@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/EnemyData.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/giantRat.webp" id="2"]
+
+[resource]
+script = ExtResource("1")
+enemy_name = "Giant Rat"
+hp = 30
+armor_class = 5
+damage = "1D4+2"
+critical_chance = 2
+magic_bonus = 0
+ailment = "none"
+attack_speed = 80
+tier = 1
+xp = 50
+gold = 20
+ai_behavior = "Random"
+sprite_texture = ExtResource("2")
+resist_fire = 0
+resist_physical = 0
+resist_cold = 0
+resist_electric = 0
+resist_light = 0
+resist_dark = 0
+drops = []

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ClassData" format=3 uid="uid://bihilgk2xg1o0"]
+
+[ext_resource type="Script" uid="uid://dt5hef65gemqo" path="res://resources/ClassData.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cy21m677h31mg" path="res://assets/portraits/knight_p.png" id="2"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1")
+name = "Knight"
+member_name = "Power Chord"
+max_hp = 50
+max_mp = 20
+current_hp = 50
+current_mp = 20
+armor_class = 5
+might = 12
+critical_chance = 3
+attack_speed = 70
+sprite_texture = ExtResource("2")

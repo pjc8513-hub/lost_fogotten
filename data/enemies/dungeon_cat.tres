@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bu13t8noo60mp"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://chg06qptu8tft" path="res://assets/sprites/enemies/cat.webp" id="2"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1")
+enemy_name = "Dungeon Cat"
+hp = 50
+armor_class = 5
+damage = "2D4+2"
+critical_chance = 4
+attack_speed = 90
+xp = 80
+gold = 50
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("2")
+resist_fire = 10
+resist_cold = 10
+resist_dark = 10
+custom_scale = Vector3(0.35, 0.35, 0.35)
+custom_position = Vector3(0, -0.15, 0.1)
