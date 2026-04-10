@@ -8,6 +8,7 @@ script = ExtResource("1")
 enemy_name = "Giant Rat"
 hp = 30
 armor_class = 5
+accuracy = 0
 damage = "1D4+2"
 critical_chance = 2
 magic_bonus = 0

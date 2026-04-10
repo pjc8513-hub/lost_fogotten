@@ -14,6 +14,7 @@ current_hp = 50
 current_mp = 20
 armor_class = 5
 might = 12
+accuracy = 1
 critical_chance = 3
 attack_speed = 70
 sprite_texture = ExtResource("2")

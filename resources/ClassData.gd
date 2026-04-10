@@ -23,6 +23,7 @@ class_name ClassData
 			
 @export var armor_class: int = 0
 @export var might: int = 0
+@export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
 @export var attack_speed: int = 0
 @export var xp: int = 0
@@ -38,3 +39,13 @@ func take_damage(amount: int):
 	
 	# Optional: Return true if they died, useful for combat logic later
 	return current_hp <= 0
+	
+func get_resistance(element: String) -> int:
+	match element:
+		"fire": return resist_fire
+		"cold": return resist_cold
+		"dark": return resist_dark
+		_: return 0
+
+func get_accuracy() -> int:
+	return accuracy

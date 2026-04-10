@@ -11,6 +11,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var hp: int = 100
 @export var armor_class: int = 10
 @export var damage: String = "1D6+0"
+@export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
 @export var magic_bonus: int = 0
 @export var ailment: String = "none"
@@ -34,6 +35,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var vision_angle_deg: int = 120   # optional, for cone vision
 @export var custom_scale: Vector3 = Vector3(1, 1, 1) # Default to no scaling
 @export var custom_position:Vector3 = Vector3(0, 0, 0)
+@export var custom_pixel_size: int = 0.01
 
 func get_ai_enum() -> AIBehavior:
 	match ai_behavior:
@@ -58,3 +60,6 @@ func get_resistance(element: String) -> int:
 		"light": return resist_light
 		"dark": return resist_dark
 	return 0
+	
+func get_accuracy() -> int:
+	return accuracy

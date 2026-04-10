@@ -22,6 +22,7 @@ CommandQueue="*uid://dbxfqi5f01pou"
 TurnStateMachine="*uid://bqaokaecuya7q"
 PartyState="*uid://c1jr5r7klv8qa"
 GameEvents="*uid://pfcmdhkjbwb"
+CombatLogic="*uid://budxbh00thdo7"
 
 [display]
 

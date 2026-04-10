@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ClassData" format=3]
+[gd_resource type="Resource" script_class="ClassData" format=3 uid="uid://chbtfla5ph32q"]
 
 [ext_resource type="Script" uid="uid://dt5hef65gemqo" path="res://resources/ClassData.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://dn281jmyot2g7" path="res://assets/portraits/sting_p.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dn281jmyot2g7" path="res://assets/portraits/rogue_p.png" id="2"]
 
 [resource]
 resource_local_to_scene = true
@@ -14,6 +14,7 @@ current_hp = 40
 current_mp = 40
 armor_class = 3
 might = 10
+accuracy = 1
 critical_chance = 5
 attack_speed = 90
 sprite_texture = ExtResource("2")

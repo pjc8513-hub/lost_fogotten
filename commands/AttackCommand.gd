@@ -3,20 +3,53 @@
 extends Command
 class_name AttackCommand
 
+# Set these before queuing the command
+var element: String = "physical"
+var is_player_attacker: bool = false
+
 func execute():
-	# Rudimentary: Just pick the first party member for now
-	var target = PartyState.active_party[0]
+	var target = PartyState.active_party[0]  # expand targeting later
 	
-	# Calculate a very basic damage (Enemy Attack - Armor)
-	# For now, let's just do a flat 2 damage to see the bar move
-	var damage_amount = 2
+	# 1. Accuracy roll
 	
-	var msg = "[color=red]%s[/color] hits [color=white]%s[/color] for %d damage!" % [actor.enemy_data.enemy_name, target.member_name, damage_amount]
+	var accuracy : int = actor.get_accuracy()  if actor.has_method("get_accuracy") else 0
+	print ("Accuracy: ", accuracy)
 	
-	# Instead of $, we emit a global signal
+	var outcome := CombatLogic.accuracy_roll(accuracy, target.armor_class)
+	
+	if outcome == "miss":
+		var msg := "[color=gray]%s[/color] attacks %s — [color=gray]miss![/color]" % [
+			actor.enemy_data.enemy_name, target.member_name
+		]
+		GameEvents.message_logged.emit(msg)
+		emit_signal("finished")
+		return
+	
+	# 2. Roll dice
+	var raw := CombatLogic.roll_dice(actor.enemy_data.damage)
+	if outcome == "crit":
+		raw *= 2
+	
+	# 3. Might bonus (enemies don't have might; only player actors would)
+	if is_player_attacker and actor.has_method("get_might"):
+		raw += CombatLogic.might_bonus(actor.get_might())
+	
+	# 4. Resistance
+	var resist : int = target.get_resistance(element) if target.has_method("get_resistance") else 0
+	var final_damage := CombatLogic.apply_resistance(raw, resist)
+	
+	# 5. Status proc
+	CombatLogic.proc_status(
+		actor.enemy_data.ailment,
+		actor.enemy_data.critical_chance,  # repurpose or add a status_chance field
+		target
+	)
+	
+	# 6. Emit and apply
+	var crit_tag := " [color=yellow]CRITICAL![/color]" if outcome == "crit" else ""
+	var msg := "[color=red]%s[/color] hits [color=white]%s[/color] for [color=orange]%d[/color] damage!%s" % [
+		actor.enemy_data.enemy_name, target.member_name, final_damage, crit_tag
+	]
 	GameEvents.message_logged.emit(msg)
-	
-	# Apply the damage
-	target.take_damage(damage_amount)
-	
+	target.take_damage(final_damage)
 	emit_signal("finished")

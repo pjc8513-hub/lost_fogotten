@@ -236,9 +236,10 @@ func _queue_attack():
 	cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
 	CommandQueue.add_command(cmd)
 	
-
-
 func _on_turn_complete():
 	#print("_on_turn_complete called on: ", enemy_data.enemy_name)
 	#print("Enemy finished turn:", self)
 	emit_signal("turn_finished")
+
+func get_accuracy() -> int:
+	return enemy_data.get_accuracy() if enemy_data else 0

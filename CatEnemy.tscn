@@ -1,10 +1,30 @@
 [gd_scene format=3 uid="uid://bylr8vui74rgh"]
 
 [ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_k7sx2"]
-[ext_resource type="Resource" uid="uid://bu13t8noo60mp" path="res://data/enemies/dungeon_cat.tres" id="2_k7sx2"]
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="2_shl8a"]
+[ext_resource type="Texture2D" uid="uid://chg06qptu8tft" path="res://assets/sprites/enemies/cat.webp" id="3_4bnld"]
+
+[sub_resource type="Resource" id="Resource_vcknh"]
+resource_local_to_scene = true
+script = ExtResource("2_shl8a")
+enemy_name = "Dungeon Cat"
+hp = 50
+armor_class = 5
+damage = "2D4+2"
+critical_chance = 4
+attack_speed = 90
+xp = 80
+gold = 50
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("3_4bnld")
+resist_fire = 10
+resist_cold = 10
+resist_dark = 10
+custom_scale = Vector3(0.35, 0.35, 0.35)
+custom_position = Vector3(0, -0.15, 0.1)
 
 [node name="CatEnemy" unique_id=1077348863 instance=ExtResource("1_k7sx2")]
-enemy_data = ExtResource("2_k7sx2")
+enemy_data = SubResource("Resource_vcknh")
 
 [node name="Sprite3D" parent="." index="0" unique_id=727538149]
 transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
