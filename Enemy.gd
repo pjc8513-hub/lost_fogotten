@@ -5,6 +5,7 @@ class_name Enemy
 
 signal turn_finished
 signal movement_done
+signal selected(enemy)
 
 @export var enemy_data: EnemyData:
 	set(value):
@@ -16,11 +17,26 @@ var grid_position: Vector2i
 var forward_vector: Vector2i = Vector2i(0, 1) # default facing south
 var _pending_commands: int = 0
 
+
+
 func _ready():
+	print("My viewport: ", get_viewport())
+	print("Camera: ", get_viewport().get_camera_3d())
+	print("Owner viewport: ", get_tree().root)
+	print("Current camera: ", get_viewport().get_camera_3d())
+	print("Connected signals for Area3D:", $Area3D.get_signal_connection_list("input_event"))
+	
+	await get_tree().process_frame  # wait one frame for player to finish _ready
+	print("My viewport: ", get_viewport())
+	print("Camera: ", get_viewport().get_camera_3d())
+
+	$Area3D.input_ray_pickable = true  # should be true by default, but force it
+	print("Area3D pickable: ", $Area3D.input_ray_pickable)
 	#print(self, " global_position at ready: ", global_position)
 	#enemy.grid_position = spawn_pos
 	#enemy.global_position = Vector3(spawn_pos.x, 0, spawn_pos.y)
 	#grid_position = World.world_to_grid(global_position)
+	add_to_group("enemies")
 	
 	if enemy_data and sprite:
 		_apply_enemy_data()
@@ -243,3 +259,11 @@ func _on_turn_complete():
 
 func get_accuracy() -> int:
 	return enemy_data.get_accuracy() if enemy_data else 0
+
+
+func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print("Enemy clicked:", enemy_data.enemy_name)
+		World.set_selected_enemy(self)
+		emit_signal("selected", self)
+		

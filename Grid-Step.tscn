@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://duaicc2jefihn"]
 
-[ext_resource type="Script" uid="uid://c34xmu5o88q7e" path="res://Grid-Step.gd" id="1_t0xf4"]
+[ext_resource type="Script" uid="uid://c34xmu5o88q7e" path="res://Player.gd" id="1_t0xf4"]
 
 [sub_resource type="Environment" id="Environment_t0xf4"]
 background_mode = 1

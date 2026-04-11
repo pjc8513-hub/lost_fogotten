@@ -14,6 +14,8 @@ var map_open: bool = false
 var automap_grid := {}  # Dictionary of Vector2 -> int
 
 func _ready():
+	set_process_unhandled_input(true) # debug
+	
 	var data = load_room_data("res://data/maps/open1.json")
 	if data:
 		stamp_room(Vector2(0, 0), data)
@@ -29,6 +31,15 @@ func _input(event):
 		map_open = !map_open
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
 		automap.visible = map_open
+		
+	#if event is InputEventMouse:
+		#print(event)
+		#get_node("SubViewportContainer/SubViewport").push_input(event)
+		
+# debug
+func _unhandled_input(event):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print("[Main] Unhandled click at: ", event.position)		
 
 func load_room_data(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
@@ -72,10 +83,18 @@ func stamp_room(start_pos: Vector2, room_data: Dictionary):
 
 func _spawn_enemy(world_pos: Vector2i):
 	var enemy = enemy_scene.instantiate()
-	add_child(enemy)
+	#add_child(enemy)
+	$SubViewportContainer/SubViewport.add_child(enemy)
+	
+	#enemy.add_to_group("enemies") <- moved to enemy.gd _ready (?)
 
 	enemy.grid_position = world_pos   # ✅ THIS is the missing piece
 	enemy.position = Vector3(world_pos.x, 0, world_pos.y)
 
 	enemy.enemy_data = cat_data if randf() < 0.5 else goblin_data
+	enemy.connect("selected", Callable(self, "_on_enemy_selected"))
 	print("Spawned enemy with data: ", enemy.enemy_data.resource_path)
+
+func _on_enemy_selected(enemy):
+	print("Selected enemy:", enemy.enemy_data.enemy_name)
+	# Later: show UI panel, highlight enemy, set attack target, etc.

@@ -7,6 +7,7 @@ class_name AttackCommand
 var element: String = "physical"
 var is_player_attacker: bool = false
 
+
 func execute():
 	var target = PartyState.active_party[0]  # expand targeting later
 	

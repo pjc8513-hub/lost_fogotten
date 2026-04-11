@@ -1,5 +1,6 @@
 extends Node
 
+var selected_enemy: Enemy = null
 var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
 var enemies: Array = []         # Placeholder for future enemy nodes
@@ -86,6 +87,9 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 			return true
 	return false
 
+func set_selected_enemy(enemy):
+	selected_enemy = enemy
+	print("Selected enemy:", enemy.enemy_data.enemy_name)
 
 func get_player():
 	return player_ref

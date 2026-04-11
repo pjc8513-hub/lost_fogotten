@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://deuq2niu6i14a" path="res://Main.gd" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://2rsh6nvcqd03" path="res://PlayerInput.gd" id="1_r0du0"]
+[ext_resource type="Script" uid="uid://dlpkupeacr0qm" path="res://debug_click.gd" id="2_lgr22"]
 [ext_resource type="PackedScene" uid="uid://duaicc2jefihn" path="res://Grid-Step.tscn" id="2_uu6xs"]
 [ext_resource type="Script" uid="uid://dil5ux2l1cg4u" path="res://auto_map.gd" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://cx3bqh3bvbhkd" path="res://PartyManager.gd" id="5_3dxm6"]
 [ext_resource type="Script" uid="uid://cq773fy0p7cy5" path="res://scroll_container.gd" id="6_3dxm6"]
+[ext_resource type="Script" uid="uid://q60jlfp1yofx" path="res://debug_subview.gd" id="6_trn2v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
@@ -33,10 +35,12 @@ offset_left = -363.0
 offset_right = 464.0
 offset_bottom = 512.0
 grow_horizontal = 2
+script = ExtResource("2_lgr22")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
 handle_input_locally = false
-size = Vector2i(700, 512)
+physics_object_picking = true
+size = Vector2i(827, 512)
 render_target_update_mode = 4
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1741699624]
@@ -53,6 +57,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("3_r0du0")
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/CanvasLayer/AutoMap" unique_id=871169886]
@@ -64,11 +69,15 @@ offset_bottom = 40.0
 [node name="PlayerInput" type="Node" parent="SubViewportContainer/SubViewport/CanvasLayer" unique_id=1411427721]
 script = ExtResource("1_r0du0")
 
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=164301929]
+script = ExtResource("6_trn2v")
+
 [node name="Control" type="Control" parent="." unique_id=1434150912]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1352.0
+offset_right = 316.0
 offset_bottom = 689.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=725995254]
 layout_mode = 0
@@ -86,13 +95,16 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
 offset_top = -174.0
-offset_right = -1029.0
+offset_right = 1.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_bottom = 20
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer2" unique_id=394630235]
+custom_minimum_size = Vector2(310, 160)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lgr22")
 

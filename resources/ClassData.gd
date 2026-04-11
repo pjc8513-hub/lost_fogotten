@@ -31,6 +31,9 @@ class_name ClassData
 @export var resist_fire: int = 0
 @export var resist_cold: int = 0
 @export var resist_dark: int = 0
+@export var has_ranged_weapon: bool = false
+
+@export var damage: String = "1d4+0"   # player's own damage expression
 
 # A rudimentary function to handle taking a hit
 func take_damage(amount: int):
@@ -49,3 +52,6 @@ func get_resistance(element: String) -> int:
 
 func get_accuracy() -> int:
 	return accuracy
+
+func get_damage_string() -> String:
+	return damage

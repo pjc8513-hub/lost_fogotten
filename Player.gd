@@ -1,4 +1,5 @@
 extends Node3D
+class_name Player
 
 signal player_moved(grid_pos: Vector2i)
 signal movement_done
@@ -24,6 +25,11 @@ func move_to(target: Vector2i):
 	emit_signal("player_moved", grid_position)
 	emit_signal("movement_done")
 
+func _unhandled_input(event):
+	if event.is_action_pressed("attack"):
+		_attempt_attack()
+
+
 func rotate_left():
 	forward_vector = Vector2i(forward_vector.y, -forward_vector.x)
 	rotation.y += deg_to_rad(90)
@@ -31,3 +37,36 @@ func rotate_left():
 func rotate_right():
 	forward_vector = Vector2i(-forward_vector.y, forward_vector.x)
 	rotation.y -= deg_to_rad(90)
+
+func _queue_melee_attack(target):
+	var cmd = MeleeAttackCommand.new()
+	cmd.actor = self
+	cmd.target = target
+	CommandQueue.add_command(cmd)
+
+func _queue_ranged_attack(target):
+	# For now: auto-miss if no ranged weapon
+	if not has_ranged_weapon():
+		print("You have no ranged weapon. Auto-miss!")
+		return
+
+	var cmd = RangedAttackCommand.new()
+	cmd.actor = self
+	cmd.target = target
+	CommandQueue.add_command(cmd)
+
+func has_ranged_weapon() -> bool:
+	return false  # until you add inventory
+
+func _attempt_attack():
+	var target = World.selected_enemy
+	if target == null:
+		print("No enemy selected")
+		return
+
+	var dist = grid_position.distance_to(target.grid_position)
+
+	if dist == 1:
+		_queue_melee_attack(target)
+	else:
+		_queue_ranged_attack(target)
