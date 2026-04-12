@@ -59,6 +59,11 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	]
 	GameEvents.message_logged.emit(msg)
 	target.enemy_data.hp -= final_damage
+	if target.enemy_data.hp <= 0:
+		var death_msg := "[color=red]%s[/color] dies!" % target.enemy_data.enemy_name
+		GameEvents.message_logged.emit(death_msg)
+		World.remove_enemy(target)
+		# TODO: Drop loot here
 
 	emit_signal("finished")
 
@@ -94,5 +99,10 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 	]
 	GameEvents.message_logged.emit(msg)
 	target.enemy_data.hp -= final_damage
+	if target.enemy_data.hp <= 0:
+		var death_msg := "[color=red]%s[/color] dies!" % target.enemy_data.enemy_name
+		GameEvents.message_logged.emit(death_msg)
+		World.remove_enemy(target)
+		# TODO: Drop loot here
 
 	emit_signal("finished")

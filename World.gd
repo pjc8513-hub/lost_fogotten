@@ -31,6 +31,14 @@ func register_enemy(enemy):
 func get_enemies() -> Array:
 	return enemies.duplicate()
 
+func remove_enemy(enemy) -> void:
+	enemies.erase(enemy)
+	if CombatState.combatants.has(enemy):
+		CombatState.combatants.erase(enemy)
+	if CombatState.targeted_enemy == enemy:
+		CombatState.clear_target()
+	enemy.queue_free()
+
 func process_step_events() -> void:
 	# Placeholder for traps, pressure plates, etc.
 	pass

@@ -68,6 +68,10 @@ func _run_enemy_turns(enemies: Array):
 
 	var enemy = enemies.pop_front()
 
+	if not is_instance_valid(enemy) or enemy.is_queued_for_deletion() or enemy.enemy_data.hp <= 0:
+		_run_enemy_turns(enemies)
+		return
+
 	enemy.connect("turn_finished", func():
 		_run_enemy_turns(enemies)
 	, CONNECT_ONE_SHOT)

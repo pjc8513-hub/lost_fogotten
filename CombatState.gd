@@ -95,7 +95,7 @@ func next_turn():
 
 func _is_dead(actor):
 	if actor is Enemy:
-		return actor.enemy_data.current_hp <= 0
+		return actor.enemy_data.hp <= 0
 	if actor is ClassData:
 		return actor.current_hp <= 0
 	return false

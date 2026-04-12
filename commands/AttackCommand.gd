@@ -9,8 +9,19 @@ var is_player_attacker: bool = false
 
 
 func execute():
-	var target = PartyState.active_party[0]  # expand targeting later
-	
+	var valid_targets = []
+	for member in PartyState.active_party:
+		if member.current_hp > 0:
+			valid_targets.append(member)
+			
+	if valid_targets.is_empty():
+		var msg := "[color=gray]%s looks for a target, but the party is dead.[/color]" % actor.enemy_data.enemy_name
+		GameEvents.message_logged.emit(msg)
+		emit_signal("finished")
+		return
+		
+	var target = valid_targets.pick_random()
+
 	# 1. Accuracy roll
 	
 	var accuracy : int = actor.get_accuracy()  if actor.has_method("get_accuracy") else 0
@@ -53,6 +64,10 @@ func execute():
 	]
 	GameEvents.message_logged.emit(msg)
 	target.take_damage(final_damage)
+	
+	if target.current_hp <= 0:
+		var death_msg := "[color=white]%s[/color] dies!" % target.member_name
+		GameEvents.message_logged.emit(death_msg)
 	
 	actor.enemy_data.cooldown = 8
 	emit_signal("finished")
