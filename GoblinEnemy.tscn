@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ca8otefebdg2o"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_ksusw"]
+[ext_resource type="Resource" uid="uid://creh02gtv0bv4" path="res://data/enemies/goblin.tres" id="2_i0el1"]
+[ext_resource type="Texture2D" uid="uid://cijf7ir7r1p0v" path="res://assets/sprites/enemies/goblin.webp" id="3_jylg8"]
+
+[node name="Enemy" unique_id=1461009798 instance=ExtResource("1_ksusw")]
+enemy_data = ExtResource("2_i0el1")
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+texture = ExtResource("3_jylg8")

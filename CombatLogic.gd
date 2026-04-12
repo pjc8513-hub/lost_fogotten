@@ -45,5 +45,15 @@ static func proc_status(ailment: String, chance_percent: int, target) -> void:
 	if ailment == "none" or ailment == "":
 		return
 	if randi_range(1, 100) <= chance_percent:
-		if target.has_method("add_status_effect"):
-			target.add_status_effect(ailment)
+		var effect_list = null
+		var target_name = ""
+		if target is ClassData:
+			effect_list = target.status_effects
+			target_name = target.member_name
+		elif target is Node3D and target.has_method("get_accuracy"): # Basic check for Enemy
+			effect_list = target.enemy_data.status_effects
+			target_name = target.enemy_data.enemy_name
+			
+		if effect_list != null and not ailment in effect_list:
+			effect_list.append(ailment)
+			GameEvents.message_logged.emit("[color=yellow]" + target_name + " is afflicted with " + ailment + "![/color]")

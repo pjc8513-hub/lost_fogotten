@@ -11,6 +11,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var hp: int = 100
 @export var armor_class: int = 10
 @export var damage: String = "1D6+0"
+@export var status_effects: Array[String] = []
 @export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
 @export var magic_bonus: int = 0

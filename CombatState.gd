@@ -24,16 +24,18 @@ func advance_party_member() -> bool:
 	while acting_member_index < size:
 		var member = PartyState.active_party[acting_member_index]
 		if not _is_dead(member):
+			if "stun" in member.status_effects:
+				GameEvents.message_logged.emit("[color=yellow]" + member.member_name + " is stunned and skips their turn![/color]")
+				member.status_effects.erase("stun")
+				acting_member_index += 1
+				continue
 			return true
 		acting_member_index += 1
 	return false
 
 func reset_party_turn():
-	acting_member_index = 0
-	if PartyState.active_party.size() > 0:
-		var member = PartyState.active_party[0]
-		if _is_dead(member):
-			advance_party_member()
+	acting_member_index = -1
+	advance_party_member()
 
 func set_target(enemy: Enemy) -> void:
 	targeted_enemy = enemy

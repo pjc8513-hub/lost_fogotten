@@ -53,7 +53,7 @@ func execute():
 	# 5. Status proc
 	CombatLogic.proc_status(
 		actor.enemy_data.ailment,
-		actor.enemy_data.critical_chance,  # repurpose or add a status_chance field
+		5,
 		target
 	)
 	

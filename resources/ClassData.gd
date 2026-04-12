@@ -7,6 +7,7 @@ class_name ClassData
 @export var member_name: String = ""
 @export var max_hp: int = 0
 @export var max_mp: int = 0
+@export var status_effects: Array[String] = []
 @export var current_hp: int = 0:
 	set(value):
 		current_hp = clamp(value, 0, max_hp)

@@ -94,7 +94,7 @@ func _spawn_enemy(world_pos: Vector2i):
 	enemy.enemy_data = cat_data if randf() < 0.5 else goblin_data
 	enemy.connect("selected", Callable(self, "_on_enemy_selected"))
 	print("Spawned enemy with data: ", enemy.enemy_data.resource_path)
-
+	print("Enemy ailment: ", enemy.enemy_data.ailment)
 func _on_enemy_selected(enemy):
 	print("Selected enemy:", enemy.enemy_data.enemy_name)
 	# Later: show UI panel, highlight enemy, set attack target, etc.

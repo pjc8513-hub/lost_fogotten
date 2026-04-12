@@ -3,29 +3,15 @@
 [ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cijf7ir7r1p0v" path="res://assets/sprites/enemies/goblin.webp" id="2"]
 
-[sub_resource type="Resource" id="1"]
-script = ExtResource("1")
-
 [resource]
 script = ExtResource("1")
 enemy_name = "Goblin"
 hp = 45
 armor_class = 8
-accuracy = 0
 damage = "1D6+2"
 critical_chance = 2
-magic_bonus = 0
-ailment = "none"
-tier = 1
+ailment = "stun"
 xp = 70
 gold = 30
 ai_behavior = "Hunter"
 sprite_texture = ExtResource("2")
-drops = Array[Resource]([SubResource("1")])
-resist_fire = 0
-resist_physical = 0
-resist_cold = 0
-resist_electric = 0
-resist_light = 0
-resist_dark = 0
-drops = []

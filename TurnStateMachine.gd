@@ -44,7 +44,25 @@ func _player_action_complete():
 
 func _on_world_update():
 	World.process_step_events()
+	_apply_poison_effects()
 	set_state(State.ENEMY_TURN)
+
+func _apply_poison_effects():
+	for member in PartyState.active_party:
+		if "poison" in member.status_effects and member.current_hp > 0:
+			member.take_damage(10)
+			GameEvents.message_logged.emit("[color=purple]" + member.member_name + " takes 10 poison damage![/color]")
+			if member.current_hp <= 0:
+				GameEvents.message_logged.emit("[color=red]" + member.member_name + " dies from poison![/color]")
+				
+	var enemies = World.get_enemies()
+	for enemy in enemies:
+		if "poison" in enemy.enemy_data.status_effects and enemy.enemy_data.hp > 0:
+			enemy.enemy_data.hp -= 10
+			GameEvents.message_logged.emit("[color=purple]" + enemy.enemy_data.enemy_name + " takes 10 poison damage![/color]")
+			if enemy.enemy_data.hp <= 0:
+				GameEvents.message_logged.emit("[color=red]" + enemy.enemy_data.enemy_name + " dies from poison![/color]")
+				World.remove_enemy(enemy)
 
 func _on_enemy_turn():
 	var enemies = World.get_enemies()
@@ -58,8 +76,17 @@ func _on_enemy_turn():
 
 func _on_transition():
 	await get_tree().create_timer(0.05).timeout
-	CombatState.reset_party_turn()
-	set_state(State.PLAYER_INPUT)
+	if World.get_enemies().is_empty():
+		for member in PartyState.active_party:
+			if "stun" in member.status_effects:
+				member.status_effects.erase("stun")
+				GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")
+		CombatState.reset_party_turn()
+		if State.PLAYER_INPUT != state:
+			set_state(State.PLAYER_INPUT)
+	else:
+		CombatState.reset_party_turn()
+		set_state(State.PLAYER_INPUT)
 
 func _run_enemy_turns(enemies: Array):
 	if enemies.is_empty():
@@ -69,6 +96,13 @@ func _run_enemy_turns(enemies: Array):
 	var enemy = enemies.pop_front()
 
 	if not is_instance_valid(enemy) or enemy.is_queued_for_deletion() or enemy.enemy_data.hp <= 0:
+		_run_enemy_turns(enemies)
+		return
+
+	if "stun" in enemy.enemy_data.status_effects:
+		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " is stunned and skips their turn![/color]")
+		enemy.enemy_data.status_effects.erase("stun")
+		await get_tree().create_timer(0.5).timeout
 		_run_enemy_turns(enemies)
 		return
 
