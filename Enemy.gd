@@ -70,6 +70,13 @@ func _apply_enemy_data() -> void:
 		sprite.position = enemy_data.custom_position
 		print(enemy_data.enemy_name, " final custom position applied: ", sprite.position)
 
+func _queue_command(cmd) -> void:
+	_pending_commands += 1
+	cmd.actor = self
+	cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
+	CommandQueue.add_command(cmd)
+
+
 func move_to(target: Vector2i):
 	grid_position = target
 	global_position = Vector3(target.x, global_position.y, target.y)
@@ -90,46 +97,31 @@ func take_turn():
 			_take_turn_random()
 
 
-func _take_turn_hunter():
+func _take_turn_hunter() -> void:
 	var player = World.get_player()
 	if player == null:
 		emit_signal("turn_finished")
 		return
-	
-	# Attack if adjacent
+
 	if _is_adjacent_to_player():
 		_queue_attack()
 		return
-	
-	# Only chase if player is visible
+
 	if not World.can_see_player(grid_position, enemy_data.vision_range):
-		# fallback to random wandering
 		_take_turn_random()
 		return
 
 	var dx = player.grid_position.x - grid_position.x
 	var dy = player.grid_position.y - grid_position.y
 
-	# Determine primary direction
-	var primary_dir: Vector2i
-	var secondary_dir: Vector2i
+	var primary_dir   = Vector2i(sign(dx), 0) if abs(dx) > abs(dy) else Vector2i(0, sign(dy))
+	var secondary_dir = Vector2i(0, sign(dy))  if abs(dx) > abs(dy) else Vector2i(sign(dx), 0)
 
-	if abs(dx) > abs(dy):
-		primary_dir = Vector2i(sign(dx), 0)
-		secondary_dir = Vector2i(0, sign(dy))
-	else:
-		primary_dir = Vector2i(0, sign(dy))
-		secondary_dir = Vector2i(sign(dx), 0)
-
-	# Try primary direction
 	if _try_move_direction(primary_dir):
 		return
-
-	# Try secondary direction
 	if _try_move_direction(secondary_dir):
 		return
 
-	# If both blocked, fallback to random
 	_take_turn_random()
 
 	
@@ -137,33 +129,20 @@ func _take_turn_guard():
 	print('Guard took turn (placeholder!)')
 	emit_signal("turn_finished")
 	
-func _take_turn_random():
-	# Attack if adjacent
+func _take_turn_random() -> void:
 	if _is_adjacent_to_player():
 		_queue_attack()
 		return
-		
-	var dirs = [
-		Vector2i(0, -1),  # north
-		Vector2i(1, 0),   # east
-		Vector2i(0, 1),   # south
-		Vector2i(-1, 0)   # west
-	]
 
-	var valid_dirs = []
-
-	for dir in dirs:
-		var target = grid_position + dir
-		if World.is_walkable(target):
-			valid_dirs.append(dir)
+	var dirs = [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]
+	var valid_dirs: Array = dirs.filter(func(d): return World.is_walkable(grid_position + d))
 
 	if valid_dirs.is_empty():
 		emit_signal("turn_finished")
 		return
 
-	var target_dir = valid_dirs[randi() % valid_dirs.size()]
-	forward_vector = target_dir  # ← critical fix
-	#print('target direction: ', target_dir)
+	var chosen: Vector2i = valid_dirs[randi() % valid_dirs.size()]
+	forward_vector = chosen
 	_queue_move_forward()
 	
 func rotate_left():
@@ -174,69 +153,56 @@ func rotate_right():
 	forward_vector = Vector2i(-forward_vector.y, forward_vector.x)
 	rotation.y -= deg_to_rad(90)
 
-func _queue_turn_toward(target_dir: Vector2i):
-	# Determine left or right turn
-	var left = Vector2i(forward_vector.y, -forward_vector.x)
-	var right = Vector2i(-forward_vector.y, forward_vector.x)
+func _queue_turn_toward(target_dir: Vector2i) -> void:
+	var left  = Vector2i( forward_vector.y, -forward_vector.x)
+	var right = Vector2i(-forward_vector.y,  forward_vector.x)
+
+	if target_dir == forward_vector:
+		return  # already facing — caller shouldn't reach here, but safe guard
 
 	if target_dir == left:
-		_pending_commands += 1
-		var cmd = TurnLeftCommand.new()
-		cmd.actor = self
-		cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-		CommandQueue.add_command(cmd)
+		_queue_command(TurnLeftCommand.new())
 	elif target_dir == right:
-		_pending_commands += 1
-		var cmd = TurnRightCommand.new()
-		cmd.actor = self
-		cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-		CommandQueue.add_command(cmd)
+		_queue_command(TurnRightCommand.new())
 	else:
-		_pending_commands += 2
-		# 180-degree turn: two left turns
-		var cmd1 = TurnLeftCommand.new()
-		cmd1.actor = self
-		cmd1.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-		CommandQueue.add_command(cmd1)
+		# 180 — two turns, both tracked by _pending_commands
+		_queue_command(TurnLeftCommand.new())
+		_queue_command(TurnLeftCommand.new())
 
-		var cmd2 = TurnLeftCommand.new()
-		cmd2.actor = self
-		CommandQueue.connect("queue_empty", Callable(self, "_on_turn_complete"), CONNECT_ONE_SHOT)
-		cmd2.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-		CommandQueue.add_command(cmd2)
-
-func _on_own_command_finished():
+func _on_own_command_finished() -> void:
 	_pending_commands -= 1
 	if _pending_commands < 0:
-		print("WARNING: _pending_commands underflow on ", enemy_data.enemy_name)
+		push_warning("_pending_commands underflow: " + enemy_data.enemy_name)
 		_pending_commands = 0
-	if _pending_commands <= 0:
-		_pending_commands = 0
+	if _pending_commands == 0:
 		_on_turn_complete()
 
-func _queue_move_forward():
-	_pending_commands += 1
-	var cmd = MoveForwardCommand.new()
-	cmd.actor = self
-	cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-	CommandQueue.add_command(cmd)
+func _queue_move_forward() -> void:
+	_queue_command(MoveForwardCommand.new())
 
 func _try_move_direction(dir: Vector2i) -> bool:
-	if dir == Vector2i(0, 0):
+	if dir == Vector2i.ZERO:
 		return false
 
-	# If not facing the direction, rotate first
+	var target = grid_position + dir
+
 	if forward_vector != dir:
+		# Rotate toward the desired direction first.
 		_queue_turn_toward(dir)
+		# After rotating we'd be facing dir — check walkability now.
+		# If the tile is blocked we still consumed the turn rotating.
+		if World.is_walkable(target):
+			_queue_move_forward()
+		# Either way we queued something, so the turn is handled.
 		return true
 
-	# Try to move forward
-	var target = grid_position + dir
+	# Already facing dir.
 	if World.is_walkable(target):
 		_queue_move_forward()
 		return true
 
-	return false
+	return false  # facing the right way but wall — caller tries next option
+
 
 func _is_adjacent_to_player() -> bool:
 	var player = World.get_player()
@@ -245,16 +211,10 @@ func _is_adjacent_to_player() -> bool:
 
 	return grid_position.distance_to(player.grid_position) == 1
 
-func _queue_attack():
-	_pending_commands += 1
-	var cmd = AttackCommand.new()
-	cmd.actor = self
-	cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
-	CommandQueue.add_command(cmd)
+func _queue_attack() -> void:
+	_queue_command(AttackCommand.new())
 	
-func _on_turn_complete():
-	#print("_on_turn_complete called on: ", enemy_data.enemy_name)
-	#print("Enemy finished turn:", self)
+func _on_turn_complete() -> void:
 	emit_signal("turn_finished")
 
 func get_accuracy() -> int:
@@ -264,6 +224,7 @@ func get_accuracy() -> int:
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("Enemy clicked:", enemy_data.enemy_name)
-		World.set_selected_enemy(self)
+		#World.set_selected_enemy(self)
+		CombatState.set_target(self)
 		emit_signal("selected", self)
 		

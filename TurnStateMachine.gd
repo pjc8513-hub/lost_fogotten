@@ -9,6 +9,7 @@ enum State {
 }
 
 var state: State = State.PLAYER_INPUT
+var last_action_was_party_wide: bool = false
 
 func set_state(new_state: State):
 	print("STATE → ", new_state)
@@ -27,14 +28,19 @@ func set_state(new_state: State):
 			_on_transition()
 
 func _on_player_action():
-	if CommandQueue.queue.is_empty():
+	if not CommandQueue.is_busy():
 		_player_action_complete()
 	else:
 		CommandQueue.connect("queue_empty", Callable(self, "_player_action_complete"), CONNECT_ONE_SHOT)
 
-
 func _player_action_complete():
-	set_state(State.WORLD_UPDATE)
+	if last_action_was_party_wide:
+		set_state(State.WORLD_UPDATE)
+	else:
+		if CombatState.advance_party_member():
+			set_state(State.PLAYER_INPUT)
+		else:
+			set_state(State.WORLD_UPDATE)
 
 func _on_world_update():
 	World.process_step_events()
@@ -52,6 +58,7 @@ func _on_enemy_turn():
 
 func _on_transition():
 	await get_tree().create_timer(0.05).timeout
+	CombatState.reset_party_turn()
 	set_state(State.PLAYER_INPUT)
 
 func _run_enemy_turns(enemies: Array):

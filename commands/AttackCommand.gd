@@ -53,4 +53,6 @@ func execute():
 	]
 	GameEvents.message_logged.emit(msg)
 	target.take_damage(final_damage)
+	
+	actor.enemy_data.cooldown = 8
 	emit_signal("finished")

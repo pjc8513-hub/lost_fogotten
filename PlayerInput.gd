@@ -15,6 +15,7 @@ func _unhandled_input(event):
 		var cmd = MoveForwardCommand.new()
 		cmd.actor = player
 		CommandQueue.add_command(cmd)
+		TurnStateMachine.last_action_was_party_wide = true
 		TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
 		get_viewport().set_input_as_handled()
 
@@ -22,6 +23,7 @@ func _unhandled_input(event):
 		var cmd = TurnLeftCommand.new()
 		cmd.actor = player
 		CommandQueue.add_command(cmd)
+		TurnStateMachine.last_action_was_party_wide = true
 		TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
 		get_viewport().set_input_as_handled()
 
@@ -29,6 +31,7 @@ func _unhandled_input(event):
 		var cmd = TurnRightCommand.new()
 		cmd.actor = player
 		CommandQueue.add_command(cmd)
+		TurnStateMachine.last_action_was_party_wide = true
 		TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
 		get_viewport().set_input_as_handled()
 
@@ -52,6 +55,7 @@ func _on_enemy_clicked(enemy: Enemy) -> void:
 	cmd.actor = CombatState.get_acting_member()  # ClassData of acting party member
 	CommandQueue.add_command(cmd)
 
+	TurnStateMachine.last_action_was_party_wide = false
 	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
 
 func _on_npc_clicked(_npc: Node3D) -> void:

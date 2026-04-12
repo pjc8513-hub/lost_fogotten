@@ -26,8 +26,19 @@ func move_to(target: Vector2i):
 	emit_signal("movement_done")
 
 func _unhandled_input(event):
+	if TurnStateMachine.state != TurnStateMachine.State.PLAYER_INPUT:
+		return
+
+	var acting_member = CombatState.current_actor
+	if acting_member == null:
+		return
+	
+	# Only handle input if the acting member is actually the player/party
+	if not acting_member is ClassData:
+		return  # it's an enemy turn, ignore input
+		
 	if event.is_action_pressed("attack"):
-		_attempt_attack()
+		_queue_player_attack()
 
 
 func rotate_left():
@@ -38,35 +49,15 @@ func rotate_right():
 	forward_vector = Vector2i(-forward_vector.y, forward_vector.x)
 	rotation.y -= deg_to_rad(90)
 
-func _queue_melee_attack(target):
-	var cmd = MeleeAttackCommand.new()
-	cmd.actor = self
-	cmd.target = target
-	CommandQueue.add_command(cmd)
 
-func _queue_ranged_attack(target):
-	# For now: auto-miss if no ranged weapon
-	if not has_ranged_weapon():
-		print("You have no ranged weapon. Auto-miss!")
+func _queue_player_attack():
+	if not CombatState.has_valid_target():
+		print("No valid target selected")
 		return
 
-	var cmd = RangedAttackCommand.new()
-	cmd.actor = self
-	cmd.target = target
+	var cmd := PlayerAttackCommand.new()
+	cmd.actor = CombatState.get_acting_member()  # ClassData
 	CommandQueue.add_command(cmd)
 
-func has_ranged_weapon() -> bool:
-	return false  # until you add inventory
-
-func _attempt_attack():
-	var target = World.selected_enemy
-	if target == null:
-		print("No enemy selected")
-		return
-
-	var dist = grid_position.distance_to(target.grid_position)
-
-	if dist == 1:
-		_queue_melee_attack(target)
-	else:
-		_queue_ranged_attack(target)
+	TurnStateMachine.last_action_was_party_wide = false
+	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)

@@ -16,6 +16,8 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var magic_bonus: int = 0
 @export var ailment: String = "none"
 @export var attack_speed: int = 80
+@export var initiative: int = 8
+@export var cooldown: int = 0
 @export var tier: int = 1
 @export var xp: int = 0
 @export var gold: int = 0

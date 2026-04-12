@@ -30,6 +30,8 @@ func execute() -> void:
 		_do_melee(attacker, target_enemy)
 	else:
 		_do_ranged_or_skip(attacker, target_enemy, dist)
+		
+	actor.cooldown = 2
 
 func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	var outcome := CombatLogic.accuracy_roll(attacker.accuracy, target.enemy_data.armor_class)

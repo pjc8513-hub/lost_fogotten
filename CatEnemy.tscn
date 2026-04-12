@@ -24,7 +24,6 @@ custom_scale = Vector3(0.35, 0.35, 0.35)
 custom_position = Vector3(0, -0.15, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_shl8a"]
-size = Vector3(2, 2, 2)
 
 [node name="CatEnemy" unique_id=1077348863 instance=ExtResource("1_k7sx2")]
 enemy_data = SubResource("Resource_shl8a")
