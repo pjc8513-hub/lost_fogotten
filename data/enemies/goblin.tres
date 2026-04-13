@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cijf7ir7r1p0v" path="res://assets/sprites/enemies/goblin.webp" id="2"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1")
 enemy_name = "Goblin"
 hp = 45

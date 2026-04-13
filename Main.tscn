@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://cx3bqh3bvbhkd" path="res://PartyManager.gd" id="5_3dxm6"]
 [ext_resource type="Script" uid="uid://cq773fy0p7cy5" path="res://scroll_container.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://q60jlfp1yofx" path="res://debug_subview.gd" id="6_trn2v"]
+[ext_resource type="PackedScene" uid="uid://bv0w1w5te005v" path="res://RightPanel.tscn" id="9_03owx"]
+[ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="9_wkp8b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
@@ -31,10 +33,11 @@ script = ExtResource("1_glv2v")
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -363.0
-offset_right = 464.0
+offset_left = -368.0
+offset_right = 459.0
 offset_bottom = 512.0
 grow_horizontal = 2
+scale = Vector2(0.92, 1)
 script = ExtResource("2_lgr22")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
@@ -75,7 +78,7 @@ script = ExtResource("6_trn2v")
 [node name="Control" type="Control" parent="." unique_id=1434150912]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 316.0
+offset_right = 1350.0
 offset_bottom = 689.0
 mouse_filter = 2
 
@@ -101,6 +104,8 @@ offset_right = 1.0
 offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_left = 307
+theme_override_constants/margin_right = 281
 theme_override_constants/margin_bottom = 20
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer2" unique_id=394630235]
@@ -116,7 +121,13 @@ script = ExtResource("6_3dxm6")
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/MarginContainer2/PanelContainer/ScrollContainer" unique_id=1507413573]
 custom_minimum_size = Vector2(310, 160)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("9_wkp8b")
+theme_override_font_sizes/normal_font_size = 24
 theme_override_styles/focus = SubResource("StyleBoxFlat_fos0i")
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+
+[node name="RightPanel" parent="." unique_id=280808817 instance=ExtResource("9_03owx")]
