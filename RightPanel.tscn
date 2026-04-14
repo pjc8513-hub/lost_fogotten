@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cck16k6iqplm8" path="res://assets/icons/inventory.png" id="2_dqydg"]
 [ext_resource type="Texture2D" uid="uid://de4tjocijq1sh" path="res://assets/icons/info.png" id="3_gll0b"]
 [ext_resource type="Script" uid="uid://buwmdirknn8vc" path="res://InventoryList.gd" id="5_gll0b"]
+[ext_resource type="Script" uid="uid://5cs83qgtrkjq" path="res://popup_menu_inventory.gd" id="6_5kfkf"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_idfb0"]
 
@@ -59,4 +60,16 @@ metadata/_tab_index = 0
 [node name="ItemList" type="ItemList" parent="TabContainer/InventoryView" unique_id=588340061]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("5_gll0b")
+
+[node name="PopupMenuMain" type="PopupMenu" parent="TabContainer/InventoryView" unique_id=1380312026]
+oversampling_override = 1.0
+visible = true
+script = ExtResource("6_5kfkf")
+
+[node name="TradeMenu" type="PopupMenu" parent="TabContainer/InventoryView/PopupMenuMain" unique_id=777877962]
+oversampling_override = 1.0
+visible = true
+
+[connection signal="gui_input" from="TabContainer/InventoryView/ItemList" to="TabContainer/InventoryView/ItemList" method="_on_gui_input"]

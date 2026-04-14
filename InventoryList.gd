@@ -64,3 +64,24 @@ func sort_inventory(items: Array[ItemInstance]) -> Array:
 	)
 
 	return sorted
+
+func _on_item_gui_input(event):
+	print("Event!")
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		print("Right")
+		var idx = item_list.get_item_at_position(event.position)
+		if idx == -1:
+			return
+		item_list.select(idx)
+		var inst: ItemInstance = item_list.get_item_metadata(idx)
+		$PopupMenuMain.open_for(inst, get_global_mouse_position())
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		var idx = item_list.get_item_at_position(event.position)
+		if idx == -1:
+			return
+		item_list.select(idx)
+		var inst: ItemInstance = item_list.get_item_metadata(idx)
+		$"../PopupMenuMain".open_for(inst, get_global_mouse_position())
