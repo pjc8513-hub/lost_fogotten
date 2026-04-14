@@ -36,6 +36,15 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 
 
+	if event.is_action_pressed("select_member_1"):
+		PartyState.selected_index = 0
+	elif event.is_action_pressed("select_member_2"):
+		PartyState.selected_index = 1
+	elif event.is_action_pressed("select_member_3"):
+		PartyState.selected_index = 2
+	elif event.is_action_pressed("select_member_4"):
+		PartyState.selected_index = 3
+
 func handle_entity_clicked(entity: Node3D) -> void:
 	# Only process clicks during player input phase
 	if TurnStateMachine.state != TurnStateMachine.State.PLAYER_INPUT:

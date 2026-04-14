@@ -25,6 +25,7 @@ func _ready():
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
 		automap.set_map_data(automap_grid)
 		World.set_map_data(automap_grid)
+		PartyState.selected_index = 0
 
 func _input(event):
 	if event.is_action_pressed("map"):  # Set this up in Project > Input Map

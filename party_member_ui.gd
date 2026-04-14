@@ -7,10 +7,33 @@ extends PanelContainer
 @onready var label = $HBoxContainer/VBoxContainer/Label
 
 var my_member_data: ClassData
+var member_index: int = -1
+var normal_style: StyleBoxFlat
+var selected_style: StyleBoxFlat
+
+func _ready():
+	_create_styles()
+	GameEvents.selected_character_changed.connect(_on_selection_changed)
+
+func _create_styles():
+	normal_style = StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.1, 0.1, 0.1, 1)
+	normal_style.border_width_left = 0
+	normal_style.border_width_right = 0
+	normal_style.border_width_top = 0
+	normal_style.border_width_bottom = 0
+	
+	selected_style = normal_style.duplicate()
+	selected_style.border_width_left = 3
+	selected_style.border_width_right = 3
+	selected_style.border_width_top = 3
+	selected_style.border_width_bottom = 3
+	selected_style.border_color = Color("FFD700") # gold
 
 # This function takes a .tres file and fills the UI
-func setup(data): # We leave 'data' untyped here too just to be safe
+func setup(data: ClassData, index: int): # We leave 'data' untyped here too just to be safe
 	if data:
+		member_index = index
 		# Use the variable names from your ClassData.gd
 		portrait.texture = data.sprite_texture 
 		hp_bar.max_value = data.max_hp
@@ -40,3 +63,12 @@ func update_ui():
 	#print(my_member_data.name, " max hp: ", my_member_data.max_hp)
 	#print(my_member_data.name, " current hp: ", my_member_data.current_hp)
 	mp_bar.value = my_member_data.current_mp
+
+func _on_selection_changed(_character: ClassData):
+	_update_border()
+
+func _update_border():
+	if PartyState.selected_index == member_index:
+		add_theme_stylebox_override("panel", selected_style)
+	else:
+		add_theme_stylebox_override("panel", normal_style)

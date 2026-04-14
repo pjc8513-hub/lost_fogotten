@@ -27,11 +27,9 @@ func _set_active_button(active_button):
 	active_button.modulate = Color(1, 1, 1)
 	
 func _on_character_changed(character):
-	$TabContainer/InventoryView.set_inventory(character.inventory)
-	$TabContainer/SkillsView.set_skills(character.skills)
-	$TabContainer/InfoView.set_info(character)
+	# InventoryList currently handles its own updates via GameEvents.
+	# SkillsView and InfoView nodes do not exist yet.
+	pass
 
 func set_character(character):
-	$ContentArea/InventoryView.set_inventory(character.inventory)
-	$ContentArea/SkillsView.set_skills(character.skills)
-	$ContentArea/InfoView.set_info(character.stats)
+	pass

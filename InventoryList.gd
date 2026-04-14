@@ -5,6 +5,9 @@ extends ItemList
 func _ready():
 	GameEvents.inventory_changed.connect(_on_inventory_changed)
 	GameEvents.selected_character_changed.connect(_on_inventory_changed)
+	
+	if PartyState.get_selected():
+		set_inventory(PartyState.get_selected().inventory)
 
 func set_inventory(items: Array[ItemInstance]):
 	item_list.clear()
@@ -12,6 +15,9 @@ func set_inventory(items: Array[ItemInstance]):
 	var sorted = sort_inventory(items)
 
 	for inst in sorted:
+		if inst == null or inst.item_data == null:
+			continue
+			
 		var item = inst.item_data
 
 		var idx = item_list.add_item(item.name, item.icon)
@@ -29,6 +35,9 @@ func _on_inventory_changed(character):
 		set_inventory(character.inventory)
 
 func get_sort_value(inst: ItemInstance) -> int:
+	if inst == null or inst.item_data == null:
+		return 999
+		
 	var item := inst.item_data
 
 	# Junk always at bottom
