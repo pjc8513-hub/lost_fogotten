@@ -38,7 +38,7 @@ func execute():
 		return
 	
 	# 2. Roll dice
-	var raw := CombatLogic.roll_dice(actor.enemy_data.damage)
+	var raw := CombatLogic.roll_dice(actor.enemy_data.dice_rolls, actor.enemy_data.dice_sides, actor.enemy_data.bonus_damage)
 	if outcome == "crit":
 		raw *= 2
 	

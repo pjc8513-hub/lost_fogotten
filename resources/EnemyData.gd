@@ -6,11 +6,14 @@ class_name EnemyData
 
 enum AIBehavior { HUNTER, RANDOM, GUARD }
 enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
+enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 
 @export var enemy_name: String = ""
 @export var hp: int = 100
 @export var armor_class: int = 10
-@export var damage: String = "1D6+0"
+@export var dice_sides: int = 4
+@export var dice_rolls: int = 1
+@export var bonus_damage: int = 0
 @export var status_effects: Array[String] = []
 @export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
@@ -24,6 +27,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var gold: int = 0
 @export var ai_behavior: String = "Random"
 @export var sprite_texture: Texture2D
+@export var loot_table: Loot_Table
 
 @export var resist_fire: int = 0
 @export var resist_physical: int = 0

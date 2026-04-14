@@ -1,28 +1,10 @@
 # CombatLogic.gd
 extends Node
 
-static func roll_dice(expression: String) -> int:
-	# Handles "2d6+3", "1d8", "1d4-1", etc.
+static func roll_dice(num_dice: int, die_size: int, bonus: int = 0) -> int:
 	var result := 0
-	var expr := expression.to_lower().strip_edges()
-	
-	var bonus := 0
-	var plus_idx := expr.rfind("+")
-	var minus_idx := expr.rfind("-", expr.find("d") + 1) # avoid "d" itself
-	
-	if plus_idx != -1:
-		bonus = int(expr.substr(plus_idx + 1))
-		expr = expr.substr(0, plus_idx)
-	elif minus_idx != -1:
-		bonus = -int(expr.substr(minus_idx + 1))
-		expr = expr.substr(0, minus_idx)
-	
-	var parts := expr.split("d")
-	if parts.size() == 2:
-		var num_dice : int = max(1, int(parts[0])) if parts[0] != "" else 1
-		var die_size := int(parts[1])
-		for i in range(num_dice):
-			result += randi_range(1, die_size)
+	for i in range(num_dice):
+		result += randi_range(1, die_size)
 	
 	return max(0, result + bonus)
 

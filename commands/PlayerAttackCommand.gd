@@ -44,7 +44,7 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		emit_signal("finished")
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.get_damage_string())
+	var raw := CombatLogic.roll_dice(attacker.dice_rolls, attacker.dice_sides, attacker.bonus_damage)
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)
@@ -85,7 +85,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		emit_signal("finished")
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.get_damage_string())
+	var raw := CombatLogic.roll_dice(attacker.dice_rolls, attacker.dice_sides, attacker.bonus_damage)
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)

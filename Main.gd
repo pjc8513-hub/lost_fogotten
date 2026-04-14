@@ -91,7 +91,10 @@ func _spawn_enemy(world_pos: Vector2i):
 	enemy.grid_position = world_pos   # ✅ THIS is the missing piece
 	enemy.position = Vector3(world_pos.x, 0, world_pos.y)
 
-	enemy.enemy_data = cat_data if randf() < 0.5 else goblin_data
+	#enemy.enemy_data = cat_data.duplicate() if randf() < 0.5 else goblin_data.duplicate()
+	var data_template = cat_data if randf() < 0.5 else goblin_data
+	enemy.enemy_data = data_template.duplicate()
+	
 	enemy.connect("selected", Callable(self, "_on_enemy_selected"))
 	print("Spawned enemy with data: ", enemy.enemy_data.resource_path)
 	print("Enemy ailment: ", enemy.enemy_data.ailment)

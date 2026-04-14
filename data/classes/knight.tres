@@ -1,7 +1,9 @@
 [gd_resource type="Resource" script_class="ClassData" format=3 uid="uid://bihilgk2xg1o0"]
 
 [ext_resource type="Script" uid="uid://dt5hef65gemqo" path="res://resources/ClassData.gd" id="1"]
+[ext_resource type="Script" uid="uid://chlmveswktok8" path="res://resources/ItemInstance.gd" id="1_qn3v0"]
 [ext_resource type="Texture2D" uid="uid://cy21m677h31mg" path="res://assets/portraits/knight_p.png" id="2"]
+[ext_resource type="Resource" uid="uid://b54pdifskqo45" path="res://data/weapons/instances/RustyDaggerInstance.tres" id="2_1xdxe"]
 
 [resource]
 resource_local_to_scene = true
@@ -18,3 +20,4 @@ accuracy = 1
 critical_chance = 3
 attack_speed = 70
 sprite_texture = ExtResource("2")
+inventory = Array[ExtResource("1_qn3v0")]([ExtResource("2_1xdxe")])

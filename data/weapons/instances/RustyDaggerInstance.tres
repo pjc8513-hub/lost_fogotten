@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemInstance" format=3 uid="uid://b54pdifskqo45"]
+
+[ext_resource type="Resource" uid="uid://brot0mgb7gogm" path="res://data/weapons/RustyDagger.tres" id="1_tjdlg"]
+[ext_resource type="Script" uid="uid://chlmveswktok8" path="res://resources/ItemInstance.gd" id="2_ousqt"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_ousqt")
+item_data = ExtResource("1_tjdlg")
+metadata/_custom_type_script = "uid://chlmveswktok8"

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cooqwoxmojusx" path="res://RightPanel.gd" id="1_dqydg"]
 [ext_resource type="Texture2D" uid="uid://cck16k6iqplm8" path="res://assets/icons/inventory.png" id="2_dqydg"]
 [ext_resource type="Texture2D" uid="uid://de4tjocijq1sh" path="res://assets/icons/info.png" id="3_gll0b"]
+[ext_resource type="Script" uid="uid://buwmdirknn8vc" path="res://InventoryList.gd" id="5_gll0b"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_idfb0"]
 
@@ -29,14 +30,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 button_group = SubResource("ButtonGroup_idfb0")
-icon = ExtResource("1_bc2uk")
+icon = ExtResource("2_dqydg")
 
 [node name="SkillsButton" type="Button" parent="ButtonBar" unique_id=994439526]
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
 button_group = SubResource("ButtonGroup_yqgkb")
-icon = ExtResource("2_dqydg")
+icon = ExtResource("1_bc2uk")
 
 [node name="InfoButton" type="Button" parent="ButtonBar" unique_id=993940634]
 layout_mode = 2
@@ -58,3 +59,4 @@ metadata/_tab_index = 0
 [node name="ItemList" type="ItemList" parent="TabContainer/InventoryView" unique_id=588340061]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("5_gll0b")

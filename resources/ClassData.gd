@@ -36,7 +36,11 @@ class_name ClassData
 @export var cooldown: int = 0
 @export var has_ranged_weapon: bool = false
 
-@export var damage: String = "1d4+0"   # player's own damage expression
+@export var dice_sides: int = 4
+@export var dice_rolls: int = 1
+@export var bonus_damage: int = 0
+
+@export var inventory: Array[ItemInstance] = []
 
 # A rudimentary function to handle taking a hit
 func take_damage(amount: int):
@@ -55,6 +59,3 @@ func get_resistance(element: String) -> int:
 
 func get_accuracy() -> int:
 	return accuracy
-
-func get_damage_string() -> String:
-	return damage
