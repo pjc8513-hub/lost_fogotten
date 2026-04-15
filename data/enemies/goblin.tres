@@ -14,6 +14,7 @@ dice_rolls = 1
 bonus = 1
 critical_chance = 2
 ailment = "stun"
+attack_speed = 1
 xp = 70
 gold = 30
 ai_behavior = "Hunter"

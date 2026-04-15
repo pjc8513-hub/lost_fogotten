@@ -26,25 +26,35 @@ func execute() -> void:
 
 	var dist: float = player_node.grid_position.distance_to(target_enemy.grid_position)
 
-	if dist <= MELEE_RANGE:
-		_do_melee(attacker, target_enemy)
-	else:
-		_do_ranged_or_skip(attacker, target_enemy, dist)
+	var attacks = 1
+	var total_speed = attacker.get_total_attack_speed()
+	if total_speed > 0:
+		if randi_range(1, 100) <= (total_speed * 10):
+			attacks = 2
+
+	for i in range(attacks):
+		if target_enemy == null or not is_instance_valid(target_enemy) or target_enemy.enemy_data.hp <= 0:
+			break
+
+		if dist <= MELEE_RANGE:
+			_do_melee(attacker, target_enemy)
+		else:
+			_do_ranged_or_skip(attacker, target_enemy, dist)
 		
 	actor.cooldown = 2
+	emit_signal("finished")
 
 func _do_melee(attacker: ClassData, target: Enemy) -> void:
-	var outcome := CombatLogic.accuracy_roll(attacker.accuracy, target.enemy_data.armor_class)
+	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
 
 	if outcome == "miss":
 		var msg := "[color=white]%s[/color] swings at [color=red]%s[/color] — [color=gray]miss![/color]" % [
 			attacker.member_name, target.enemy_data.enemy_name
 		]
 		GameEvents.message_logged.emit(msg)
-		emit_signal("finished")
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.dice_rolls, attacker.dice_sides, attacker.bonus_damage)
+	var raw := CombatLogic.roll_dice(attacker.get_dice_rolls(), attacker.get_dice_sides(), attacker.get_bonus_damage())
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)
@@ -65,27 +75,23 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		World.remove_enemy(target)
 		# TODO: Drop loot here
 
-	emit_signal("finished")
-
 func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void:
 	if not attacker.has_ranged_weapon:
 		var msg := "[color=gray]%s is too far away to attack with no ranged weapon. Turn wasted.[/color]" % attacker.member_name
 		GameEvents.message_logged.emit(msg)
-		emit_signal("finished")
 		return
 
 	# Ranged attack — same pipeline, no resist override needed (will use weapon element later)
-	var outcome := CombatLogic.accuracy_roll(attacker.accuracy, target.enemy_data.armor_class)
+	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
 
 	if outcome == "miss":
 		var msg := "[color=white]%s[/color] fires at [color=red]%s[/color] — [color=gray]miss![/color]" % [
 			attacker.member_name, target.enemy_data.enemy_name
 		]
 		GameEvents.message_logged.emit(msg)
-		emit_signal("finished")
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.dice_rolls, attacker.dice_sides, attacker.bonus_damage)
+	var raw := CombatLogic.roll_dice(attacker.get_dice_rolls(), attacker.get_dice_sides(), attacker.get_bonus_damage())
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)
@@ -104,5 +110,3 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		GameEvents.message_logged.emit(death_msg)
 		World.remove_enemy(target)
 		# TODO: Drop loot here
-
-	emit_signal("finished")

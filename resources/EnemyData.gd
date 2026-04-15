@@ -19,7 +19,7 @@ enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 @export var critical_chance: int = 0
 @export var magic_bonus: int = 0
 @export var ailment: String = "none"
-@export var attack_speed: int = 80
+@export var attack_speed: int = 0
 @export var initiative: int = 8
 @export var cooldown: int = 0
 @export var tier: int = 1

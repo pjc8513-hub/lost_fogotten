@@ -59,3 +59,34 @@ func get_resistance(element: String) -> int:
 
 func get_accuracy() -> int:
 	return accuracy
+
+func get_equipped_item(slot: ItemData.Equip_Slot) -> ItemInstance:
+	for inst in inventory:
+		if inst.is_equipped and inst.item_data != null and inst.item_data.equip_slot == slot:
+			return inst
+	return null
+
+func is_slot_equipped(slot: ItemData.Equip_Slot) -> bool:
+	return get_equipped_item(slot) != null
+
+func get_dice_rolls() -> int:
+	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
+	if weapon != null and weapon.item_data is WeaponData:
+		return weapon.item_data.dice_rolls
+	return dice_rolls
+
+func get_dice_sides() -> int:
+	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
+	if weapon != null and weapon.item_data is WeaponData:
+		return weapon.item_data.dice_sides
+	return dice_sides
+
+func get_bonus_damage() -> int:
+	return bonus_damage
+
+func get_total_attack_speed() -> int:
+	var total_speed = float(attack_speed)
+	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
+	if weapon != null and weapon.item_data is WeaponData:
+		total_speed += weapon.item_data.attack_speed
+	return int(total_speed)

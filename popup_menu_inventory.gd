@@ -46,7 +46,9 @@ func _build_context_menu(inst: ItemInstance) -> void:
 		if inst.is_equipped:
 			add_item("Unequip", Action.EQUIP_TOGGLE)
 		else:
-			add_item("Equip", Action.EQUIP_TOGGLE)
+			var owner_char = PartyState.get_selected()
+			if owner_char != null and not owner_char.is_slot_equipped(item.equip_slot):
+				add_item("Equip", Action.EQUIP_TOGGLE)
 
 	# CONSUMABLE – use
 	if item.item_type == ItemData.ItemType.CONSUMABLE:

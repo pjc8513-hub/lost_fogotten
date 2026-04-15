@@ -13,7 +13,10 @@ static func accuracy_roll(attacker_accuracy: int, target_ac: int) -> String:
 	var roll := randi_range(1, 20)
 	if roll == 20:
 		return "crit"
-	if roll + attacker_accuracy >= target_ac:
+		
+	# THAC0 15 system: minimum roll needed is 15 - AC
+	var target_roll = 15 - target_ac
+	if roll + attacker_accuracy >= target_roll:
 		return "hit"
 	return "miss"
 

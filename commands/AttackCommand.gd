@@ -22,10 +22,23 @@ func execute():
 		
 	var target = valid_targets.pick_random()
 
+	var attacks = 1
+	if actor.enemy_data.attack_speed > 0:
+		if randi_range(1, 100) <= (actor.enemy_data.attack_speed * 10):
+			attacks = 2
+
+	for i in range(attacks):
+		if target.current_hp <= 0:
+			break
+		_perform_single_attack(target)
+
+	actor.enemy_data.cooldown = 8
+	emit_signal("finished")
+
+func _perform_single_attack(target):
 	# 1. Accuracy roll
 	
 	var accuracy : int = actor.get_accuracy()  if actor.has_method("get_accuracy") else 0
-	print ("Accuracy: ", accuracy)
 	
 	var outcome := CombatLogic.accuracy_roll(accuracy, target.armor_class)
 	
@@ -34,7 +47,6 @@ func execute():
 			actor.enemy_data.enemy_name, target.member_name
 		]
 		GameEvents.message_logged.emit(msg)
-		emit_signal("finished")
 		return
 	
 	# 2. Roll dice
@@ -68,6 +80,3 @@ func execute():
 	if target.current_hp <= 0:
 		var death_msg := "[color=white]%s[/color] dies!" % target.member_name
 		GameEvents.message_logged.emit(death_msg)
-	
-	actor.enemy_data.cooldown = 8
-	emit_signal("finished")
