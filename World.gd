@@ -33,10 +33,7 @@ func get_enemies() -> Array:
 
 func remove_enemy(enemy) -> void:
 	enemies.erase(enemy)
-	if CombatState.combatants.has(enemy):
-		CombatState.combatants.erase(enemy)
-	if CombatState.targeted_enemy == enemy:
-		CombatState.clear_target()
+	CombatState.disengage_enemy(enemy)
 	enemy.queue_free()
 
 func process_step_events() -> void:
@@ -71,6 +68,10 @@ func has_line_of_sight(from_pos: Vector2i, to_pos: Vector2i) -> bool:
 		# Skip the starting tile
 		if check == from_pos:
 			continue
+
+		# Allow the destination tile to be occupied by an enemy and only care about walls.
+		if check == to_pos:
+			return map_data.has(check) and map_data[check] == 0
 
 		# If we hit a wall, LOS is blocked
 		if not is_walkable(check):

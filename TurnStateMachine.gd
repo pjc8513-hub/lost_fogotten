@@ -10,6 +10,7 @@ enum State {
 
 var state: State = State.PLAYER_INPUT
 var last_action_was_party_wide: bool = false
+var combat_just_ended: bool = false
 
 func set_state(new_state: State):
 	print("STATE → ", new_state)
@@ -43,9 +44,15 @@ func _player_action_complete():
 			set_state(State.WORLD_UPDATE)
 
 func _on_world_update():
+	var was_in_combat := CombatState.is_in_combat()
 	World.process_step_events()
+	CombatState.refresh_combat_state()
 	_apply_poison_effects()
-	set_state(State.ENEMY_TURN)
+	combat_just_ended = was_in_combat and not CombatState.is_in_combat()
+	if CombatState.is_in_combat():
+		set_state(State.ENEMY_TURN)
+	else:
+		set_state(State.TRANSITION)
 
 func _apply_poison_effects():
 	for member in PartyState.active_party:
@@ -65,7 +72,7 @@ func _apply_poison_effects():
 				World.remove_enemy(enemy)
 
 func _on_enemy_turn():
-	var enemies = World.get_enemies()
+	var enemies = CombatState.get_engaged_enemies()
 
 	if enemies.is_empty():
 		set_state(State.TRANSITION)
@@ -76,17 +83,23 @@ func _on_enemy_turn():
 
 func _on_transition():
 	await get_tree().create_timer(0.05).timeout
-	if World.get_enemies().is_empty():
-		for member in PartyState.active_party:
-			if "stun" in member.status_effects:
-				member.status_effects.erase("stun")
-				GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")
-		CombatState.reset_party_turn()
-		if State.PLAYER_INPUT != state:
-			set_state(State.PLAYER_INPUT)
-	else:
-		CombatState.reset_party_turn()
+	if combat_just_ended:
+		_clear_end_of_combat_effects()
+		combat_just_ended = false
+
+	CombatState.reset_party_turn()
+	if State.PLAYER_INPUT != state:
 		set_state(State.PLAYER_INPUT)
+
+func _clear_end_of_combat_effects() -> void:
+	for member in PartyState.active_party:
+		if "stun" in member.status_effects:
+			member.status_effects.erase("stun")
+			GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")
+
+	for enemy in World.get_enemies():
+		if "stun" in enemy.enemy_data.status_effects:
+			enemy.enemy_data.status_effects.erase("stun")
 
 func _run_enemy_turns(enemies: Array):
 	if enemies.is_empty():

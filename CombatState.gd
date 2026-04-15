@@ -1,6 +1,8 @@
 # CombatState.gd
 extends Node
 
+const COMBAT_RANGE: int = 6
+
 # The enemy the player has selected as their current target
 var targeted_enemy: Enemy = null
 
@@ -10,6 +12,7 @@ var acting_member_index: int = 0
 var current_actor: Variant = null: get = get_current_actor
 
 var combatants: Array = []
+var engaged_enemies: Array[Enemy] = []
 var turn_index: int = 0
 
 func get_acting_member() -> ClassData:
@@ -38,13 +41,54 @@ func reset_party_turn():
 	advance_party_member()
 
 func set_target(enemy: Enemy) -> void:
+	engage_enemy(enemy)
 	targeted_enemy = enemy
 
 func clear_target() -> void:
 	targeted_enemy = null
 
 func has_valid_target() -> bool:
-	return targeted_enemy != null and targeted_enemy.enemy_data.hp > 0
+	return targeted_enemy != null and is_instance_valid(targeted_enemy) and targeted_enemy.enemy_data.hp > 0
+
+func is_in_combat() -> bool:
+	return not engaged_enemies.is_empty()
+
+func get_engaged_enemies() -> Array:
+	return engaged_enemies.duplicate()
+
+func engage_enemy(enemy: Enemy) -> void:
+	if not _is_valid_enemy(enemy):
+		return
+	if not engaged_enemies.has(enemy):
+		engaged_enemies.append(enemy)
+		rebuild_combatants()
+
+func disengage_enemy(enemy: Enemy) -> void:
+	if engaged_enemies.has(enemy):
+		engaged_enemies.erase(enemy)
+		rebuild_combatants()
+	if targeted_enemy == enemy:
+		clear_target()
+
+func refresh_combat_state() -> bool:
+	var was_in_combat := is_in_combat()
+	var refreshed: Array[Enemy] = []
+
+	for enemy in engaged_enemies:
+		if _should_remain_engaged(enemy):
+			refreshed.append(enemy)
+
+	for enemy in World.get_enemies():
+		if _can_enter_combat(enemy) and not refreshed.has(enemy):
+			refreshed.append(enemy)
+
+	engaged_enemies = refreshed
+
+	if targeted_enemy != null and (not is_instance_valid(targeted_enemy) or not engaged_enemies.has(targeted_enemy)):
+		clear_target()
+
+	rebuild_combatants()
+	return was_in_combat and not is_in_combat()
 
 func get_current_actor():
 	# During PLAYER_INPUT, the actor should be the selected party member
@@ -64,15 +108,15 @@ func rebuild_combatants():
 	for member in PartyState.active_party:
 		combatants.append(member)
 
-	# Add enemies
-	for enemy in World.enemies:
+	# Add enemies currently engaged with the party
+	for enemy in engaged_enemies:
 		combatants.append(enemy)
 
 	# Sort by initiative (descending)
 	combatants.sort_custom(_sort_by_initiative)
 	
 func _sort_by_initiative(a, b):
-	return b.initiative - a.initiative
+	return _get_initiative(b) - _get_initiative(a)
 
 func next_turn():
 	if combatants.is_empty():
@@ -87,8 +131,8 @@ func next_turn():
 			continue
 
 		# Cooldown handling
-		if actor.cooldown > 0:
-			actor.cooldown -= 1
+		if _get_cooldown(actor) > 0:
+			_set_cooldown(actor, _get_cooldown(actor) - 1)
 			continue
 
 		# Found the next actor
@@ -101,3 +145,44 @@ func _is_dead(actor):
 	if actor is ClassData:
 		return actor.current_hp <= 0
 	return false
+
+func _can_enter_combat(enemy: Enemy) -> bool:
+	if not _is_valid_enemy(enemy):
+		return false
+	var player = World.get_player()
+	if player == null:
+		return false
+	if player.grid_position.distance_to(enemy.grid_position) > COMBAT_RANGE:
+		return false
+	return World.has_line_of_sight(player.grid_position, enemy.grid_position)
+
+func _should_remain_engaged(enemy: Enemy) -> bool:
+	if not _is_valid_enemy(enemy):
+		return false
+	var player = World.get_player()
+	if player == null:
+		return false
+	return player.grid_position.distance_to(enemy.grid_position) <= COMBAT_RANGE
+
+func _is_valid_enemy(enemy: Enemy) -> bool:
+	return enemy != null and is_instance_valid(enemy) and enemy.enemy_data.hp > 0
+
+func _get_initiative(actor) -> int:
+	if actor is Enemy:
+		return actor.enemy_data.initiative
+	if actor is ClassData:
+		return actor.initiative
+	return 0
+
+func _get_cooldown(actor) -> int:
+	if actor is Enemy:
+		return actor.enemy_data.cooldown
+	if actor is ClassData:
+		return actor.cooldown
+	return 0
+
+func _set_cooldown(actor, value: int) -> void:
+	if actor is Enemy:
+		actor.enemy_data.cooldown = value
+	elif actor is ClassData:
+		actor.cooldown = value
