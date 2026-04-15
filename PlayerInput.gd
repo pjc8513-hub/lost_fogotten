@@ -44,6 +44,8 @@ func _unhandled_input(event):
 		PartyState.selected_index = 2
 	elif event.is_action_pressed("select_member_4"):
 		PartyState.selected_index = 3
+	elif event.is_action_pressed("select_member_5"):
+		PartyState.selected_index = 4
 
 func handle_entity_clicked(entity: Node3D) -> void:
 	# Only process clicks during player input phase

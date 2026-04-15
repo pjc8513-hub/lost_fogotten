@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ClassData" format=3 uid="uid://50ueb7i1jmhu"]
+
+[ext_resource type="Script" uid="uid://chlmveswktok8" path="res://resources/ItemInstance.gd" id="1_iwujt"]
+[ext_resource type="Script" uid="uid://dt5hef65gemqo" path="res://resources/ClassData.gd" id="2_2ycw2"]
+[ext_resource type="Texture2D" uid="uid://dsfyykwlhnfl0" path="res://assets/portraits/monk_p.png" id="3_tnird"]
+
+[resource]
+script = ExtResource("2_2ycw2")
+name = "Monk"
+member_name = "Sykes"
+max_hp = 12
+max_mp = 10
+current_hp = 12
+current_mp = 10
+armor_class = 10
+might = 10
+accuracy = 1
+critical_chance = 2
+attack_speed = 1
+sprite_texture = ExtResource("3_tnird")
+metadata/_custom_type_script = "uid://dt5hef65gemqo"

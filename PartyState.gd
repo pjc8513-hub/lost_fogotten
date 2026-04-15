@@ -4,6 +4,7 @@ extends Node
 # Type-hinting the array ensures only ClassData resources can be added
 var active_party: Array[ClassData] = [
 	preload("res://data/classes/knight.tres"),
+	preload("res://data/classes/monk.tres"),
 	preload("res://data/classes/cleric.tres"),
 	preload("res://data/classes/rogue.tres"),
 	preload("res://data/classes/sorcerer.tres")

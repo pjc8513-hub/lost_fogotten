@@ -5,6 +5,7 @@ class_name ClassData
 
 @export var name: String = ""
 @export var member_name: String = ""
+@export var row: int = 0
 @export var max_hp: int = 0
 @export var max_mp: int = 0
 @export var status_effects: Array[String] = []
