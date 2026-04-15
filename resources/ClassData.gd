@@ -34,6 +34,7 @@ class_name ClassData
 @export var resist_cold: int = 0
 @export var resist_dark: int = 0
 @export var initiative: int = 10
+@export var movement: int = 5
 @export var cooldown: int = 0
 @export var has_ranged_weapon: bool = false
 

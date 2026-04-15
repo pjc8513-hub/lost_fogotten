@@ -26,6 +26,7 @@ enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 @export var xp: int = 0
 @export var gold: int = 0
 @export var ai_behavior: String = "Random"
+@export var movement: int = 5
 @export var sprite_texture: Texture2D
 @export var loot_table: Loot_Table
 
