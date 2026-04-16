@@ -16,6 +16,7 @@ signal selected(enemy)
 var grid_position: Vector2i
 var forward_vector: Vector2i = Vector2i(0, 1) # default facing south
 var _pending_commands: int = 0
+var movement_remaining: int = 0
 
 
 
@@ -83,6 +84,7 @@ func move_to(target: Vector2i):
 	emit_signal("movement_done")
 
 func take_turn():
+	movement_remaining = max(0, enemy_data.movement)
 	# Placeholder AI — enemy does nothing for now
 	#print(enemy_data.enemy_name, " takes its turn (placeholder)")
 	#emit_signal("turn_finished")
@@ -103,26 +105,28 @@ func _take_turn_hunter() -> void:
 		emit_signal("turn_finished")
 		return
 
-	if _is_adjacent_to_player():
-		_queue_attack()
+	if _try_attack_with_remaining_movement():
 		return
 
 	if not World.can_see_player(grid_position, enemy_data.vision_range):
 		_take_turn_random()
 		return
 
-	var dx = player.grid_position.x - grid_position.x
-	var dy = player.grid_position.y - grid_position.y
+	while movement_remaining > 0:
+		if _try_attack_with_remaining_movement():
+			return
 
-	var primary_dir   = Vector2i(sign(dx), 0) if abs(dx) > abs(dy) else Vector2i(0, sign(dy))
-	var secondary_dir = Vector2i(0, sign(dy))  if abs(dx) > abs(dy) else Vector2i(sign(dx), 0)
+		var dirs = _get_hunter_dirs(player.grid_position)
+		if _move_in_direction(dirs[0]):
+			continue
+		if _move_in_direction(dirs[1]):
+			continue
+		break
 
-	if _try_move_direction(primary_dir):
+	if _try_attack_with_remaining_movement():
 		return
-	if _try_move_direction(secondary_dir):
-		return
 
-	_take_turn_random()
+	emit_signal("turn_finished")
 
 	
 func _take_turn_guard():
@@ -130,20 +134,24 @@ func _take_turn_guard():
 	emit_signal("turn_finished")
 	
 func _take_turn_random() -> void:
-	if _is_adjacent_to_player():
-		_queue_attack()
+	while movement_remaining > 0:
+		if _try_attack_with_remaining_movement():
+			return
+
+		var dirs = [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]
+		var valid_dirs: Array = dirs.filter(func(d): return World.is_walkable(grid_position + d))
+
+		if valid_dirs.is_empty():
+			break
+
+		var chosen: Vector2i = valid_dirs[randi() % valid_dirs.size()]
+		if not _move_in_direction(chosen):
+			break
+
+	if _try_attack_with_remaining_movement():
 		return
 
-	var dirs = [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]
-	var valid_dirs: Array = dirs.filter(func(d): return World.is_walkable(grid_position + d))
-
-	if valid_dirs.is_empty():
-		emit_signal("turn_finished")
-		return
-
-	var chosen: Vector2i = valid_dirs[randi() % valid_dirs.size()]
-	forward_vector = chosen
-	_queue_move_forward()
+	emit_signal("turn_finished")
 	
 func rotate_left():
 	forward_vector = Vector2i(forward_vector.y, -forward_vector.x)
@@ -202,6 +210,55 @@ func _try_move_direction(dir: Vector2i) -> bool:
 		return true
 
 	return false  # facing the right way but wall — caller tries next option
+
+func _move_in_direction(dir: Vector2i) -> bool:
+	if movement_remaining <= 0 or dir == Vector2i.ZERO:
+		return false
+
+	var target = grid_position + dir
+	if not World.is_walkable(target):
+		return false
+
+	_face_direction(dir)
+	move_to(target)
+	movement_remaining -= 1
+	return true
+
+func _face_direction(target_dir: Vector2i) -> void:
+	while forward_vector != target_dir:
+		var left  = Vector2i(forward_vector.y, -forward_vector.x)
+		var right = Vector2i(-forward_vector.y, forward_vector.x)
+
+		if target_dir == left:
+			rotate_left()
+		elif target_dir == right:
+			rotate_right()
+		else:
+			rotate_left()
+
+func _try_attack_with_remaining_movement() -> bool:
+	if movement_remaining <= 0 or not _is_adjacent_to_player():
+		return false
+
+	movement_remaining -= 1
+	_queue_attack()
+	return true
+
+func _get_hunter_dirs(player_pos: Vector2i) -> Array[Vector2i]:
+	var dx = player_pos.x - grid_position.x
+	var dy = player_pos.y - grid_position.y
+
+	var primary_dir := Vector2i.ZERO
+	var secondary_dir := Vector2i.ZERO
+
+	if abs(dx) > abs(dy):
+		primary_dir = Vector2i(sign(dx), 0)
+		secondary_dir = Vector2i(0, sign(dy))
+	else:
+		primary_dir = Vector2i(0, sign(dy))
+		secondary_dir = Vector2i(sign(dx), 0)
+
+	return [primary_dir, secondary_dir]
 
 
 func _is_adjacent_to_player() -> bool:

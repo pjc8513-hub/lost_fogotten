@@ -3,6 +3,8 @@ extends Node
 
 const COMBAT_RANGE: int = 6
 
+enum CombatStatus { IDLE, WAITING, ACTING, STUN, DONE }
+
 # The enemy the player has selected as their current target
 var targeted_enemy: Enemy = null
 
@@ -28,12 +30,16 @@ func advance_party_member() -> bool:
 		var member = PartyState.active_party[acting_member_index]
 		if not _is_dead(member):
 			if "stun" in member.status_effects:
+				GameEvents.combat_status_changed.emit(member, CombatStatus.STUN)
 				GameEvents.message_logged.emit("[color=yellow]" + member.member_name + " is stunned and skips their turn![/color]")
 				member.status_effects.erase("stun")
+				GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
 				acting_member_index += 1
 				continue
+			_refresh_party_combat_statuses()
 			return true
 		acting_member_index += 1
+	_refresh_party_combat_statuses()
 	return false
 
 func reset_party_turn():
@@ -57,11 +63,14 @@ func get_engaged_enemies() -> Array:
 	return engaged_enemies.duplicate()
 
 func engage_enemy(enemy: Enemy) -> void:
+	var was_in_combat := is_in_combat()
 	if not _is_valid_enemy(enemy):
 		return
 	if not engaged_enemies.has(enemy):
 		engaged_enemies.append(enemy)
 		rebuild_combatants()
+	if not was_in_combat:
+		_refresh_party_combat_statuses()
 
 func disengage_enemy(enemy: Enemy) -> void:
 	if engaged_enemies.has(enemy):
@@ -88,7 +97,23 @@ func refresh_combat_state() -> bool:
 		clear_target()
 
 	rebuild_combatants()
+	if not was_in_combat and is_in_combat():
+		_refresh_party_combat_statuses()
 	return was_in_combat and not is_in_combat()
+
+func mark_current_member_done() -> void:
+	if not is_in_combat():
+		return
+
+	var member = get_acting_member()
+	if member == null or _is_dead(member):
+		return
+
+	GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
+
+func clear_party_combat_statuses() -> void:
+	for member in PartyState.active_party:
+		GameEvents.combat_status_changed.emit(member, CombatStatus.IDLE)
 
 func get_current_actor():
 	# During PLAYER_INPUT, the actor should be the selected party member
@@ -186,3 +211,21 @@ func _set_cooldown(actor, value: int) -> void:
 		actor.enemy_data.cooldown = value
 	elif actor is ClassData:
 		actor.cooldown = value
+
+func _refresh_party_combat_statuses() -> void:
+	if not is_in_combat():
+		clear_party_combat_statuses()
+		return
+
+	for index in range(PartyState.active_party.size()):
+		var member = PartyState.active_party[index]
+		if _is_dead(member):
+			GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
+		elif "stun" in member.status_effects:
+			GameEvents.combat_status_changed.emit(member, CombatStatus.STUN)
+		elif index < acting_member_index:
+			GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
+		elif index == acting_member_index:
+			GameEvents.combat_status_changed.emit(member, CombatStatus.ACTING)
+		else:
+			GameEvents.combat_status_changed.emit(member, CombatStatus.WAITING)

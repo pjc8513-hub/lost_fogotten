@@ -18,9 +18,11 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8582"]
 bg_color = Color(0.21568628, 0.1764706, 0.95686275, 1)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t3qfy"]
+
 [node name="MemberPanel1" type="PanelContainer" unique_id=1532612420]
 custom_minimum_size = Vector2(0, 100)
-offset_right = 193.0
+offset_right = 271.0
 offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qui0h")
 script = ExtResource("1_t3qfy")
@@ -58,3 +60,8 @@ theme_override_styles/background = SubResource("StyleBoxFlat_q77pa")
 theme_override_styles/fill = SubResource("StyleBoxFlat_n8582")
 value = 100.0
 show_percentage = false
+
+[node name="StatusIcon" type="TextureRect" parent="HBoxContainer" unique_id=607042440]
+material = SubResource("CanvasItemMaterial_t3qfy")
+layout_mode = 2
+size_flags_horizontal = 3

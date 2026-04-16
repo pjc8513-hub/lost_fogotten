@@ -35,6 +35,9 @@ func _on_player_action():
 		CommandQueue.connect("queue_empty", Callable(self, "_player_action_complete"), CONNECT_ONE_SHOT)
 
 func _player_action_complete():
+	if CombatState.is_in_combat() and not last_action_was_party_wide:
+		CombatState.mark_current_member_done()
+
 	if last_action_was_party_wide:
 		set_state(State.WORLD_UPDATE)
 	else:
@@ -100,6 +103,8 @@ func _clear_end_of_combat_effects() -> void:
 	for enemy in World.get_enemies():
 		if "stun" in enemy.enemy_data.status_effects:
 			enemy.enemy_data.status_effects.erase("stun")
+
+	CombatState.clear_party_combat_statuses()
 
 func _run_enemy_turns(enemies: Array):
 	if enemies.is_empty():

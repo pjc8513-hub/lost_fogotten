@@ -5,15 +5,22 @@ extends PanelContainer
 @onready var hp_bar = $HBoxContainer/VBoxContainer/ProgressBar
 @onready var mp_bar = $HBoxContainer/VBoxContainer/ProgressBar2
 @onready var label = $HBoxContainer/VBoxContainer/Label
+@onready var status_icon = $HBoxContainer/StatusIcon
 
 var my_member_data: ClassData
 var member_index: int = -1
 var normal_style: StyleBoxFlat
 var selected_style: StyleBoxFlat
 
+enum CombatStatus { IDLE, WAITING, ACTING, STUN, DONE }
+var wait_texture = preload("res://assets/icons/wait.png")
+var turn_texture = preload("res://assets/icons/turn.png")
+var stun_texture = preload("res://assets/icons/stun.png")
+
 func _ready():
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
+	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
 
 func _create_styles():
 	normal_style = StyleBoxFlat.new()
@@ -72,3 +79,17 @@ func _update_border():
 		add_theme_stylebox_override("panel", selected_style)
 	else:
 		add_theme_stylebox_override("panel", normal_style)
+func _on_combat_status_changed(updated_data: ClassData, new_status: int):
+	if updated_data == my_member_data:
+		update_status_icon(new_status)
+
+func update_status_icon(status: CombatStatus):
+	match status:
+		CombatStatus.IDLE, CombatStatus.DONE:
+			status_icon.texture = null
+		CombatStatus.WAITING:
+			status_icon.texture = wait_texture
+		CombatStatus.ACTING:
+			status_icon.texture = turn_texture
+		CombatStatus.STUN:
+			status_icon.texture = stun_texture

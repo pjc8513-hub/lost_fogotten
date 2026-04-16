@@ -11,12 +11,7 @@ func _unhandled_input(event):
 	var player = get_node("/root/Main/SubViewportContainer/SubViewport/Player")   # adjust path if needed
 
 	if event.is_action_pressed("ui_up"):
-		#print('w')
-		var cmd = MoveForwardCommand.new()
-		cmd.actor = player
-		CommandQueue.add_command(cmd)
-		TurnStateMachine.last_action_was_party_wide = true
-		TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
+		_queue_player_move(player)
 		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("ui_left"):
@@ -77,4 +72,19 @@ func _queue_player_turn(player, cmd) -> void:
 		return
 
 	TurnStateMachine.last_action_was_party_wide = true
+	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
+
+func _queue_player_move(player) -> void:
+	if CommandQueue.is_busy():
+		return
+
+	var cmd = MoveForwardCommand.new()
+	cmd.actor = player
+	CommandQueue.add_command(cmd)
+
+	if CombatState.is_in_combat():
+		TurnStateMachine.last_action_was_party_wide = false
+	else:
+		TurnStateMachine.last_action_was_party_wide = true
+
 	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
