@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemInstance" format=3 uid="uid://c7vuiog8e3olh"]
+
+[ext_resource type="Resource" uid="uid://yh0mt3uoh4i0" path="res://data/weapons/SimpleBow.tres" id="1_5ke3w"]
+[ext_resource type="Script" uid="uid://chlmveswktok8" path="res://resources/ItemInstance.gd" id="2_k3ba2"]
+
+[resource]
+script = ExtResource("2_k3ba2")
+item_data = ExtResource("1_5ke3w")
+metadata/_custom_type_script = "uid://chlmveswktok8"

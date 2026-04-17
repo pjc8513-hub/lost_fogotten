@@ -16,4 +16,5 @@ enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 @export var attack_speed: float
 @export var loot_table: Loot_Table
 @export var is_ranged: bool = false
+@export var tile_range: int = 1
 @export var weapon_type: Weapon_Type
