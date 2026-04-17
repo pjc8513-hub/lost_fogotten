@@ -27,8 +27,6 @@ CombatState="*uid://cvworrhxh636x"
 
 [display]
 
-window/size/viewport_width=1354
-window/size/viewport_height=696
 window/stretch/mode="viewport"
 
 [input]

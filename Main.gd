@@ -4,24 +4,24 @@ extends Node3D
 
 @export var wall_scene: PackedScene = preload("res://Wall.tscn")
 @export var enemy_scene: PackedScene = preload("res://Enemy.tscn")
-@export var rat_data: EnemyData = preload("res://data/enemies/giant_rat.tres")
-@export var goblin_data: EnemyData = preload("res://data/enemies/goblin.tres")
-@export var cat_data: EnemyData = preload("res://data/enemies/dungeon_cat.tres")
+#@export var rat_data: EnemyData = preload("res://data/enemies/giant_rat.tres")
+#@export var goblin_data: EnemyData = preload("res://data/enemies/goblin.tres")
+#@export var cat_data: EnemyData = preload("res://data/enemies/dungeon_cat.tres")
 
-var map_width = 10
-var map_height = 10
+#var map_width = 10
+#var map_height = 10
 var map_open: bool = false
 var automap_grid := {}  # Dictionary of Vector2 -> int
 
 func _ready():
-	set_process_unhandled_input(true) # debug
+	set_process_unhandled_input(true)
 	
-	var data = load_room_data("res://data/maps/open1.json")
+	# Load the new JSON format we exported from the TileMap
+	var data = load_room_data("res://data/maps/cave_level_1.json")
 	if data:
-		stamp_room(Vector2(0, 0), data)
-		stamp_room(Vector2(8, 0), data)
+		build_map_from_json(data)
 
-		# ✅ Send the populated automap_grid to the AutoMap node
+		# Setup UI/World
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
 		automap.set_map_data(automap_grid)
 		World.set_map_data(automap_grid)
@@ -44,6 +44,7 @@ func _unhandled_input(event):
 
 func load_room_data(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
+		print("File not found: ", file_path)
 		return {}
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var content = file.get_as_text()
@@ -55,50 +56,99 @@ func load_room_data(file_path: String) -> Dictionary:
 		print("JSON Parse Error: ", json.get_error_message())
 		return {}
 
-func stamp_room(start_pos: Vector2, room_data: Dictionary):
-	var base = room_data["base_layer"]
-	var entities = room_data.get("entity_layer", null)
+func build_map_from_json(data: Dictionary):
+	# 1. Spawn Walls/Floors from "cells"
+	for cell in data.get("cells", []):
+		# Handle pos being either Array or String like "[x,y]"
+		var pos_data = cell.get("pos", [])
+		if pos_data is String:
+			pos_data = JSON.parse_string(pos_data)
+		
+		# Handle atlas being either Array or String like "[x,y]"
+		var atlas_data = cell.get("atlas", [])
+		if atlas_data is String:
+			atlas_data = JSON.parse_string(atlas_data)
+		
+		# Now validate we actually have arrays with 2 elements
+		if not (pos_data is Array and atlas_data is Array and pos_data.size() >= 2 and atlas_data.size() >= 2):
+			push_error("Malformed cell in map data: " + str(cell))
+			continue
+			
+		var pos = Vector2i(int(pos_data[0]), int(pos_data[1]))
+		var atlas_x = int(atlas_data[0])
+		var atlas_y = int(atlas_data[1])
+		
+		# For a blobber, we usually treat certain atlas coords as walls
+		# Assuming your wall tile was Atlas (0,0) in the TileSet
+		if atlas_x == 0 and atlas_y == 0:
+			automap_grid[pos] = 1 # 1 for Wall in your automap logic
+			var wall = wall_scene.instantiate()
+			add_child(wall)
+			wall.position = Vector3(pos.x, 0, pos.y)
+		else:
+			automap_grid[pos] = 0 # 0 for Floor/Empty
 
-	for y in range(room_data["height"]):
-		for x in range(room_data["width"]):
+	# 2. Spawn Entities (Enemies, Chests, etc.)
+	for ent in data.get("entities", []):
+		var ent_pos_data = ent.get("pos", [])
+		if ent_pos_data is String:
+			ent_pos_data = JSON.parse_string(ent_pos_data)
+		
+		if not (ent_pos_data is Array and ent_pos_data.size() >= 2):
+			push_error("Malformed entity in map data: " + str(ent))
+			continue
+			
+		var pos = Vector2i(int(ent_pos_data[0]), int(ent_pos_data[1]))
+		var type = ent["type"]
+		match type:
+			"enemy":
+				_spawn_enemy(pos, ent["data_resource"], ent["aggro_group"])
+			"chest":
+				print("Chest found at ", pos, " with loot: ", ent["data_resource"])
+				# _spawn_chest(pos, ent["data_resource"])
+			"player":
+				print("spawning player at: ", pos)
+				_set_player_start(pos)
 
-			var world_x = int(start_pos.x + x)
-			var world_y = int(start_pos.y + y)
-			var world_pos = Vector2i(world_x, world_y)
-
-			# --- BASE LAYER (floors, walls) ---
-			var base_value = base[y][x]
-			automap_grid[world_pos] = base_value
-
-			if base_value == 1:
-				var wall = wall_scene.instantiate()
-				add_child(wall)
-				wall.position = Vector3(world_x, 0, world_y)
-
-			# --- ENTITY LAYER (enemies, items, etc.) ---
-			if entities:
-				var ent_value = entities[y][x]
-
-				if ent_value == 4:
-					_spawn_enemy(world_pos)
-
-func _spawn_enemy(world_pos: Vector2i):
+func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int):
 	var enemy = enemy_scene.instantiate()
-	#add_child(enemy)
 	$SubViewportContainer/SubViewport.add_child(enemy)
 	
-	#enemy.add_to_group("enemies") <- moved to enemy.gd _ready (?)
+	enemy.grid_position = grid_pos
+	enemy.position = Vector3(grid_pos.x, 0, grid_pos.y)
 
-	enemy.grid_position = world_pos   # ✅ THIS is the missing piece
-	enemy.position = Vector3(world_pos.x, 0, world_pos.y)
-
-	#enemy.enemy_data = cat_data.duplicate() if randf() < 0.5 else goblin_data.duplicate()
-	var data_template = cat_data if randf() < 0.5 else goblin_data
-	enemy.enemy_data = data_template.duplicate()
+	# Load the .tres file directly from the path provided by the TileMap
+	if FileAccess.file_exists(data_path):
+		var res = load(data_path)
+		enemy.enemy_data = res.duplicate()
+	else:
+		print("no enemy at: ", data_path)
+	
+	# Handle Aggro Groups
+	if aggro_id > 0:
+		enemy.add_to_group("aggro_" + str(aggro_id))
+		print("Enemy added to aggro group: aggro_", aggro_id)
 	
 	enemy.connect("selected", Callable(self, "_on_enemy_selected"))
-	print("Spawned enemy with data: ", enemy.enemy_data.resource_path)
-	print("Enemy ailment: ", enemy.enemy_data.ailment)
+
 func _on_enemy_selected(enemy):
 	print("Selected enemy:", enemy.enemy_data.enemy_name)
 	# Later: show UI panel, highlight enemy, set attack target, etc.
+
+func _set_player_start(grid_pos: Vector2i):
+	# Find your player node. Adjust the path if yours is different!
+	# (e.g., $Player or $SubViewportContainer/.../Player)
+	var player = get_node("Player") 
+	
+	if player:
+		# Update the 3D position
+		player.position = Vector3(grid_pos.x, 0, grid_pos.y)
+		
+		# If your player script has a 'grid_position' variable for movement:
+		if "grid_position" in player:
+			player.grid_position = grid_pos
+			
+		print("Player started at grid position: ", grid_pos)
+		
+		# Ensure the automap knows this tile is walkable (0) and not a wall
+		automap_grid[grid_pos] = 0
