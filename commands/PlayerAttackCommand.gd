@@ -25,9 +25,10 @@ func execute() -> void:
 		return
 
 	var dist: float = player_node.grid_position.distance_to(target_enemy.grid_position)
+	var attack_slot := _get_attack_slot(dist)
 
 	var attacks = 1
-	var total_speed = attacker.get_total_attack_speed()
+	var total_speed = attacker.get_total_attack_speed(attack_slot)
 	if total_speed > 0:
 		if randi_range(1, 100) <= (total_speed * 10):
 			attacks = 2
@@ -44,6 +45,11 @@ func execute() -> void:
 	actor.cooldown = 2
 	emit_signal("finished")
 
+func _get_attack_slot(dist: float) -> ItemData.Equip_Slot:
+	if dist <= MELEE_RANGE:
+		return ItemData.Equip_Slot.WEAPON
+	return ItemData.Equip_Slot.RANGE
+
 func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
 
@@ -54,7 +60,11 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		GameEvents.message_logged.emit(msg)
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.get_dice_rolls(), attacker.get_dice_sides(), attacker.get_bonus_damage())
+	var raw := CombatLogic.roll_dice(
+		attacker.get_dice_rolls(ItemData.Equip_Slot.WEAPON),
+		attacker.get_dice_sides(ItemData.Equip_Slot.WEAPON),
+		attacker.get_bonus_damage()
+	)
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)
@@ -76,8 +86,14 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		# TODO: Drop loot here
 
 func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void:
-	if not attacker.has_ranged_weapon:
+	if not attacker.has_ranged_weapon():
 		var msg := "[color=gray]%s is too far away to attack with no ranged weapon. Turn wasted.[/color]" % attacker.member_name
+		GameEvents.message_logged.emit(msg)
+		return
+
+	var max_range := attacker.get_ranged_weapon_range()
+	if dist > max_range:
+		var msg := "[color=gray]%s's ranged weapon cannot reach that far. Turn wasted.[/color]" % attacker.member_name
 		GameEvents.message_logged.emit(msg)
 		return
 
@@ -91,7 +107,11 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		GameEvents.message_logged.emit(msg)
 		return
 
-	var raw := CombatLogic.roll_dice(attacker.get_dice_rolls(), attacker.get_dice_sides(), attacker.get_bonus_damage())
+	var raw := CombatLogic.roll_dice(
+		attacker.get_dice_rolls(ItemData.Equip_Slot.RANGE),
+		attacker.get_dice_sides(ItemData.Equip_Slot.RANGE),
+		attacker.get_bonus_damage()
+	)
 	if outcome == "crit":
 		raw *= 2
 	raw += CombatLogic.might_bonus(attacker.might)

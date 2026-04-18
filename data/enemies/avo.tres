@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://y8aqdtmcb7pr"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_5wwdh"]
+[ext_resource type="Texture2D" uid="uid://bd8nbb6gmtvaq" path="res://assets/sprites/enemies/avocado.png" id="2_tv8ai"]
+
+[resource]
+script = ExtResource("1_5wwdh")
+enemy_name = "Avo"
+scene_path = "uid://vicoohh0fubh"
+hp = 12
+armor_class = 4
+dice_sides = 6
+bonus_damage = 2
+accuracy = 2
+initiative = -3
+xp = 10
+gold = 10
+movement = 3
+sprite_texture = ExtResource("2_tv8ai")
+resist_physical = 3
+resist_cold = 3
+resist_electric = 3
+custom_scale = Vector3(0.1, 0.1, 0.1)
+metadata/_custom_type_script = "uid://buna7h064pfvn"

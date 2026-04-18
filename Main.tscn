@@ -37,7 +37,7 @@ offset_left = -368.0
 offset_right = 459.0
 offset_bottom = 512.0
 grow_horizontal = 2
-scale = Vector2(0.92, 1)
+scale = Vector2(0.92, 0.9200001)
 script = ExtResource("2_lgr22")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
@@ -99,9 +99,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1.0
-offset_top = -174.0
+offset_top = -216.0
 offset_right = 1.0
-offset_bottom = 22.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 307
@@ -131,3 +131,4 @@ fit_content = true
 scroll_active = false
 
 [node name="RightPanel" parent="." unique_id=280808817 instance=ExtResource("9_03owx")]
+scale = Vector2(1, 0.9200001)

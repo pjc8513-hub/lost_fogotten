@@ -2048,7 +2048,7 @@
 		},
 		{
 			"aggro_group": 1,
-			"data_resource": "res://data/enemies/dungeon_cat.tres",
+			"data_resource": "res://data/enemies/avo.tres",
 			"pos": [
 				13,
 				2
@@ -2075,7 +2075,7 @@
 		},
 		{
 			"aggro_group": 1,
-			"data_resource": "res://data/enemies/dungeon_cat.tres",
+			"data_resource": "res://data/enemies/avo.tres",
 			"pos": [
 				16,
 				10

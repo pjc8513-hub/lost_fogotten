@@ -30,6 +30,7 @@ func execute():
 	for i in range(attacks):
 		if target.current_hp <= 0:
 			break
+
 		_perform_single_attack(target)
 
 	actor.enemy_data.cooldown = 8

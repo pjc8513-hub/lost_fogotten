@@ -111,7 +111,12 @@ func build_map_from_json(data: Dictionary):
 				_set_player_start(pos)
 
 func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int):
-	var enemy = enemy_scene.instantiate()
+	#var enemy = enemy_scene.instantiate()
+	var res = load(data_path) as EnemyData
+	
+	# Load the scene from the path string
+	var enemy_scene_resource = load(res.scene_path) 
+	var enemy = enemy_scene_resource.instantiate()
 	$SubViewportContainer/SubViewport.add_child(enemy)
 	
 	enemy.grid_position = grid_pos
@@ -119,7 +124,7 @@ func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int):
 
 	# Load the .tres file directly from the path provided by the TileMap
 	if FileAccess.file_exists(data_path):
-		var res = load(data_path)
+		#var res = load(data_path)
 		enemy.enemy_data = res.duplicate()
 	else:
 		print("no enemy at: ", data_path)

@@ -9,6 +9,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 
 @export var enemy_name: String = ""
+@export_file("*.tscn") var scene_path: String
 @export var hp: int = 100
 @export var armor_class: int = 10
 @export var dice_sides: int = 4

@@ -36,7 +36,6 @@ class_name ClassData
 @export var initiative: int = 0
 @export var movement: int = 5
 @export var cooldown: int = 0
-@export var has_ranged_weapon: bool = false
 
 @export var dice_sides: int = 4
 @export var dice_rolls: int = 1
@@ -71,24 +70,39 @@ func get_equipped_item(slot: ItemData.Equip_Slot) -> ItemInstance:
 func is_slot_equipped(slot: ItemData.Equip_Slot) -> bool:
 	return get_equipped_item(slot) != null
 
-func get_dice_rolls() -> int:
-	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
+func get_equipped_weapon(slot: ItemData.Equip_Slot) -> WeaponData:
+	var weapon = get_equipped_item(slot)
 	if weapon != null and weapon.item_data is WeaponData:
-		return weapon.item_data.dice_rolls
+		return weapon.item_data
+	return null
+
+func has_ranged_weapon() -> bool:
+	return get_equipped_weapon(ItemData.Equip_Slot.RANGE) != null
+
+func get_ranged_weapon_range() -> int:
+	var weapon = get_equipped_weapon(ItemData.Equip_Slot.RANGE)
+	if weapon != null:
+		return max(1, weapon.tile_range)
+	return 0
+
+func get_dice_rolls(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var weapon = get_equipped_weapon(slot)
+	if weapon != null:
+		return weapon.dice_rolls
 	return dice_rolls
 
-func get_dice_sides() -> int:
-	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
-	if weapon != null and weapon.item_data is WeaponData:
-		return weapon.item_data.dice_sides
+func get_dice_sides(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var weapon = get_equipped_weapon(slot)
+	if weapon != null:
+		return weapon.dice_sides
 	return dice_sides
 
 func get_bonus_damage() -> int:
 	return bonus_damage
 
-func get_total_attack_speed() -> int:
+func get_total_attack_speed(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
 	var total_speed = float(attack_speed)
-	var weapon = get_equipped_item(ItemData.Equip_Slot.WEAPON)
-	if weapon != null and weapon.item_data is WeaponData:
-		total_speed += weapon.item_data.attack_speed
+	var weapon = get_equipped_weapon(slot)
+	if weapon != null:
+		total_speed += weapon.attack_speed
 	return int(total_speed)
