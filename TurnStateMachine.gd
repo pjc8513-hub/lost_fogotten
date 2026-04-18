@@ -76,6 +76,7 @@ func _apply_poison_effects():
 
 func _on_enemy_turn():
 	var enemies = CombatState.get_engaged_enemies()
+	print("[TurnStateMachine] _on_enemy_turn enemies=", enemies.size())
 
 	if enemies.is_empty():
 		set_state(State.TRANSITION)
@@ -108,16 +109,20 @@ func _clear_end_of_combat_effects() -> void:
 
 func _run_enemy_turns(enemies: Array):
 	if enemies.is_empty():
+		print("[TurnStateMachine] enemy list exhausted -> transition")
 		set_state(State.TRANSITION)
 		return
 
 	var enemy = enemies.pop_front()
+	print("[TurnStateMachine] next enemy:", enemy)
 
 	if not is_instance_valid(enemy) or enemy.is_queued_for_deletion() or enemy.enemy_data.hp <= 0:
+		print("[TurnStateMachine] skipping invalid/dead enemy:", enemy)
 		_run_enemy_turns(enemies)
 		return
 
 	if "stun" in enemy.enemy_data.status_effects:
+		print("[TurnStateMachine] stunned enemy skips turn:", enemy.enemy_data.enemy_name)
 		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " is stunned and skips their turn![/color]")
 		enemy.enemy_data.status_effects.erase("stun")
 		await get_tree().create_timer(0.5).timeout
@@ -125,7 +130,9 @@ func _run_enemy_turns(enemies: Array):
 		return
 
 	enemy.connect("turn_finished", func():
+		print("[TurnStateMachine] received turn_finished from", enemy.enemy_data.enemy_name)
 		_run_enemy_turns(enemies)
 	, CONNECT_ONE_SHOT)
 
+	print("[TurnStateMachine] calling take_turn on", enemy.enemy_data.enemy_name)
 	enemy.take_turn()

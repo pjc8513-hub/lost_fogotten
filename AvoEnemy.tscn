@@ -4,12 +4,12 @@
 [ext_resource type="Resource" uid="uid://y8aqdtmcb7pr" path="res://data/enemies/avo.tres" id="2_ybhub"]
 [ext_resource type="Texture2D" uid="uid://bd8nbb6gmtvaq" path="res://assets/sprites/enemies/avocado.png" id="3_ybhub"]
 
-[sub_resource type="Animation" id="Animation_1wg4c"]
+[sub_resource type="Animation" id="Animation_ybhub"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,26 +19,25 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_prcwn"]
-resource_name = "avo"
-length = 1.0333333
+[sub_resource type="Animation" id="Animation_1wg4c"]
+resource_name = "attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(-0.06666666, 0.16666669, 0.33333337, 0.5333334),
+"times": PackedFloat32Array(0.06666667, 0.33333334, 0.53333336, 0.8333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 3, 5, 6]
+"values": [0, 1, 5, 7]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmq6a"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_prcwn"]
 _data = {
-&"RESET": SubResource("Animation_1wg4c"),
-&"avo": SubResource("Animation_prcwn")
+&"RESET": SubResource("Animation_ybhub"),
+&"attack": SubResource("Animation_1wg4c")
 }
 
 [node name="Enemy" unique_id=1461009798 instance=ExtResource("1_tpvnx")]
@@ -49,6 +48,5 @@ texture = ExtResource("3_ybhub")
 hframes = 3
 vframes = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" index="0" unique_id=243894605]
-root_node = NodePath("../..")
-libraries/ = SubResource("AnimationLibrary_pmq6a")
+[node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
+libraries/ = SubResource("AnimationLibrary_prcwn")

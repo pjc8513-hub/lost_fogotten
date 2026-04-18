@@ -24,9 +24,11 @@ PartyState="*uid://c1jr5r7klv8qa"
 GameEvents="*uid://pfcmdhkjbwb"
 CombatLogic="*uid://budxbh00thdo7"
 CombatState="*uid://cvworrhxh636x"
+AnimationManager="*uid://b78u1bo5q4p6a"
 
 [display]
 
+window/size/viewport_width=1352
 window/stretch/mode="viewport"
 
 [input]

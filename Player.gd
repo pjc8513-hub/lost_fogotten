@@ -53,6 +53,7 @@ func rotate_right():
 func _queue_player_attack():
 	if not CombatState.has_valid_target():
 		print("No valid target selected")
+		GameEvents.message_logged.emit("[color=gray]No valid target.[/color]")
 		return
 
 	var cmd := PlayerAttackCommand.new()

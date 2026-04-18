@@ -47,7 +47,7 @@ func reset_party_turn():
 	advance_party_member()
 
 func set_target(enemy: Enemy) -> void:
-	engage_enemy(enemy)
+	#engage_enemy(enemy)
 	targeted_enemy = enemy
 
 func clear_target() -> void:

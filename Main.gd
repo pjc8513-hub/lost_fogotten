@@ -136,14 +136,11 @@ func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int):
 	
 	enemy.connect("selected", Callable(self, "_on_enemy_selected"))
 
-func _on_enemy_selected(enemy):
-	print("Selected enemy:", enemy.enemy_data.enemy_name)
-	# Later: show UI panel, highlight enemy, set attack target, etc.
 
 func _set_player_start(grid_pos: Vector2i):
 	# Find your player node. Adjust the path if yours is different!
 	# (e.g., $Player or $SubViewportContainer/.../Player)
-	var player = get_node("Player") 
+	var player = get_node("SubViewportContainer/SubViewport/Player") 
 	
 	if player:
 		# Update the 3D position

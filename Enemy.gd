@@ -6,6 +6,7 @@ class_name Enemy
 signal turn_finished
 signal movement_done
 signal selected(enemy)
+signal attack_animation_completed
 
 @export var enemy_data: EnemyData:
 	set(value):
@@ -74,6 +75,7 @@ func _apply_enemy_data() -> void:
 func _queue_command(cmd) -> void:
 	_pending_commands += 1
 	cmd.actor = self
+	print("[Enemy]", enemy_data.enemy_name, "_queue_command ->", cmd, " pending=", _pending_commands)
 	cmd.connect("finished", _on_own_command_finished, CONNECT_ONE_SHOT)
 	CommandQueue.add_command(cmd)
 
@@ -85,6 +87,7 @@ func move_to(target: Vector2i):
 
 func take_turn():
 	movement_remaining = max(0, enemy_data.movement)
+	print("[Enemy]", enemy_data.enemy_name, "take_turn movement=", movement_remaining, " ai=", enemy_data.get_ai_enum())
 	# Placeholder AI — enemy does nothing for now
 	#print(enemy_data.enemy_name, " takes its turn (placeholder)")
 	#emit_signal("turn_finished")
@@ -238,9 +241,11 @@ func _face_direction(target_dir: Vector2i) -> void:
 
 func _try_attack_with_remaining_movement() -> bool:
 	if movement_remaining <= 0 or not _is_adjacent_to_player():
+		print("[Enemy]", enemy_data.enemy_name, "_try_attack_with_remaining_movement -> false movement=", movement_remaining, " adjacent=", _is_adjacent_to_player())
 		return false
 
 	movement_remaining -= 1
+	print("[Enemy]", enemy_data.enemy_name, "_try_attack_with_remaining_movement -> queue attack, movement now=", movement_remaining)
 	_queue_attack()
 	return true
 
@@ -269,9 +274,11 @@ func _is_adjacent_to_player() -> bool:
 	return grid_position.distance_to(player.grid_position) == 1
 
 func _queue_attack() -> void:
+	print("[Enemy]", enemy_data.enemy_name, "_queue_attack")
 	_queue_command(AttackCommand.new())
 	
 func _on_turn_complete() -> void:
+	print("[Enemy]", enemy_data.enemy_name, "_on_turn_complete emit turn_finished")
 	emit_signal("turn_finished")
 
 func get_accuracy() -> int:
@@ -281,7 +288,63 @@ func get_accuracy() -> int:
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("Enemy clicked:", enemy_data.enemy_name)
+		var msg := "[color=gray]Targeted %s.[/color]" % enemy_data.enemy_name
+		GameEvents.message_logged.emit(msg)
 		#World.set_selected_enemy(self)
 		CombatState.set_target(self)
 		emit_signal("selected", self)
 		
+# Animations
+func animate_move_to(target: Vector2i, duration: float = 0.3):
+	var target_pos = Vector3(target.x, global_position.y, target.y)
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", target_pos, duration)
+	await tween.finished
+	grid_position = target
+	GameEvents.emit_signal("movement_animation_finished", self)
+
+func animate_take_damage(damage: int):
+	print("animation")
+	GameEvents.emit_signal("damage_animation_started", self, damage)
+	# Shake effect
+	var tween = create_tween()
+	# Use TRANS_SINE and EASE_IN_OUT directly
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	for i in range(3):
+		tween.tween_property(self, "position:x", position.x + 0.2, 0.05)
+		tween.tween_property(self, "position:x", position.x - 0.2, 0.05)
+	await tween.finished
+
+func animate_death():
+	GameEvents.emit_signal("character_died_animation_started", self)
+	var tween = create_tween()
+	tween.tween_property($Sprite3D, "modulate:a", 0.0, 0.5)
+	await tween.finished
+	queue_free()
+	
+func play_attack_animation():
+	print("[Enemy]", enemy_data.enemy_name, "play_attack_animation")
+	var anim_player = get_node_or_null("Sprite3D/AnimationPlayer")
+	
+	if anim_player and anim_player is AnimationPlayer:
+		print("[Enemy]", enemy_data.enemy_name, "AnimationPlayer found. current=", anim_player.current_animation, " is_playing=", anim_player.is_playing())
+		if anim_player.has_animation("attack"):
+			print("[Enemy]", enemy_data.enemy_name, "playing attack animation")
+			anim_player.play("attack")
+		else:
+			print("[Enemy] Warning: Animation 'attack' not found on ", name)
+			call_deferred("_emit_attack_animation_completed")
+	else:
+		print("[Enemy] No AnimationPlayer found on ", name)
+		call_deferred("_emit_attack_animation_completed")
+		
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	print("[Enemy]", enemy_data.enemy_name, "_on_animation_player_animation_finished:", anim_name)
+	if anim_name == &"attack":
+		print("[Enemy]", enemy_data.enemy_name, "emit attack_animation_completed")
+		attack_animation_completed.emit()
+
+func _emit_attack_animation_completed() -> void:
+	print("[Enemy]", enemy_data.enemy_name, "deferred emit attack_animation_completed")
+	attack_animation_completed.emit()
