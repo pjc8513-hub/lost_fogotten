@@ -20,4 +20,6 @@ func _on_damage_started(target, damage):
 
 func _on_movement_started(actor, destination):
 	# Play footstep sounds, particle effects, etc.
+	if actor.has_method("animate_move_to"):
+		actor.animate_move_to(destination)
 	pass

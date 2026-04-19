@@ -1,23 +1,19 @@
 [gd_scene format=3 uid="uid://bh6ds62n2else"]
 
-[ext_resource type="Texture2D" uid="uid://dynf15drpjyqq" path="res://assets/textures/stone.png" id="1_l6igm"]
+[ext_resource type="Texture2D" uid="uid://d3c857xqdbici" path="res://assets/textures/MossyWall.png" id="1_l6igm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rytl6"]
 albedo_texture = ExtResource("1_l6igm")
 
-[sub_resource type="BoxMesh" id="BoxMesh_fgjl5"]
-material = SubResource("StandardMaterial3D_rytl6")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fgjl5"]
-size = Vector3(1, 1, 1.2177734)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywhhs"]
+size = Vector3(1, 2, 1)
 
 [node name="Wall" type="Node3D" unique_id=2067035905]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=414904732]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=868299884]
-mesh = SubResource("BoxMesh_fgjl5")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1454137612]
+material_override = SubResource("StandardMaterial3D_rytl6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1000738951]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.10888672)
-shape = SubResource("BoxShape3D_fgjl5")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1784313210]
+shape = SubResource("BoxShape3D_ywhhs")

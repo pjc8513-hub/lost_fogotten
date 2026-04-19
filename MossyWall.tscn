@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cr4alb0lll0yu"]
+
+[ext_resource type="Texture2D" uid="uid://iujnkrlq2nnh" path="res://assets/textures/MarshPit1.png" id="1_0p4el"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nm1n1"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3g0p"]
+albedo_texture = ExtResource("1_0p4el")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ypghy"]
+material = SubResource("StandardMaterial3D_w3g0p")
+size = Vector3(1, 2, 1)
+
+[node name="Wall" type="Node3D" unique_id=2067035905]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=414904732]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=899305777]
+shape = SubResource("BoxShape3D_nm1n1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1077826803]
+mesh = SubResource("BoxMesh_ypghy")

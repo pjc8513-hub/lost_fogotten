@@ -2,7 +2,8 @@
 
 extends Node3D
 
-@export var wall_scene: PackedScene = preload("res://Wall.tscn")
+@export var wall_scene: PackedScene = preload("res://MossyWall.tscn")
+@export var floor_scene: PackedScene = preload("res://FloorMarsh.tscn")
 @export var enemy_scene: PackedScene = preload("res://Enemy.tscn")
 #@export var rat_data: EnemyData = preload("res://data/enemies/giant_rat.tres")
 #@export var goblin_data: EnemyData = preload("res://data/enemies/goblin.tres")
@@ -85,8 +86,26 @@ func build_map_from_json(data: Dictionary):
 			var wall = wall_scene.instantiate()
 			add_child(wall)
 			wall.position = Vector3(pos.x, 0, pos.y)
+			wall.position += Vector3(
+				randf_range(-0.05, 0.05),
+				0,
+				randf_range(-0.05, 0.05)
+			)
+			
+			var scale_variation = randf_range(0.95, 1.05)
+			wall.scale = Vector3(scale_variation, 1, scale_variation)
+			
+			# Random 0, 90, 180, 270 rotation
+			var rotations = [0, 90, 180, 270]
+			wall.rotation_degrees.y = rotations.pick_random()
 		else:
 			automap_grid[pos] = 0 # 0 for Floor/Empty
+			var floor = floor_scene.instantiate()
+			add_child(floor)
+			floor.position = Vector3(pos.x, 0, pos.y)
+			floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
+			
+	
 
 	# 2. Spawn Entities (Enemies, Chests, etc.)
 	for ent in data.get("entities", []):
@@ -154,3 +173,9 @@ func _set_player_start(grid_pos: Vector2i):
 		
 		# Ensure the automap knows this tile is walkable (0) and not a wall
 		automap_grid[grid_pos] = 0
+
+func spawn_light_here(posx, posy):
+	var light = OmniLight3D.new()
+	add_child(light)
+	light.position = Vector3(posx, 0.2, posy)
+	light.light_energy = 0.4

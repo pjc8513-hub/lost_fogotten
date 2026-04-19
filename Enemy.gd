@@ -83,6 +83,7 @@ func _queue_command(cmd) -> void:
 func move_to(target: Vector2i):
 	grid_position = target
 	global_position = Vector3(target.x, global_position.y, target.y)
+	GameEvents.emit_signal("movement_animation_started", self, target)
 	emit_signal("movement_done")
 
 func take_turn():
@@ -295,10 +296,32 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 		emit_signal("selected", self)
 		
 # Animations
-func animate_move_to(target: Vector2i, duration: float = 0.3):
+func animate_move_to(target: Vector2i, duration: float = 0.25):
 	var target_pos = Vector3(target.x, global_position.y, target.y)
+	var start_pos = global_position
+	
+	# Face movement direction
+	if target_pos != start_pos:
+		look_at(target_pos, Vector3.UP)
+	
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", target_pos, duration)
+	tween.set_parallel(true) # Run multiple tweens at once
+	
+	# 1. Main movement with easing
+	tween.tween_property(self, "global_position", target_pos, duration)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT) # Fast start, slow stop feels natural
+	
+	# 2. Add a subtle vertical bob for footsteps
+	var mid_point = start_pos.lerp(target_pos, 0.5)
+	mid_point.y += 0.1 # hop height
+	tween.tween_property(self, "global_position:y", mid_point.y, duration * 0.5)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
+	tween.chain().tween_property(self, "global_position:y", target_pos.y, duration * 0.5)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN)
+	
 	await tween.finished
 	grid_position = target
 	GameEvents.emit_signal("movement_animation_finished", self)
