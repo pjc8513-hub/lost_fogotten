@@ -9,7 +9,7 @@ var is_player_attacker: bool = false
 
 
 func execute():
-	print("[AttackCommand] execute actor=", actor)
+	#print("[AttackCommand] execute actor=", actor)
 	var valid_targets = []
 	for member in PartyState.active_party:
 		if member.current_hp > 0:
@@ -23,42 +23,42 @@ func execute():
 		return
 		
 	var target = valid_targets.pick_random()
-	print("[AttackCommand] chosen target=", target.member_name)
+	#print("[AttackCommand] chosen target=", target.member_name)
 
 	var attacks = 1
 	if actor.enemy_data.attack_speed > 0:
 		if randi_range(1, 100) <= (actor.enemy_data.attack_speed * 10):
 			attacks = 2
-	print("[AttackCommand] attacks=", attacks)
+	#print("[AttackCommand] attacks=", attacks)
 
 	for i in range(attacks):
 		if target.current_hp <= 0:
 			print("[AttackCommand] target died before attack", i)
 			break
 
-		print("[AttackCommand] begin attack index=", i)
+		#print("[AttackCommand] begin attack index=", i)
 		await _perform_single_attack(target)
-		print("[AttackCommand] attack index complete=", i)
+		#print("[AttackCommand] attack index complete=", i)
 
-	print("[AttackCommand] all attacks complete -> emit finished")
+	#print("[AttackCommand] all attacks complete -> emit finished")
 	actor.enemy_data.cooldown = 8
 	emit_signal("finished")
 
 func _perform_single_attack(target) -> void:
-	print("[AttackCommand] _perform_single_attack target=", target.member_name)
+	#print("[AttackCommand] _perform_single_attack target=", target.member_name)
 	# 1. Accuracy roll
 	
 	var accuracy : int = actor.get_accuracy()  if actor.has_method("get_accuracy") else 0
 	
 	var outcome := CombatLogic.accuracy_roll(accuracy, target.armor_class)
-	print("[AttackCommand] outcome=", outcome, " accuracy=", accuracy, " armor=", target.armor_class)
+	#print("[AttackCommand] outcome=", outcome, " accuracy=", accuracy, " armor=", target.armor_class)
 	
 	if outcome == "miss":
 		var msg := "[color=gray]%s[/color] attacks %s — [color=gray]miss![/color]" % [
 			actor.enemy_data.enemy_name, target.member_name
 		]
 		GameEvents.message_logged.emit(msg)
-		print("[AttackCommand] miss -> return")
+		#print("[AttackCommand] miss -> return")
 		return
 	
 	# 2. Roll dice
@@ -88,20 +88,20 @@ func _perform_single_attack(target) -> void:
 	]
 	GameEvents.message_logged.emit(msg)
 	
-	print("[AttackCommand] emit attack_animation_started")
+	#print("[AttackCommand] emit attack_animation_started")
 	GameEvents.emit_signal("attack_animation_started", actor, target, final_damage)
 	if actor and actor.has_signal("attack_animation_completed"):
-		print("[AttackCommand] awaiting attack_animation_completed from actor")
+		#print("[AttackCommand] awaiting attack_animation_completed from actor")
 		await actor.attack_animation_completed
-		print("[AttackCommand] resumed after attack_animation_completed")
+		#print("[AttackCommand] resumed after attack_animation_completed")
 	else:
 		print("[AttackCommand] actor missing attack_animation_completed signal")
 	GameEvents.emit_signal("damage_animation_started", target, final_damage)
 	target.take_damage(final_damage)
-	print("[AttackCommand] damage applied final_damage=", final_damage, " target_hp=", target.current_hp)
+	#print("[AttackCommand] damage applied final_damage=", final_damage, " target_hp=", target.current_hp)
 	GameEvents.emit_signal("attack_animation_finished", actor, target)
 	
 	if target.current_hp <= 0:
 		var death_msg := "[color=white]%s[/color] dies!" % target.member_name
 		GameEvents.message_logged.emit(death_msg)
-		print("[AttackCommand] target died")
+		#print("[AttackCommand] target died")

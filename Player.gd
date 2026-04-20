@@ -38,7 +38,23 @@ func _unhandled_input(event):
 		return  # it's an enemy turn, ignore input
 		
 	if event.is_action_pressed("attack"):
-		_queue_player_attack()
+		_queue_context_action()
+		
+func _queue_context_action():
+	var actor: ClassData = CombatState.get_acting_member()
+	
+	# Priority order: Chest > Enemy > NPC > nothing
+	# Only one thing can be selected at a time thanks to World.set_selected_*()
+	
+	if World.selected_chest and not World.selected_chest.is_opened:
+		_queue_open_chest(actor)
+	elif World.selected_enemy and CombatState.has_valid_target():
+		#print("World selected enemy: ", World.selected_enemy)
+		_queue_player_attack(actor)
+	#elif World.selected_npc: # future
+		#_queue_talk_to_npc(actor)
+	else:
+		GameEvents.message_logged.emit("[color=gray]Nothing to interact with.[/color]")
 
 
 func rotate_left():
@@ -50,15 +66,31 @@ func rotate_right():
 	rotation.y -= deg_to_rad(90)
 
 
-func _queue_player_attack():
+
+func _queue_player_attack(actor: ClassData):
 	if not CombatState.has_valid_target():
 		print("No valid target selected")
 		GameEvents.message_logged.emit("[color=gray]No valid target.[/color]")
 		return
 
 	var cmd := PlayerAttackCommand.new()
-	cmd.actor = CombatState.get_acting_member()  # ClassData
+	cmd.actor = actor
 	CommandQueue.add_command(cmd)
+	_start_player_action()
 
+func _queue_open_chest(actor: ClassData):
+	var cmd := PlayerOpenChestCommand.new()
+	cmd.actor = actor
+	CommandQueue.add_command(cmd)
+	_start_player_action()
+
+#func _queue_talk_to_npc(actor: ClassData):
+	# var cmd := PlayerTalkCommand.new()
+	# cmd.actor = actor
+	# CommandQueue.add_command(cmd)
+	# _start_player_action()
+	#pass
+
+func _start_player_action():
 	TurnStateMachine.last_action_was_party_wide = false
 	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)

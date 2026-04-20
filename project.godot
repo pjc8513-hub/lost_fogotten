@@ -25,6 +25,7 @@ GameEvents="*uid://pfcmdhkjbwb"
 CombatLogic="*uid://budxbh00thdo7"
 CombatState="*uid://cvworrhxh636x"
 AnimationManager="*uid://b78u1bo5q4p6a"
+LootManager="*uid://uuljtpokh0d5"
 
 [display]
 

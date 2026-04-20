@@ -96,6 +96,10 @@ func get_dice_sides(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> i
 	if weapon != null:
 		return weapon.dice_sides
 	return dice_sides
+	
+func get_skill_bonus(SkillName: String):
+	# placeholder
+	pass
 
 func get_bonus_damage() -> int:
 	return bonus_damage

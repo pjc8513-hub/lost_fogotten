@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TreasureData" format=3 uid="uid://ck6s0vtu5108y"]
+
+[ext_resource type="Script" uid="uid://bawvbn1dta1qb" path="res://resources/TreasureData.gd" id="1_l04si"]
+[ext_resource type="Texture2D" uid="uid://cogblh53nwrgb" path="res://assets/sprites/entities/Chest1.png" id="2_8pbkr"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_l04si")
+scene_path = "uid://c4slrhwrs74vf"
+sprite_texture = ExtResource("2_8pbkr")
+loot_table = Array[int]([0, 3])
+metadata/_custom_type_script = "uid://bawvbn1dta1qb"

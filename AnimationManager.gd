@@ -7,7 +7,7 @@ func _ready():
 	GameEvents.movement_animation_started.connect(_on_movement_started)
 
 func _on_attack_started(attacker, target, damage):
-	print("[AnimationManager] attack started attacker=", attacker, " target=", target, " damage=", damage)
+	#print("[AnimationManager] attack started attacker=", attacker, " target=", target, " damage=", damage)
 	if attacker.has_method("play_attack_animation"):
 		attacker.play_attack_animation()
 	if target.has_method("play_hit_effect"):

@@ -5,6 +5,10 @@ var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
 var enemies: Array = []         # Placeholder for future enemy nodes
 
+# --- Treasure Chests ---
+var treasure_chests: Array[TreasureChest] = []
+var selected_chest: TreasureChest = null
+
 func set_map_data(data: Dictionary) -> void:
 	map_data = data
 	
@@ -98,7 +102,38 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 
 func set_selected_enemy(enemy):
 	selected_enemy = enemy
-	print("Selected enemy:", enemy.enemy_data.enemy_name)
+	selected_chest = null # deselect chest if enemy selected
+	if enemy:
+		print("Selected enemy:", enemy.enemy_data.enemy_name)
+
+# === TREASURE CHEST MANAGEMENT ===
+func register_treasure_chest(chest: TreasureChest):
+	if not treasure_chests.has(chest):
+		treasure_chests.append(chest)
+
+func get_treasure_chests() -> Array[TreasureChest]:
+	return treasure_chests.duplicate()
+
+func remove_treasure_chest(chest: TreasureChest) -> void:
+	treasure_chests.erase(chest)
+	if selected_chest == chest:
+		selected_chest = null
+	chest.queue_free()
+
+func set_selected_chest(chest: TreasureChest):
+	selected_chest = chest
+	selected_enemy = null # deselect enemy if chest selected
+	if chest:
+		print("Selected chest:", chest.treasure_data.chest_name)
+
 
 func get_player():
 	return player_ref
+
+func are_adjacent(a: Node3D, b: Node3D) -> bool:
+	if not a or not b:
+		return false
+	var pos_a = world_to_grid(a.global_position)
+	var pos_b = world_to_grid(b.global_position)
+	var diff = (pos_a - pos_b).abs()
+	return diff.x <= 1 and diff.y <= 1 and not (diff.x == 0 and diff.y == 0) # 8-directional, exclude same tile

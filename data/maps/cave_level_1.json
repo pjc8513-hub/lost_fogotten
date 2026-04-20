@@ -663,7 +663,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				1
 			],
 			"pos": [
 				6,
@@ -689,17 +689,6 @@
 			],
 			"pos": [
 				8,
-				3
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
-				3,
-				0
-			],
-			"pos": [
-				10,
 				3
 			],
 			"source_id": 2
@@ -2034,17 +2023,28 @@
 				3
 			],
 			"source_id": 2
-		}
-	],
-	"entities": [
+		},
 		{
-			"aggro_group": 1,
-			"data_resource": "res://data/enemies/avo.tres",
+			"atlas": [
+				1,
+				0
+			],
 			"pos": [
 				10,
 				3
 			],
-			"type": "enemy"
+			"source_id": 2
+		}
+	],
+	"entities": [
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"pos": [
+				6,
+				4
+			],
+			"type": "chest"
 		},
 		{
 			"aggro_group": 2,

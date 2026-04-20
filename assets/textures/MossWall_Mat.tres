@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://da6x4ra0tdlup"]
+
+[ext_resource type="Texture2D" uid="uid://d3c857xqdbici" path="res://assets/textures/MossyWall.png" id="1_cjwn1"]
+
+[resource]
+albedo_texture = ExtResource("1_cjwn1")
+uv1_triplanar = true

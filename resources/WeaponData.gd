@@ -9,12 +9,12 @@ enum Weapon_Type{
 	CUDGEL
 }
 
-enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
+#enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 
 @export var dice_sides: int
 @export var dice_rolls: int
 @export var attack_speed: float
-@export var loot_table: Loot_Table
+@export var loot_table: LootManager.Loot_Table
 @export var is_ranged: bool = false
 @export var tile_range: int = 1
 @export var weapon_type: Weapon_Type

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://deq83ov2r3uog"]
+
+[ext_resource type="Script" uid="uid://mpe24ror4md7" path="res://TreasureChest.gd" id="1_equa1"]
+[ext_resource type="Script" uid="uid://bawvbn1dta1qb" path="res://resources/TreasureData.gd" id="2_fql6u"]
+
+[sub_resource type="Resource" id="Resource_c4iej"]
+script = ExtResource("2_fql6u")
+metadata/_custom_type_script = "uid://bawvbn1dta1qb"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qhknk"]
+
+[node name="Chest" type="Node3D" unique_id=221038444]
+script = ExtResource("1_equa1")
+treasure_data = SubResource("Resource_c4iej")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1170120736]
+billboard = 2
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" unique_id=484330340]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=130876638]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1799078832]
+shape = SubResource("BoxShape3D_qhknk")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

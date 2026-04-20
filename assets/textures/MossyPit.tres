@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cywkww3ncdolw"]
+
+[ext_resource type="Texture2D" uid="uid://iujnkrlq2nnh" path="res://assets/textures/MarshPit1.png" id="1_545rv"]
+
+[resource]
+albedo_texture = ExtResource("1_545rv")
+uv1_triplanar = true

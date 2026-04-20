@@ -5,6 +5,12 @@ extends Node3D
 @export var wall_scene: PackedScene = preload("res://MossyWall.tscn")
 @export var floor_scene: PackedScene = preload("res://FloorMarsh.tscn")
 @export var enemy_scene: PackedScene = preload("res://Enemy.tscn")
+@export var chest_scene: PackedScene = preload("res://ChestScene.tscn")
+@export var floor_materials = [
+	preload("res://assets/textures/MossWall_Mat.tres"),
+	preload("res://assets/textures/MossyWall_Mat2.tres"),
+	preload("res://assets/textures/MossyPit.tres")
+]
 #@export var rat_data: EnemyData = preload("res://data/enemies/giant_rat.tres")
 #@export var goblin_data: EnemyData = preload("res://data/enemies/goblin.tres")
 #@export var cat_data: EnemyData = preload("res://data/enemies/dungeon_cat.tres")
@@ -102,6 +108,12 @@ func build_map_from_json(data: Dictionary):
 			automap_grid[pos] = 0 # 0 for Floor/Empty
 			var floor = floor_scene.instantiate()
 			add_child(floor)
+			#print("Node found: ", floor.get_node("StaticBody3D/CSGBakedMeshInstance3D")) # Should print MeshInstance3D:XXXX, not null
+			#print("Materials array: ", floor_materials) # Check if this is [] or [null, null, null]
+			#print("Picked: ", floor_materials.pick_random()) # This is probably <Object#null>
+			
+			floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = floor_materials.pick_random()
+			#print(floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override)
 			floor.position = Vector3(pos.x, 0, pos.y)
 			floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 			
@@ -124,7 +136,7 @@ func build_map_from_json(data: Dictionary):
 				_spawn_enemy(pos, ent["data_resource"], ent["aggro_group"])
 			"chest":
 				print("Chest found at ", pos, " with loot: ", ent["data_resource"])
-				# _spawn_chest(pos, ent["data_resource"])
+				_spawn_chest(pos, ent["data_resource"])
 			"player":
 				print("spawning player at: ", pos)
 				_set_player_start(pos)
@@ -173,6 +185,23 @@ func _set_player_start(grid_pos: Vector2i):
 		
 		# Ensure the automap knows this tile is walkable (0) and not a wall
 		automap_grid[grid_pos] = 0
+
+func _spawn_chest(grid_pos: Vector2i, data_path: String):
+	var res = load(data_path) as TreasureData
+	# Load the scene from the path string
+	var chest_scene_resource = load(res.scene_path)
+	var chest = chest_scene_resource.instantiate()
+	$SubViewportContainer/SubViewport.add_child(chest)
+	chest.grid_position = grid_pos
+	chest.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	
+	# Load the tres file
+	if FileAccess.file_exists(data_path):
+		chest.treasure_data = res.duplicate()
+	else:
+		print("No chest data at: ", data_path)
+	
+	chest.connect("selected", Callable(self, "_on_chest_selected"))
 
 func spawn_light_here(posx, posy):
 	var light = OmniLight3D.new()

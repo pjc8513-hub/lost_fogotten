@@ -291,7 +291,7 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 		print("Enemy clicked:", enemy_data.enemy_name)
 		var msg := "[color=gray]Targeted %s.[/color]" % enemy_data.enemy_name
 		GameEvents.message_logged.emit(msg)
-		#World.set_selected_enemy(self)
+		World.set_selected_enemy(self)
 		CombatState.set_target(self)
 		emit_signal("selected", self)
 		
@@ -346,11 +346,11 @@ func animate_death():
 	queue_free()
 	
 func play_attack_animation():
-	print("[Enemy]", enemy_data.enemy_name, "play_attack_animation")
+	#print("[Enemy]", enemy_data.enemy_name, "play_attack_animation")
 	var anim_player = get_node_or_null("Sprite3D/AnimationPlayer")
 	
 	if anim_player and anim_player is AnimationPlayer:
-		print("[Enemy]", enemy_data.enemy_name, "AnimationPlayer found. current=", anim_player.current_animation, " is_playing=", anim_player.is_playing())
+		#print("[Enemy]", enemy_data.enemy_name, "AnimationPlayer found. current=", anim_player.current_animation, " is_playing=", anim_player.is_playing())
 		if anim_player.has_animation("attack"):
 			print("[Enemy]", enemy_data.enemy_name, "playing attack animation")
 			anim_player.play("attack")
@@ -363,9 +363,9 @@ func play_attack_animation():
 		
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	print("[Enemy]", enemy_data.enemy_name, "_on_animation_player_animation_finished:", anim_name)
+	#print("[Enemy]", enemy_data.enemy_name, "_on_animation_player_animation_finished:", anim_name)
 	if anim_name == &"attack":
-		print("[Enemy]", enemy_data.enemy_name, "emit attack_animation_completed")
+		#print("[Enemy]", enemy_data.enemy_name, "emit attack_animation_completed")
 		attack_animation_completed.emit()
 
 func _emit_attack_animation_completed() -> void:
