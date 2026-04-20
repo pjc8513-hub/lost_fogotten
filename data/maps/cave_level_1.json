@@ -68,8 +68,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				1,
@@ -651,8 +651,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				7,
@@ -706,8 +706,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				9,
@@ -1003,8 +1003,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				14,
@@ -1597,8 +1597,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				13,
@@ -2039,12 +2039,48 @@
 	"entities": [
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"pos": [
+				1,
+				5
+			],
+			"type": "decoration"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"pos": [
+				7,
+				4
+			],
+			"type": "decoration"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
 			"pos": [
 				6,
 				4
 			],
 			"type": "chest"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"pos": [
+				9,
+				2
+			],
+			"type": "decoration"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"pos": [
+				14,
+				5
+			],
+			"type": "decoration"
 		},
 		{
 			"aggro_group": 2,
@@ -2075,12 +2111,21 @@
 		},
 		{
 			"aggro_group": 1,
-			"data_resource": "res://data/enemies/avo.tres",
+			"data_resource": "res://data/enemies/MosherData.tres",
 			"pos": [
 				16,
 				10
 			],
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"pos": [
+				13,
+				9
+			],
+			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,

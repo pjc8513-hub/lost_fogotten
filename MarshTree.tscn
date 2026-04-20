@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://0dfv61tkbiji"]
+
+[ext_resource type="Texture2D" uid="uid://l6yyqyekvtoa" path="res://assets/sprites/entities/MoshTree1.png" id="1_pegvx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f8m0g"]
+
+[node name="StaticEntity" type="Node3D" unique_id=1841116259]
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=2047977382]
+billboard = 2
+shaded = true
+texture = ExtResource("1_pegvx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1106403083]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2012437453]
+shape = SubResource("BoxShape3D_f8m0g")

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cuer2jdhr4s3v"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_oxh2c"]
+[ext_resource type="Texture2D" uid="uid://b6ivxup3ed57y" path="res://assets/sprites/enemies/mosher.png" id="2_4kye2"]
+
+[resource]
+script = ExtResource("1_oxh2c")
+enemy_name = "Mosher"
+scene_path = "uid://cvvmtfer4dm7f"
+hp = 30
+armor_class = 4
+dice_sides = 3
+dice_rolls = 4
+bonus_damage = 2
+accuracy = 1
+critical_chance = 3
+ailment = "stun"
+xp = 25
+gold = 30
+ai_behavior = "Hunter"
+movement = 3
+sprite_texture = ExtResource("2_4kye2")
+resist_fire = 3
+resist_physical = 3
+resist_cold = 3
+resist_electric = 3
+resist_light = 3
+resist_dark = 3
+vision_range = 4
+metadata/_custom_type_script = "uid://buna7h064pfvn"

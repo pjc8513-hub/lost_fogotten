@@ -6,6 +6,7 @@ extends Node3D
 @export var floor_scene: PackedScene = preload("res://FloorMarsh.tscn")
 @export var enemy_scene: PackedScene = preload("res://Enemy.tscn")
 @export var chest_scene: PackedScene = preload("res://ChestScene.tscn")
+@export var MoshTree_scene: PackedScene = preload("res://MarshTree.tscn")
 @export var floor_materials = [
 	preload("res://assets/textures/MossWall_Mat.tres"),
 	preload("res://assets/textures/MossyWall_Mat2.tres"),
@@ -140,6 +141,9 @@ func build_map_from_json(data: Dictionary):
 			"player":
 				print("spawning player at: ", pos)
 				_set_player_start(pos)
+			"decoration":
+				print("spawning decor at: ", pos)
+				_spawn_decor(pos)
 
 func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int):
 	#var enemy = enemy_scene.instantiate()
@@ -193,7 +197,7 @@ func _spawn_chest(grid_pos: Vector2i, data_path: String):
 	var chest = chest_scene_resource.instantiate()
 	$SubViewportContainer/SubViewport.add_child(chest)
 	chest.grid_position = grid_pos
-	chest.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	chest.position = Vector3(grid_pos.x, -0.5, grid_pos.y)
 	
 	# Load the tres file
 	if FileAccess.file_exists(data_path):
@@ -208,3 +212,8 @@ func spawn_light_here(posx, posy):
 	add_child(light)
 	light.position = Vector3(posx, 0.2, posy)
 	light.light_energy = 0.4
+
+func _spawn_decor(pos):
+	var decor = MoshTree_scene.instantiate()
+	add_child(decor)
+	decor.position = Vector3(pos.x, 0, pos.y)

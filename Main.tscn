@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://q60jlfp1yofx" path="res://debug_subview.gd" id="6_trn2v"]
 [ext_resource type="PackedScene" uid="uid://bv0w1w5te005v" path="res://RightPanel.tscn" id="9_03owx"]
 [ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="9_wkp8b"]
+[ext_resource type="PackedScene" uid="uid://c4c4blrojhq5d" path="res://GoldUI.tscn" id="11_20pc6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
@@ -132,3 +133,13 @@ scroll_active = false
 
 [node name="RightPanel" parent="." unique_id=280808817 instance=ExtResource("9_03owx")]
 scale = Vector2(1, 0.9200001)
+
+[node name="Control2" parent="." unique_id=1136315377 instance=ExtResource("11_20pc6")]
+anchors_preset = -1
+anchor_top = 0.80200005
+anchor_bottom = 0.80200005
+offset_left = 2.0000002
+offset_top = 0.30395508
+offset_right = 2.0000002
+offset_bottom = 0.30395508
+scale = Vector2(1.12, 0.8800012)

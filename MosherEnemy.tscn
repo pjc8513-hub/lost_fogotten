@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cvvmtfer4dm7f"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_ussmu"]
+[ext_resource type="Texture2D" uid="uid://b6ivxup3ed57y" path="res://assets/sprites/enemies/mosher.png" id="2_ns1wv"]
+
+[sub_resource type="Animation" id="Animation_3llu2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4kkri"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j7ibn"]
+_data = {
+&"RESET": SubResource("Animation_3llu2"),
+&"attack": SubResource("Animation_4kkri")
+}
+
+[node name="MosherEnemy" unique_id=1461009798 instance=ExtResource("1_ussmu")]
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+texture = ExtResource("2_ns1wv")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
+libraries/ = SubResource("AnimationLibrary_j7ibn")
