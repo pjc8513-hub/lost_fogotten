@@ -25,4 +25,5 @@ vframes = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1799078832]
 shape = SubResource("BoxShape3D_qhknk")
 
+[connection signal="animation_finished" from="Sprite3D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

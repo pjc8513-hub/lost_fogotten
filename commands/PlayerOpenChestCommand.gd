@@ -32,6 +32,13 @@ func execute() -> void:
 	#var skill_bonus = acting_member.get_skill_bonus("lockpicking") # however you calc it
 	var skill_bonus = 0
 	var success = target_chest.attempt_unlock(skill_bonus)
+
+	if success:
+		GameEvents.open_chest_animation_started.emit(target_chest)
+		if target_chest.has_signal("open_animation_completed"):
+			await target_chest.open_animation_completed
+		target_chest.open_chest()
+		GameEvents.open_chest_animation_finished.emit(target_chest)
 	
 	# attempt_unlock() already handles trap trigger + loot + messages
 	# so we don't duplicate that logic here

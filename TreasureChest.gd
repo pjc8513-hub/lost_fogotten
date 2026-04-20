@@ -5,6 +5,7 @@ class_name TreasureChest
 signal chest_opened(chest: TreasureChest, gold: int, loot: Array)
 signal chest_trap_triggered(chest: TreasureChest, damage: int)
 signal selected(chest: TreasureChest)
+signal open_animation_completed
 
 @onready var sprite: Sprite3D = $Sprite3D
 @onready var area: Area3D = $Area3D
@@ -92,7 +93,6 @@ func attempt_unlock(player_skill_bonus: int = 0) -> bool:
 	var success = roll >= treasure_data.lock_dc
 	
 	if success:
-		_open_chest()
 		GameEvents.message_logged.emit("[color=green]Unlocked! Rolled %d vs DC %d[/color]" % [roll, treasure_data.lock_dc])
 	else:
 		GameEvents.message_logged.emit("[color=red]Failed to pick lock. Rolled %d vs DC %d[/color]" % [roll, treasure_data.lock_dc])
@@ -110,7 +110,7 @@ func _trigger_trap():
 	chest_trap_triggered.emit(self, damage)
 	# Player.take_damage(damage) - call this however your player handles it
 
-func _open_chest():
+func open_chest():
 	if is_opened:
 		return
 	is_opened = true
@@ -128,3 +128,22 @@ func _open_chest():
 	
 	chest_opened.emit(self, gold_total, loot_ids)
 	sprite.modulate = Color.DARK_GRAY
+
+func play_open_animation() -> void:
+	var anim_player = get_node_or_null("Sprite3D/AnimationPlayer")
+
+	if anim_player and anim_player is AnimationPlayer:
+		if anim_player.has_animation("open_chest"):
+			anim_player.play("open_chest")
+		else:
+			call_deferred("_emit_open_animation_completed")
+	else:
+		call_deferred("_emit_open_animation_completed")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"open_chest":
+		open_animation_completed.emit()
+
+func _emit_open_animation_completed() -> void:
+	open_animation_completed.emit()
