@@ -18,6 +18,16 @@ var selected_index: int = 0:
 		selected_index = clamp(value, 0, active_party.size() - 1)
 		GameEvents.selected_character_changed.emit(get_selected())
 
+var party_gold: int = 0:
+	set(value):
+		party_gold = max(0, value)
+		GameEvents.gold_changed.emit(party_gold)
+		
+var party_food: int = 5:
+	set(value):
+		party_food = max(0, value)
+		GameEvents.food_changed.emit(party_food)
+
 func _ready():
 	# Emit initial selection signal if the party isn't empty
 	if not active_party.is_empty():

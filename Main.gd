@@ -22,6 +22,7 @@ var map_open: bool = false
 var automap_grid := {}  # Dictionary of Vector2 -> int
 
 func _ready():
+	GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
 	
 	# Load the new JSON format we exported from the TileMap

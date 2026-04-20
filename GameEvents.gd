@@ -6,9 +6,13 @@ signal selected_character_changed(character)
 signal inventory_changed(character)
 signal combat_status_changed(member_data: ClassData, new_status: int)
 
-#treasure chests opening
+# Treasure chests opening
 signal chest_opened(chest: TreasureChest, gold: int, loot: Array)
 signal chest_trap_triggered(chest: TreasureChest, damage: int)
+
+# Resource tracking
+signal gold_changed(new_amount: int)
+signal food_changed(new_amount: int)
 
 # Animation events
 # Add to GameEvents.gd

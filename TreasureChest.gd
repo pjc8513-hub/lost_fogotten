@@ -126,7 +126,11 @@ func open_chest():
 		var loot_names = loot_ids.map(func(id): return id.replace("_", " ").capitalize())
 		GameEvents.message_logged.emit("[color=cyan]Found: %s[/color]" % ", ".join(loot_names))
 	
+	# Emit local signal for direct connections to this chest
 	chest_opened.emit(self, gold_total, loot_ids)
+	# Emit global signal for LootDistributor and other systems
+	GameEvents.chest_opened.emit(self, gold_total, loot_ids)
+	
 	sprite.modulate = Color.DARK_GRAY
 
 func play_open_animation() -> void:

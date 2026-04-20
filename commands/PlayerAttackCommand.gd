@@ -129,4 +129,5 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		var death_msg := "[color=red]%s[/color] dies!" % target.enemy_data.enemy_name
 		GameEvents.message_logged.emit(death_msg)
 		World.remove_enemy(target)
+		LootDistributor.distribute_enemy_loot(target)
 		# TODO: Drop loot here
