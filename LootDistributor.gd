@@ -3,7 +3,6 @@ extends Node
 
 func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
 	# Add gold to party
-	print("Distribute_chest_loot")
 	PartyState.party_gold += gold
 	
 	# Handle items
@@ -11,11 +10,13 @@ func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
 		var item_data = LootManager.get_item_data(item_id)
 		if item_data:
 			# Add to a random party member's inventory
-			var random_member = PartyState.active_party.pick_random()
+			var selected_member = PartyState.get_selected()
 			var item_instance = ItemInstance.new()
 			item_instance.item_data = item_data
-			random_member.inventory.append(item_instance)
-			GameEvents.inventory_changed.emit(random_member)
+			selected_member.inventory.append(item_instance)
+			GameEvents.inventory_changed.emit(selected_member)
+		else:
+			print("No item data found for: ", item_id)
 
 func distribute_enemy_loot(enemy: Enemy):
 	var enemy_data = enemy.enemy_data

@@ -11,5 +11,5 @@ dice_rolls = 1
 attack_speed = 1.0
 name = "Rusty Dagger"
 icon = ExtResource("1_fcynr")
-sell_value = 15
+sell_value = 5
 metadata/_custom_type_script = "uid://cogina04lplf3"

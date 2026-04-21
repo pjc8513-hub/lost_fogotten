@@ -11,17 +11,17 @@ enum Loot_Table {
 # For now: just arrays of item_id strings or Resource paths
 const LOOT_POOLS = {
 	Loot_Table.EQUIP_1: {
-		"items": ["rusty_sword", "cloth_robe", "leather_cap"],
+		"items": ["RustyDagger", "ShortSword", "SimpleBow", "ClothRobe", "LeatherCap"],
 		"rolls": 1, # how many times to roll this table when selected
 		"chance": 1.0 # 100% chance to get something if this table is rolled
 	},
 	Loot_Table.EQUIP_2: {
-		"items": ["iron_sword", "chain_mail", "steel_helm"],
+		"items": ["IronSword", "ChainMail", "SteelHelm"],
 		"rolls": 1,
 		"chance": 0.75
 	},
 	Loot_Table.EQUIP_3: {
-		"items": ["mithril_blade", "plate_armor", "dragon_helm"],
+		"items": ["MithrilBlade", "PlateArmor", "DragonHelm"],
 		"rolls": 1,
 		"chance": 0.5
 	},
@@ -67,7 +67,7 @@ func roll_loot(tables: Array[Loot_Table], bonus_luck: int = 0) -> Array[String]:
 
 # Helper if you want to convert item_id -> ItemData resource later
 func get_item_data(item_id: String) -> Resource:
-	var path = "res://resources/items/%s.tres" % item_id
+	var path = "res://data/weapons/%s.tres" % item_id
 	if ResourceLoader.exists(path):
 		return load(path)
 	push_warning("LootManager: ItemData not found: %s" % path)
