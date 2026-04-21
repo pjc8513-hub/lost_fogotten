@@ -6,7 +6,7 @@ class_name EnemyData
 
 enum AIBehavior { HUNTER, RANDOM, GUARD }
 enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
-enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
+#enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 
 @export var enemy_name: String = ""
 @export_file("*.tscn") var scene_path: String
@@ -29,7 +29,7 @@ enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 @export var ai_behavior: String = "Random"
 @export var movement: int = 5
 @export var sprite_texture: Texture2D
-@export var loot_table: Loot_Table
+@export var loot_table: Array[LootManager.Loot_Table] = []
 
 @export var resist_fire: int = 0
 @export var resist_physical: int = 0
@@ -38,7 +38,7 @@ enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
 @export var resist_light: int = 0
 @export var resist_dark: int = 0
 
-@export var drops: Array[Resource] = []
+#@export var drops: Array[Resource] = []
 
 @export var vision_range: int = 6
 @export var vision_angle_deg: int = 120   # optional, for cone vision

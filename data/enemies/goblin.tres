@@ -18,3 +18,4 @@ xp = 70
 gold = 30
 ai_behavior = "Hunter"
 sprite_texture = ExtResource("2_dk6at")
+loot_table = Array[int]([0])

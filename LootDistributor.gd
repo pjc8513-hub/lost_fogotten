@@ -23,8 +23,13 @@ func distribute_enemy_loot(enemy: Enemy):
 	
 	# Add enemy gold
 	PartyState.party_gold += enemy_data.gold
-	
+	GameEvents.message_logged.emit("[color=gold]Found %d gold![/color]" % enemy.enemy_data.gold)
+
+	#print("enemy loot table: ", enemy.enemy_data.loot_table)
 	# Roll loot tables
+	if not (enemy.enemy_data.loot_table):
+		return
+	
 	var loot_ids = LootManager.roll_loot(enemy_data.loot_table, 0)  # Add luck bonus later
 	for item_id in loot_ids:
 		var item_data = LootManager.get_item_data(item_id)
@@ -34,6 +39,8 @@ func distribute_enemy_loot(enemy: Enemy):
 			item_instance.item_data = item_data
 			random_member.inventory.append(item_instance)
 			GameEvents.inventory_changed.emit(random_member)
+			var loot_names = loot_ids.map(func(id): return id.replace("_", " ").capitalize())
+			GameEvents.message_logged.emit("[color=yellow]%s[/color] [color=cyan]Found: %s[/color]" % [random_member.member_name, ", ".join(loot_names)])
 
 func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 	PartyState.party_gold += gold

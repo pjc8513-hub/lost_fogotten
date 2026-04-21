@@ -82,6 +82,7 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	if target.enemy_data.hp <= 0:
 		var death_msg := "[color=red]%s[/color] dies!" % target.enemy_data.enemy_name
 		GameEvents.message_logged.emit(death_msg)
+		LootDistributor.distribute_enemy_loot(target)
 		World.remove_enemy(target)
 		# TODO: Drop loot here
 
