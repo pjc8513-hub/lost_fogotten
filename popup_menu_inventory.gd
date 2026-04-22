@@ -47,7 +47,7 @@ func _build_context_menu(inst: ItemInstance) -> void:
 			add_item("Unequip", Action.EQUIP_TOGGLE)
 		else:
 			var owner_char = PartyState.get_selected()
-			if owner_char != null and not owner_char.is_slot_equipped(item.equip_slot):
+			if owner_char != null and owner_char.can_equip_item(item) and not owner_char.is_slot_equipped(item.equip_slot):
 				add_item("Equip", Action.EQUIP_TOGGLE)
 
 	# CONSUMABLE – use
@@ -114,6 +114,9 @@ func _on_trade_id_pressed(party_index: int) -> void:
 func _toggle_equip(inst: ItemInstance) -> void:
 	var owner_char := PartyState.get_selected()
 	if owner_char == null:
+		return
+	if not inst.is_equipped and not owner_char.can_equip_item(inst.item_data):
+		push_warning("%s cannot equip %s." % [owner_char.member_name, inst.item_data.name])
 		return
 
 	inst.is_equipped = not inst.is_equipped
