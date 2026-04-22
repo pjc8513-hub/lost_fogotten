@@ -1,8 +1,7 @@
 # PartyState.gd (global)
 extends Node
 
-# Type-hinting the array ensures only ClassData resources can be added
-var active_party: Array[ClassData] = [
+const DEFAULT_PARTY_TEMPLATES: Array[ClassData] = [
 	preload("res://data/classes/knight.tres"),
 	preload("res://data/classes/monk.tres"),
 	preload("res://data/classes/cleric.tres"),
@@ -10,6 +9,7 @@ var active_party: Array[ClassData] = [
 	preload("res://data/classes/sorcerer.tres")
 ]
 
+var active_party: Array[ClassData] = []
 var selected_index: int = 0:
 	set(value):
 		if active_party.is_empty():
@@ -29,11 +29,19 @@ var party_food: int = 5:
 		GameEvents.food_changed.emit(party_food)
 
 func _ready():
-	# Emit initial selection signal if the party isn't empty
-	if not active_party.is_empty():
-		GameEvents.selected_character_changed.emit(get_selected())
+	reset_default_party()
 
 func get_selected() -> ClassData:
 	if active_party.is_empty():
 		return null
 	return active_party[selected_index]
+
+func reset_default_party() -> void:
+	active_party.clear()
+
+	for template in DEFAULT_PARTY_TEMPLATES:
+		if template == null:
+			continue
+		active_party.append(template.create_party_member_instance())
+
+	selected_index = 0

@@ -15,4 +15,4 @@ func refresh_party_ui():
 		var new_ui = MEMBER_UI_SCENE.instantiate()
 		add_child(new_ui)
 		new_ui.setup(member_data, i) # pass the index here
-		print(member_data.name, " panel set up complete")
+		print(member_data.member_name, " panel set up complete")

@@ -65,10 +65,10 @@ func update_ui():
 	# Use Tween for a smooth sliding animation instead of a sudden jump
 	var tween = create_tween()
 	tween.tween_property(hp_bar, "value", my_member_data.current_hp, 0.2)
-	#print(my_member_data.name, " max mp: ", my_member_data.max_mp)
-	#print(my_member_data.name, " current mp: ", my_member_data.current_mp)
-	#print(my_member_data.name, " max hp: ", my_member_data.max_hp)
-	#print(my_member_data.name, " current hp: ", my_member_data.current_hp)
+	#print(my_member_data.class_name, " max mp: ", my_member_data.max_mp)
+	#print(my_member_data.class_name, " current mp: ", my_member_data.current_mp)
+	#print(my_member_data.class_name, " max hp: ", my_member_data.max_hp)
+	#print(my_member_data.class_name, " current hp: ", my_member_data.current_hp)
 	mp_bar.value = my_member_data.current_mp
 
 func _on_selection_changed(_character: ClassData):

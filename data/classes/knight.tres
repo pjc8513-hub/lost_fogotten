@@ -8,6 +8,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1")
+class_names = 0
 name = "Knight"
 member_name = "Power Chord"
 max_hp = 50

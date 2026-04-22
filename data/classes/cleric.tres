@@ -6,6 +6,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1")
+class_names = 2
 name = "Cleric"
 member_name = "Christmas"
 max_hp = 50

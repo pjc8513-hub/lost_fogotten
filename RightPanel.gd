@@ -6,7 +6,7 @@ func _ready():
 	GameEvents.selected_character_changed.connect(_on_character_changed)
 	$ButtonBar/InventoryButton.pressed.connect(_on_inventory)
 	$ButtonBar/SkillsButton.pressed.connect(_on_skills)
-	$ButtonBar/InfoButton.pressed.connect(_on_info)
+	$ButtonBar/StatsButton.pressed.connect(_on_stats)
 
 func _on_inventory():
 	tabs.current_tab = 0
@@ -16,9 +16,9 @@ func _on_skills():
 	tabs.current_tab = 1
 	_set_active_button($ButtonBar/SkillsButton)
 
-func _on_info():
+func _on_stats():
 	tabs.current_tab = 2
-	_set_active_button($ButtonBar/InfoButton)
+	_set_active_button($ButtonBar/StatsButton)
 
 func _set_active_button(active_button):
 	for b in $ButtonBar.get_children():

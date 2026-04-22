@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("2_2ycw2")
+class_names = 8
 name = "Monk"
 member_name = "Sykes"
 max_hp = 12
