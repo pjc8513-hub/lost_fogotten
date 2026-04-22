@@ -43,9 +43,9 @@ func setup(data: ClassData, index: int): # We leave 'data' untyped here too just
 		member_index = index
 		# Use the variable names from your ClassData.gd
 		portrait.texture = data.sprite_texture 
-		hp_bar.max_value = data.max_hp
+		hp_bar.max_value = data.get_max_hp()
 		hp_bar.value = data.current_hp
-		mp_bar.max_value = data.max_mp
+		mp_bar.max_value = data.get_max_mp()
 		mp_bar.value = data.current_mp
 		label.text = data.member_name
 		
@@ -63,6 +63,8 @@ func _on_stats_changed(updated_data: ClassData):
 
 func update_ui():
 	# Use Tween for a smooth sliding animation instead of a sudden jump
+	hp_bar.max_value = my_member_data.get_max_hp()
+	mp_bar.max_value = my_member_data.get_max_mp()
 	var tween = create_tween()
 	tween.tween_property(hp_bar, "value", my_member_data.current_hp, 0.2)
 	#print(my_member_data.class_name, " max mp: ", my_member_data.max_mp)

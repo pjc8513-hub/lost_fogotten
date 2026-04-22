@@ -76,6 +76,17 @@ script = ExtResource("1_r0du0")
 [node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=164301929]
 script = ExtResource("6_trn2v")
 
+[node name="AnimationLayer" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=1205095281]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
 [node name="Control" type="Control" parent="." unique_id=1434150912]
 layout_mode = 3
 anchors_preset = 0

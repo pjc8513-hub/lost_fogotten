@@ -10,7 +10,7 @@ var available_points: int = 0:
 		available_points = value
 		_update_header()
 
-var stat_entries: Dictionary = {} # "Might": StatEntry node
+var primary_stat_entries: Dictionary = {} # "Might": StatEntry node
 
 func _ready():
 	GameEvents.selected_character_changed.connect(
@@ -32,20 +32,23 @@ func _refresh_from_character(character):
 	if character == null:
 		return
 
-	var stats = character.get_stats()
-	_build_stat_list(stats)
+	var primary_stats = character.get_primary_stats()
+	_build_primary_stat_list(primary_stats)
+
+	var derived_stats = character.get_derived_stats()
+	_build_derived_stat_list(derived_stats)
 
 	available_points = character.get_available_points()
 
 func _on_stats_changed(character):
 	if character == PartyState.get_selected():
-		_build_stat_list(character.get_stats())
+		_refresh_from_character(character)
 		
-func _build_stat_list(stats: Dictionary):
+func _build_primary_stat_list(stats: Dictionary):
 	# Clear old ones if rebuilding
 	for child in stats_list.get_children():
 		child.queue_free()
-	stat_entries.clear()
+	primary_stat_entries.clear()
 	
 	# Create one row per stat
 	for stat_name in stats.keys(): # ["might", "dexterity", "vitality", ...]
@@ -56,23 +59,36 @@ func _build_stat_list(stats: Dictionary):
 			stats_list.add_child(entry)
 			entry.setup(stat_name, stats[stat_name])
 			entry.stat_clicked.connect(_on_stat_clicked)
-			stat_entries[stat_name] = entry
+			primary_stat_entries[stat_name] = entry
 		else:
 			print("No stat_entry_scene")
-	
-	_update_all_entries()
+
+	_update_primary_entries()
+
+func _build_derived_stat_list(stats: Dictionary):
+	# Create one row per stat
+	for stat_name in stats.keys(): # ["might", "dexterity", "vitality", ...]
+		print("Building stat: ", stat_name)
+		var entry: StatEntry = stat_entry_scene.instantiate()
+		if entry:
+			entry.custom_minimum_size = Vector2(0, 32)
+			stats_list.add_child(entry)
+			entry.setup(stat_name, stats[stat_name])
+			entry.set_clickable(false)
+		else:
+			print("No stat_entry_scene")
 
 func _on_stat_clicked(stat_name: String):
-	if available_points > 0:
-		available_points -= 1
-		var player_stats = PartyState.get_selected().get_stats()
-		player_stats[stat_name] += 1
-		stat_entries[stat_name].set_value(player_stats[stat_name])
-		_update_all_entries()
+	var selected := PartyState.get_selected()
+	if selected == null:
+		return
 
-func _update_all_entries():
+	if selected.spend_stat_point(stat_name):
+		_refresh_from_character(selected)
+
+func _update_primary_entries():
 	var can_add = available_points > 0
-	for entry in stat_entries.values():
+	for entry in primary_stat_entries.values():
 		entry.set_clickable(can_add)
 
 func _update_header():

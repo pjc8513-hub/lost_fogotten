@@ -117,6 +117,7 @@ func _toggle_equip(inst: ItemInstance) -> void:
 		return
 
 	inst.is_equipped = not inst.is_equipped
+	owner_char.recalculate_derived_stats(false)
 	GameEvents.inventory_changed.emit(owner_char)
 
 func _use_item(inst: ItemInstance) -> void:

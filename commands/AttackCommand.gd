@@ -50,11 +50,12 @@ func _perform_single_attack(target) -> void:
 	
 	var accuracy : int = actor.get_accuracy()  if actor.has_method("get_accuracy") else 0
 	
-	var outcome := CombatLogic.accuracy_roll(accuracy, target.armor_class)
+	var target_ac = target.get_armor_class() if target.has_method("get_armor_class") else target.armor_class
+	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
 	#print("[AttackCommand] outcome=", outcome, " accuracy=", accuracy, " armor=", target.armor_class)
 	
 	if outcome == "miss":
-		var msg := "[color=gray]%s[/color] attacks %s — [color=gray]miss![/color]" % [
+		var msg = "[color=gray]%s[/color] attacks %s — [color=gray]miss![/color]" % [
 			actor.enemy_data.enemy_name, target.member_name
 		]
 		GameEvents.message_logged.emit(msg)

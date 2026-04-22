@@ -67,7 +67,7 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	)
 	if outcome == "crit":
 		raw *= 2
-	raw += CombatLogic.might_bonus(attacker.might)
+	raw += CombatLogic.might_bonus(attacker.get_might())
 
 	# Physical resist on enemy side
 	var resist := target.enemy_data.get_resistance("physical")
@@ -115,7 +115,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 	)
 	if outcome == "crit":
 		raw *= 2
-	raw += CombatLogic.might_bonus(attacker.might)
+	raw += CombatLogic.might_bonus(attacker.get_might())
 
 	var resist := target.enemy_data.get_resistance("physical")
 	var final_damage := CombatLogic.apply_resistance(raw, resist)

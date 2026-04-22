@@ -29,8 +29,7 @@ func execute() -> void:
 		return
 	
 	# Skill check - use lockpick/thievery from ClassData
-	#var skill_bonus = acting_member.get_skill_bonus("lockpicking") # however you calc it
-	var skill_bonus = 0
+	var skill_bonus = acting_member.get_skill_bonus("lockpicking")
 	var success = target_chest.attempt_unlock(skill_bonus)
 
 	if success:

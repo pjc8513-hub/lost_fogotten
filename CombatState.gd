@@ -196,7 +196,7 @@ func _get_initiative(actor) -> int:
 	if actor is Enemy:
 		return actor.enemy_data.initiative
 	if actor is ClassData:
-		return actor.initiative
+		return actor.get_initiative()
 	return 0
 
 func _get_cooldown(actor) -> int:
