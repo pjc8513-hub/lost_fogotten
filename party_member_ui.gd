@@ -2,10 +2,12 @@ extends PanelContainer
 
 # Drag your UI nodes here to create references
 @onready var portrait = $HBoxContainer/PortraitOne
-@onready var hp_bar = $HBoxContainer/VBoxContainer/ProgressBar
-@onready var mp_bar = $HBoxContainer/VBoxContainer/ProgressBar2
+@onready var hp_bar: ProgressBar = $HBoxContainer/VBoxContainer/ProgressBar
+@onready var mp_bar: ProgressBar = $HBoxContainer/VBoxContainer/ProgressBar2
+@onready var xp_bar: ProgressBar = $HBoxContainer/VBoxContainer/ProgressBar3
 @onready var label = $HBoxContainer/VBoxContainer/Label
 @onready var status_icon = $HBoxContainer/StatusIcon
+
 
 var my_member_data: ClassData
 var member_index: int = -1
@@ -21,6 +23,7 @@ func _ready():
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
+
 
 func _create_styles():
 	normal_style = StyleBoxFlat.new()
@@ -47,6 +50,7 @@ func setup(data: ClassData, index: int): # We leave 'data' untyped here too just
 		hp_bar.value = data.current_hp
 		mp_bar.max_value = data.get_max_mp()
 		mp_bar.value = data.current_mp
+		xp_bar.value = data.xp
 		label.text = data.member_name
 		
 		my_member_data = data
@@ -65,6 +69,7 @@ func update_ui():
 	# Use Tween for a smooth sliding animation instead of a sudden jump
 	hp_bar.max_value = my_member_data.get_max_hp()
 	mp_bar.max_value = my_member_data.get_max_mp()
+	xp_bar.max_value = my_member_data.xp_to_next_level
 	var tween = create_tween()
 	tween.tween_property(hp_bar, "value", my_member_data.current_hp, 0.2)
 	#print(my_member_data.class_name, " max mp: ", my_member_data.max_mp)
@@ -72,7 +77,8 @@ func update_ui():
 	#print(my_member_data.class_name, " max hp: ", my_member_data.max_hp)
 	#print(my_member_data.class_name, " current hp: ", my_member_data.current_hp)
 	mp_bar.value = my_member_data.current_mp
-
+	xp_bar.value = my_member_data.xp
+	print(my_member_data.xp, "xp debug")
 func _on_selection_changed(_character: ClassData):
 	_update_border()
 

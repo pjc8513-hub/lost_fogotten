@@ -206,7 +206,7 @@ const CLASS_STAT_MAP = {
 @export_group("Progression")
 @export var xp: int = 0
 @export var xp_to_next_level = BASE_XP_TO_NEXT_LEVEL
-@export var available_points = 1
+@export var available_points = 0
 @export var learned_skills: Array[String] = []
 
 @export_group("Presentation")

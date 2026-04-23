@@ -45,3 +45,6 @@ func reset_default_party() -> void:
 		active_party.append(template.create_party_member_instance())
 
 	selected_index = 0
+	
+func get_active_party() -> Array[ClassData]:
+	return active_party

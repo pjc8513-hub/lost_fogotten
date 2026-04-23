@@ -54,3 +54,12 @@ func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 			item_instance.item_data = item_data
 			random_member.inventory.append(item_instance)
 			GameEvents.inventory_changed.emit(random_member)
+
+func distribute_xp(xp: int = 0):
+	# Distribute xp
+	var members: Array[ClassData] = PartyState.get_active_party()
+	GameEvents.message_logged.emit("[color=green]Party gained %s xp[/color]" % [xp])
+	for member in members:
+		member.xp += xp/5
+		GameEvents.party_member_stats_changed.emit(member)
+		
