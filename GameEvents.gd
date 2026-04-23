@@ -15,7 +15,7 @@ signal gold_changed(new_amount: int)
 signal food_changed(new_amount: int)
 
 # Animation events
-# Add to GameEvents.gd
+
 signal attack_animation_started(attacker, target, damage)
 signal attack_animation_finished(attacker, target)
 signal damage_animation_started(target, damage_amount)  
@@ -25,3 +25,4 @@ signal character_status_changed_visually(character, status)
 signal character_died_animation_started(character)
 signal open_chest_animation_started(chest)
 signal open_chest_animation_finished(chest)
+#signal level_increase(character)

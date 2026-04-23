@@ -23,6 +23,7 @@ func _ready():
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
+	#GameEvents.level_increase.connect(_on_level_increase)
 
 
 func _create_styles():

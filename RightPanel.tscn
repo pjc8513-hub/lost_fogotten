@@ -87,6 +87,18 @@ layout_mode = 2
 script = ExtResource("7_ce36d")
 metadata/_tab_index = 2
 
+[node name="ClassHeader" type="PanelContainer" parent="TabContainer/StatsView" unique_id=29371852]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/StatsView/ClassHeader" unique_id=1209523534]
+layout_mode = 2
+
+[node name="LevelHeader" type="PanelContainer" parent="TabContainer/StatsView" unique_id=105647880]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/StatsView/LevelHeader" unique_id=615838498]
+layout_mode = 2
+
 [node name="PointsHeader" type="PanelContainer" parent="TabContainer/StatsView" unique_id=1175432266]
 layout_mode = 2
 

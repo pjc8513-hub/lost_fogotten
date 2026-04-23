@@ -55,11 +55,37 @@ func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 			random_member.inventory.append(item_instance)
 			GameEvents.inventory_changed.emit(random_member)
 
+# LootDistributor
 func distribute_xp(xp: int = 0):
-	# Distribute xp
-	var members: Array[ClassData] = PartyState.get_active_party()
-	GameEvents.message_logged.emit("[color=green]Party gained %s xp[/color]" % [xp])
-	for member in members:
-		member.xp += xp/5
-		GameEvents.party_member_stats_changed.emit(member)
+	if xp <= 0:
+		return
 		
+	var members: Array[ClassData] = PartyState.get_active_party()
+	if members.is_empty():
+		return
+	
+	var xp_per_member: int = xp / members.size()
+	var remainder: int = xp % members.size() # handle leftover xp
+	
+	GameEvents.message_logged.emit("[color=green]Party gained %s xp[/color]" % [xp])
+	
+	for i in members.size():
+		var member: ClassData = members[i]
+		var gained: int = xp_per_member
+		if i < remainder: # distribute remainder 1 by 1
+			gained += 1
+			
+		member.xp += gained
+		
+		# Handle multiple level ups
+		while member.xp >= member.xp_to_next_level:
+			var xp_for_level: int = member.xp_to_next_level
+			member.xp -= xp_for_level # subtract cost, keep overflow
+			
+			var points = member.roll_level_up_points()
+			member.gain_level(points) # this should update xp_to_next_level internally
+			
+			GameEvents.message_logged.emit("[color=yellow]%s reached level %s![/color]" % [member.member_name, member.level])
+		
+		# Only emit once after all level ups are done
+		GameEvents.party_member_stats_changed.emit(member)		

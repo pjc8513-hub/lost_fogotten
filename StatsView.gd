@@ -4,6 +4,9 @@ extends VBoxContainer
 @onready var stats_list: VBoxContainer = $ScrollContainer/StatsList
 @onready var points_header: PanelContainer = $PointsHeader
 @onready var points_label: Label = $PointsHeader/Label
+@onready var class_label: Label = $ClassHeader/Label
+@onready var level_label: Label = $LevelHeader/Label
+
 
 var available_points: int = 0:
 	set(value):
@@ -11,6 +14,14 @@ var available_points: int = 0:
 		_update_header()
 
 var primary_stat_entries: Dictionary = {} # "Might": StatEntry node
+
+var current_class_name: String:
+	set(value):
+		current_class_name = value
+		
+var level: int = 0:
+	set(value):
+		level = value
 
 func _ready():
 	GameEvents.selected_character_changed.connect(
@@ -39,6 +50,12 @@ func _refresh_from_character(character):
 	_build_derived_stat_list(derived_stats)
 
 	available_points = character.get_available_points()
+	
+	# This works in 4.0+ : Dictionary.find_key(value)
+	current_class_name = ClassData.Class_Names.find_key(character.class_names)
+	
+	level = character.level
+	_update_header()
 
 func _on_stats_changed(character):
 	if character == PartyState.get_selected():
@@ -68,7 +85,7 @@ func _build_primary_stat_list(stats: Dictionary):
 func _build_derived_stat_list(stats: Dictionary):
 	# Create one row per stat
 	for stat_name in stats.keys(): # ["might", "dexterity", "vitality", ...]
-		print("Building stat: ", stat_name)
+		#print("Building stat: ", stat_name)
 		var entry: StatEntry = stat_entry_scene.instantiate()
 		if entry:
 			entry.custom_minimum_size = Vector2(0, 32)
@@ -92,6 +109,8 @@ func _update_primary_entries():
 		entry.set_clickable(can_add)
 
 func _update_header():
+	class_label.text = current_class_name
+	level_label.text = "Current level: %s" % level
 	points_label.text = "Available stat points: %d" % available_points
 
 	var style := points_header.get_theme_stylebox("panel").duplicate()

@@ -332,6 +332,7 @@ func gain_level(stat_points: int = -1) -> void:
 	level += 1
 	available_points += stat_points
 	xp_to_next_level = int(round(xp_to_next_level * 1.35))
+	
 	recalculate_derived_stats(false)
 
 func roll_level_up_points() -> int:
