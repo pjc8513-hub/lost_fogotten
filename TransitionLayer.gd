@@ -12,16 +12,19 @@ func _ready():
 	
 
 	overlay = ColorRect.new()
-	overlay.color = Color(0, 0, 0, 0)  # start fully black
-	overlay.anchor_right = 1.0
-	overlay.anchor_bottom = 1.0
+	overlay.color = Color(0, 0, 0, 1)  # start fully black
+	#overlay.anchor_right = 1.0
+	#overlay.anchor_bottom = 1.0
 	# Makes it fill the screen regardless of resolution
-	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	#overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	canvas_layer.add_child(overlay)
+	
+	overlay.set_deferred("custom_minimum_size", Vector2(1,1)) # Kickstarts the layout
+	overlay.call_deferred("set_anchors_and_offsets_preset", Control.PRESET_FULL_RECT)
 
 	# Fade in immediately on game start (clears the initial black)
-	# fade_in()
+	fade_in()
 
 func fade_out() -> void:
 	if tween:

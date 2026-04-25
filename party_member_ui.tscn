@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://c2osn80j6saxq"]
 
-[ext_resource type="Texture2D" uid="uid://cy21m677h31mg" path="res://assets/portraits/knight_p.png" id="1_bhaq4"]
 [ext_resource type="Script" uid="uid://bhdj7ejekuvtb" path="res://party_member_ui.gd" id="1_t3qfy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qui0h"]
@@ -29,6 +28,7 @@ bg_color = Color(1, 0.84313726, 0, 1)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t3qfy"]
 
 [node name="MemberPanel1" type="PanelContainer" unique_id=1532612420]
+visible = false
 custom_minimum_size = Vector2(0, 100)
 offset_right = 271.0
 offset_bottom = 100.0
@@ -42,7 +42,6 @@ layout_mode = 2
 [node name="PortraitOne" type="TextureRect" parent="HBoxContainer" unique_id=2061576124]
 custom_minimum_size = Vector2(69, 60)
 layout_mode = 2
-texture = ExtResource("1_bhaq4")
 expand_mode = 1
 flip_h = true
 
@@ -52,7 +51,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1432678078]
 layout_mode = 2
-text = "Power Chord"
 
 [node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1425417927]
 custom_minimum_size = Vector2(0, 20)

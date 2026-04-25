@@ -59,7 +59,6 @@ func _ready():
 		print("[FRAME ", Engine.get_process_frames(), "] Main map build complete, selected index: ", PartyState.selected_index)
 		print("[FRAME ", Engine.get_process_frames(), "] Main selected member: ", PartyState.get_selected())
 	print("[FRAME ", Engine.get_process_frames(), "] Main _ready end")
-	$Control/MarginContainer/VBoxContainer.refresh_party_ui()
 		
 func _input(event):
 	if event.is_action_pressed("map"):  # Set this up in Project > Input Map

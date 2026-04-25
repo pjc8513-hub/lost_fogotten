@@ -13,6 +13,8 @@ var my_member_data: ClassData
 var member_index: int = -1
 var normal_style: StyleBoxFlat
 var selected_style: StyleBoxFlat
+var _pending_member_data: ClassData
+var _pending_member_index: int = -1
 
 enum CombatStatus { IDLE, WAITING, ACTING, STUN, DONE }
 var wait_texture = preload("res://assets/icons/wait.png")
@@ -23,9 +25,14 @@ func _enter_tree():
 	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _enter_tree")
 	
 func _ready():
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready start member_index=", member_index, " pending_index=", _pending_member_index)
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
+	if _pending_member_data:
+		_apply_setup(_pending_member_data, _pending_member_index)		
+	call_deferred("_update_border")
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready end texture=", portrait.texture, " visible=", visible)
 	#GameEvents.level_increase.connect(_on_level_increase)
 
 func _create_styles():
@@ -45,23 +52,38 @@ func _create_styles():
 
 # This function takes a .tres file and fills the UI
 func setup(data: ClassData, index: int): # We leave 'data' untyped here too just to be safe
-	if data:
-		member_index = index
-		# Use the variable names from your ClassData.gd
-		portrait.texture = data.sprite_texture 
-		hp_bar.max_value = data.get_max_hp()
-		hp_bar.value = data.current_hp
-		mp_bar.max_value = data.get_max_mp()
-		mp_bar.value = data.current_mp
-		xp_bar.value = data.xp
-		label.text = data.member_name
-		
-		my_member_data = data
-		# Listen for any stat changes globally
-		if !GameEvents.party_member_stats_changed.is_connected(_on_stats_changed):
-			GameEvents.party_member_stats_changed.connect(_on_stats_changed)
-		
-		update_ui()
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " setup called index=", index, " node_ready=", is_node_ready(), " data=", data)
+	_pending_member_data = data
+	_pending_member_index = index
+	if is_node_ready():
+		_apply_setup(data, index)
+
+func _apply_setup(data: ClassData, index: int) -> void:
+	if not data:
+		return
+
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup index=", index, " member=", data.member_name, " texture=", data.sprite_texture)
+	member_index = index
+	# Use the variable names from your ClassData.gd
+	portrait.texture = null
+	portrait.texture = data.sprite_texture
+	portrait.queue_redraw()
+	hp_bar.max_value = data.get_max_hp()
+	hp_bar.value = data.current_hp
+	mp_bar.max_value = data.get_max_mp()
+	mp_bar.value = data.current_mp
+	xp_bar.value = data.xp
+	label.text = data.member_name
+
+	my_member_data = data
+	# Listen for any stat changes globally
+	if !GameEvents.party_member_stats_changed.is_connected(_on_stats_changed):
+		GameEvents.party_member_stats_changed.connect(_on_stats_changed)
+
+	update_ui()
+	call_deferred("_update_border")
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup done texture=", portrait.texture)
+	call_deferred("show")
 
 func _on_stats_changed(updated_data: ClassData):
 	# Check: Is the person who changed actually ME?
@@ -81,15 +103,25 @@ func update_ui():
 	#print(my_member_data.class_name, " current hp: ", my_member_data.current_hp)
 	mp_bar.value = my_member_data.current_mp
 	xp_bar.value = my_member_data.xp
-	print(my_member_data.xp, "xp debug")
+	if my_member_data.current_hp <=0:
+		portrait.texture = preload("res://assets/portraits/dead_p.png")
 func _on_selection_changed(_character: ClassData):
 	_update_border()
 
 func _update_border():
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _update_border selected_index=", PartyState.selected_index, " member_index=", member_index)
 	if PartyState.selected_index == member_index:
 		add_theme_stylebox_override("panel", selected_style)
 	else:
 		add_theme_stylebox_override("panel", normal_style)
+
+func _notification(what):
+	if what == NOTIFICATION_DRAW:
+		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " DRAW texture=", portrait.texture, " global_pos=", global_position, " visible=", visible)
+	elif what == NOTIFICATION_FOCUS_ENTER:
+		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " focus enter")
+	elif what == NOTIFICATION_FOCUS_EXIT:
+		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " focus exit")
 func _on_combat_status_changed(updated_data: ClassData, new_status: int):
 	if updated_data == my_member_data:
 		update_status_icon(new_status)

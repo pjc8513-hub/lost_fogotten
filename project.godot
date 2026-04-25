@@ -29,6 +29,7 @@ LootManager="*uid://uuljtpokh0d5"
 LootDistributor="*uid://b7tnhcewxuhuw"
 TransitionLayer="*uid://ce61dp1c5nboa"
 SceneManager="*uid://sxmewt851dru"
+MusicManager="*uid://cft2oio8a8ruy"
 
 [display]
 
