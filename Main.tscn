@@ -39,6 +39,8 @@ offset_right = 459.0
 offset_bottom = 512.0
 grow_horizontal = 2
 scale = Vector2(0.92, 0.9200001)
+focus_mode = 2
+focus_behavior_recursive = 2
 script = ExtResource("2_lgr22")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
@@ -61,6 +63,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+focus_behavior_recursive = 1
 mouse_filter = 2
 script = ExtResource("3_r0du0")
 
@@ -84,6 +87,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_behavior_recursive = 1
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
@@ -92,16 +96,19 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1350.0
 offset_bottom = 689.0
+focus_behavior_recursive = 1
 mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=725995254]
 layout_mode = 0
 offset_right = 280.0
 offset_bottom = 500.0
+focus_behavior_recursive = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=410320132]
 material = SubResource("ShaderMaterial_fos0i")
 layout_mode = 2
+focus_behavior_recursive = 1
 script = ExtResource("5_3dxm6")
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control" unique_id=15787608]
@@ -116,6 +123,7 @@ offset_right = 1.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_behavior_recursive = 1
 theme_override_constants/margin_left = 307
 theme_override_constants/margin_right = 281
 theme_override_constants/margin_bottom = 20
@@ -123,10 +131,12 @@ theme_override_constants/margin_bottom = 20
 [node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer2" unique_id=394630235]
 custom_minimum_size = Vector2(310, 160)
 layout_mode = 2
+focus_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_lgr22")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/MarginContainer2/PanelContainer" unique_id=117281084]
 layout_mode = 2
+focus_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3dxm6")
 script = ExtResource("6_3dxm6")
 
@@ -144,6 +154,7 @@ scroll_active = false
 
 [node name="RightPanel" parent="." unique_id=280808817 instance=ExtResource("9_03owx")]
 scale = Vector2(1, 0.9200001)
+focus_behavior_recursive = 1
 
 [node name="Control2" parent="." unique_id=1136315377 instance=ExtResource("11_20pc6")]
 anchors_preset = -1
@@ -154,3 +165,4 @@ offset_top = 0.30395508
 offset_right = 2.0000002
 offset_bottom = 0.30395508
 scale = Vector2(1.12, 0.8800012)
+focus_behavior_recursive = 1

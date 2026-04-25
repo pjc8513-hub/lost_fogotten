@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://wn83fyy0rosq"]
+
+[ext_resource type="Script" uid="uid://ce61dp1c5nboa" path="res://TransitionLayer.gd" id="1_8nvxw"]
+[ext_resource type="Script" uid="uid://sxmewt851dru" path="res://SceneManager.gd" id="2_nxskp"]
+
+[node name="Node2D" type="Node2D" unique_id=342781242]
+
+[node name="TransitionLayer" type="Node" parent="." unique_id=1158866036]
+script = ExtResource("1_8nvxw")
+
+[node name="SceneManager" type="Node" parent="." unique_id=1924991403]
+script = ExtResource("2_nxskp")

@@ -22,6 +22,10 @@ func _unhandled_input(event):
 		_queue_player_turn(player, TurnRightCommand.new())
 		get_viewport().set_input_as_handled()
 
+	if event.is_action_pressed("restart"):
+		SceneManager.change_scene("res://Main.tscn")
+
+
 
 	if event.is_action_pressed("select_member_1"):
 		PartyState.selected_index = 0

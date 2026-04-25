@@ -20,21 +20,41 @@ extends Node3D
 #var map_height = 10
 var map_open: bool = false
 var automap_grid := {}  # Dictionary of Vector2 -> int
+@onready var sub_viewport_container: SubViewportContainer = $SubViewportContainer
+@onready var sub_viewport: SubViewport = $SubViewportContainer/SubViewport
+
+func _enter_tree():
+	print("[FRAME ", Engine.get_process_frames(), "] Main _enter_tree")
 
 func _ready():
-	GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
+	
+	sub_viewport.gui_disable_input = false
+	sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	sub_viewport_container.mouse_filter = Control.MOUSE_FILTER_STOP
+	sub_viewport_container.grab_focus()
+	
+	call_deferred("_grab_viewport_focus")
+	
+	if not GameEvents.chest_opened.is_connected(LootDistributor.distribute_chest_loot):
+		GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
 	
 	# Load the new JSON format we exported from the TileMap
-	var data = load_room_data("res://data/maps/cave_level_1.json")
+	var data = MapBuilder.load_room_data("res://data/maps/cave_level_1.json")
 	if data:
-		build_map_from_json(data)
-
-		# Setup UI/World
+		var result = MapBuilder.build(
+			data, self, 
+			$SubViewportContainer/SubViewport,
+			_on_enemy_selected,
+			_on_chest_selected
+		)
+		var automap_grid = result.automap_grid
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
 		automap.set_map_data(automap_grid)
 		World.set_map_data(automap_grid)
-		PartyState.selected_index = 0
+		PartyState.selected_index = 0	
+		
+	get_window().grab_focus()
 
 func _input(event):
 	if event.is_action_pressed("map"):  # Set this up in Project > Input Map
@@ -48,6 +68,7 @@ func _input(event):
 		
 # debug
 func _unhandled_input(event):
+	get_node("SubViewportContainer/SubViewport").push_input(event)
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("[Main] Unhandled click at: ", event.position)		
 
@@ -218,3 +239,12 @@ func _spawn_decor(pos):
 	var decor = MoshTree_scene.instantiate()
 	add_child(decor)
 	decor.position = Vector3(pos.x, 0, pos.y)
+	
+func _grab_viewport_focus():
+	sub_viewport_container.grab_focus()
+
+func _on_enemy_selected(enemy):
+	World.set_selected_enemy(enemy)
+
+func _on_chest_selected(chest):
+	World.set_selected_chest(chest)

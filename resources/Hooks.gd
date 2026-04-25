@@ -1,0 +1,12 @@
+# Hooks.gd
+class_name Hooks
+
+enum Type {
+	PRE_DAMAGE,
+	POST_DAMAGE,
+	PRE_ACCURACY,
+	POST_ACTION,
+	TURN_START,
+	TURN_END,
+	ON_APPLY_STATUS,
+}

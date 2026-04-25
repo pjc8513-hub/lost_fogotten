@@ -19,12 +19,14 @@ var wait_texture = preload("res://assets/icons/wait.png")
 var turn_texture = preload("res://assets/icons/turn.png")
 var stun_texture = preload("res://assets/icons/stun.png")
 
+func _enter_tree():
+	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _enter_tree")
+	
 func _ready():
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
 	#GameEvents.level_increase.connect(_on_level_increase)
-
 
 func _create_styles():
 	normal_style = StyleBoxFlat.new()

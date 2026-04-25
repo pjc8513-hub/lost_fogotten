@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bsb0khwmixqdk"]
+
+[ext_resource type="Script" uid="uid://nbt54i5uap1k" path="res://NewGame.gd" id="1_yipjo"]
+
+[node name="Node2D" type="Node2D" unique_id=1600741914]
+
+[node name="Node" type="Node" parent="." unique_id=2144604098]
+script = ExtResource("1_yipjo")
+
+[node name="MarginContainer" type="MarginContainer" parent="Node" unique_id=1294616294]
+offset_right = 2155.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 800
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 1200
+theme_override_constants/margin_bottom = 400
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Node/MarginContainer" unique_id=1347602506]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Node/MarginContainer/VBoxContainer" unique_id=997659087]
+layout_mode = 2
+text = "LOST & FORGOTTEN"
+horizontal_alignment = 1
+
+[node name="new_game" type="Button" parent="Node/MarginContainer/VBoxContainer" unique_id=1759476543]
+layout_mode = 2
+text = "Start new Game"

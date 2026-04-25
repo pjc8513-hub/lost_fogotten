@@ -32,6 +32,7 @@ bg_color = Color(1, 0.84313726, 0, 1)
 custom_minimum_size = Vector2(0, 100)
 offset_right = 271.0
 offset_bottom = 100.0
+focus_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_qui0h")
 script = ExtResource("1_t3qfy")
 
