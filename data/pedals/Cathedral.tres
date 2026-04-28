@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EffectLoadout" format=3 uid="uid://ci6l3j85ff2ll"]
+
+[ext_resource type="Script" uid="uid://byojvrq58eohk" path="res://resources/EffectsLoadout.gd" id="1_h06sa"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_sftp7"]
+
+[resource]
+script = ExtResource("1_h06sa")
+display_name = "Cathedral"
+slot = 2
+cost = 4
+level = 12
+audio_effect = SubResource("AudioEffectReverb_sftp7")
+stat_mods = {
+"aoe_radius": 1.0,
+"crit_chance": 0.0,
+"evasion": 0.0,
+"fire_damage": 0.0,
+"ice_damage": 0.0,
+"phys_damage": 0.0
+}
+visual_mods = {
+"bloom_intensity": 0.3,
+"chromatic_aberration": 0.0,
+"color_temp": 0.0,
+"fog_density": 0.25
+}
+description = "Huge space."
+metadata/_custom_type_script = "uid://byojvrq58eohk"

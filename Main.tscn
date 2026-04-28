@@ -27,8 +27,6 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fos0i"]
 
-[sub_resource type="Theme" id="Theme_20pc6"]
-
 [node name="Main" type="Node3D" unique_id=86941200]
 script = ExtResource("1_glv2v")
 
@@ -168,12 +166,3 @@ offset_right = 2.0000002
 offset_bottom = 0.30395508
 scale = Vector2(1.12, 0.8800012)
 focus_behavior_recursive = 1
-
-[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=647180003]
-offset_left = 26.0
-offset_top = 25.0
-offset_right = 66.0
-offset_bottom = 65.0
-scale = Vector2(2.4799995, 2.44)
-theme = SubResource("Theme_20pc6")
-border_width = 5.0

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EffectLoadout" format=3 uid="uid://cjf4sno2agwkr"]
+
+[ext_resource type="Script" uid="uid://byojvrq58eohk" path="res://resources/EffectsLoadout.gd" id="1_vkgwu"]
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_jvnm2"]
+
+[resource]
+script = ExtResource("1_vkgwu")
+display_name = "Phase 90"
+slot = 1
+audio_effect = SubResource("AudioEffectPhaser_jvnm2")
+stat_mods = {
+"aoe_radius": 0.0,
+"crit_chance": 0.0,
+"evasion": 1.0,
+"fire_damage": 0.0,
+"ice_damage": 3.0,
+"phys_damage": 0.0
+}
+visual_mods = {
+"bloom_intensity": 0.0,
+"chromatic_aberration": 0.2,
+"color_temp": 0.0,
+"fog_density": 0.0
+}
+description = "Swooshy.
++1 evasion
++1-3 ice damage"
+metadata/_custom_type_script = "uid://byojvrq58eohk"

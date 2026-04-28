@@ -15,6 +15,10 @@ run/main_scene="uid://bsb0khwmixqdk"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://cd2ailb1m1wfj"
+
 [autoload]
 
 World="*uid://breu4ni7l6isq"
@@ -30,6 +34,7 @@ LootDistributor="*uid://b7tnhcewxuhuw"
 TransitionLayer="*uid://ce61dp1c5nboa"
 SceneManager="*uid://sxmewt851dru"
 MusicManager="*uid://cft2oio8a8ruy"
+LoadoutManager="*uid://cckvg3fitl8p1"
 
 [display]
 

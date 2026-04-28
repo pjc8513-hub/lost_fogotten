@@ -19,3 +19,15 @@ layout_mode = 2
 [node name="quick_start" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=1901269627]
 layout_mode = 2
 text = "Quick Start"
+
+[node name="add_distortion" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=2098416883]
+layout_mode = 2
+text = "Add Distortion"
+
+[node name="add_reverb" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=2072767038]
+layout_mode = 2
+text = "Add Reverb"
+
+[node name="add_phaser" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=2092709033]
+layout_mode = 2
+text = "Add Phaser"

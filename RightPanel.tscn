@@ -66,12 +66,10 @@ script = ExtResource("5_gll0b")
 
 [node name="PopupMenuMain" type="PopupMenu" parent="TabContainer/InventoryView" unique_id=1380312026]
 oversampling_override = 1.0
-visible = true
 script = ExtResource("6_5kfkf")
 
 [node name="TradeMenu" type="PopupMenu" parent="TabContainer/InventoryView/PopupMenuMain" unique_id=777877962]
 oversampling_override = 1.0
-visible = true
 
 [node name="SkillView" type="VBoxContainer" parent="TabContainer" unique_id=1804126734]
 visible = false
