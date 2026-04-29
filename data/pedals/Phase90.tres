@@ -9,6 +9,14 @@ script = ExtResource("1_vkgwu")
 display_name = "Phase 90"
 slot = 1
 audio_effect = SubResource("AudioEffectPhaser_jvnm2")
+audio_settings = {
+"depth": 0.7,
+"drive": 0.0,
+"feedback": 0.4,
+"mode": 0.0,
+"post_gain": 0.0,
+"rate_hz": 0.8
+}
 stat_mods = {
 "aoe_radius": 0.0,
 "crit_chance": 0.0,

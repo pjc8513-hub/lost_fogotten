@@ -12,6 +12,8 @@
 [ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="9_wkp8b"]
 [ext_resource type="PackedScene" uid="uid://c4c4blrojhq5d" path="res://GoldUI.tscn" id="11_20pc6"]
 
+[sub_resource type="Environment" id="Environment_20pc6"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lgr22"]
@@ -48,6 +50,9 @@ handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(827, 512)
 render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport" unique_id=917973934]
+environment = SubResource("Environment_20pc6")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1741699624]
 distance_fade_enabled = true

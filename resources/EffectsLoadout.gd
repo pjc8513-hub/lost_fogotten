@@ -11,15 +11,31 @@ enum Slot { PREAMP, MODULATION, TIME, DYNAMICS, EQ }
 # Audio: What Godot effect + settings to use
 @export var audio_effect: AudioEffect # Set in.tres file
 @export var bus_send_amount: float = 0.0 # Only used for Time slot if using sends
+# Use this to store specific knob settings: {"drive": 0.5, "mode": 1}
+@export var audio_settings: Dictionary = {
+	"mode": 0.0,
+	"drive": 0.0,
+	"post_gain": 0.0,
+	"rate_hz": 0.0,
+	"depth": 0.0,
+	"feedback": 0.0,
+	"room_size": 0.0,
+	"damping": 0.0,
+	"hipass": 0.0,
+	"dry": 0.0,
+	"wet": 0.0
+}
 
 # Gameplay: Key = stat name, Value = bonus. Use floats: 0.2 = +20%
 @export var stat_mods: Dictionary = {
 	"phys_damage": 0.0,
 	"crit_chance": 0.0,
+	"crit_damage": 0.0,
 	"fire_damage": 0.0,
 	"ice_damage": 0.0,
 	"aoe_radius": 0.0,
 	"evasion": 0.0,
+	"accuracy": 0.0
 }
 
 # Visuals: Key = env property, Value = amount to add

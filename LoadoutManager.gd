@@ -4,7 +4,7 @@ signal loadout_changed
 
 const MUSIC_BUS_NAME := "MusicGameplay"
 const CLEAN_BUS_NAME := "MusicClean"
-const MAX_POINTS := 10
+const MAX_POINTS := 11
 
 var total_points: int = MAX_POINTS
 var equipped: Dictionary = {} # Slot -> EffectLoadout
@@ -24,7 +24,7 @@ func _ready() -> void:
 		AudioServer.add_bus()
 		AudioServer.set_bus_name(clean_idx, CLEAN_BUS_NAME)
 
-# Call this when player changes gear
+# Call this when player changes pedal loadout
 func equip_effect(effect: EffectLoadout) -> bool:
 	var current_cost := get_current_cost()
 	if equipped.has(effect.slot):

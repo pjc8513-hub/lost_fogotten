@@ -10,6 +10,11 @@ display_name = "HM-2 Chainsaw"
 cost = 3
 level = 2
 audio_effect = SubResource("AudioEffectDistortion_5sll3")
+audio_settings = {
+"drive": 0.65,
+"mode": 1.0,
+"post_gain": 0.0
+}
 stat_mods = {
 "aoe_radius": 0.0,
 "crit_chance": 1.0,
