@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [audio]
 
-buses/default_bus_layout="uid://cd2ailb1m1wfj"
+buses/default_bus_layout=""
 
 [autoload]
 
@@ -34,7 +34,6 @@ LootDistributor="*uid://b7tnhcewxuhuw"
 TransitionLayer="*uid://ce61dp1c5nboa"
 SceneManager="*uid://sxmewt851dru"
 MusicManager="*uid://cft2oio8a8ruy"
-LoadoutManager="*uid://cckvg3fitl8p1"
 
 [display]
 

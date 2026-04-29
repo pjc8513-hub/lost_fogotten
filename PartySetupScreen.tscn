@@ -18,57 +18,36 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="quick_start" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=1901269627]
+custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "Quick Start"
 
-[node name="PointsLabel" type="Label" parent="Node/PanelContainer/VBoxContainer" unique_id=1392317827]
+[node name="CreateCharacterButton" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=250500151]
+custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Create Character"
 
-[node name="PedalContainer" type="HBoxContainer" parent="Node/PanelContainer/VBoxContainer" unique_id=825501098]
+[node name="AddPedalsButton" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=856213524]
+custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Add Pedals"
 
-[node name="Label" type="Label" parent="Node/PanelContainer/VBoxContainer/PedalContainer" unique_id=961033771]
+[node name="ManagePartyButton" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=1570590784]
+custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
-text = "Distortion"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Manage Party"
 
-[node name="HM2Toggle" type="Button" parent="Node/PanelContainer/VBoxContainer/PedalContainer" unique_id=1228533797]
+[node name="BeginButton" type="Button" parent="Node/PanelContainer/VBoxContainer" unique_id=808748736]
+custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
-text = "HM-2"
-
-[node name="PedalContainer2" type="HBoxContainer" parent="Node/PanelContainer/VBoxContainer" unique_id=1981904317]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Node/PanelContainer/VBoxContainer/PedalContainer2" unique_id=422347718]
-layout_mode = 2
-text = "Phaser"
-
-[node name="Phase90Toggle" type="Button" parent="Node/PanelContainer/VBoxContainer/PedalContainer2" unique_id=102150595]
-layout_mode = 2
-text = "Phase 90"
-
-[node name="PedalContainer3" type="HBoxContainer" parent="Node/PanelContainer/VBoxContainer" unique_id=1862161329]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Node/PanelContainer/VBoxContainer/PedalContainer3" unique_id=1277106657]
-layout_mode = 2
-text = "Reverb"
-
-[node name="Cathedral" type="Button" parent="Node/PanelContainer/VBoxContainer/PedalContainer3" unique_id=1128586393]
-layout_mode = 2
-text = "Cathedral"
-
-[node name="PedalContainer4" type="HBoxContainer" parent="Node/PanelContainer/VBoxContainer" unique_id=929918479]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Node/PanelContainer/VBoxContainer/PedalContainer4" unique_id=1609900049]
-layout_mode = 2
-text = "Clear"
-
-[node name="ClearAll" type="Button" parent="Node/PanelContainer/VBoxContainer/PedalContainer4" unique_id=2100756421]
-layout_mode = 2
-text = "Clear All"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Set Out"

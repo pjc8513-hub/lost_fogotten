@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://bybpru3fduqwq"]
+
+[ext_resource type="Script" uid="uid://5o2xdvhctqbw" path="res://CharacterCreation.gd" id="1_cj3lx"]
+
+[node name="Control" type="Control" unique_id=1658209856]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cj3lx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1940704490]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="class_option_button" type="Button" parent="VBoxContainer" unique_id=952799046]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Class Selection"
+
+[node name="name_input" type="LineEdit" parent="VBoxContainer" unique_id=1440066144]
+layout_mode = 2
+text = "Name"
+placeholder_text = "Name"
+max_length = 13
+flat = true
+
+[node name="PointsContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2009789025]
+layout_mode = 2
+
+[node name="available" type="Label" parent="VBoxContainer/PointsContainer" unique_id=1938937420]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Available points:"
+
+[node name="points_label" type="Label" parent="VBoxContainer/PointsContainer" unique_id=1857625188]
+layout_mode = 2
+text = "0"
+
+[node name="MightContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=911532934]
+layout_mode = 2
+
+[node name="MightButton" type="Button" parent="VBoxContainer/MightContainer" unique_id=138261240]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Might:"
+flat = true
+
+[node name="might_label" type="Label" parent="VBoxContainer/MightContainer" unique_id=1659746532]
+layout_mode = 2
+text = "0"
+
+[node name="EndContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1217177743]
+layout_mode = 2
+
+[node name="EndButton" type="Button" parent="VBoxContainer/EndContainer" unique_id=506859449]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Endurance:"
+flat = true
+
+[node name="end_label" type="Label" parent="VBoxContainer/EndContainer" unique_id=1554931846]
+layout_mode = 2
+text = "0"
+
+[node name="WisContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=255908091]
+layout_mode = 2
+
+[node name="WisButton" type="Button" parent="VBoxContainer/WisContainer" unique_id=461322484]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Wisdom:"
+flat = true
+
+[node name="wis_label" type="Label" parent="VBoxContainer/WisContainer" unique_id=1359862727]
+layout_mode = 2
+text = "0"
+
+[node name="DexContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=414183882]
+layout_mode = 2
+
+[node name="DexButton" type="Button" parent="VBoxContainer/DexContainer" unique_id=374644357]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Might:"
+flat = true
+
+[node name="dex_label" type="Label" parent="VBoxContainer/DexContainer" unique_id=1462337537]
+layout_mode = 2
+text = "0"
+
+[node name="save_button" type="Button" parent="VBoxContainer" unique_id=1088068697]
+layout_mode = 2
+text = "Save"
