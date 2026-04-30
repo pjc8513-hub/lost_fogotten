@@ -12,14 +12,12 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="class_option_button" type="Button" parent="VBoxContainer" unique_id=952799046]
+[node name="class_option_button" type="OptionButton" parent="VBoxContainer" unique_id=952799046]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
-text = "Class Selection"
 
 [node name="name_input" type="LineEdit" parent="VBoxContainer" unique_id=1440066144]
 layout_mode = 2
-text = "Name"
 placeholder_text = "Name"
 max_length = 13
 flat = true
@@ -81,7 +79,7 @@ layout_mode = 2
 [node name="DexButton" type="Button" parent="VBoxContainer/DexContainer" unique_id=374644357]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Might:"
+text = "Dexterity:"
 flat = true
 
 [node name="dex_label" type="Label" parent="VBoxContainer/DexContainer" unique_id=1462337537]

@@ -28,6 +28,13 @@ const PRIMARY_STAT_FIELDS := {
 	"Wisdom": "base_wisdom",
 	"Dexterity": "base_dexterity",
 }
+const CLASS_TEMPLATE_PATHS := {
+	Class_Names.KNIGHT: "res://data/classes/knight.tres",
+	Class_Names.CLERIC: "res://data/classes/cleric.tres",
+	Class_Names.SORCERER: "res://data/classes/sorcerer.tres",
+	Class_Names.ROGUE: "res://data/classes/rogue.tres",
+	Class_Names.MONK: "res://data/classes/monk.tres",
+}
 const CLASS_STAT_MAP = {
 	Class_Names.KNIGHT: {
 		"base_might": 12, "base_end": 12, "base_wis": 6, "base_dex": 8,
@@ -265,10 +272,49 @@ func create_party_member_instance() -> ClassData:
 	member.initialize_from_class_map(true)
 	return member
 
+static func create_custom_member(class_id: Class_Names, member_name_value: String, base_stats: Dictionary = {}) -> ClassData:
+	var template_path: String = CLASS_TEMPLATE_PATHS.get(class_id, "")
+	var member: ClassData = null
+
+	if template_path != "":
+		var template := load(template_path) as ClassData
+		if template != null:
+			member = template.create_party_member_instance()
+
+	if member == null:
+		member = ClassData.new()
+
+	member.class_names = class_id
+	member.member_name = member_name_value.strip_edges()
+	member.level = 1
+	member.xp = 0
+	member.xp_to_next_level = BASE_XP_TO_NEXT_LEVEL
+	member.available_points = 0
+	member.learned_skills = []
+	member.status_effects = []
+	member.cooldown = 0
+
+	member.base_might = int(base_stats.get("might", base_stats.get("Might", member.base_might)))
+	member.base_endurance = int(base_stats.get("endurance", base_stats.get("Endurance", member.base_endurance)))
+	member.base_wisdom = int(base_stats.get("wisdom", base_stats.get("Wisdom", member.base_wisdom)))
+	member.base_dexterity = int(base_stats.get("dexterity", base_stats.get("Dexterity", member.base_dexterity)))
+
+	member.initialize_from_class_map(true)
+	return member
+
+static func get_class_display_name(class_id: Class_Names) -> String:
+	for key in Class_Names.keys():
+		if Class_Names[key] == class_id:
+			return String(key).capitalize()
+	return "Unknown"
+
 func get_resolved_class_name() -> Class_Names:
 	if class_names != Class_Names.UNKNOWN:
 		return class_names
 	return _infer_class_name_from_resource()
+
+func get_class_display_name_value() -> String:
+	return get_class_display_name(get_resolved_class_name())
 
 func _infer_class_name_from_resource() -> Class_Names:
 	var resource_name := String(resource_path.get_file().get_basename()).to_lower()
