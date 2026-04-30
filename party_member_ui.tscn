@@ -28,7 +28,6 @@ bg_color = Color(1, 0.84313726, 0, 1)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t3qfy"]
 
 [node name="MemberPanel1" type="PanelContainer" unique_id=1532612420]
-visible = false
 custom_minimum_size = Vector2(0, 100)
 offset_right = 271.0
 offset_bottom = 100.0
