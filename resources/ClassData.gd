@@ -46,6 +46,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 0, "initiative_dex_scale": 0.5,
 		"attack_speed_base": 0, "attack_speed_dex_scale": 0.35,
 		"bonus_damage_base": 1, "damage_might_scale": 1.0,
+		"magic_amp": 0, "magic_amp_wis_scale": 0,
 		"movement": 4, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT, ArmorData.Armor_Type.MEDIUM, ArmorData.Armor_Type.HEAVY],
 		"skill_bonuses": {"leadership": 1}
 	},
@@ -59,6 +60,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": -1, "initiative_dex_scale": 0.35,
 		"attack_speed_base": 0, "attack_speed_dex_scale": 0.25,
 		"bonus_damage_base": 3, "damage_might_scale": 1.35,
+		"magic_amp": 0, "magic_amp_wis_scale": 0,
 		"movement": 4, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT, ArmorData.Armor_Type.MEDIUM],
 		"skill_bonuses": {"athletics": 2}
 	},
@@ -72,6 +74,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 0, "initiative_dex_scale": 0.45,
 		"attack_speed_base": 0, "attack_speed_dex_scale": 0.25,
 		"bonus_damage_base": 0, "damage_might_scale": 0.55, "damage_wis_scale": 0.3,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.2,
 		"movement": 4, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT, ArmorData.Armor_Type.MEDIUM],
 		"skill_bonuses": {"medicine": 2, "lore": 1}
 	},
@@ -85,6 +88,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 1, "initiative_dex_scale": 0.55, "initiative_wis_scale": 0.25,
 		"attack_speed_base": 1, "attack_speed_dex_scale": 0.35,
 		"bonus_damage_base": 0, "damage_might_scale": 0.35,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.1,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
 		"skill_bonuses": {"lore": 2, "perception": 1, "leadership": 1}
 	},
@@ -98,6 +102,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 0, "initiative_dex_scale": 0.5, "initiative_wis_scale": 0.2,
 		"attack_speed_base": 0, "attack_speed_dex_scale": 0.2,
 		"bonus_damage_base": 0, "damage_wis_scale": 0.4,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.4,
 		"movement": 4, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
 		"skill_bonuses": {"lore": 2, "perception": 1}
 	},
@@ -111,6 +116,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 3, "initiative_dex_scale": 1.1,
 		"attack_speed_base": 3, "attack_speed_dex_scale": 0.9,
 		"bonus_damage_base": 0, "damage_might_scale": 0.25, "damage_dex_scale": 0.45,
+		"magic_amp": 0, "magic_amp_wis_scale": 0,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
 		"skill_bonuses": {"lockpicking": 3, "thievery": 3, "disarm_traps": 3, "sleight_of_hand": 2}
 	},
@@ -124,6 +130,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 2, "initiative_dex_scale": 0.9,
 		"attack_speed_base": 1, "attack_speed_dex_scale": 0.55,
 		"bonus_damage_base": 0, "damage_might_scale": 0.45, "damage_dex_scale": 0.35,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.15,
 		"movement": 6, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT, ArmorData.Armor_Type.MEDIUM],
 		"skill_bonuses": {"perception": 2, "survival": 2}
 	},
@@ -137,6 +144,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 0, "initiative_dex_scale": 0.45, "initiative_wis_scale": 0.25,
 		"attack_speed_base": 0, "attack_speed_dex_scale": 0.2,
 		"bonus_damage_base": 0, "damage_wis_scale": 0.45,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.3,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT, ArmorData.Armor_Type.MEDIUM],
 		"skill_bonuses": {"medicine": 1, "lore": 2, "survival": 1}
 	},
@@ -150,6 +158,7 @@ const CLASS_STAT_MAP = {
 		"initiative_base": 2, "initiative_dex_scale": 0.8, "initiative_wis_scale": 0.2,
 		"attack_speed_base": 2, "attack_speed_dex_scale": 0.7,
 		"bonus_damage_base": 1, "damage_might_scale": 0.35, "damage_dex_scale": 0.25, "damage_wis_scale": 0.2,
+		"magic_amp": 0, "magic_amp_wis_scale": 0.2,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
 		"skill_bonuses": {"medicine": 1, "discipline": 2}
 	},
@@ -228,6 +237,7 @@ const CLASS_STAT_MAP = {
 @export var movement: int = 5
 @export var cooldown: int = 0
 var quick_step_used: bool = false
+var suppress_stat_signal: bool = false
 
 @export var dice_sides: int = 4
 @export var dice_rolls: int = 1
@@ -247,9 +257,13 @@ func get_derived_stats() -> Dictionary:
 		"Level": level,
 		"Max HP": get_max_hp(),
 		"Max MP": get_max_mp(),
+		"Damage Mod": get_damage_modifier(),
+		"Magic Amp": get_magic_amp(),
 		"Armor Class": get_armor_class(),
 		"Accuracy": get_accuracy(),
 		"Critical Chance": get_critical_chance(),
+		"Critical Amp": get_critical_amp(),
+		"Counter Chance": get_counter_chance(),
 		"Initiative": get_initiative(),
 		"Attack Speed": get_attack_speed_bonus(),
 		"Movement": get_movement(),
@@ -273,18 +287,24 @@ func create_party_member_instance() -> ClassData:
 	member.initialize_from_class_map(true)
 	return member
 
-static func create_custom_member(class_id: Class_Names, member_name_value: String, base_stats: Dictionary = {}) -> ClassData:
+static func create_custom_member(class_id: Class_Names, member_name_value: String, base_stats: Dictionary = {}, silent: bool = false) -> ClassData:
 	var template_path: String = CLASS_TEMPLATE_PATHS.get(class_id, "")
 	var member: ClassData = null
 
 	if template_path != "":
 		var template := load(template_path) as ClassData
 		if template != null:
-			member = template.create_party_member_instance()
+			if silent:
+				member = template.duplicate(true) as ClassData
+				member.status_effects = []
+				member.cooldown = 0
+			else:
+				member = template.create_party_member_instance()
 
 	if member == null:
 		member = ClassData.new()
 
+	member.suppress_stat_signal = silent
 	member.class_names = class_id
 	member.member_name = member_name_value.strip_edges()
 	member.level = 1
@@ -301,6 +321,7 @@ static func create_custom_member(class_id: Class_Names, member_name_value: Strin
 	member.base_dexterity = int(base_stats.get("dexterity", base_stats.get("Dexterity", member.base_dexterity)))
 
 	member.initialize_from_class_map(true)
+	member.suppress_stat_signal = false
 	return member
 
 static func get_class_display_name(class_id: Class_Names) -> String:
@@ -421,6 +442,15 @@ func get_armor_class() -> int:
 func get_movement() -> int:
 	return _get_class_int("movement", movement) + int(_get_skill_stat_bonus("movement_bonus"))
 
+func get_magic_amp() -> int:
+	return _calculate_magic_amp()
+
+func get_critical_amp() -> int:
+	return _calculate_critical_amp()
+
+func get_counter_chance() -> int:
+	return _calculate_counter_chance()
+
 func can_equip_item(item: ItemData) -> bool:
 	if item == null:
 		return false
@@ -513,6 +543,12 @@ func get_bonus_damage() -> int:
 func get_attack_speed_bonus() -> int:
 	return _calculate_attack_speed_bonus()
 
+func get_damage_modifier(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	return get_bonus_damage() + CombatLogic.might_bonus(get_might()) + _get_weapon_bonus(slot, "bonus_damage_bonus")
+
+func get_damage_display(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> String:
+	return "%dd%d" % [get_dice_rolls(slot), get_dice_sides(slot)]
+
 func get_total_attack_speed(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
 	var total_speed = float(get_attack_speed_bonus())
 	var weapon = get_equipped_weapon(slot)
@@ -584,6 +620,15 @@ func _calculate_initiative() -> int:
 func _calculate_bonus_damage() -> int:
 	return base_bonus_damage_bonus + _get_class_int("bonus_damage_base", 0) + _scaled_modifier(get_might(), _get_class_float("damage_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("damage_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("damage_wis_scale", 0.0)) + _get_equipped_bonus("bonus_damage_bonus")
 
+func _calculate_magic_amp() -> int:
+	return _get_class_int("magic_amp", 0) + _scaled_modifier(get_wisdom(), _get_class_float("magic_amp_wis_scale", 0.0)) + _get_equipped_bonus("magic_amp_bonus")
+
+func _calculate_critical_amp() -> int:
+	return _get_class_int("crit_amp", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_amp_dex_scale", 0.0)) + _get_equipped_bonus("critical_amp_bonus")
+
+func _calculate_counter_chance() -> int:
+	return max(0, _get_class_int("counter_chance", 0) + _scaled_modifier(get_dexterity(), _get_class_float("counter_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("counter_wis_scale", 0.0)) + _get_equipped_bonus("counter_chance_bonus"))
+
 func _get_equipped_bonus(stat_name: String) -> int:
 	var total := 0
 	for inst in inventory:
@@ -599,6 +644,12 @@ func _get_armor_item_bonus() -> int:
 			continue
 		total += (inst.item_data as ArmorData).armor_class
 	return total
+
+func _get_weapon_bonus(slot: ItemData.Equip_Slot, stat_name: String) -> int:
+	var weapon := get_equipped_weapon(slot)
+	if weapon == null:
+		return 0
+	return int(weapon.get(stat_name))
 
 func _stat_modifier(value: int) -> int:
 	return int(floor((value - 10) / 2.0))
@@ -624,6 +675,8 @@ func _get_allowed_armor_types() -> Array:
 	return allowed if allowed is Array else []
 
 func _emit_stats_changed() -> void:
+	if suppress_stat_signal:
+		return
 	if GameEvents:
 		GameEvents.party_member_stats_changed.emit(self)
 

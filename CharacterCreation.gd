@@ -37,6 +37,7 @@ var stats := {
 @onready var attack_speed_label: Label = $HBoxContainer/CharacterStats/AttackSpeedContainer/AttackSpeedLabel
 @onready var movement_speed_label: Label = $HBoxContainer/CharacterStats/MovementSpeedContainer2/MovementSpeedLabel
 @onready var magic_damage_label: Label = $HBoxContainer/CharacterStats/MagicDamageMod/MagicDamageLabel
+@onready var armor_class_label: Label = $HBoxContainer/CharacterStats/ArmorClassContainer/ArmorClassLabel
 
 # SkillContainer
 @onready var skill_list: ItemList = $HBoxContainer/SkillContainer/ScrollContainer/SkillList
@@ -86,6 +87,7 @@ func _update_ui():
 	wis_label.text = str(stats.wisdom)
 	dex_label.text = str(stats.dexterity)
 	save_button.disabled = name_input.text.strip_edges().is_empty()
+	_update_character_stats()
 
 # Signal handlers for the [+] buttons
 func _on_add_stat(stat_name: String):
@@ -109,6 +111,25 @@ func _on_save_button_pressed():
 	var new_member := ClassData.create_custom_member(current_class, member_name, stats)
 	PartyState.add_roster_member(new_member, false)
 	SceneManager.change_scene("res://PartyMemberSelection.tscn")
+
+func _update_character_stats() -> void:
+	var preview_member := ClassData.create_custom_member(current_class, "", stats, true)
+
+	damage_label.text = preview_member.get_damage_display()
+	damage_mod_container.text = _format_signed(preview_member.get_damage_modifier())
+	accuracy_label.text = _format_signed(preview_member.get_accuracy())
+	critical_chance_label.text = str(preview_member.get_critical_chance())
+	critical_amp_label.text = str(preview_member.get_critical_amp())
+	counter_chance_label.text = str(preview_member.get_counter_chance())
+	attack_speed_label.text = str(preview_member.get_total_attack_speed())
+	movement_speed_label.text = str(preview_member.get_movement())
+	magic_damage_label.text = str(preview_member.get_magic_amp())
+	armor_class_label.text = str(preview_member.get_armor_class())
+
+func _format_signed(value: int) -> String:
+	if value > 0:
+		return "+%d" % value
+	return str(value)
 
 func _populate_skill_list(class_enum: ClassData.Class_Names) -> void:
 	skill_list.clear()

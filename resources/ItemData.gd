@@ -39,5 +39,8 @@ enum Equip_Slot {
 @export var max_hp_bonus: int = 0
 @export var max_mp_bonus: int = 0
 @export var bonus_damage_bonus: int = 0
+@export var magic_amp_bonus: int = 0
+@export var critical_amp_bonus: int = 0
+@export var counter_chance_bonus: int = 0
 @export var lockpicking_bonus: int = 0
 @export var perception_bonus: int = 0
