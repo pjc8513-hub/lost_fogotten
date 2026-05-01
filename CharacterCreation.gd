@@ -12,19 +12,19 @@ var stats := {
 }
 
 # Node references
-@onready var class_option_button: OptionButton = $VBoxContainer/class_option_button
-@onready var name_input: LineEdit = $VBoxContainer/name_input
-@onready var points_label: Label = $VBoxContainer/PointsContainer/points_label
-@onready var might_button: Button = $VBoxContainer/MightContainer/MightButton
-@onready var end_button: Button = $VBoxContainer/EndContainer/EndButton
-@onready var wis_button: Button = $VBoxContainer/WisContainer/WisButton
-@onready var dex_button: Button = $VBoxContainer/DexContainer/DexButton
-@onready var save_button: Button = $VBoxContainer/save_button
+@onready var class_option_button: OptionButton = $HBoxContainer/CharacterCard/class_option_button
+@onready var name_input: LineEdit = $HBoxContainer/CharacterCard/name_input
+@onready var points_label: Label = $HBoxContainer/CharacterCard/PointsContainer/points_label
+@onready var might_button: Button = $HBoxContainer/CharacterCard/MightContainer/MightButton
+@onready var end_button: Button = $HBoxContainer/CharacterCard/EndContainer/EndButton
+@onready var wis_button: Button = $HBoxContainer/CharacterCard/WisContainer/WisButton
+@onready var dex_button: Button = $HBoxContainer/CharacterCard/DexContainer/DexButton
+@onready var save_button: Button = $HBoxContainer/CharacterCard/save_button
 
-@onready var might_label: Label = $VBoxContainer/MightContainer/might_label
-@onready var end_label: Label = $VBoxContainer/EndContainer/end_label
-@onready var wis_label: Label = $VBoxContainer/WisContainer/wis_label
-@onready var dex_label: Label = $VBoxContainer/DexContainer/dex_label
+@onready var might_label: Label = $HBoxContainer/CharacterCard/MightContainer/might_label
+@onready var end_label: Label = $HBoxContainer/CharacterCard/EndContainer/end_label
+@onready var wis_label: Label = $HBoxContainer/CharacterCard/WisContainer/wis_label
+@onready var dex_label: Label = $HBoxContainer/CharacterCard/DexContainer/dex_label
 
 
 # Called when the node enters the scene tree for the first time.
