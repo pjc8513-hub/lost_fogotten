@@ -11,7 +11,7 @@ var stats := {
 	"dexterity": 0,
 }
 
-# Node references
+# Node references - CharacterCard
 @onready var class_option_button: OptionButton = $HBoxContainer/CharacterCard/class_option_button
 @onready var name_input: LineEdit = $HBoxContainer/CharacterCard/name_input
 @onready var points_label: Label = $HBoxContainer/CharacterCard/PointsContainer/points_label
@@ -27,9 +27,26 @@ var stats := {
 @onready var dex_label: Label = $HBoxContainer/CharacterCard/DexContainer/dex_label
 
 
+#CharacterStats
+@onready var damage_label: Label = $HBoxContainer/CharacterStats/DamageContainer/DamageLabel
+@onready var damage_mod_container: Label = $HBoxContainer/CharacterStats/DamageModContainer/DamageModContainer
+@onready var accuracy_label: Label = $HBoxContainer/CharacterStats/AccuracyContainer/AccuracyLabel
+@onready var critical_chance_label: Label = $HBoxContainer/CharacterStats/CritChanceContainer/CriticalChanceLabel
+@onready var critical_amp_label: Label = $HBoxContainer/CharacterStats/CritAmpContainer/CriticalAmpLabel
+@onready var counter_chance_label: Label = $HBoxContainer/CharacterStats/CounterChanceContainer/CounterChanceLabel
+@onready var attack_speed_label: Label = $HBoxContainer/CharacterStats/AttackSpeedContainer/AttackSpeedLabel
+@onready var movement_speed_label: Label = $HBoxContainer/CharacterStats/MovementSpeedContainer2/MovementSpeedLabel
+@onready var magic_damage_label: Label = $HBoxContainer/CharacterStats/MagicDamageMod/MagicDamageLabel
+
+# SkillContainer
+@onready var skill_list: ItemList = $HBoxContainer/SkillContainer/ScrollContainer/SkillList
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_setup_class_options()
+	_populate_skill_list(current_class) # populate for initial class
 	might_button.pressed.connect(func(): _on_add_stat("might"))
 	end_button.pressed.connect(func(): _on_add_stat("endurance"))
 	wis_button.pressed.connect(func(): _on_add_stat("wisdom"))
@@ -82,6 +99,7 @@ func _on_class_selected(index: int):
 	var class_name_str = class_option_button.get_item_text(index)
 	current_class = ClassData.Class_Names[class_name_str]
 	_reset_stats()
+	_populate_skill_list(current_class)
 
 func _on_save_button_pressed():
 	var member_name := name_input.text.strip_edges()
@@ -91,3 +109,19 @@ func _on_save_button_pressed():
 	var new_member := ClassData.create_custom_member(current_class, member_name, stats)
 	PartyState.add_roster_member(new_member, false)
 	SceneManager.change_scene("res://PartyMemberSelection.tscn")
+
+func _populate_skill_list(class_enum: ClassData.Class_Names) -> void:
+	skill_list.clear()
+	
+	var available_skills: Array[SkillData] = SkillRegistry.get_skills_for_class(class_enum)
+	
+	for skill: SkillData in available_skills:
+		var idx: int = skill_list.add_item(skill.display_name)
+		skill_list.set_item_metadata(idx, skill.skill_id) # store ID for later
+		skill_list.set_item_tooltip(idx, skill.description) # nice UX
+		if skill.icon:
+			skill_list.set_item_icon(idx, skill.icon)
+
+
+func _on_item_list_mouse_entered() -> void:
+	pass # Replace with function body.

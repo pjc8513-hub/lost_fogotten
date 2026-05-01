@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cedyxud83w1wn"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_qbc25"]
+
+[resource]
+script = ExtResource("1_qbc25")
+skill_id = "stage_presence"
+display_name = "Stage Presence"
+description = "Increase per level HP gain"
+available_classes = Array[int]([0, 1, 2, 3])
+min_level = 3
+hp_per_level_bonus = 5.0
+base_learn_chance = 35
+wisdom_scale = 1.0
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

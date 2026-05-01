@@ -11,6 +11,10 @@ bg_color = Color(0.601223, 0.601223, 0.6012228, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3on5s"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj3lx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cayyc"]
+
 [node name="Control" type="Control" unique_id=1658209856]
 layout_mode = 3
 anchors_preset = 0
@@ -146,16 +150,16 @@ size_flags_horizontal = 3
 text = "0"
 horizontal_alignment = 2
 
-[node name="AccuracyContainer" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=1014397090]
+[node name="MagicDamageMod" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=764896147]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/AccuracyContainer" unique_id=1650288410]
+[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/MagicDamageMod" unique_id=1896804115]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_uqpm6")
-text = "Accuracy Mod"
+text = "Magic Amp"
 
-[node name="DamageLabel" type="Label" parent="HBoxContainer/CharacterStats/AccuracyContainer" unique_id=1185696861]
+[node name="MagicDamageLabel" type="Label" parent="HBoxContainer/CharacterStats/MagicDamageMod" unique_id=1943130478]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_3on5s")
@@ -192,15 +196,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_3on5s")
 text = "0"
 horizontal_alignment = 2
 
-[node name="CounterChanceContainer" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=536357594]
+[node name="AccuracyContainer" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=1014397090]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/CounterChanceContainer" unique_id=1973917280]
+[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/AccuracyContainer" unique_id=1650288410]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Counter Chance"
+text = "Accuracy Mod"
 
-[node name="CounterChanceLabel" type="Label" parent="HBoxContainer/CharacterStats/CounterChanceContainer" unique_id=553563265]
+[node name="AccuracyLabel" type="Label" parent="HBoxContainer/CharacterStats/AccuracyContainer" unique_id=1185696861]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0"
@@ -236,19 +240,33 @@ size_flags_horizontal = 3
 text = "0"
 horizontal_alignment = 2
 
-[node name="MagicDamageMod" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=764896147]
+[node name="ArmorClassContainer" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=494555472]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/MagicDamageMod" unique_id=1896804115]
+[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/ArmorClassContainer" unique_id=878526916]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_uqpm6")
-text = "Magic Amp"
+theme_override_styles/normal = SubResource("StyleBoxFlat_cj3lx")
+text = "Armor Class"
 
-[node name="MagicDamageLabel" type="Label" parent="HBoxContainer/CharacterStats/MagicDamageMod" unique_id=1943130478]
+[node name="ArmorClassLabel" type="Label" parent="HBoxContainer/CharacterStats/ArmorClassContainer" unique_id=1744454469]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_3on5s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cayyc")
+text = "0"
+horizontal_alignment = 2
+
+[node name="CounterChanceContainer" type="HBoxContainer" parent="HBoxContainer/CharacterStats" unique_id=536357594]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/CharacterStats/CounterChanceContainer" unique_id=1973917280]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Counter Chance"
+
+[node name="CounterChanceLabel" type="Label" parent="HBoxContainer/CharacterStats/CounterChanceContainer" unique_id=553563265]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "0"
 horizontal_alignment = 2
 
@@ -261,6 +279,13 @@ layout_mode = 2
 text = "Skills"
 horizontal_alignment = 1
 
-[node name="ItemList" type="ItemList" parent="HBoxContainer/SkillContainer" unique_id=981050556]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/SkillContainer" unique_id=245779477]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="SkillList" type="ItemList" parent="HBoxContainer/SkillContainer/ScrollContainer" unique_id=981050556]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="mouse_entered" from="HBoxContainer/SkillContainer/ScrollContainer/SkillList" to="." method="_on_item_list_mouse_entered"]

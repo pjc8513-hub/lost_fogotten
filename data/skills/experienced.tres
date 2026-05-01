@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bdrjqtlmtyc1p"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_rulny"]
+
+[resource]
+script = ExtResource("1_rulny")
+skill_id = "experienced"
+display_name = "Experienced"
+description = "Gain an additional stat point per level"
+available_classes = Array[int]([2, 3, 4, 7, 8])
+min_level = 3
+base_learn_chance = 45
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

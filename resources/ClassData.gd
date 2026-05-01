@@ -227,6 +227,7 @@ const CLASS_STAT_MAP = {
 @export_group("Combat")
 @export var movement: int = 5
 @export var cooldown: int = 0
+var quick_step_used: bool = false
 
 @export var dice_sides: int = 4
 @export var dice_rolls: int = 1
@@ -378,8 +379,14 @@ func gain_level(stat_points: int = -1) -> void:
 	level += 1
 	available_points += stat_points
 	xp_to_next_level = int(round(xp_to_next_level * 1.35))
-	
 	recalculate_derived_stats(false)
+	
+	var new_skills := try_learn_skills()
+	for skill_id in new_skills:
+		var skill := SkillRegistry.get_skill(skill_id)
+		GameEvents.message_logged.emit(
+			"[color=cyan]%s learned %s![/color]" % [member_name, skill.display_name if skill else skill_id]
+		)
 
 func roll_level_up_points() -> int:
 	var points := randi_range(1, 3)
@@ -412,7 +419,7 @@ func get_armor_class() -> int:
 	return _calculate_armor_class()
 
 func get_movement() -> int:
-	return _get_class_int("movement", movement)
+	return _get_class_int("movement", movement) + int(_get_skill_stat_bonus("movement_bonus"))
 
 func can_equip_item(item: ItemData) -> bool:
 	if item == null:
@@ -547,6 +554,8 @@ func _calculate_max_hp() -> int:
 	var hp_from_level = max(0.0, float(level - 1) * _get_class_float("hp_per_level", 5.0))
 	var hp_from_might = float(get_might()) * _get_class_float("hp_might_scale", 1.0)
 	var hp_from_endurance := float(get_endurance()) * _get_class_float("hp_end_scale", 1.0)
+	
+	var hp_from_skills := float(level - 1) * _get_skill_stat_bonus("hp_per_level_bonus")
 	return max(1, int(round(hp_base + hp_from_level + hp_from_might + hp_from_endurance + bonus_max_hp + _get_equipped_bonus("max_hp_bonus"))))
 
 func _calculate_max_mp() -> int:
@@ -617,3 +626,50 @@ func _get_allowed_armor_types() -> Array:
 func _emit_stats_changed() -> void:
 	if GameEvents:
 		GameEvents.party_member_stats_changed.emit(self)
+
+# ==SKILLS==
+
+const SKILL_REGISTRY_PATH = "res://data/skills/"  # folder of SkillData .tres files
+
+func try_learn_skills() -> Array[String]:
+	# Call this at level-up. Returns list of newly learned skill IDs.
+	var newly_learned: Array[String] = []
+	
+	for skill in _get_all_skills_for_class():
+		if learned_skills.has(skill.skill_id):
+			continue
+		if level < skill.min_level:
+			continue
+		
+		var chance := _calculate_learn_chance(skill)
+		if randi_range(1, 100) <= chance:
+			learned_skills.append(skill.skill_id)
+			newly_learned.append(skill.skill_id)
+			recalculate_derived_stats(false)  # stat skills take effect immediately
+	
+	return newly_learned
+
+func _calculate_learn_chance(skill: SkillData) -> int:
+	var levels_above_min = max(0, level - skill.min_level)
+	var wis_mod := _stat_modifier(get_wisdom())  # you already have this
+	var wis_bonus := int(round(float(wis_mod) * skill.wisdom_scale * 10.0))
+	return skill.base_learn_chance + (levels_above_min * skill.chance_per_level) + wis_bonus
+
+func _get_all_skills_for_class() -> Array[SkillData]:
+	# Load from a registry — see below
+	return SkillRegistry.get_skills_for_class(get_resolved_class_name())
+
+func _get_skill_stat_bonus(stat: String) -> float:
+	var total := 0.0
+	for skill_id in learned_skills:
+		var skill := SkillRegistry.get_skill(skill_id)
+		if skill != null:
+			total += float(skill.get(stat))
+	return total
+
+func get_combat_movement() -> int:
+	# Includes Quick Step bonus if not yet used this turn
+	var base := get_movement()
+	if has_skill("quick_step") and not quick_step_used:
+		base += 1
+	return base

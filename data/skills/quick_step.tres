@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://73e6qvv8fthf"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_uubvs"]
+
+[resource]
+script = ExtResource("1_uubvs")
+skill_id = "quick_step"
+display_name = "Quick Step"
+description = "Gain a movement turn before attacking"
+skill_type = 2
+available_classes = Array[int]([5, 6, 8])
+movement_bonus = 1
+base_learn_chance = 30
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
