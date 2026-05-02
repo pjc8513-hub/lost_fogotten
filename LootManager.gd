@@ -3,7 +3,8 @@ extends Node
 
 enum Loot_Table {
 	EQUIP_1, EQUIP_2, EQUIP_3,
-	ITEM_1, ITEM_2, ITEM_3
+	ITEM_1, ITEM_2, ITEM_3,
+	GUITAR_1, GUITAR_2, GUITAR_3
 	# Later: WEAPON_1, ARMOR_1, ACCESSORY_1, etc
 }
 
@@ -40,6 +41,21 @@ const LOOT_POOLS = {
 		"rolls": 1,
 		"chance": 0.6
 	},
+	Loot_Table.GUITAR_1: {
+		"items": ["OMALLEY", "PAN"],
+		"rolls": 1,
+		"chance": 0.8
+	},
+	Loot_Table.GUITAR_2: {
+		"items": ["WinterWizard", "DE"],
+		"rolls": 1,
+		"chance": 0.8
+	},
+	Loot_Table.GUITAR_3: {
+		"items": ["THRONE", "Arthur"],
+		"rolls": 1,
+		"chance": 0.8
+	}
 }
 
 # Main function both chests and enemies call

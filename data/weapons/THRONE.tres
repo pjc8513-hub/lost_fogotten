@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GuitarData" format=3 uid="uid://cm2is3r13y8kl"]
+
+[ext_resource type="Script" uid="uid://mw50tsrlfvns" path="res://resources/GuitarData.gd" id="1_bw5nv"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_bw5nv")
+company = 1
+guitar_name = "THRONE"
+min_strings = 6
+max_strings = 7
+loot_table = 8
+name = "THRONE"
+sell_value = 600
+equip_slot = 3
+metadata/_custom_type_script = "uid://mw50tsrlfvns"

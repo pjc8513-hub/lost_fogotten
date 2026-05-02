@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GuitarData" format=3 uid="uid://dx4s8ow11dnfy"]
+
+[ext_resource type="Script" uid="uid://mw50tsrlfvns" path="res://resources/GuitarData.gd" id="1_6c000"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_6c000")
+company = 5
+guitar_name = "OMalley"
+max_strings = 4
+step_count = 4
+loot_table = 6
+name = "OMalley"
+sell_value = 150
+equip_slot = 3
+metadata/_custom_type_script = "uid://mw50tsrlfvns"

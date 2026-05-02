@@ -8,5 +8,5 @@ resource_local_to_scene = true
 script = ExtResource("1_l04si")
 scene_path = "uid://c4slrhwrs74vf"
 sprite_texture = ExtResource("2_8pbkr")
-loot_table = Array[int]([0, 3])
+loot_table = Array[int]([0, 3, 6])
 metadata/_custom_type_script = "uid://bawvbn1dta1qb"

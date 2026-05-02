@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://2t0xkthjrfs7"]
+
+[node name="CastingScene" type="Control" unique_id=1576703094]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -525.0
+offset_bottom = -136.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1585841135]
+layout_mode = 0
+offset_right = 827.0
+offset_bottom = 512.0
+
+[node name="LeftPanel" type="PanelContainer" parent="HBoxContainer" unique_id=319394530]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="MotifList" type="VBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=876534980]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MotifButton" type="Button" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1977106373]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterPanel" type="PanelContainer" parent="HBoxContainer" unique_id=2126686912]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StepContainer" type="HBoxContainer" parent="HBoxContainer/CenterPanel" unique_id=2142727559]
+layout_mode = 2
+
+[node name="StingContainer" type="VBoxContainer" parent="HBoxContainer/CenterPanel/StepContainer" unique_id=395292618]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/CenterPanel/StepContainer/StingContainer" unique_id=1888366796]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 0, 0, 0)
+
+[node name="RightContainer" type="PanelContainer" parent="HBoxContainer" unique_id=394447965]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+
+[node name="ControlsContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1871700071]
+layout_mode = 2
+alignment = 1
+
+[node name="CastButton" type="Button" parent="HBoxContainer/RightContainer/ControlsContainer" unique_id=1405522983]
+layout_mode = 2
+disabled = true
+text = "Cast"
+
+[node name="CancelButton" type="Button" parent="HBoxContainer/RightContainer/ControlsContainer" unique_id=855547593]
+layout_mode = 2
+text = "Cancel"

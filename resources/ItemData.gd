@@ -12,7 +12,7 @@ enum Equip_Slot {
 	WEAPON,
 	RANGE,
 	ARMOR,
-	SHIELD,
+	GUITAR,
 	HELMET,
 	BOOTS,
 	GLOVES,
