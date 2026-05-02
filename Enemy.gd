@@ -272,7 +272,9 @@ func _is_adjacent_to_player() -> bool:
 	if player == null:
 		return false
 
-	return grid_position.distance_to(player.grid_position) == 1
+	# 8-directional adjacency
+	var diff = (grid_position - player.grid_position).abs()
+	return diff.x <= 1 and diff.y <= 1 and not (diff.x == 0 and diff.y == 0)
 
 func _queue_attack() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_queue_attack")

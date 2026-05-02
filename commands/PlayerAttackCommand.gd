@@ -5,7 +5,7 @@ class_name PlayerAttackCommand
 # actor here is a ClassData (the party member acting), not an Enemy node.
 # This is the reverse of AttackCommand where actor is an Enemy node.
 
-const MELEE_RANGE: int = 1
+const MELEE_RANGE: int = 1  # 8-directional: max distance for adjacent tiles
 
 func execute() -> void:
 	var attacker: ClassData = actor  # ClassData
@@ -24,7 +24,9 @@ func execute() -> void:
 		emit_signal("finished")
 		return
 
-	var dist: float = player_node.grid_position.distance_to(target_enemy.grid_position)
+	# Calculate 8-directional distance for range check
+	var grid_diff = (player_node.grid_position - target_enemy.grid_position).abs()
+	var dist: float = max(grid_diff.x, grid_diff.y)  # Chebyshev distance for 8-directional
 	var attack_slot := _get_attack_slot(dist)
 
 	var attacks = 1

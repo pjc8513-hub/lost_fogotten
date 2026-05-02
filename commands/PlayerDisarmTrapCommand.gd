@@ -2,7 +2,7 @@
 extends Command
 class_name PlayerDisarmChestCommand
 
-const MELEE_RANGE: float = 1.5
+const MELEE_RANGE: int = 1  # 8-directional: max distance for adjacent tiles
 
 func execute() -> void:
 	var acting_member: ClassData = actor
@@ -23,7 +23,10 @@ func execute() -> void:
 		emit_signal("finished")
 		return
 	
-	var dist: float = player_node.grid_position.distance_to(World.world_to_grid(target_chest.global_position))
+	# Range check - 8-directional adjacency
+	var chest_grid = World.world_to_grid(target_chest.global_position)
+	var grid_diff = (player_node.grid_position - chest_grid).abs()
+	var dist: float = max(grid_diff.x, grid_diff.y)  # Chebyshev distance for 8-directional
 	if dist > MELEE_RANGE:
 		GameEvents.message_logged.emit("[color=red]Out of reach.[/color]")
 		emit_signal("finished")
