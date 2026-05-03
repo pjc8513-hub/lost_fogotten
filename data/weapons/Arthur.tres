@@ -7,6 +7,7 @@ resource_local_to_scene = true
 script = ExtResource("1_mgmbd")
 guitar_name = "Arthur"
 min_strings = 5
+complexity = 20
 loot_table = 8
 name = "Arthur"
 sell_value = 500

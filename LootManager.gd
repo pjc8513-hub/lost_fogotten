@@ -89,6 +89,21 @@ func get_item_data(item_id: String) -> Resource:
 	push_warning("LootManager: ItemData not found: %s" % path)
 	return null
 
+func create_item_instance(item_id: String) -> ItemInstance:
+	var item_data := get_item_data(item_id)
+	if item_data == null:
+		return null
+
+	var item_instance := ItemInstance.new()
+	if item_data is GuitarData:
+		var guitar_data := (item_data as GuitarData).duplicate(true) as GuitarData
+		guitar_data.roll_strings()
+		item_instance.item_data = guitar_data
+	else:
+		item_instance.item_data = item_data
+
+	return item_instance
+
 # Debug helper
 func table_name(table: Loot_Table) -> String:
 	return Loot_Table.keys()[table]

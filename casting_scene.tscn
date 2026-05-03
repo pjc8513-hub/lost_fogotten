@@ -3,70 +3,94 @@
 [ext_resource type="Script" uid="uid://duqbiphjxi8k1" path="res://casting_scene.gd" id="1_y46to"]
 
 [node name="CastingScene" type="Control" unique_id=1576703094]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -525.0
-offset_bottom = -584.0
+visible = false
+custom_minimum_size = Vector2(920, 430)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -215.0
+offset_right = 460.0
+offset_bottom = 215.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_y46to")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1585841135]
-layout_mode = 0
-offset_right = 827.0
-offset_bottom = 66.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
 
 [node name="LeftPanel" type="PanelContainer" parent="HBoxContainer" unique_id=319394530]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 
 [node name="MotifList" type="VBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=876534980]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="MotifButton" type="Button" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1977106373]
+[node name="MotifLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188439]
 layout_mode = 2
 size_flags_vertical = 3
+autowrap_mode = 2
+text = "No guitar equipped."
 
 [node name="CenterPanel" type="PanelContainer" parent="HBoxContainer" unique_id=2126686912]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="StingContainer" type="VBoxContainer" parent="HBoxContainer/CenterPanel" unique_id=395292618]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="StepContainer" type="HBoxContainer" parent="HBoxContainer/CenterPanel/StingContainer" unique_id=2142727559]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Step1" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=1888366796]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/CenterPanel" unique_id=165500001]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(1, 0, 0, 0)
 
-[node name="Step2" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=960638989]
+[node name="StingContainer" type="VBoxContainer" parent="HBoxContainer/CenterPanel/ScrollContainer" unique_id=395292618]
+custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(1, 0, 0, 0)
+theme_override_constants/separation = 6
 
-[node name="Step3" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=1072695403]
+[node name="StepContainer" type="HBoxContainer" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer" unique_id=2142727559]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(1, 0, 0, 0)
+theme_override_constants/separation = 6
+
+[node name="Step1" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=1888366796]
+layout_mode = 2
+custom_minimum_size = Vector2(42, 42)
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
+[node name="Step2" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=960638989]
+layout_mode = 2
+custom_minimum_size = Vector2(42, 42)
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
+[node name="Step3" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=1072695403]
+layout_mode = 2
+custom_minimum_size = Vector2(42, 42)
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 
 [node name="RightContainer" type="PanelContainer" parent="HBoxContainer" unique_id=394447965]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
 [node name="ControlsContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1871700071]
 layout_mode = 2
+size_flags_vertical = 4
 alignment = 1
+theme_override_constants/separation = 10
 
 [node name="CastButton" type="Button" parent="HBoxContainer/RightContainer/ControlsContainer" unique_id=1405522983]
 layout_mode = 2

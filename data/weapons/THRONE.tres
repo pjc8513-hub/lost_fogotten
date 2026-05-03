@@ -9,6 +9,7 @@ company = 1
 guitar_name = "THRONE"
 min_strings = 6
 max_strings = 7
+complexity = 20
 loot_table = 8
 name = "THRONE"
 sell_value = 600

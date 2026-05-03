@@ -8,6 +8,7 @@ script = ExtResource("1_l024t")
 company = 2
 guitar_name = "DE"
 min_strings = 4
+complexity = 16
 loot_table = 7
 name = "DE"
 sell_value = 300
