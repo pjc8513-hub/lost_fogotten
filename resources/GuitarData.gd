@@ -20,7 +20,21 @@ enum Element {
 	DARK
 	}
 
+enum Prefix {
+	CLASSIC,
+	VINTAGE,
+	FLYING_V,
+	HEADLESS,
+	SUPERSTRAT,
+	JAG_STANG,
+	SIGNATURE,
+	LIMITED,
+	EXPLORER,
+	DELUXE
+}
+
 @export var company: Company
+@export var invetory_name: String = ""
 @export var guitar_name: String = "6-String Ironclad"
 @export var min_strings: int = 3
 @export var max_strings: int = 8
@@ -82,3 +96,31 @@ func _get_all_elements() -> Array[Element]:
 	for value in Element.values():
 		all_elements.append(value)
 	return all_elements
+
+func roll_guitar_name() -> void:
+	# 1. Ensure strings are rolled first so rolled_string_count isn't 0
+	if rolled_string_count == 0:
+		roll_strings()
+
+	# 2. Get the Prefix string
+	var prefix_key = Prefix.keys()[randi() % Prefix.size()]
+	var prefix_str = prefix_key.to_lower().capitalize()
+	
+	# 3. Explicitly use 'self.company' to get the value from the .tres file
+	# This prevents the script from defaulting to the Enum's first constant
+	var company_str = _company_to_string(self.company)
+	
+	# 4. Final String Construction
+	guitar_name = "%s %s %s String" % [prefix_str, company_str, rolled_string_count]
+	name = "%s %s string" % [company_str, rolled_string_count]
+	# Debug to verify the fix
+	#print("Instance Company Value: ", self.company) 
+	#print("Generated Name: ", guitar_name)
+	
+
+func _prefix_to_string(prefix: Prefix) -> String:
+	return Prefix.keys()[prefix].to_lower().capitalize()
+
+
+func _company_to_string(company: Company) -> String:
+	return Company.keys()[company].to_lower().capitalize()

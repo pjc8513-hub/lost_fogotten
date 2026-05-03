@@ -98,6 +98,7 @@ func create_item_instance(item_id: String) -> ItemInstance:
 	if item_data is GuitarData:
 		var guitar_data := (item_data as GuitarData).duplicate(true) as GuitarData
 		guitar_data.roll_strings()
+		guitar_data.roll_guitar_name()
 		item_instance.item_data = guitar_data
 	else:
 		item_instance.item_data = item_data

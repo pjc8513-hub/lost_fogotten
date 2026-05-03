@@ -5,6 +5,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_84r1x")
+company = 4
 guitar_name = "Pan"
 max_strings = 5
 step_count = 4

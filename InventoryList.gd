@@ -19,8 +19,9 @@ func set_inventory(items: Array[ItemInstance]):
 			continue
 			
 		var item = inst.item_data
-
-		var idx = item_list.add_item(item.name, item.icon)
+		var equip_slot_string = _equip_slot_to_string(item.equip_slot)
+		var inventory_name = "%s: %s" % [equip_slot_string, item.name]
+		var idx = item_list.add_item(inventory_name, item.icon)
 
 		if inst.is_equipped:
 			item_list.set_item_custom_bg_color(idx, Color(0.5, 0.1, 0.1))
@@ -76,6 +77,8 @@ func _on_item_gui_input(event):
 		var inst: ItemInstance = item_list.get_item_metadata(idx)
 		$PopupMenuMain.open_for(inst, get_global_mouse_position())
 
+func _equip_slot_to_string(equip_slot: ItemData.Equip_Slot) -> String:
+		return ItemData.Equip_Slot.keys()[equip_slot].to_lower().capitalize()
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:

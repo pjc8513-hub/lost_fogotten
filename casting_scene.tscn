@@ -5,7 +5,7 @@
 [node name="CastingScene" type="Control" unique_id=1576703094]
 visible = false
 custom_minimum_size = Vector2(920, 430)
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -43,14 +43,14 @@ theme_override_constants/separation = 5
 
 [node name="MotifLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188439]
 layout_mode = 2
-autowrap_mode = 2
 text = "No guitar equipped."
+autowrap_mode = 2
 
 [node name="ComplexityLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188440]
 layout_mode = 2
 size_flags_vertical = 3
-autowrap_mode = 2
 text = "Complexity: 0/0"
+autowrap_mode = 2
 
 [node name="CenterPanel" type="PanelContainer" parent="HBoxContainer" unique_id=2126686912]
 layout_mode = 2
@@ -73,18 +73,18 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Step1" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=1888366796]
-layout_mode = 2
 custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
 color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 
 [node name="Step2" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=960638989]
-layout_mode = 2
 custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
 color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 
 [node name="Step3" type="ColorRect" parent="HBoxContainer/CenterPanel/ScrollContainer/StingContainer/StepContainer" unique_id=1072695403]
-layout_mode = 2
 custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
 color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 
 [node name="RightContainer" type="PanelContainer" parent="HBoxContainer" unique_id=394447965]
@@ -94,8 +94,8 @@ layout_mode = 2
 [node name="ControlsContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer" unique_id=1871700071]
 layout_mode = 2
 size_flags_vertical = 4
-alignment = 1
 theme_override_constants/separation = 10
+alignment = 1
 
 [node name="CastButton" type="Button" parent="HBoxContainer/RightContainer/ControlsContainer" unique_id=1405522983]
 layout_mode = 2
