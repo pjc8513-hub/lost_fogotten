@@ -52,6 +52,12 @@ size_flags_vertical = 3
 text = "Complexity: 0/0"
 autowrap_mode = 2
 
+[node name="PreviewLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188441]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Spell preview will appear here."
+autowrap_mode = 2
+
 [node name="CenterPanel" type="PanelContainer" parent="HBoxContainer" unique_id=2126686912]
 layout_mode = 2
 size_flags_horizontal = 3

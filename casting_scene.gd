@@ -6,6 +6,39 @@ const EMPTY_CELL_COLOR := Color(0.07, 0.07, 0.07, 1.0)
 const GRID_BACKGROUND_COLOR := Color(0.02, 0.02, 0.02, 0.82)
 const LABEL_TEXT_COLOR := Color(0.82, 0.73, 0.45, 1.0)
 const INFO_TEXT_COLOR := Color(0.73, 0.69, 0.55, 1.0)
+const WARNING_TEXT_COLOR := Color("e0a95c")
+const PREVIEW_TEXT_COLOR := Color("d8d2bc")
+
+const ELEMENT_RULES := {
+	GuitarData.Element.FIRE: {"name": "Fire", "die": 6, "mana": 3, "splash": true},
+	GuitarData.Element.ICE: {"name": "Ice", "die": 4, "mana": 2, "splash": false},
+	GuitarData.Element.ELECTRIC: {"name": "Electric", "die": 8, "mana": 4, "splash": false},
+	GuitarData.Element.EARTH: {"name": "Earth", "die": 5, "mana": 3, "splash": false},
+	GuitarData.Element.DARK: {"name": "Dark", "die": 6, "mana": 3, "splash": false},
+	GuitarData.Element.LIGHT: {"name": "Light", "die": 5, "mana": 2, "splash": false},
+	GuitarData.Element.PHYSICAL: {"name": "Physical", "die": 5, "mana": 2, "splash": false},
+	GuitarData.Element.SPIRIT: {"name": "Spirit", "die": 3, "mana": 3, "splash": false, "healing": true},
+}
+
+const DISSONANT_CHORDS := {
+	"4:3": true,
+	"6:7": true,
+	"1:2": true,
+	"0:5": true,
+}
+
+const HARMONIC_CHORDS := {
+	"2:3": {"name": "Aftershock", "details": "Extra stun chance"},
+	"1:4": {"name": "Lava", "details": "Additional DOT"},
+	"0:4": {"name": "Earthquake", "details": "Additional AOE damage"},
+	"4:7": {"name": "Poison Alter", "details": "Poison status effect"},
+	"5:6": {"name": "Destroy Undead", "details": "Additional damage to undead"},
+	"3:5": {"name": "Amped", "details": "Small mana recovery for allies"},
+	"1:5": {"name": "Shred", "details": "+1 attack speed for the party"},
+}
+
+const CHORD_FAIL_CHANCE := 70
+const CHORD_SUCCESS_CHANCE := 30
 
 const ELEMENT_COLORS := {
 	GuitarData.Element.FIRE: Color("d6422b"),
@@ -20,6 +53,7 @@ const ELEMENT_COLORS := {
 
 @onready var motif_label: Label = $HBoxContainer/LeftPanel/MotifList/MotifLabel
 @onready var complexity_label: Label = $HBoxContainer/LeftPanel/MotifList/ComplexityLabel
+@onready var preview_label: Label = $HBoxContainer/LeftPanel/MotifList/PreviewLabel
 @onready var string_container: VBoxContainer = $HBoxContainer/CenterPanel/ScrollContainer/StingContainer
 @onready var cast_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CastButton
 @onready var cancel_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CancelButton
@@ -77,12 +111,14 @@ func _rebuild_interface() -> void:
 	if current_character == null:
 		motif_label.text = "No party member selected."
 		complexity_label.text = "Complexity: 0/0"
+		preview_label.text = "Select a party member to preview a spell."
 		cast_button.disabled = true
 		return
 
 	if current_guitar == null:
 		motif_label.text = "%s needs a guitar equipped." % current_character.member_name
 		complexity_label.text = "Complexity: 0/0"
+		preview_label.text = "Equip a guitar to start composing."
 		cast_button.disabled = true
 		return
 
@@ -130,6 +166,7 @@ func _rebuild_interface() -> void:
 		string_container.add_child(row)
 
 	_update_complexity_display()
+	_update_spell_preview()
 	_update_cast_button_state()
 
 func _build_step_header(step_count: int) -> void:
@@ -175,6 +212,7 @@ func _on_cell_gui_input(event: InputEvent, cell: ColorRect) -> void:
 		cell.color = EMPTY_CELL_COLOR
 
 	_update_complexity_display()
+	_update_spell_preview()
 	_update_cast_button_state()
 
 func _update_cast_button_state() -> void:
@@ -207,6 +245,7 @@ func _apply_static_styling() -> void:
 
 	motif_label.add_theme_color_override("font_color", INFO_TEXT_COLOR)
 	complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
+	preview_label.add_theme_color_override("font_color", PREVIEW_TEXT_COLOR)
 
 func _on_cancel_pressed() -> void:
 	visible = false
@@ -245,9 +284,113 @@ func _update_complexity_display() -> void:
 	]
 
 	if remaining_slots == 0 and current_complexity_limit > 0:
-		complexity_label.add_theme_color_override("font_color", Color("e0a95c"))
+		complexity_label.add_theme_color_override("font_color", WARNING_TEXT_COLOR)
 	else:
 		complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
+
+func _update_spell_preview() -> void:
+	var preview := _build_spell_preview()
+	var lines: Array[String] = []
+
+	if preview["element_lines"].is_empty() and preview["chord_lines"].is_empty():
+		lines.append("Spell Preview")
+		lines.append("Place notes on the grid to see rolls, chords, and mana.")
+	else:
+		lines.append("Spell Preview")
+		lines.append_array(preview["element_lines"])
+		if not preview["extra_lines"].is_empty():
+			lines.append("")
+			lines.append_array(preview["extra_lines"])
+		if not preview["chord_lines"].is_empty():
+			lines.append("")
+			lines.append_array(preview["chord_lines"])
+		lines.append("")
+		lines.append("Mana: %s" % preview["mana"])
+
+	preview_label.text = "\n".join(lines)
+
+func _build_spell_preview() -> Dictionary:
+	var element_counts := {}
+	var chord_counts := {}
+	var splash_lines: Array[String] = []
+
+	if current_guitar == null:
+		return {
+			"element_lines": [],
+			"extra_lines": [],
+			"chord_lines": [],
+			"mana": 0,
+		}
+
+	var string_elements := current_guitar.get_active_string_elements()
+	var step_count := 0
+	if not sequence_grid.is_empty():
+		step_count = sequence_grid[0].size()
+
+	for step_index in step_count:
+		var active_elements: Array[int] = []
+		for row_index in sequence_grid.size():
+			if sequence_grid[row_index][step_index]:
+				active_elements.append(string_elements[row_index])
+
+		var remaining_elements := active_elements.duplicate()
+		for pair_key in DISSONANT_CHORDS.keys():
+			var pair := _parse_pair_key(pair_key)
+			if remaining_elements.has(pair[0]) and remaining_elements.has(pair[1]):
+				remaining_elements.erase(pair[0])
+				remaining_elements.erase(pair[1])
+
+		for element in remaining_elements:
+			element_counts[element] = int(element_counts.get(element, 0)) + 1
+
+		for pair_key in HARMONIC_CHORDS.keys():
+			var pair := _parse_pair_key(pair_key)
+			if remaining_elements.has(pair[0]) and remaining_elements.has(pair[1]):
+				var chord_name := String(HARMONIC_CHORDS[pair_key]["name"])
+				chord_counts[chord_name] = int(chord_counts.get(chord_name, 0)) + 1
+
+	var element_lines: Array[String] = []
+	var extra_lines: Array[String] = []
+	var mana_total := 0
+
+	for element in ELEMENT_RULES.keys():
+		var rolls := int(element_counts.get(element, 0))
+		if rolls <= 0:
+			continue
+
+		var rule: Dictionary = ELEMENT_RULES[element]
+		mana_total += rolls * int(rule["mana"])
+
+		if rule.get("healing", false):
+			element_lines.append("%s: Heals each party member %sd%s" % [rule["name"], rolls, rule["die"]])
+		else:
+			element_lines.append("%s: %sd%s" % [rule["name"], rolls, rule["die"]])
+
+		if bool(rule.get("splash", false)) and rolls >= 4:
+			splash_lines.append("%s Splash: 1d6 adjacent enemies" % rule["name"])
+
+	extra_lines.append_array(splash_lines)
+
+	var chord_lines: Array[String] = []
+	var chord_names := chord_counts.keys()
+	chord_names.sort()
+	for chord_name in chord_names:
+		var count := int(chord_counts[chord_name])
+		if count <= 0:
+			continue
+		var count_text := "" if count == 1 else " x%s" % count
+		chord_lines.append("%s%s (%s%% fail / %s%% success)" % [chord_name, count_text, CHORD_FAIL_CHANCE, CHORD_SUCCESS_CHANCE])
+
+	return {
+		"element_lines": element_lines,
+		"extra_lines": extra_lines,
+		"chord_lines": chord_lines,
+		"mana": mana_total,
+	}
+
+func _parse_pair_key(pair_key: String) -> Array[int]:
+	var values := pair_key.split(":")
+	return [int(values[0]), int(values[1])]
 
 func _get_element_name(element: int) -> String:
 	match element:
