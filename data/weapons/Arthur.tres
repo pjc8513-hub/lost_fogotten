@@ -8,6 +8,7 @@ script = ExtResource("1_mgmbd")
 guitar_name = "Arthur"
 min_strings = 5
 loot_table = 8
+name = "Arthur"
 sell_value = 500
 equip_slot = 3
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

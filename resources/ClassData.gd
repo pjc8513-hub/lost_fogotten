@@ -726,3 +726,12 @@ func get_combat_movement() -> int:
 	if has_skill("quick_step") and not quick_step_used:
 		base += 1
 	return base
+
+# ===== GUITAR/INSTRUMENT TRACKING =====
+func has_guitar_equipped() -> bool:
+	"""Check if a guitar is equipped in the GUITAR slot."""
+	return is_slot_equipped(ItemData.Equip_Slot.GUITAR)
+
+func get_equipped_guitar() -> ItemInstance:
+	"""Get the equipped guitar ItemInstance from the GUITAR slot."""
+	return get_equipped_item(ItemData.Equip_Slot.GUITAR)

@@ -1,20 +1,22 @@
 [gd_scene format=3 uid="uid://2t0xkthjrfs7"]
 
+[ext_resource type="Script" uid="uid://duqbiphjxi8k1" path="res://casting_scene.gd" id="1_y46to"]
+
 [node name="CastingScene" type="Control" unique_id=1576703094]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -525.0
-offset_bottom = -136.0
+offset_bottom = -584.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_y46to")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1585841135]
 layout_mode = 0
 offset_right = 827.0
-offset_bottom = 512.0
+offset_bottom = 66.0
 
 [node name="LeftPanel" type="PanelContainer" parent="HBoxContainer" unique_id=319394530]
 custom_minimum_size = Vector2(150, 0)
@@ -32,14 +34,27 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="StepContainer" type="HBoxContainer" parent="HBoxContainer/CenterPanel" unique_id=2142727559]
-layout_mode = 2
-
-[node name="StingContainer" type="VBoxContainer" parent="HBoxContainer/CenterPanel/StepContainer" unique_id=395292618]
+[node name="StingContainer" type="VBoxContainer" parent="HBoxContainer/CenterPanel" unique_id=395292618]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/CenterPanel/StepContainer/StingContainer" unique_id=1888366796]
+[node name="StepContainer" type="HBoxContainer" parent="HBoxContainer/CenterPanel/StingContainer" unique_id=2142727559]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Step1" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=1888366796]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 0, 0, 0)
+
+[node name="Step2" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=960638989]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 0, 0, 0)
+
+[node name="Step3" type="ColorRect" parent="HBoxContainer/CenterPanel/StingContainer/StepContainer" unique_id=1072695403]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

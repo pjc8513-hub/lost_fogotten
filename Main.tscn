@@ -174,6 +174,8 @@ scale = Vector2(1.12, 0.8800012)
 focus_behavior_recursive = 1
 
 [node name="CastingScene" parent="." unique_id=1576703094 instance=ExtResource("12_5vvyt")]
+visible = true
+top_level = true
 offset_left = 268.0
 offset_top = 135.0
 offset_right = -257.0

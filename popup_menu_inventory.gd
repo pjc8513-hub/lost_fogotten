@@ -120,6 +120,11 @@ func _toggle_equip(inst: ItemInstance) -> void:
 		return
 
 	inst.is_equipped = not inst.is_equipped
+	
+	# Notify if a guitar was unequipped
+	if not inst.is_equipped and inst.item_data.equip_slot == ItemData.Equip_Slot.GUITAR:
+		GameEvents.message_logged.emit("[color=gray]%s unequipped %s.[/color]" % [owner_char.member_name, inst.item_data.name])
+	
 	owner_char.recalculate_derived_stats(false)
 	GameEvents.inventory_changed.emit(owner_char)
 
