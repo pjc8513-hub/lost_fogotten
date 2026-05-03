@@ -43,9 +43,14 @@ theme_override_constants/separation = 5
 
 [node name="MotifLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188439]
 layout_mode = 2
-size_flags_vertical = 3
 autowrap_mode = 2
 text = "No guitar equipped."
+
+[node name="ComplexityLabel" type="Label" parent="HBoxContainer/LeftPanel/MotifList" unique_id=1251188440]
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 2
+text = "Complexity: 0/0"
 
 [node name="CenterPanel" type="PanelContainer" parent="HBoxContainer" unique_id=2126686912]
 layout_mode = 2

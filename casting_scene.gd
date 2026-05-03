@@ -13,12 +13,13 @@ const ELEMENT_COLORS := {
 	GuitarData.Element.EARTH: Color("8b5a2b"),
 	GuitarData.Element.ELECTRIC: Color("f0d038"),
 	GuitarData.Element.LIGHT: Color("f4f1dc"),
-	GuitarData.Element.DARK: Color("111111"),
+	GuitarData.Element.DARK: Color("5d4a78"),
 	GuitarData.Element.SPIRIT: Color("3aa55d"),
 	GuitarData.Element.PHYSICAL: Color("d8c49a"),
 }
 
 @onready var motif_label: Label = $HBoxContainer/LeftPanel/MotifList/MotifLabel
+@onready var complexity_label: Label = $HBoxContainer/LeftPanel/MotifList/ComplexityLabel
 @onready var string_container: VBoxContainer = $HBoxContainer/CenterPanel/ScrollContainer/StingContainer
 @onready var cast_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CastButton
 @onready var cancel_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CancelButton
@@ -26,6 +27,7 @@ const ELEMENT_COLORS := {
 var sequence_grid: Array[Array] = []
 var current_character: ClassData = null
 var current_guitar: GuitarData = null
+var current_complexity_limit: int = 0
 
 func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
@@ -74,17 +76,20 @@ func _rebuild_interface() -> void:
 
 	if current_character == null:
 		motif_label.text = "No party member selected."
+		complexity_label.text = "Complexity: 0/0"
 		cast_button.disabled = true
 		return
 
 	if current_guitar == null:
 		motif_label.text = "%s needs a guitar equipped." % current_character.member_name
+		complexity_label.text = "Complexity: 0/0"
 		cast_button.disabled = true
 		return
 
 	var string_elements := current_guitar.get_active_string_elements()
 	var string_count := string_elements.size()
 	var step_count = max(1, current_guitar.step_count)
+	current_complexity_limit = _get_current_complexity_limit()
 
 	motif_label.text = "%s\n%s strings, %s steps" % [
 		current_guitar.guitar_name,
@@ -124,6 +129,7 @@ func _rebuild_interface() -> void:
 
 		string_container.add_child(row)
 
+	_update_complexity_display()
 	_update_cast_button_state()
 
 func _build_step_header(step_count: int) -> void:
@@ -157,6 +163,10 @@ func _on_cell_gui_input(event: InputEvent, cell: ColorRect) -> void:
 	var row := int(cell.get_meta("row"))
 	var col := int(cell.get_meta("col"))
 	var is_active = not sequence_grid[row][col]
+
+	if is_active and _get_filled_slot_count() >= current_complexity_limit:
+		return
+
 	sequence_grid[row][col] = is_active
 
 	if is_active:
@@ -164,6 +174,7 @@ func _on_cell_gui_input(event: InputEvent, cell: ColorRect) -> void:
 	else:
 		cell.color = EMPTY_CELL_COLOR
 
+	_update_complexity_display()
 	_update_cast_button_state()
 
 func _update_cast_button_state() -> void:
@@ -195,9 +206,48 @@ func _apply_static_styling() -> void:
 		panel_path.add_theme_stylebox_override("panel", panel_style)
 
 	motif_label.add_theme_color_override("font_color", INFO_TEXT_COLOR)
+	complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 
 func _on_cancel_pressed() -> void:
 	visible = false
+
+func _get_current_complexity_limit() -> int:
+	if current_guitar == null:
+		return 0
+
+	var base_complexity = max(0, current_guitar.complexity)
+	var bonus_complexity := _get_complexity_bonus(current_character)
+	var max_slots = current_guitar.get_active_string_elements().size() * max(1, current_guitar.step_count)
+	return clamp(base_complexity + bonus_complexity, 0, max_slots)
+
+func _get_complexity_bonus(character: ClassData) -> int:
+	if character == null:
+		return 0
+
+	# Hook for future class / skill modifiers.
+	return 0
+
+func _get_filled_slot_count() -> int:
+	var total := 0
+	for row in sequence_grid:
+		for value in row:
+			if value:
+				total += 1
+	return total
+
+func _update_complexity_display() -> void:
+	var filled_slots := _get_filled_slot_count()
+	var remaining_slots = max(0, current_complexity_limit - filled_slots)
+	complexity_label.text = "Complexity: %s/%s\nRemaining motifs: %s" % [
+		filled_slots,
+		current_complexity_limit,
+		remaining_slots
+	]
+
+	if remaining_slots == 0 and current_complexity_limit > 0:
+		complexity_label.add_theme_color_override("font_color", Color("e0a95c"))
+	else:
+		complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 
 func _get_element_name(element: int) -> String:
 	match element:
@@ -222,5 +272,5 @@ func _get_element_name(element: int) -> String:
 
 func _get_text_color_for_element(element: int) -> Color:
 	if element == GuitarData.Element.DARK:
-		return Color("888888")
+		return Color("b69ad9")
 	return ELEMENT_COLORS.get(element, LABEL_TEXT_COLOR)
