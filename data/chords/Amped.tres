@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://bdjvbxrs1fnvs"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_q026q"]
+
+[resource]
+script = ExtResource("1_q026q")
+chord_id = "Amped"
+display_name = "Amped"
+details = "Small mana recovery for allies"
+required_elements = Array[int]([3, 5])
+min_required_count = 2
+mp_recovery = true
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

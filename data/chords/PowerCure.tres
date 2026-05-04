@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://d0gvaujg7rwt4"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_0bllj"]
+
+[resource]
+script = ExtResource("1_0bllj")
+chord_id = "Power_Cure"
+display_name = "Power Cure"
+details = "Add +10 to heal"
+required_elements = Array[int]([0, 5])
+min_required_count = 2
+extra_mana_cost = 3
+bonus_heal = 10
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

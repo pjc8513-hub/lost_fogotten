@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://6yo3b7mdwtct"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_jteij"]
+
+[resource]
+script = ExtResource("1_jteij")
+chord_id = "Poison_Alter"
+display_name = "Poison Alter"
+details = "Poison status effect"
+required_elements = Array[int]([4, 7])
+status_effect = "POISON"
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

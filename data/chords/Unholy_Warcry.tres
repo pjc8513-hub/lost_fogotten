@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://bwrrtpd37hk48"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_0v8ys"]
+
+[resource]
+script = ExtResource("1_0v8ys")
+chord_id = "Unholy_Warcry"
+display_name = "Unholy_Warcry"
+details = "Grants a number of boons"
+required_elements = Array[int]([1, 5])
+min_required_count = 3
+extra_mana_cost = 5
+buff_stat = {
+"ac_bonus": 1,
+"accuracy": 1,
+"attack_speed": 1,
+"magic_amp": 1,
+"might": 10
+}
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

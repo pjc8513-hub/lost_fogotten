@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://dicjmdotxijgk"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_wajfq"]
+
+[resource]
+script = ExtResource("1_wajfq")
+chord_id = "Earthquake"
+display_name = "Earthquake"
+details = "Additional AOE damage"
+required_elements = Array[int]([0, 4])
+min_required_count = 2
+is_aoe = true
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

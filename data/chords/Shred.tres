@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://dhyaa31m1js6g"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_xs5uf"]
+
+[resource]
+script = ExtResource("1_xs5uf")
+chord_id = "Shred"
+display_name = "Shred"
+details = "+1 attack speed for the party"
+required_elements = Array[int]([1, 5])
+buff_stat = {
+"attack_speed": 1
+}
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

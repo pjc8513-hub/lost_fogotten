@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://cxsrblskdgn6c"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_8y5rk"]
+
+[resource]
+script = ExtResource("1_8y5rk")
+chord_id = "Might"
+display_name = "Might"
+details = "+10 Might"
+required_elements = Array[int]([0, 6])
+extra_complexity_cost = 1
+buff_stat = {
+"Might": 10
+}
+metadata/_custom_type_script = "uid://md6iok7tr7hm"

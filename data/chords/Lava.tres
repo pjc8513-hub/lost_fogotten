@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChordData" format=3 uid="uid://68q1dsgccjhq"]
+
+[ext_resource type="Script" uid="uid://md6iok7tr7hm" path="res://resources/ChordData.gd" id="1_5vggv"]
+
+[resource]
+script = ExtResource("1_5vggv")
+chord_id = "Lava"
+display_name = "Lava"
+details = "Additional DOT"
+status_effect = "BURN"
+metadata/_custom_type_script = "uid://md6iok7tr7hm"
