@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://drty1lgc4a0lg"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_u2ui0"]
+
+[resource]
+script = ExtResource("1_u2ui0")
+skill_id = "IceMastery"
+display_name = "Ice Mastery"
+description = "Add 1 roll to ice spells"
+skill_type = 1
+available_classes = Array[int]([7, 4, 3])
+min_level = 9
+element_mastery = 2
+base_learn_chance = 35
+wisdom_scale = 1.0
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

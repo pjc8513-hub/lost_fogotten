@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cnavjs3x1o2e2"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_h42ta"]
+
+[resource]
+script = ExtResource("1_h42ta")
+skill_id = "DarklMastery"
+display_name = "Dark Mastery"
+description = "Add 1 roll to dark spells"
+skill_type = 1
+available_classes = Array[int]([4])
+min_level = 19
+element_mastery = 7
+base_learn_chance = 30
+wisdom_scale = 1.0
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

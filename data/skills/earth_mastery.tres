@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cqgwj75llxajh"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_p1buf"]
+
+[resource]
+script = ExtResource("1_p1buf")
+skill_id = "EarthMastery"
+display_name = "Earth Mastery"
+description = "Add 1 roll to earth spells"
+skill_type = 1
+available_classes = Array[int]([4, 7, 6])
+min_level = 14
+element_mastery = 4
+base_learn_chance = 35
+wisdom_scale = 1.0
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

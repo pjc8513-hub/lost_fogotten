@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://batt2bcmra27o"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_hwk8i"]
+
+[resource]
+script = ExtResource("1_hwk8i")
+skill_id = "Precision_IV"
+display_name = "Precision IV"
+description = "Adds 10% chance of chord success"
+available_classes = Array[int]([4, 2, 3])
+min_level = 25
+precision = 10.0
+base_learn_chance = 30
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

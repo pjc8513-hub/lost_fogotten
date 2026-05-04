@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://c4k81gltbqant"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_xpsmr"]
+
+[resource]
+script = ExtResource("1_xpsmr")
+skill_id = "FireMastery"
+display_name = "Fire Mastery"
+description = "Add 1 roll to fire spells"
+skill_type = 1
+available_classes = Array[int]([3, 4, 5])
+min_level = 12
+element_mastery = 1
+base_learn_chance = 35
+wisdom_scale = 1.0
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

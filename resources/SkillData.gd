@@ -8,6 +8,18 @@ enum SkillType {
 	ACTIVE_COMBAT,      # Grants a usable combat ability (Quick Step)
 }
 
+enum Element { 
+	NONE,
+	PHYSICAL,
+	FIRE, 
+	ICE, 
+	ELECTRIC, 
+	EARTH, 
+	SPIRIT, 
+	LIGHT, 
+	DARK
+	}
+
 @export var skill_id: String = ""           # Unique key, matches learned_skills entries
 @export var display_name: String = ""
 @export var description: String = ""
@@ -24,6 +36,8 @@ enum SkillType {
 @export var accuracy_bonus: int = 0
 @export var initiative_bonus: int = 0
 @export var movement_bonus: int = 0           # permanent movement increase
+@export var element_mastery: Element
+@export var precision: float = 0.0
 # ...extend as needed
 
 # Learning chance
