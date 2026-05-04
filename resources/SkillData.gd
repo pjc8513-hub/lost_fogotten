@@ -38,6 +38,8 @@ enum Element {
 @export var movement_bonus: int = 0           # permanent movement increase
 @export var element_mastery: Element
 @export var precision: float = 0.0
+@export var complexity_bonus: int = 0
+@export var extra_damage_roll: int = 0
 # ...extend as needed
 
 # Learning chance

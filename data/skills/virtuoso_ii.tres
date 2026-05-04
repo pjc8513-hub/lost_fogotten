@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://d2e1ciy2febhy"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_cfbfj"]
+
+[resource]
+script = ExtResource("1_cfbfj")
+skill_id = "Virtuoso_II"
+display_name = "Virtuoso II"
+description = "+1 complexity bonus to guitar sequences"
+skill_type = 1
+available_classes = Array[int]([2, 3, 4, 0, 6, 5, 7, 8])
+min_level = 8
+complexity_bonus = 1
+base_learn_chance = 45
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bvubslxmxcvu5"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_cbcck"]
+
+[resource]
+script = ExtResource("1_cbcck")
+skill_id = "Arms_Master_I"
+display_name = "Arms Master I"
+description = "+1 die roll on attack"
+skill_type = 1
+available_classes = Array[int]([0, 1, 6, 8])
+min_level = 8
+base_learn_chance = 50
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
