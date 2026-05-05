@@ -49,8 +49,10 @@ func resolve_spell_preview(spell_data: SpellData) -> SpellResult:
 	result.spell_data = spell_data
 	result.chord_success_chance = _get_chord_success_chance(spell_data)
 	result.chord_fail_chance = 100 - result.chord_success_chance
+	result.caster_current_mp = 0 if spell_data == null or spell_data.caster == null else spell_data.caster.current_mp
 
 	if spell_data == null or spell_data.guitar == null:
+		result.mana_sufficient = true
 		return result
 
 	var element_counts := {}
@@ -116,6 +118,7 @@ func resolve_spell_preview(spell_data: SpellData) -> SpellResult:
 		if chord_data != null:
 			result.mana_cost += chord_data.extra_mana_cost * count
 
+	result.mana_sufficient = result.mana_cost <= result.caster_current_mp
 	return result
 
 func format_preview_lines(result: SpellResult) -> Dictionary:

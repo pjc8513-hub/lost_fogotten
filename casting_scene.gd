@@ -8,6 +8,7 @@ const LABEL_TEXT_COLOR := Color(0.82, 0.73, 0.45, 1.0)
 const INFO_TEXT_COLOR := Color(0.73, 0.69, 0.55, 1.0)
 const WARNING_TEXT_COLOR := Color("e0a95c")
 const PREVIEW_TEXT_COLOR := Color("d8d2bc")
+const ERROR_TEXT_COLOR := Color("d65c5c")
 
 const ELEMENT_COLORS := {
 	GuitarData.Element.FIRE: Color("d6422b"),
@@ -23,6 +24,7 @@ const ELEMENT_COLORS := {
 @onready var motif_label: Label = $HBoxContainer/LeftPanel/MotifList/MotifLabel
 @onready var complexity_label: Label = $HBoxContainer/LeftPanel/MotifList/ComplexityLabel
 @onready var preview_label: Label = $HBoxContainer/LeftPanel/MotifList/PreviewLabel
+@onready var mana_label: Label = $HBoxContainer/LeftPanel/MotifList/ManaLabel
 @onready var string_container: VBoxContainer = $HBoxContainer/CenterPanel/ScrollContainer/StingContainer
 @onready var cast_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CastButton
 @onready var cancel_button: Button = $HBoxContainer/RightContainer/ControlsContainer/CancelButton
@@ -31,6 +33,7 @@ var sequence_grid: Array[Array] = []
 var current_character: ClassData = null
 var current_guitar: GuitarData = null
 var current_complexity_limit: int = 0
+var current_spell_result: SpellResult = null
 
 func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
@@ -81,6 +84,8 @@ func _rebuild_interface() -> void:
 		motif_label.text = "No party member selected."
 		complexity_label.text = "Complexity: 0/0"
 		preview_label.text = "Select a party member to preview a spell."
+		mana_label.text = "Mana: 0 / 0"
+		current_spell_result = null
 		cast_button.disabled = true
 		return
 
@@ -88,6 +93,8 @@ func _rebuild_interface() -> void:
 		motif_label.text = "%s needs a guitar equipped." % current_character.member_name
 		complexity_label.text = "Complexity: 0/0"
 		preview_label.text = "Equip a guitar to start composing."
+		mana_label.text = "Mana: 0 / %s" % current_character.current_mp
+		current_spell_result = null
 		cast_button.disabled = true
 		return
 
@@ -185,12 +192,24 @@ func _on_cell_gui_input(event: InputEvent, cell: ColorRect) -> void:
 	_update_cast_button_state()
 
 func _update_cast_button_state() -> void:
+	var has_notes := false
 	for row in sequence_grid:
 		for value in row:
 			if value:
-				cast_button.disabled = false
-				return
-	cast_button.disabled = true
+				has_notes = true
+				break
+		if has_notes:
+			break
+
+	if not has_notes:
+		cast_button.disabled = true
+		return
+
+	if current_spell_result == null:
+		cast_button.disabled = true
+		return
+
+	cast_button.disabled = not current_spell_result.mana_sufficient
 
 func _apply_static_styling() -> void:
 	var panel_style := StyleBoxFlat.new()
@@ -215,6 +234,7 @@ func _apply_static_styling() -> void:
 	motif_label.add_theme_color_override("font_color", INFO_TEXT_COLOR)
 	complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 	preview_label.add_theme_color_override("font_color", PREVIEW_TEXT_COLOR)
+	mana_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 
 func _on_cancel_pressed() -> void:
 	visible = false
@@ -259,6 +279,7 @@ func _update_complexity_display() -> void:
 func _update_spell_preview() -> void:
 	var spell_data := _build_spell_data()
 	var result := SpellResolver.resolve_spell_preview(spell_data)
+	current_spell_result = result
 	var preview := SpellResolver.format_preview_lines(result)
 	var lines: Array[String] = []
 
@@ -274,13 +295,25 @@ func _update_spell_preview() -> void:
 		if not preview["chord_lines"].is_empty():
 			lines.append("")
 			lines.append_array(preview["chord_lines"])
-		lines.append("")
-		lines.append("Mana: %s" % preview["mana"])
 
 	preview_label.text = "\n".join(lines)
+	_update_mana_label(result)
 
 func _build_spell_data() -> SpellData:
 	return SpellResolver.build_spell_data(current_character, current_guitar, sequence_grid, current_complexity_limit)
+
+func _build_cast_request() -> SpellCastRequest:
+	return SpellGateway.build_request(_build_spell_data())
+
+func _update_mana_label(result: SpellResult) -> void:
+	var current_mp := 0 if current_character == null else current_character.current_mp
+	var mana_cost := 0 if result == null else result.mana_cost
+	mana_label.text = "Mana: %s / %s" % [mana_cost, current_mp]
+
+	if result != null and not result.mana_sufficient:
+		mana_label.add_theme_color_override("font_color", ERROR_TEXT_COLOR)
+	else:
+		mana_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 
 func _get_element_name(element: int) -> String:
 	match element:
