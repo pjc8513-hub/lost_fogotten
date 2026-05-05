@@ -15,6 +15,8 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var dice_sides: int = 4
 @export var dice_rolls: int = 1
 @export var bonus_damage: int = 0
+@export var is_ranged: bool = false
+@export var ranged_tiles: int = 0
 @export var status_effects: Array[String] = []
 @export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
@@ -34,6 +36,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var resist_fire: int = 0
 @export var resist_physical: int = 0
 @export var resist_cold: int = 0
+@export var resist_earth: int = 0
 @export var resist_electric: int = 0
 @export var resist_light: int = 0
 @export var resist_dark: int = 0
@@ -65,6 +68,7 @@ func get_resistance(element: String) -> int:
 		"fire": return resist_fire
 		"physical": return resist_physical
 		"cold": return resist_cold
+		"earth": return resist_earth
 		"electric": return resist_electric
 		"light": return resist_light
 		"dark": return resist_dark

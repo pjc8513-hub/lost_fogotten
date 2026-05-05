@@ -109,7 +109,12 @@ func _take_turn_hunter() -> void:
 		emit_signal("turn_finished")
 		return
 
+	# Try melee attack if adjacent
 	if _try_attack_with_remaining_movement():
+		return
+
+	# Try ranged attack if in range
+	if _try_ranged_attack_with_remaining_movement():
 		return
 
 	if not World.can_see_player(grid_position, enemy_data.vision_range):
@@ -117,7 +122,10 @@ func _take_turn_hunter() -> void:
 		return
 
 	while movement_remaining > 0:
+		# Check for attacks after each movement
 		if _try_attack_with_remaining_movement():
+			return
+		if _try_ranged_attack_with_remaining_movement():
 			return
 
 		var dirs = _get_hunter_dirs(player.grid_position)
@@ -127,7 +135,10 @@ func _take_turn_hunter() -> void:
 			continue
 		break
 
+	# Final attempt at attack after movement
 	if _try_attack_with_remaining_movement():
+		return
+	if _try_ranged_attack_with_remaining_movement():
 		return
 
 	emit_signal("turn_finished")
@@ -139,7 +150,10 @@ func _take_turn_guard():
 	
 func _take_turn_random() -> void:
 	while movement_remaining > 0:
+		# Try attacks before moving
 		if _try_attack_with_remaining_movement():
+			return
+		if _try_ranged_attack_with_remaining_movement():
 			return
 
 		var dirs = [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]
@@ -152,7 +166,10 @@ func _take_turn_random() -> void:
 		if not _move_in_direction(chosen):
 			break
 
+	# Final attack attempt after movement
 	if _try_attack_with_remaining_movement():
+		return
+	if _try_ranged_attack_with_remaining_movement():
 		return
 
 	emit_signal("turn_finished")
@@ -279,6 +296,35 @@ func _is_adjacent_to_player() -> bool:
 func _queue_attack() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_queue_attack")
 	_queue_command(AttackCommand.new())
+
+func _get_distance_to_player() -> float:
+	var player = World.get_player()
+	if player == null:
+		return 999.0
+	
+	# Chebyshev distance (max of absolute differences) for 8-directional movement
+	var grid_diff = (grid_position - player.grid_position).abs()
+	return float(max(grid_diff.x, grid_diff.y))
+
+func _is_within_ranged_distance() -> bool:
+	if not enemy_data.is_ranged:
+		return false
+	
+	var distance = _get_distance_to_player()
+	return distance <= enemy_data.ranged_tiles and distance > 1
+
+func _try_ranged_attack_with_remaining_movement() -> bool:
+	if movement_remaining <= 0 or not _is_within_ranged_distance():
+		return false
+
+	movement_remaining -= 1
+	print("[Enemy]", enemy_data.enemy_name, "_try_ranged_attack_with_remaining_movement -> queue ranged attack, movement now=", movement_remaining)
+	_queue_ranged_attack()
+	return true
+
+func _queue_ranged_attack() -> void:
+	print("[Enemy]", enemy_data.enemy_name, "_queue_ranged_attack")
+	_queue_command(RangedAttackCommand.new())
 	
 func _on_turn_complete() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_on_turn_complete emit turn_finished")
