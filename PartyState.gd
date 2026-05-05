@@ -15,15 +15,12 @@ const MAX_ACTIVE_PARTY_SIZE := 5
 
 var roster: Array[ClassData] = []
 var active_party: Array[ClassData] = []
-var selected_index: int = 0:
+var _selected_index: int = 0
+var selected_index: int:
+	get:
+		return _selected_index
 	set(value):
-		if active_party.is_empty():
-			selected_index = 0
-			GameEvents.selected_character_changed.emit(null)
-			return
-		# Clamp based on the active_party size
-		selected_index = clamp(value, 0, active_party.size() - 1)
-		GameEvents.selected_character_changed.emit(get_selected())
+		_set_selected_index(value)
 
 var party_gold: int = 0:
 	set(value):
@@ -42,7 +39,24 @@ func _ready():
 func get_selected() -> ClassData:
 	if active_party.is_empty():
 		return null
-	return active_party[selected_index]
+	return active_party[_selected_index]
+
+func select_member(index: int, allow_during_combat: bool = false) -> bool:
+	if CombatState.is_in_combat() and not allow_during_combat:
+		return false
+
+	_set_selected_index(index)
+	return true
+
+func select_member_by_reference(member: ClassData, allow_during_combat: bool = false) -> bool:
+	if member == null:
+		return false
+
+	var index := active_party.find(member)
+	if index == -1:
+		return false
+
+	return select_member(index, allow_during_combat)
 
 func reset_default_party() -> void:
 	roster.clear()
@@ -128,8 +142,17 @@ func _emit_party_state_changed() -> void:
 
 func _normalize_selected_index() -> void:
 	if active_party.is_empty():
-		selected_index = 0
+		_selected_index = 0
 		GameEvents.selected_character_changed.emit(null)
 		return
-	selected_index = clamp(selected_index, 0, active_party.size() - 1)
+	_selected_index = clamp(_selected_index, 0, active_party.size() - 1)
+	GameEvents.selected_character_changed.emit(get_selected())
+
+func _set_selected_index(value: int) -> void:
+	if active_party.is_empty():
+		_selected_index = 0
+		GameEvents.selected_character_changed.emit(null)
+		return
+
+	_selected_index = clamp(value, 0, active_party.size() - 1)
 	GameEvents.selected_character_changed.emit(get_selected())

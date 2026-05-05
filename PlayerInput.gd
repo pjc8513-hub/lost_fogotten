@@ -26,17 +26,16 @@ func _unhandled_input(event):
 		SceneManager.change_scene("res://Main.tscn")
 
 
-
 	if event.is_action_pressed("select_member_1"):
-		PartyState.selected_index = 0
+		_try_select_party_member(0)
 	elif event.is_action_pressed("select_member_2"):
-		PartyState.selected_index = 1
+		_try_select_party_member(1)
 	elif event.is_action_pressed("select_member_3"):
-		PartyState.selected_index = 2
+		_try_select_party_member(2)
 	elif event.is_action_pressed("select_member_4"):
-		PartyState.selected_index = 3
+		_try_select_party_member(3)
 	elif event.is_action_pressed("select_member_5"):
-		PartyState.selected_index = 4
+		_try_select_party_member(4)
 
 
 
@@ -68,3 +67,15 @@ func _queue_player_move(player) -> void:
 		TurnStateMachine.last_action_was_party_wide = true
 
 	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
+
+func _try_select_party_member(index: int) -> void:
+	print("input")
+	if PartyState.select_member(index):
+		return
+
+	if CombatState.is_in_combat():
+		var acting_member := CombatState.get_acting_member()
+		if acting_member != null:
+			GameEvents.message_logged.emit("[color=gray]You cannot change characters during combat. It is %s's turn.[/color]" % acting_member.member_name)
+		else:
+			GameEvents.message_logged.emit("[color=gray]You cannot change characters during combat.[/color]")

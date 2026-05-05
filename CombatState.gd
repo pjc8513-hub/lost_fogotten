@@ -37,6 +37,7 @@ func advance_party_member() -> bool:
 				acting_member_index += 1
 				continue
 			_refresh_party_combat_statuses()
+			_sync_selected_to_acting_member()
 			return true
 		acting_member_index += 1
 	_refresh_party_combat_statuses()
@@ -71,6 +72,7 @@ func engage_enemy(enemy: Enemy) -> void:
 		rebuild_combatants()
 	if not was_in_combat:
 		_refresh_party_combat_statuses()
+		_sync_selected_to_acting_member()
 
 func disengage_enemy(enemy: Enemy) -> void:
 	if engaged_enemies.has(enemy):
@@ -99,6 +101,7 @@ func refresh_combat_state() -> bool:
 	rebuild_combatants()
 	if not was_in_combat and is_in_combat():
 		_refresh_party_combat_statuses()
+		_sync_selected_to_acting_member()
 	return was_in_combat and not is_in_combat()
 
 func mark_current_member_done() -> void:
@@ -229,3 +232,13 @@ func _refresh_party_combat_statuses() -> void:
 			GameEvents.combat_status_changed.emit(member, CombatStatus.ACTING)
 		else:
 			GameEvents.combat_status_changed.emit(member, CombatStatus.WAITING)
+
+func _sync_selected_to_acting_member() -> void:
+	if not is_in_combat():
+		return
+
+	var acting_member := get_acting_member()
+	if acting_member == null:
+		return
+
+	PartyState.select_member_by_reference(acting_member, true)
