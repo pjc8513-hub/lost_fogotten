@@ -9,27 +9,6 @@ const INFO_TEXT_COLOR := Color(0.73, 0.69, 0.55, 1.0)
 const WARNING_TEXT_COLOR := Color("e0a95c")
 const PREVIEW_TEXT_COLOR := Color("d8d2bc")
 
-const ELEMENT_RULES := {
-	GuitarData.Element.FIRE: {"name": "Fire", "die": 6, "mana": 3, "splash": true},
-	GuitarData.Element.ICE: {"name": "Ice", "die": 4, "mana": 2, "splash": false},
-	GuitarData.Element.ELECTRIC: {"name": "Electric", "die": 8, "mana": 4, "splash": false},
-	GuitarData.Element.EARTH: {"name": "Earth", "die": 5, "mana": 3, "splash": false},
-	GuitarData.Element.DARK: {"name": "Dark", "die": 6, "mana": 3, "splash": false},
-	GuitarData.Element.LIGHT: {"name": "Light", "die": 5, "mana": 2, "splash": false},
-	GuitarData.Element.PHYSICAL: {"name": "Physical", "die": 5, "mana": 2, "splash": false},
-	GuitarData.Element.SPIRIT: {"name": "Spirit", "die": 3, "mana": 3, "splash": false, "healing": true},
-}
-
-const DISSONANT_CHORDS := {
-	"4:3": true,
-	"6:7": true,
-	"1:2": true,
-	"0:5": true,
-}
-
-const CHORD_FAIL_CHANCE := 70
-const CHORD_SUCCESS_CHANCE := 30
-
 const ELEMENT_COLORS := {
 	GuitarData.Element.FIRE: Color("d6422b"),
 	GuitarData.Element.ICE: Color("4f8cff"),
@@ -278,7 +257,9 @@ func _update_complexity_display() -> void:
 		complexity_label.add_theme_color_override("font_color", LABEL_TEXT_COLOR)
 
 func _update_spell_preview() -> void:
-	var preview := _build_spell_preview()
+	var spell_data := _build_spell_data()
+	var result := SpellResolver.resolve_spell_preview(spell_data)
+	var preview := SpellResolver.format_preview_lines(result)
 	var lines: Array[String] = []
 
 	if preview["element_lines"].is_empty() and preview["chord_lines"].is_empty():
@@ -298,121 +279,8 @@ func _update_spell_preview() -> void:
 
 	preview_label.text = "\n".join(lines)
 
-func _build_spell_preview() -> Dictionary:
-	var element_counts := {}
-	var chord_counts := {}
-	var splash_lines: Array[String] = []
-
-	if current_guitar == null:
-		return {
-			"element_lines": [],
-			"extra_lines": [],
-			"chord_lines": [],
-			"mana": 0,
-		}
-
-	var string_elements := current_guitar.get_active_string_elements()
-	var step_count := 0
-	if not sequence_grid.is_empty():
-		step_count = sequence_grid[0].size()
-
-	for step_index in step_count:
-		var active_elements: Array[int] = []
-		for row_index in sequence_grid.size():
-			if sequence_grid[row_index][step_index]:
-				active_elements.append(string_elements[row_index])
-
-		var remaining_elements := active_elements.duplicate()
-		for pair_key in DISSONANT_CHORDS.keys():
-			var pair := _parse_pair_key(pair_key)
-			if remaining_elements.has(pair[0]) and remaining_elements.has(pair[1]):
-				remaining_elements.erase(pair[0])
-				remaining_elements.erase(pair[1])
-
-		for element in remaining_elements:
-			element_counts[element] = int(element_counts.get(element, 0)) + 1
-
-		for chord in ChordRegistry.get_matching_chords(remaining_elements):
-			if chord == null:
-				continue
-			chord_counts[chord.display_name] = {
-				"count": int(chord_counts.get(chord.display_name, {}).get("count", 0)) + 1,
-				"data": chord,
-			}
-
-	var element_lines: Array[String] = []
-	var extra_lines: Array[String] = []
-	var mana_total := 0
-
-	for element in ELEMENT_RULES.keys():
-		var rolls := int(element_counts.get(element, 0))
-		rolls += _get_element_roll_bonus(element)
-		rolls = max(0, rolls)
-		if rolls <= 0:
-			continue
-
-		var rule: Dictionary = ELEMENT_RULES[element]
-		mana_total += rolls * int(rule["mana"])
-
-		if rule.get("healing", false):
-			element_lines.append("%s: Heals each party member %sd%s" % [rule["name"], rolls, rule["die"]])
-		else:
-			element_lines.append("%s: %sd%s" % [rule["name"], rolls, rule["die"]])
-
-		if bool(rule.get("splash", false)) and rolls >= 4:
-			splash_lines.append("%s Splash: 1d6 adjacent enemies" % rule["name"])
-
-	extra_lines.append_array(splash_lines)
-
-	var chord_lines: Array[String] = []
-	var chord_names := chord_counts.keys()
-	chord_names.sort()
-	for chord_name in chord_names:
-		var chord_entry: Dictionary = chord_counts[chord_name]
-		var count := int(chord_entry.get("count", 0))
-		if count <= 0:
-			continue
-		var chord_data := chord_entry.get("data") as ChordData
-		var count_text := "" if count == 1 else " x%s" % count
-		var extra_text := ""
-		if chord_data != null and not chord_data.get_summary_text().is_empty():
-			extra_text = " - %s" % chord_data.get_summary_text()
-		if chord_data != null:
-			mana_total += chord_data.extra_mana_cost * count
-		chord_lines.append("%s%s (%s%% fail / %s%% success)%s" % [
-			chord_name,
-			count_text,
-			_get_chord_fail_chance(),
-			_get_chord_success_chance(),
-			extra_text
-		])
-
-	return {
-		"element_lines": element_lines,
-		"extra_lines": extra_lines,
-		"chord_lines": chord_lines,
-		"mana": mana_total,
-	}
-
-func _parse_pair_key(pair_key: String) -> Array[int]:
-	var values := pair_key.split(":")
-	return [int(values[0]), int(values[1])]
-
-func _get_chord_success_chance() -> int:
-	return clamp(CHORD_SUCCESS_CHANCE + _get_precision_bonus(), 0, 100)
-
-func _get_chord_fail_chance() -> int:
-	return 100 - _get_chord_success_chance()
-
-func _get_precision_bonus() -> int:
-	if current_character == null:
-		return 0
-	return current_character.get_spell_precision_bonus()
-
-func _get_element_roll_bonus(element: int) -> int:
-	if current_character == null:
-		return 0
-	return current_character.get_spell_element_roll_bonus(element)
+func _build_spell_data() -> SpellData:
+	return SpellResolver.build_spell_data(current_character, current_guitar, sequence_grid, current_complexity_limit)
 
 func _get_element_name(element: int) -> String:
 	match element:

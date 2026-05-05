@@ -7,5 +7,6 @@ script = ExtResource("1_5vggv")
 chord_id = "Lava"
 display_name = "Lava"
 details = "Additional DOT"
+required_elements = Array[int]([1, 4])
 status_effect = "BURN"
 metadata/_custom_type_script = "uid://md6iok7tr7hm"

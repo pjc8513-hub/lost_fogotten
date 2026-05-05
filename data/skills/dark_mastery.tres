@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_h42ta")
-skill_id = "DarklMastery"
+skill_id = "DarkMastery"
 display_name = "Dark Mastery"
 description = "Add 1 roll to dark spells"
 skill_type = 1
