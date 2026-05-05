@@ -28,14 +28,19 @@ func _unhandled_input(event):
 
 	if event.is_action_pressed("select_member_1"):
 		_try_select_party_member(0)
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("select_member_2"):
 		_try_select_party_member(1)
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("select_member_3"):
 		_try_select_party_member(2)
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("select_member_4"):
 		_try_select_party_member(3)
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("select_member_5"):
 		_try_select_party_member(4)
+		get_viewport().set_input_as_handled()
 
 
 

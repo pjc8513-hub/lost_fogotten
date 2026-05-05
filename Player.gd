@@ -39,6 +39,7 @@ func _unhandled_input(event):
 		
 	if event.is_action_pressed("attack"):
 		_queue_context_action()
+		get_viewport().set_input_as_handled()
 		
 func _queue_context_action():
 	var actor: ClassData = CombatState.get_acting_member()
