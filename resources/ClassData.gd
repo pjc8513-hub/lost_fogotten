@@ -238,6 +238,7 @@ const CLASS_STAT_MAP = {
 @export var cooldown: int = 0
 var quick_step_used: bool = false
 var suppress_stat_signal: bool = false
+var combat_buffs: Dictionary = {}
 
 @export var dice_sides: int = 4
 @export var dice_rolls: int = 1
@@ -419,16 +420,16 @@ func has_skill(skill_name: String) -> bool:
 	return learned_skills.has(skill_name) or learned_skills.has(skill_name.to_lower())
 
 func get_might() -> int:
-	return base_might + bonus_might + _get_equipped_bonus("might_bonus")
+	return base_might + bonus_might + _get_equipped_bonus("might_bonus") + _get_combat_bonus("might")
 
 func get_endurance() -> int:
-	return base_endurance + bonus_endurance + _get_equipped_bonus("endurance_bonus")
+	return base_endurance + bonus_endurance + _get_equipped_bonus("endurance_bonus") + _get_combat_bonus("endurance")
 
 func get_wisdom() -> int:
-	return base_wisdom + bonus_wisdom + _get_equipped_bonus("wisdom_bonus")
+	return base_wisdom + bonus_wisdom + _get_equipped_bonus("wisdom_bonus") + _get_combat_bonus("wisdom")
 
 func get_dexterity() -> int:
-	return base_dexterity + bonus_dexterity + _get_equipped_bonus("dexterity_bonus")
+	return base_dexterity + bonus_dexterity + _get_equipped_bonus("dexterity_bonus") + _get_combat_bonus("dexterity")
 
 func get_max_hp() -> int:
 	return _calculate_max_hp()
@@ -440,7 +441,7 @@ func get_armor_class() -> int:
 	return _calculate_armor_class()
 
 func get_movement() -> int:
-	return _get_class_int("movement", movement) + int(_get_skill_stat_bonus("movement_bonus"))
+	return _get_class_int("movement", movement) + int(_get_skill_stat_bonus("movement_bonus")) + _get_combat_bonus("movement")
 
 func get_magic_amp() -> int:
 	return _calculate_magic_amp()
@@ -603,25 +604,25 @@ func _calculate_max_mp() -> int:
 func _calculate_armor_class() -> int:
 	var dex_bonus := _scaled_modifier(get_dexterity(), _get_class_float("ac_dex_scale", 1.0))
 	var wis_bonus := _scaled_modifier(get_wisdom(), _get_class_float("ac_wis_scale", 0.0))
-	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus")
+	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus") + _get_combat_bonus("armor_class")
 
 func _calculate_accuracy() -> int:
-	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(get_might(), _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus")
+	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(get_might(), _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy")
 
 func _calculate_critical_chance() -> int:
 	return max(0, base_critical_chance_bonus + _get_class_int("crit_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_dex_scale", 0.5)) + _scaled_modifier(get_wisdom(), _get_class_float("crit_wis_scale", 0.0)) + _get_equipped_bonus("critical_chance_bonus"))
 
 func _calculate_attack_speed_bonus() -> int:
-	return base_attack_speed_bonus + _get_class_int("attack_speed_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("attack_speed_dex_scale", 0.5)) + _get_equipped_bonus("attack_speed_bonus")
+	return base_attack_speed_bonus + _get_class_int("attack_speed_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("attack_speed_dex_scale", 0.5)) + _get_equipped_bonus("attack_speed_bonus") + _get_combat_bonus("attack_speed")
 
 func _calculate_initiative() -> int:
-	return base_initiative_bonus + _get_class_int("initiative_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("initiative_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("initiative_wis_scale", 0.0)) + _get_equipped_bonus("initiative_bonus")
+	return base_initiative_bonus + _get_class_int("initiative_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("initiative_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("initiative_wis_scale", 0.0)) + _get_equipped_bonus("initiative_bonus") + _get_combat_bonus("initiative")
 
 func _calculate_bonus_damage() -> int:
-	return base_bonus_damage_bonus + _get_class_int("bonus_damage_base", 0) + _scaled_modifier(get_might(), _get_class_float("damage_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("damage_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("damage_wis_scale", 0.0)) + _get_equipped_bonus("bonus_damage_bonus")
+	return base_bonus_damage_bonus + _get_class_int("bonus_damage_base", 0) + _scaled_modifier(get_might(), _get_class_float("damage_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("damage_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("damage_wis_scale", 0.0)) + _get_equipped_bonus("bonus_damage_bonus") + _get_combat_bonus("bonus_damage")
 
 func _calculate_magic_amp() -> int:
-	return _get_class_int("magic_amp", 0) + _scaled_modifier(get_wisdom(), _get_class_float("magic_amp_wis_scale", 0.0)) + _get_equipped_bonus("magic_amp_bonus")
+	return _get_class_int("magic_amp", 0) + _scaled_modifier(get_wisdom(), _get_class_float("magic_amp_wis_scale", 0.0)) + _get_equipped_bonus("magic_amp_bonus") + _get_combat_bonus("magic_amp")
 
 func _calculate_critical_amp() -> int:
 	return _get_class_int("crit_amp", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_amp_dex_scale", 0.0)) + _get_equipped_bonus("critical_amp_bonus")
@@ -820,6 +821,59 @@ func _convert_skill_element_to_guitar_element(skill_element: SkillData.Element) 
 			return GuitarData.Element.DARK
 		_:
 			return -1
+
+func apply_combat_buff(stat_name: String, value: int) -> void:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty() or value == 0:
+		return
+
+	var current_value := int(combat_buffs.get(normalized, 0))
+	if value > 0:
+		combat_buffs[normalized] = max(current_value, value)
+	elif value < 0:
+		combat_buffs[normalized] = min(current_value, value)
+
+	recalculate_derived_stats(false)
+
+func clear_combat_buffs() -> void:
+	if combat_buffs.is_empty():
+		return
+	combat_buffs.clear()
+	recalculate_derived_stats(false)
+
+func _get_combat_bonus(stat_name: String) -> int:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty():
+		return 0
+	return int(combat_buffs.get(normalized, 0))
+
+func _normalize_combat_buff_key(stat_name: String) -> String:
+	var key := stat_name.to_lower().strip_edges()
+	match key:
+		"might":
+			return "might"
+		"endurance":
+			return "endurance"
+		"wisdom":
+			return "wisdom"
+		"dexterity":
+			return "dexterity"
+		"accuracy":
+			return "accuracy"
+		"ac_bonus", "armor_class":
+			return "armor_class"
+		"initiative":
+			return "initiative"
+		"attack_speed":
+			return "attack_speed"
+		"magic_amp":
+			return "magic_amp"
+		"movement":
+			return "movement"
+		"bonus_damage":
+			return "bonus_damage"
+		_:
+			return ""
 
 func get_combat_movement() -> int:
 	# Includes Quick Step bonus if not yet used this turn

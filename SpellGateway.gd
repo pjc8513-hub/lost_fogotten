@@ -15,6 +15,9 @@ func build_request(spell_data: SpellData) -> SpellCastRequest:
 func can_cast(spell_data: SpellData) -> bool:
 	return _create_request(spell_data).is_valid
 
+func preview_request(spell_data: SpellData) -> SpellCastRequest:
+	return _create_request(spell_data)
+
 func _create_request(spell_data: SpellData) -> SpellCastRequest:
 	var request := SpellCastRequest.new()
 	request.spell_data = spell_data

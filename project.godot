@@ -38,6 +38,7 @@ SkillRegistry="*uid://cv4cauospdyep"
 ChordRegistry="*res://ChordRegistry.gd"
 SpellResolver="*res://SpellResolver.gd"
 SpellGateway="*res://SpellGateway.gd"
+SpellExecutor="*res://SpellExecutor.gd"
 
 [display]
 

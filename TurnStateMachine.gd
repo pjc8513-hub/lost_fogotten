@@ -97,6 +97,7 @@ func _on_transition():
 
 func _clear_end_of_combat_effects() -> void:
 	for member in PartyState.active_party:
+		member.clear_combat_buffs()
 		if "stun" in member.status_effects:
 			member.status_effects.erase("stun")
 			GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")

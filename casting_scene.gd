@@ -34,11 +34,13 @@ var current_character: ClassData = null
 var current_guitar: GuitarData = null
 var current_complexity_limit: int = 0
 var current_spell_result: SpellResult = null
+var current_cast_request: SpellCastRequest = null
 
 func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
 	GameEvents.selected_character_changed.connect(_on_selected_character_changed)
 	GameEvents.inventory_changed.connect(_on_inventory_changed)
+	cast_button.pressed.connect(_on_cast_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
 	cast_button.disabled = true
 	_apply_static_styling()
@@ -86,6 +88,7 @@ func _rebuild_interface() -> void:
 		preview_label.text = "Select a party member to preview a spell."
 		mana_label.text = "Mana: 0 / 0"
 		current_spell_result = null
+		current_cast_request = null
 		cast_button.disabled = true
 		return
 
@@ -95,6 +98,7 @@ func _rebuild_interface() -> void:
 		preview_label.text = "Equip a guitar to start composing."
 		mana_label.text = "Mana: 0 / %s" % current_character.current_mp
 		current_spell_result = null
+		current_cast_request = null
 		cast_button.disabled = true
 		return
 
@@ -209,7 +213,11 @@ func _update_cast_button_state() -> void:
 		cast_button.disabled = true
 		return
 
-	cast_button.disabled = not current_spell_result.mana_sufficient
+	if current_cast_request == null:
+		cast_button.disabled = true
+		return
+
+	cast_button.disabled = not current_cast_request.is_valid
 
 func _apply_static_styling() -> void:
 	var panel_style := StyleBoxFlat.new()
@@ -278,7 +286,9 @@ func _update_complexity_display() -> void:
 
 func _update_spell_preview() -> void:
 	var spell_data := _build_spell_data()
-	var result := SpellResolver.resolve_spell_preview(spell_data)
+	var request := SpellGateway.preview_request(spell_data)
+	current_cast_request = request
+	var result := request.spell_result
 	current_spell_result = result
 	var preview := SpellResolver.format_preview_lines(result)
 	var lines: Array[String] = []
@@ -304,6 +314,23 @@ func _build_spell_data() -> SpellData:
 
 func _build_cast_request() -> SpellCastRequest:
 	return SpellGateway.build_request(_build_spell_data())
+
+func _on_cast_pressed() -> void:
+	var request := _build_cast_request()
+	if request == null or not request.is_valid:
+		var error_text := "The spell cannot be cast right now."
+		if request != null and not request.get_primary_error().is_empty():
+			error_text = request.get_primary_error()
+		GameEvents.message_logged.emit("[color=red]%s[/color]" % error_text)
+		return
+
+	var cmd := PlayerCastSpellCommand.new()
+	cmd.actor = current_character
+	cmd.cast_request = request
+	cmd.target_enemy = CombatState.targeted_enemy if CombatState.has_valid_target() else null
+	CommandQueue.add_command(cmd)
+	visible = false
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _update_mana_label(result: SpellResult) -> void:
 	var current_mp := 0 if current_character == null else current_character.current_mp
