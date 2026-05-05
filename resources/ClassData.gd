@@ -720,6 +720,107 @@ func _get_skill_stat_bonus(stat: String) -> float:
 			total += float(skill.get(stat))
 	return total
 
+func get_learned_skill_resources() -> Array[SkillData]:
+	var skills: Array[SkillData] = []
+	for skill_id in learned_skills:
+		var skill := SkillRegistry.get_skill(skill_id)
+		if skill != null:
+			skills.append(skill)
+	return skills
+
+func get_spell_precision_bonus() -> int:
+	var total := 0.0
+	for skill in get_learned_skill_resources():
+		total += skill.precision
+	return int(round(total))
+
+func get_spell_complexity_bonus() -> int:
+	var total := 0
+	for skill in get_learned_skill_resources():
+		total += skill.complexity_bonus
+	return total
+
+func get_spell_element_roll_bonus(element: int) -> int:
+	return _get_spell_mastery_bonus(element) + _get_guitar_tuning_bonus(element)
+
+func _get_spell_mastery_bonus(element: int) -> int:
+	var total := 0
+	for skill in get_learned_skill_resources():
+		if _get_mastery_target_element(skill) == element:
+			total += max(1, skill.extra_damage_roll if skill.extra_damage_roll > 0 else 1)
+	return total
+
+func _get_guitar_tuning_bonus(element: int) -> int:
+	var guitar_instance := get_equipped_guitar()
+	if guitar_instance == null or not guitar_instance.item_data is GuitarData:
+		return 0
+
+	var guitar_data := guitar_instance.item_data as GuitarData
+	if guitar_data.tuning_modifiers.is_empty():
+		return 0
+
+	var possible_keys := [
+		element,
+		str(element),
+		GuitarData.Element.keys()[element],
+		String(GuitarData.Element.keys()[element]).to_lower()
+	]
+
+	for key in possible_keys:
+		if guitar_data.tuning_modifiers.has(key):
+			return int(guitar_data.tuning_modifiers[key])
+
+	return 0
+
+func _get_mastery_target_element(skill: SkillData) -> int:
+	if skill == null:
+		return -1
+
+	if skill.element_mastery != SkillData.Element.NONE:
+		return _convert_skill_element_to_guitar_element(skill.element_mastery)
+
+	var skill_text := "%s %s" % [skill.skill_id, skill.display_name]
+	var normalized := skill_text.to_lower()
+	if normalized.contains("physical"):
+		return GuitarData.Element.PHYSICAL
+	if normalized.contains("fire"):
+		return GuitarData.Element.FIRE
+	if normalized.contains("ice"):
+		return GuitarData.Element.ICE
+	if normalized.contains("electric"):
+		return GuitarData.Element.ELECTRIC
+	if normalized.contains("earth"):
+		return GuitarData.Element.EARTH
+	if normalized.contains("spirit"):
+		return GuitarData.Element.SPIRIT
+	if normalized.contains("light"):
+		return GuitarData.Element.LIGHT
+	if normalized.contains("dark"):
+		return GuitarData.Element.DARK
+
+	return -1
+
+func _convert_skill_element_to_guitar_element(skill_element: SkillData.Element) -> int:
+	match skill_element:
+		SkillData.Element.PHYSICAL:
+			return GuitarData.Element.PHYSICAL
+		SkillData.Element.FIRE:
+			return GuitarData.Element.FIRE
+		SkillData.Element.ICE:
+			return GuitarData.Element.ICE
+		SkillData.Element.ELECTRIC:
+			return GuitarData.Element.ELECTRIC
+		SkillData.Element.EARTH:
+			return GuitarData.Element.EARTH
+		SkillData.Element.SPIRIT:
+			return GuitarData.Element.SPIRIT
+		SkillData.Element.LIGHT:
+			return GuitarData.Element.LIGHT
+		SkillData.Element.DARK:
+			return GuitarData.Element.DARK
+		_:
+			return -1
+
 func get_combat_movement() -> int:
 	# Includes Quick Step bonus if not yet used this turn
 	var base := get_movement()

@@ -35,6 +35,7 @@ TransitionLayer="*uid://ce61dp1c5nboa"
 SceneManager="*uid://sxmewt851dru"
 MusicManager="*uid://cft2oio8a8ruy"
 SkillRegistry="*uid://cv4cauospdyep"
+ChordRegistry="*res://ChordRegistry.gd"
 
 [display]
 

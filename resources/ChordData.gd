@@ -6,6 +6,7 @@ class_name ChordData
 @export var chord_id: String = ""
 @export var display_name: String = ""
 @export var details: String = ""
+@export var description: String = ""
 
 # Requirements
 @export var required_elements: Array[int] = []  # the two element enums
@@ -23,3 +24,8 @@ class_name ChordData
 @export var bonus_rolls: int = 0
 @export var bonus_damage: int = 0
 @export var bonus_vs_type: String = ""
+
+func get_summary_text() -> String:
+	if not details.is_empty():
+		return details
+	return description

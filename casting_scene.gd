@@ -27,16 +27,6 @@ const DISSONANT_CHORDS := {
 	"0:5": true,
 }
 
-const HARMONIC_CHORDS := {
-	"2:3": {"name": "Aftershock", "details": "Extra stun chance"},
-	"1:4": {"name": "Lava", "details": "Additional DOT"},
-	"0:4": {"name": "Earthquake", "details": "Additional AOE damage"},
-	"4:7": {"name": "Poison Alter", "details": "Poison status effect"},
-	"5:6": {"name": "Destroy Undead", "details": "Additional damage to undead"},
-	"3:5": {"name": "Amped", "details": "Small mana recovery for allies"},
-	"1:5": {"name": "Shred", "details": "+1 attack speed for the party"},
-}
-
 const CHORD_FAIL_CHANCE := 70
 const CHORD_SUCCESS_CHANCE := 30
 
@@ -263,8 +253,7 @@ func _get_complexity_bonus(character: ClassData) -> int:
 	if character == null:
 		return 0
 
-	# Hook for future class / skill modifiers.
-	return 0
+	return character.get_spell_complexity_bonus()
 
 func _get_filled_slot_count() -> int:
 	var total := 0
@@ -343,11 +332,13 @@ func _build_spell_preview() -> Dictionary:
 		for element in remaining_elements:
 			element_counts[element] = int(element_counts.get(element, 0)) + 1
 
-		for pair_key in HARMONIC_CHORDS.keys():
-			var pair := _parse_pair_key(pair_key)
-			if remaining_elements.has(pair[0]) and remaining_elements.has(pair[1]):
-				var chord_name := String(HARMONIC_CHORDS[pair_key]["name"])
-				chord_counts[chord_name] = int(chord_counts.get(chord_name, 0)) + 1
+		for chord in ChordRegistry.get_matching_chords(remaining_elements):
+			if chord == null:
+				continue
+			chord_counts[chord.display_name] = {
+				"count": int(chord_counts.get(chord.display_name, {}).get("count", 0)) + 1,
+				"data": chord,
+			}
 
 	var element_lines: Array[String] = []
 	var extra_lines: Array[String] = []
@@ -355,6 +346,8 @@ func _build_spell_preview() -> Dictionary:
 
 	for element in ELEMENT_RULES.keys():
 		var rolls := int(element_counts.get(element, 0))
+		rolls += _get_element_roll_bonus(element)
+		rolls = max(0, rolls)
 		if rolls <= 0:
 			continue
 
@@ -375,11 +368,24 @@ func _build_spell_preview() -> Dictionary:
 	var chord_names := chord_counts.keys()
 	chord_names.sort()
 	for chord_name in chord_names:
-		var count := int(chord_counts[chord_name])
+		var chord_entry: Dictionary = chord_counts[chord_name]
+		var count := int(chord_entry.get("count", 0))
 		if count <= 0:
 			continue
+		var chord_data := chord_entry.get("data") as ChordData
 		var count_text := "" if count == 1 else " x%s" % count
-		chord_lines.append("%s%s (%s%% fail / %s%% success)" % [chord_name, count_text, CHORD_FAIL_CHANCE, CHORD_SUCCESS_CHANCE])
+		var extra_text := ""
+		if chord_data != null and not chord_data.get_summary_text().is_empty():
+			extra_text = " - %s" % chord_data.get_summary_text()
+		if chord_data != null:
+			mana_total += chord_data.extra_mana_cost * count
+		chord_lines.append("%s%s (%s%% fail / %s%% success)%s" % [
+			chord_name,
+			count_text,
+			_get_chord_fail_chance(),
+			_get_chord_success_chance(),
+			extra_text
+		])
 
 	return {
 		"element_lines": element_lines,
@@ -391,6 +397,22 @@ func _build_spell_preview() -> Dictionary:
 func _parse_pair_key(pair_key: String) -> Array[int]:
 	var values := pair_key.split(":")
 	return [int(values[0]), int(values[1])]
+
+func _get_chord_success_chance() -> int:
+	return clamp(CHORD_SUCCESS_CHANCE + _get_precision_bonus(), 0, 100)
+
+func _get_chord_fail_chance() -> int:
+	return 100 - _get_chord_success_chance()
+
+func _get_precision_bonus() -> int:
+	if current_character == null:
+		return 0
+	return current_character.get_spell_precision_bonus()
+
+func _get_element_roll_bonus(element: int) -> int:
+	if current_character == null:
+		return 0
+	return current_character.get_spell_element_roll_bonus(element)
 
 func _get_element_name(element: int) -> String:
 	match element:
