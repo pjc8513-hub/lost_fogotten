@@ -329,6 +329,8 @@ func _on_cast_pressed() -> void:
 	cmd.cast_request = request
 	cmd.target_enemy = CombatState.targeted_enemy if CombatState.has_valid_target() else null
 	CommandQueue.add_command(cmd)
+	TurnStateMachine.last_action_was_party_wide = false
+	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
 	visible = false
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 

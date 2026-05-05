@@ -4,6 +4,7 @@ const DEFAULT_BUFF_COOLDOWN := 2
 const DEFAULT_AMPED_RECOVERY := 3
 const DEFAULT_SPLASH_DICE := 1
 const DEFAULT_SPLASH_DIE_SIZE := 6
+const SPELL_DAMAGE_RANGE := 6
 
 func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> Dictionary:
 	var outcome := {
@@ -106,6 +107,16 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 			GameEvents.message_logged.emit("[color=gray]No target selected, so the spell's damage dissipates harmlessly.[/color]")
 		return
 
+	var damage_distance := _get_spell_target_distance(target_enemy)
+	if damage_distance > SPELL_DAMAGE_RANGE:
+		if _has_damage_component(result):
+			GameEvents.message_logged.emit("[color=gray]%s is %d tiles away, beyond the spell's %d-tile damage range.[/color]" % [
+				target_enemy.enemy_data.enemy_name,
+				damage_distance,
+				SPELL_DAMAGE_RANGE
+			])
+		return
+
 	var total_damage := 0
 	var splash_damage := 0
 
@@ -161,6 +172,8 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 func _apply_chord_statuses(target_enemy: Enemy, result: SpellResult) -> void:
 	if target_enemy == null or not is_instance_valid(target_enemy) or target_enemy.enemy_data.hp <= 0:
 		return
+	if _get_spell_target_distance(target_enemy) > SPELL_DAMAGE_RANGE:
+		return
 
 	for chord_entry in result.chord_entries:
 		var chord_data := chord_entry.get("data") as ChordData
@@ -212,6 +225,14 @@ func _has_damage_component(result: SpellResult) -> bool:
 		if not bool(roll_data.get("healing", false)):
 			return true
 	return false
+
+func _get_spell_target_distance(target_enemy: Enemy) -> int:
+	var player_node = World.get_player()
+	if player_node == null or target_enemy == null or not is_instance_valid(target_enemy):
+		return 999999
+
+	var grid_diff = (player_node.grid_position - target_enemy.grid_position).abs()
+	return int(max(grid_diff.x, grid_diff.y))
 
 func _cleanup_enemy_if_dead(enemy: Enemy) -> void:
 	if enemy == null or not is_instance_valid(enemy) or enemy.enemy_data.hp > 0:
