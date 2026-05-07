@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="9_wkp8b"]
 [ext_resource type="PackedScene" uid="uid://c4c4blrojhq5d" path="res://GoldUI.tscn" id="11_20pc6"]
 [ext_resource type="PackedScene" uid="uid://2t0xkthjrfs7" path="res://casting_scene.tscn" id="12_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://cfl7ouks8wtu8" path="res://EnemyCardScene.tscn" id="13_enemy_card"]
 
 [sub_resource type="Environment" id="Environment_20pc6"]
 
@@ -181,3 +182,5 @@ offset_top = 135.0
 offset_right = -257.0
 offset_bottom = -1.0
 mouse_filter = 2
+
+[node name="EnemyCardScene" parent="." instance=ExtResource("13_enemy_card")]

@@ -69,6 +69,7 @@ func _apply_poison_effects():
 	for enemy in enemies:
 		if "poison" in enemy.enemy_data.status_effects and enemy.enemy_data.hp > 0:
 			enemy.enemy_data.hp -= 10
+			GameEvents.enemy_took_damage.emit(enemy, 10)
 			GameEvents.message_logged.emit("[color=purple]" + enemy.enemy_data.enemy_name + " takes 10 poison damage![/color]")
 			if enemy.enemy_data.hp <= 0:
 				GameEvents.message_logged.emit("[color=red]" + enemy.enemy_data.enemy_name + " dies from poison![/color]")

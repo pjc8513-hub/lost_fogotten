@@ -1,5 +1,7 @@
 extends Node
 
+signal selected_enemy_changed(enemy)
+
 var selected_enemy: Enemy = null
 var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
@@ -103,6 +105,7 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 func set_selected_enemy(enemy):
 	selected_enemy = enemy
 	selected_chest = null # deselect chest if enemy selected
+	selected_enemy_changed.emit(enemy)
 	if enemy:
 		print("Selected enemy:", enemy.enemy_data.enemy_name)
 
@@ -123,6 +126,7 @@ func remove_treasure_chest(chest: TreasureChest) -> void:
 func set_selected_chest(chest: TreasureChest):
 	selected_chest = chest
 	selected_enemy = null # deselect enemy if chest selected
+	selected_enemy_changed.emit(null)
 	if chest:
 		print("Selected chest:", chest.treasure_data.chest_name)
 

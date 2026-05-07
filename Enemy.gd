@@ -11,9 +11,12 @@ signal attack_animation_completed
 @export var enemy_data: EnemyData:
 	set(value):
 		enemy_data = value
+		if enemy_data != null:
+			max_hp = enemy_data.hp
 		if is_inside_tree() and sprite:
 			_apply_enemy_data()
 
+var max_hp: int = 0
 var grid_position: Vector2i
 var forward_vector: Vector2i = Vector2i(0, 1) # default facing south
 var _pending_commands: int = 0

@@ -174,6 +174,7 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 
 	if total_damage > 0:
 		target_enemy.enemy_data.hp -= total_damage
+		GameEvents.enemy_took_damage.emit(target_enemy, total_damage)
 		GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] total spell damage." % [
 			target_enemy.enemy_data.enemy_name,
 			total_damage
@@ -186,6 +187,7 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 			if not World.are_adjacent(enemy, target_enemy):
 				continue
 			enemy.enemy_data.hp -= splash_damage
+			GameEvents.enemy_took_damage.emit(enemy, splash_damage)
 			GameEvents.message_logged.emit("[color=orange]%s[/color] is splashed for [color=red]%d[/color] damage." % [
 				enemy.enemy_data.enemy_name,
 				splash_damage
