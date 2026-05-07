@@ -38,6 +38,8 @@ func get_enemies() -> Array:
 	return enemies.duplicate()
 
 func remove_enemy(enemy) -> void:
+	if selected_enemy == enemy:
+		set_selected_enemy(null)
 	enemies.erase(enemy)
 	CombatState.disengage_enemy(enemy)
 	enemy.queue_free()
@@ -105,11 +107,14 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 func set_selected_enemy(enemy):
 	selected_enemy = enemy
 	selected_chest = null # deselect chest if enemy selected
-	if enemy == null:
+	if enemy != null and is_instance_valid(enemy) and enemy.enemy_data.hp > 0:
+		CombatState.set_target(enemy)
+	else:
+		selected_enemy = null
 		CombatState.clear_target()
-	selected_enemy_changed.emit(enemy)
-	if enemy:
-		print("Selected enemy:", enemy.enemy_data.enemy_name)
+	selected_enemy_changed.emit(selected_enemy)
+	if selected_enemy:
+		print("Selected enemy:", selected_enemy.enemy_data.enemy_name)
 
 # === TREASURE CHEST MANAGEMENT ===
 func register_treasure_chest(chest: TreasureChest):

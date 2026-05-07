@@ -95,8 +95,11 @@ func refresh_combat_state() -> bool:
 
 	engaged_enemies = refreshed
 
+	if World.selected_enemy != null and _is_valid_enemy(World.selected_enemy) and engaged_enemies.has(World.selected_enemy):
+		set_target(World.selected_enemy)
+
 	if targeted_enemy != null and (not is_instance_valid(targeted_enemy) or not engaged_enemies.has(targeted_enemy)):
-		clear_target()
+		World.set_selected_enemy(null)
 
 	rebuild_combatants()
 	if not was_in_combat and is_in_combat():
