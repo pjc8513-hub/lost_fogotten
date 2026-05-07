@@ -76,8 +76,8 @@ func _on_enemy_took_damage(enemy: Enemy, damage: int) -> void:
 	tween.tween_property(progress_bar, "value", new_hp, 0.3)
 	
 	if new_hp <= 0:
-		tween.finished.connect(Callable(self, "_hide_if_current_enemy_dead").bind(enemy), CONNECT_ONE_SHOT)
+		tween.finished.connect(Callable(self, "_hide_if_current_enemy_dead"), CONNECT_ONE_SHOT)
 
-func _hide_if_current_enemy_dead(enemy: Enemy) -> void:
-	if current_enemy == enemy:
+func _hide_if_current_enemy_dead() -> void:
+	if current_enemy == null or not is_instance_valid(current_enemy) or current_enemy.enemy_data.hp <= 0:
 		set_enemy()

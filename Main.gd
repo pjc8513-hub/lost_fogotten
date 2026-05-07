@@ -96,6 +96,9 @@ func _input(event):
 # debug
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		World.set_selected_enemy(null)
+		CombatState.clear_target()
+		World.set_selected_chest(null)
 		print("[Main] Unhandled click at: ", event.position)		
 
 func load_room_data(file_path: String) -> Dictionary:

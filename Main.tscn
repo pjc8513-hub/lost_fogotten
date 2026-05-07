@@ -183,4 +183,4 @@ offset_right = -257.0
 offset_bottom = -1.0
 mouse_filter = 2
 
-[node name="EnemyCardScene" parent="." instance=ExtResource("13_enemy_card")]
+[node name="EnemyCardScene" parent="SubViewportContainer" instance=ExtResource("13_enemy_card")]
