@@ -47,6 +47,7 @@ _data = {
 script = ExtResource("2_mhv6j")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1859454211]
+billboard = 2
 texture = ExtResource("1_hkt8c")
 hframes = 2
 vframes = 2
