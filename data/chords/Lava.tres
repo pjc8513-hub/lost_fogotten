@@ -6,6 +6,7 @@
 script = ExtResource("1_5vggv")
 chord_id = "Lava"
 display_name = "Lava"
+animation_path = "res://FireballScene.tscn"
 details = "Additional DOT"
 required_elements = Array[int]([1, 4])
 status_effect = "BURN"

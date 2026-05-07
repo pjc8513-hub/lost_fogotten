@@ -5,6 +5,7 @@ class_name ChordData
 # ID
 @export var chord_id: String = ""
 @export var display_name: String = ""
+@export var animation_path: String = ""
 @export var details: String = ""
 @export var description: String = ""
 

@@ -40,6 +40,31 @@ func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> D
 	_apply_healing(caster, result, outcome)
 	_apply_buffs(caster, result, outcome)
 	_apply_mp_recovery(caster, result, outcome)
+	
+	# Emit projectile animation if the spell targets the enemy
+	var anim_path := "res://FireballScene.tscn"
+	var affects_enemy := _has_damage_component(result)
+	
+	for entry in result.chord_entries:
+		var c_data = entry.get("data") as ChordData
+		if c_data != null:
+			if not c_data.status_effect.is_empty():
+				affects_enemy = true
+			if c_data.animation_path != "":
+				anim_path = c_data.animation_path
+
+	if affects_enemy and effect_target != null and caster != null:
+		if is_instance_valid(effect_target) and effect_target.enemy_data.hp > 0:
+			var damage_distance := _get_spell_target_distance(effect_target)
+			var player_node = World.get_player()
+			if damage_distance <= SPELL_DAMAGE_RANGE and player_node != null:
+				GameEvents.spell_projectile_cast.emit(
+					player_node.global_position,
+					effect_target.global_position,
+					anim_path
+				)
+				await get_tree().create_timer(0.6).timeout
+	
 	_apply_damage(caster, result, effect_target, outcome)
 	_apply_chord_statuses(effect_target, result)
 

@@ -13,4 +13,3 @@ var filled_slots: int = 0
 
 func has_notes() -> bool:
 	return filled_slots > 0
-

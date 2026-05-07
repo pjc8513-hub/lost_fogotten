@@ -6,6 +6,7 @@ func _ready():
 	GameEvents.damage_animation_started.connect(_on_damage_started)
 	GameEvents.movement_animation_started.connect(_on_movement_started)
 	GameEvents.open_chest_animation_started.connect(_on_open_chest_started)
+	GameEvents.spell_projectile_cast.connect(_on_spell_projectile_cast)
 
 func _on_attack_started(attacker, target, damage):
 	#print("[AnimationManager] attack started attacker=", attacker, " target=", target, " damage=", damage)
@@ -28,3 +29,15 @@ func _on_movement_started(actor, destination):
 func _on_open_chest_started(chest):
 	if chest and chest.has_method("play_open_animation"):
 		chest.play_open_animation()
+
+func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String) -> void:
+	if anim_path.is_empty():
+		return
+		
+	if ResourceLoader.exists(anim_path):
+		var fireball_scene = load(anim_path)
+		if fireball_scene:
+			var fireball = fireball_scene.instantiate()
+			get_tree().root.add_child(fireball)
+			if fireball.has_method("launch"):
+				fireball.launch(caster_pos, target_pos, 0.5)

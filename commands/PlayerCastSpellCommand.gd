@@ -15,6 +15,6 @@ func execute() -> void:
 		emit_signal("finished")
 		return
 
-	SpellExecutor.execute_request(cast_request, target_enemy)
+	await SpellExecutor.execute_request(cast_request, target_enemy)
 	caster.cooldown = 2
 	emit_signal("finished")
