@@ -45,6 +45,17 @@ func _perform_single_ranged_attack(target) -> void:
 	var target_ac = target.get_armor_class() if target.has_method("get_armor_class") else target.armor_class
 	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
 	
+	var target_pos = Vector3.ZERO
+	if target is Enemy:
+		target_pos = target.global_position
+	else:
+		var p = World.get_player()
+		if p != null:
+			target_pos = p.global_position
+			
+	GameEvents.spell_projectile_cast.emit(actor.global_position, target_pos, "res://ArrowScene.tscn")
+	await actor.get_tree().create_timer(0.5).timeout
+	
 	if outcome == "miss":
 		var msg = "[color=gray]%s[/color] fires at %s — [color=gray]miss![/color]" % [
 			actor.enemy_data.enemy_name, target.member_name

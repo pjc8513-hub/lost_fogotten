@@ -40,9 +40,9 @@ func execute() -> void:
 			break
 
 		if dist <= MELEE_RANGE:
-			_do_melee(attacker, target_enemy)
+			await _do_melee(attacker, target_enemy)
 		else:
-			_do_ranged_or_skip(attacker, target_enemy, dist)
+			await _do_ranged_or_skip(attacker, target_enemy, dist)
 		
 	actor.cooldown = 2
 	emit_signal("finished")
@@ -107,6 +107,11 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 
 	# Ranged attack — same pipeline, no resist override needed (will use weapon element later)
 	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
+
+	var p = World.get_player()
+	if p != null:
+		GameEvents.spell_projectile_cast.emit(p.global_position, target.global_position, "res://ArrowScene.tscn")
+		await p.get_tree().create_timer(0.5).timeout
 
 	if outcome == "miss":
 		var msg := "[color=white]%s[/color] fires at [color=red]%s[/color] — [color=gray]miss![/color]" % [

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dt3ub70q4winc"]
+
+[ext_resource type="Texture2D" uid="uid://cecmm1kre4xnb" path="res://assets/sprites/effects/arrow.png" id="1_35q73"]
+[ext_resource type="Script" uid="uid://c6vay56tqx7m" path="res://ArrowScene.gd" id="1_esxxi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_esxxi"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Arrow" type="Node3D" unique_id=1977865926]
+script = ExtResource("1_esxxi")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=841282913]
+billboard = 2
+texture = ExtResource("1_35q73")
+hframes = 2
+vframes = 2
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=291214325]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=270347831]
+shape = SubResource("BoxShape3D_esxxi")
