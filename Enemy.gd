@@ -21,6 +21,7 @@ var grid_position: Vector2i
 var forward_vector: Vector2i = Vector2i(0, 1) # default facing south
 var _pending_commands: int = 0
 var movement_remaining: int = 0
+var damage_flash_tween: Tween = null
 
 
 
@@ -379,16 +380,15 @@ func animate_move_to(target: Vector2i, duration: float = 0.25):
 	GameEvents.emit_signal("movement_animation_finished", self)
 
 func animate_take_damage(damage: int):
-	print("animation")
-	GameEvents.emit_signal("damage_animation_started", self, damage)
-	# Shake effect
-	var tween = create_tween()
-	# Use TRANS_SINE and EASE_IN_OUT directly
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	for i in range(3):
-		tween.tween_property(self, "position:x", position.x + 0.2, 0.05)
-		tween.tween_property(self, "position:x", position.x - 0.2, 0.05)
-	await tween.finished
+	if sprite == null:
+		return
+	if damage_flash_tween:
+		damage_flash_tween.kill()
+	sprite.modulate = Color(2.2, 0.5, 0.5, 1.0)
+	damage_flash_tween = create_tween()
+	damage_flash_tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.18)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
 
 func animate_death():
 	GameEvents.emit_signal("character_died_animation_started", self)

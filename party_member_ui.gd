@@ -15,6 +15,8 @@ var normal_style: StyleBoxFlat
 var selected_style: StyleBoxFlat
 var _pending_member_data: ClassData
 var _pending_member_index: int = -1
+var _last_hp_value: int = -1
+var _portrait_flash_tween: Tween = null
 
 enum CombatStatus { IDLE, WAITING, ACTING, STUN, DONE }
 var wait_texture = preload("res://assets/icons/wait.png")
@@ -76,6 +78,7 @@ func _apply_setup(data: ClassData, index: int) -> void:
 	label.text = data.member_name
 
 	my_member_data = data
+	_last_hp_value = data.current_hp
 	# Listen for any stat changes globally
 	if !GameEvents.party_member_stats_changed.is_connected(_on_stats_changed):
 		GameEvents.party_member_stats_changed.connect(_on_stats_changed)
@@ -91,6 +94,7 @@ func _on_stats_changed(updated_data: ClassData):
 		update_ui()
 
 func update_ui():
+	var previous_hp := _last_hp_value
 	# Use Tween for a smooth sliding animation instead of a sudden jump
 	hp_bar.max_value = my_member_data.get_max_hp()
 	mp_bar.max_value = my_member_data.get_max_mp()
@@ -103,8 +107,22 @@ func update_ui():
 	#print(my_member_data.class_name, " current hp: ", my_member_data.current_hp)
 	mp_bar.value = my_member_data.current_mp
 	xp_bar.value = my_member_data.xp
+	if previous_hp >= 0 and my_member_data.current_hp < previous_hp:
+		_flash_portrait_on_damage()
+	_last_hp_value = my_member_data.current_hp
 	if my_member_data.current_hp <=0:
 		portrait.texture = preload("res://assets/portraits/dead_p.png")
+
+func _flash_portrait_on_damage() -> void:
+	if portrait == null:
+		return
+	if _portrait_flash_tween:
+		_portrait_flash_tween.kill()
+	portrait.modulate = Color(2.0, 0.6, 0.6, 1.0)
+	_portrait_flash_tween = create_tween()
+	_portrait_flash_tween.tween_property(portrait, "modulate", Color(1, 1, 1, 1), 0.18)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
 func _on_selection_changed(_character: ClassData):
 	_update_border()
 

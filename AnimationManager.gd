@@ -4,6 +4,7 @@ extends Node
 func _ready():
 	GameEvents.attack_animation_started.connect(_on_attack_started)
 	GameEvents.damage_animation_started.connect(_on_damage_started)
+	GameEvents.enemy_took_damage.connect(_on_enemy_took_damage)
 	GameEvents.movement_animation_started.connect(_on_movement_started)
 	GameEvents.open_chest_animation_started.connect(_on_open_chest_started)
 	GameEvents.spell_projectile_cast.connect(_on_spell_projectile_cast)
@@ -17,8 +18,14 @@ func _on_attack_started(attacker, target, damage):
 
 func _on_damage_started(target, damage):
 	# Flash screen red, shake camera, float damage text, etc.
+	if target and target.has_method("animate_take_damage"):
+		target.animate_take_damage(damage)
 	if has_node("DamageFloater"):
 		$DamageFloater.show_damage(target, damage)
+
+func _on_enemy_took_damage(enemy, damage):
+	if enemy and enemy.has_method("animate_take_damage"):
+		enemy.animate_take_damage(damage)
 
 func _on_movement_started(actor, destination):
 	# Play footstep sounds, particle effects, etc.
