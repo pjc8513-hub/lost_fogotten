@@ -30,22 +30,38 @@ scale_curve = SubResource("CurveTexture_g3fef")
 emission_curve = SubResource("CurveTexture_jmh4p")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g5rpq"]
+roughness = 0.0
 emission_enabled = true
 emission = Color(0.81960785, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_o35ao"]
 material = SubResource("StandardMaterial3D_g5rpq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jmh4p"]
-emission_enabled = true
-emission = Color(0.8392157, 0, 0, 1)
-emission_energy_multiplier = 5.0
-billboard_mode = 2
-grow = true
-grow_amount = 0.368
+[sub_resource type="Gradient" id="Gradient_t0xf4"]
+colors = PackedColorArray(0.95686275, 0.8235294, 0, 1, 1, 1, 0.019607844, 0.72156864)
+metadata/_snap_enabled = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_ry3xo"]
-material = SubResource("StandardMaterial3D_jmh4p")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jmh4p"]
+gradient = SubResource("Gradient_t0xf4")
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_jmh4p"]
+colors = PackedColorArray(0.98039216, 0.95686275, 0.101960786, 1, 1, 1, 0.023529412, 0.6039216)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ry3xo"]
+gradient = SubResource("Gradient_jmh4p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry3xo"]
+albedo_color = Color(0.896813, 0.8865214, 0, 1)
+albedo_texture = SubResource("GradientTexture2D_jmh4p")
+emission_enabled = true
+emission = Color(0.9647059, 0.9647059, 0.4392157, 1)
+emission_texture = SubResource("GradientTexture2D_ry3xo")
+
+[sub_resource type="SphereMesh" id="SphereMesh_g3fef"]
+material = SubResource("StandardMaterial3D_ry3xo")
+radius = 0.1
+height = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t0xf4"]
 
@@ -64,6 +80,7 @@ current = true
 current = true
 
 [node name="CastParticles" type="GPUParticles3D" parent="Camera3D" unique_id=1837154562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.499, 0)
 material_override = SubResource("StandardMaterial3D_t0xf4")
 emitting = false
 amount = 20
@@ -71,17 +88,19 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_j0xc4")
 draw_pass_1 = SubResource("SphereMesh_o35ao")
 
-[node name="CastParticlesCPU" type="CPUParticles3D" parent="Camera3D" unique_id=1956392301]
-material_override = SubResource("StandardMaterial3D_t0xf4")
+[node name="CastParticlesCPU" type="CPUParticles3D" parent="Camera3D" unique_id=297641343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12021303, 1.2667973, -0.70040035)
 emitting = false
-amount = 20
+amount = 16
 one_shot = true
-mesh = SubResource("SphereMesh_ry3xo")
-emission_shape = 1
-emission_sphere_radius = 1.0
-initial_velocity_min = 3.0
-initial_velocity_max = 5.0
-color = Color(0.57645106, 0.01142896, 0.023009002, 1)
+randomness = 0.24
+lifetime_randomness = 0.26
+mesh = SubResource("SphereMesh_g3fef")
+emission_shape = 2
+emission_sphere_radius = 0.1
+emission_colors = PackedColorArray(0.99607843, 0.96862745, 0.050980393, 1)
+direction = Vector3(1, -1, 0)
+spread = 102.03
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2000327109]
 shape = SubResource("BoxShape3D_t0xf4")

@@ -41,6 +41,22 @@ _data = {
 &"RESET": SubResource("Animation_exoqp")
 }
 
+[sub_resource type="Gradient" id="Gradient_rjufj"]
+colors = PackedColorArray(0.96862745, 0, 0, 1, 1, 0.078431375, 0.08627451, 0.77254903)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exoqp"]
+gradient = SubResource("Gradient_rjufj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exoqp"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("GradientTexture2D_exoqp")
+
+[sub_resource type="SphereMesh" id="SphereMesh_vfhbk"]
+material = SubResource("StandardMaterial3D_exoqp")
+radius = 0.1
+height = 0.2
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_vfhbk"]
 
 [node name="fireball" type="Node3D" unique_id=465630749]
@@ -54,6 +70,17 @@ vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" unique_id=880519161]
 libraries/ = SubResource("AnimationLibrary_55mwj")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Sprite3D" unique_id=1356738963]
+amount = 13
+mesh = SubResource("SphereMesh_vfhbk")
+emission_shape = 2
+emission_sphere_radius = 0.1
+emission_colors = PackedColorArray(0.9647059, 0, 0, 1)
+initial_velocity_min = 0.2
+initial_velocity_max = 0.3
+angular_velocity_min = 0.2
+angular_velocity_max = 0.3
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=421532213]
 
