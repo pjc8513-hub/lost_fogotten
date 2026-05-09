@@ -36,6 +36,17 @@ emission = Color(0.81960785, 0, 0, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_o35ao"]
 material = SubResource("StandardMaterial3D_g5rpq")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jmh4p"]
+emission_enabled = true
+emission = Color(0.8392157, 0, 0, 1)
+emission_energy_multiplier = 5.0
+billboard_mode = 2
+grow = true
+grow_amount = 0.368
+
+[sub_resource type="SphereMesh" id="SphereMesh_ry3xo"]
+material = SubResource("StandardMaterial3D_jmh4p")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_t0xf4"]
 
 [sub_resource type="Environment" id="Environment_jmh4p"]
@@ -59,6 +70,18 @@ amount = 20
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_j0xc4")
 draw_pass_1 = SubResource("SphereMesh_o35ao")
+
+[node name="CastParticlesCPU" type="CPUParticles3D" parent="Camera3D" unique_id=1956392301]
+material_override = SubResource("StandardMaterial3D_t0xf4")
+emitting = false
+amount = 20
+one_shot = true
+mesh = SubResource("SphereMesh_ry3xo")
+emission_shape = 1
+emission_sphere_radius = 1.0
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+color = Color(0.57645106, 0.01142896, 0.023009002, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2000327109]
 shape = SubResource("BoxShape3D_t0xf4")
