@@ -45,23 +45,16 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_t0xf4")
 metadata/_snap_enabled = true
 
-[sub_resource type="Gradient" id="Gradient_jmh4p"]
-colors = PackedColorArray(0.98039216, 0.95686275, 0.101960786, 1, 1, 1, 0.023529412, 0.6039216)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ry3xo"]
-gradient = SubResource("Gradient_jmh4p")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry3xo"]
-albedo_color = Color(0.896813, 0.8865214, 0, 1)
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.9647059, 0.98039216, 0.28235295, 0.8235294)
 albedo_texture = SubResource("GradientTexture2D_jmh4p")
-emission_enabled = true
-emission = Color(0.9647059, 0.9647059, 0.4392157, 1)
-emission_texture = SubResource("GradientTexture2D_ry3xo")
 
 [sub_resource type="SphereMesh" id="SphereMesh_g3fef"]
 material = SubResource("StandardMaterial3D_ry3xo")
-radius = 0.1
-height = 0.2
+radius = 0.05
+height = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t0xf4"]
 
@@ -91,16 +84,25 @@ draw_pass_1 = SubResource("SphereMesh_o35ao")
 [node name="CastParticlesCPU" type="CPUParticles3D" parent="Camera3D" unique_id=297641343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12021303, 1.2667973, -0.70040035)
 emitting = false
-amount = 16
+amount = 32
+lifetime = 1.8
 one_shot = true
 randomness = 0.24
 lifetime_randomness = 0.26
 mesh = SubResource("SphereMesh_g3fef")
 emission_shape = 2
-emission_sphere_radius = 0.1
-emission_colors = PackedColorArray(0.99607843, 0.96862745, 0.050980393, 1)
-direction = Vector3(1, -1, 0)
-spread = 102.03
+emission_sphere_radius = 0.85
+emission_colors = PackedColorArray(1, 0.9529412, 0.70980394, 0.42)
+direction = Vector3(0, 1, 0)
+spread = 42.0
+flatness = 0.15
+gravity = Vector3(0, 1.4, 0)
+initial_velocity_min = 0.15
+initial_velocity_max = 0.65
+angular_velocity_min = -0.4
+angular_velocity_max = 0.4
+scale_amount_min = 0.65
+scale_amount_max = 1.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2000327109]
 shape = SubResource("BoxShape3D_t0xf4")
