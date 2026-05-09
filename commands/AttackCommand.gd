@@ -98,6 +98,7 @@ func _perform_single_attack(target) -> void:
 	else:
 		print("[AttackCommand] actor missing attack_animation_completed signal")
 	GameEvents.emit_signal("damage_animation_started", target, final_damage)
+	SfxManager.play_sfx("hit")
 	target.take_damage(final_damage)
 	#print("[AttackCommand] damage applied final_damage=", final_damage, " target_hp=", target.current_hp)
 	GameEvents.emit_signal("attack_animation_finished", actor, target)

@@ -8,6 +8,7 @@ func execute():
 	#print("MoveForwardCommand: target = ", target)
 
 	if not World.is_walkable(target):
+		SfxManager.play_sfx("thud")
 		print("MoveForwardCommand: target NOT walkable")
 		emit_signal("finished")
 		return

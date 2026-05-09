@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mpe24ror4md7" path="res://TreasureChest.gd" id="1_equa1"]
 [ext_resource type="Script" uid="uid://bawvbn1dta1qb" path="res://resources/TreasureData.gd" id="2_fql6u"]
+[ext_resource type="AudioStream" uid="uid://bnb6vpybaq2xi" path="res://assets/audio/sfx/open.wav" id="3_c4iej"]
 
 [sub_resource type="Resource" id="Resource_c4iej"]
 script = ExtResource("2_fql6u")
@@ -24,6 +25,10 @@ vframes = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1799078832]
 shape = SubResource("BoxShape3D_qhknk")
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="." unique_id=1354949014]
+stream = ExtResource("3_c4iej")
+volume_db = 10.0
 
 [connection signal="animation_finished" from="Sprite3D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

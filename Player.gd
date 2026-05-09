@@ -15,6 +15,7 @@ func _ready():
 	player_moved.connect(automap.on_player_moved)
 
 	emit_signal("player_moved", grid_position)
+	
 
 func move_to(target: Vector2i):
 	#print('moving')

@@ -90,6 +90,8 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		#Distribute xp
 		LootDistributor.distribute_xp(target.enemy_data.xp)
 		World.remove_enemy(target)
+	else:
+		SfxManager.play_sfx("hit")
 		
 
 

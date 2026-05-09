@@ -39,6 +39,7 @@ ChordRegistry="*res://ChordRegistry.gd"
 SpellResolver="*res://SpellResolver.gd"
 SpellGateway="*res://SpellGateway.gd"
 SpellExecutor="*res://SpellExecutor.gd"
+SfxManager="*uid://dhq138hmbhoxb"
 
 [display]
 

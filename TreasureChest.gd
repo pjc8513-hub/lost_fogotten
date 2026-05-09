@@ -9,7 +9,8 @@ signal open_animation_completed
 
 @onready var sprite: Sprite3D = $Sprite3D
 @onready var area: Area3D = $Area3D
-
+@onready var sfx_player: AudioStreamPlayer = $SfxPlayer
+@export var open_sound: AudioStream = preload("res://assets/audio/sfx/open.wav")
 @export var treasure_data: TreasureData:
 	set(value):
 		treasure_data = value
@@ -111,27 +112,31 @@ func _trigger_trap():
 	chest_trap_triggered.emit(self, damage)
 	# Player.take_damage(damage) - call this however your player handles it
 
+
+
 func open_chest():
+
 	if is_opened:
 		return
-	is_opened = true
 	
+	is_opened = true
+	if sfx_player and open_sound:
+		sfx_player.stream = open_sound
+		sfx_player.play()
+		
 	var gold_roll = randi_range(1, treasure_data.gold_die)
 	var gold_total = gold_roll * treasure_data.gold_multiplier
-	
 	# New: roll all tables in the array
 	var loot_ids = LootManager.roll_loot(treasure_data.loot_table, 0) # pass player luck later
-	
 	GameEvents.message_logged.emit("[color=gold]Found %d gold![/color]" % gold_total)
+
 	if loot_ids.size() > 0:
 		var loot_names = loot_ids.map(func(id): return id.replace("_", " ").capitalize())
 		GameEvents.message_logged.emit("[color=cyan]Found: %s[/color]" % ", ".join(loot_names))
-	
-	# Emit local signal for direct connections to this chest
-	chest_opened.emit(self, gold_total, loot_ids)
-	# Emit global signal for LootDistributor and other systems
-	GameEvents.chest_opened.emit(self, gold_total, loot_ids)
-	
+		# Emit local signal for direct connections to this chest
+		chest_opened.emit(self, gold_total, loot_ids)
+		# Emit global signal for LootDistributor and other systems
+		GameEvents.chest_opened.emit(self, gold_total, loot_ids)
 	sprite.modulate = Color.DARK_GRAY
 
 func play_open_animation() -> void:

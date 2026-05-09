@@ -26,6 +26,7 @@ signal character_status_changed_visually(character, status)
 signal character_died_animation_started(character)
 signal open_chest_animation_started(chest)
 signal open_chest_animation_finished(chest)
+#signal particle_restart(element)
 
 # Spell projectile animations
 signal spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String)
