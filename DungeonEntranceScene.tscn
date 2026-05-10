@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://btscupunbqeil"]
+
+[ext_resource type="Texture2D" uid="uid://dhdq57kvq8yxq" path="res://assets/sprites/entities/Castle1.png" id="1_adqyl"]
+[ext_resource type="Script" uid="uid://cv1s55uayit71" path="res://DungeonEntranceScene.gd" id="1_m3m3f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m3m3f"]
+size = Vector3(1.0545654, 1, 0.7290039)
+
+[node name="Dungeon" type="Node3D" unique_id=1015003909]
+script = ExtResource("1_m3m3f")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=475153216]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 2
+texture = ExtResource("1_adqyl")
+
+[node name="StaticBody3D" type="Area3D" parent="." unique_id=2075651509]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=418678643]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("BoxShape3D_m3m3f")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]

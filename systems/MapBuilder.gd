@@ -2,13 +2,15 @@
 class_name MapBuilder
 
 # Returns a Dictionary with { automap_grid: Dictionary }
-static func build(data: Dictionary, geometry_parent: Node, entity_parent: Node, 
+static func build(data: Dictionary, geometry_parent: Node, entity_parent: Node,
+				theme: MapTheme, 
 				on_enemy_selected: Callable = Callable(), 
-				on_chest_selected: Callable = Callable()) -> Dictionary:
+				on_chest_selected: Callable = Callable(),
+				on_dungeon_selected: Callable = Callable()) -> Dictionary:
 	var automap_grid := {}
 	
-	_build_geometry(data, geometry_parent, automap_grid)
-	_spawn_entities(data, entity_parent, automap_grid, on_enemy_selected, on_chest_selected)
+	_build_geometry(data, geometry_parent, automap_grid, theme)
+	_spawn_entities(data, entity_parent, automap_grid, on_enemy_selected, on_chest_selected, on_dungeon_selected)
 	
 	return { "automap_grid": automap_grid }
 
@@ -26,7 +28,7 @@ static func load_room_data(file_path: String) -> Dictionary:
 		print("JSON Parse Error: ", json.get_error_message())
 		return {}
 
-static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictionary) -> void:
+static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictionary, theme: MapTheme) -> void:
 	var wall_scene: PackedScene = load("res://MossyWall.tscn")
 	var floor_scene: PackedScene = load("res://FloorMarsh.tscn")
 	var floor_materials = [
@@ -54,8 +56,13 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 		
 		if atlas_x == 0 and atlas_y == 0:
 			automap_grid[pos] = 1
-			var wall = wall_scene.instantiate()
+			var wall = theme.wall_scene.instantiate()
 			parent.add_child(wall)
+			
+			# random wall materials if the array exists
+			if theme.wall_materials.size() > 0:
+				wall.get_node("MeshInstance3D").material_override = theme.wall_materials.pick_random()
+			
 			wall.position = Vector3(pos.x, 0, pos.y)
 			wall.position += Vector3(randf_range(-0.05, 0.05), 0, randf_range(-0.05, 0.05))
 			var scale_variation = randf_range(0.95, 1.05)
@@ -63,14 +70,15 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			wall.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 		else:
 			automap_grid[pos] = 0
-			var floor = floor_scene.instantiate()
+			var floor = theme.floor_scene.instantiate()
 			parent.add_child(floor)
-			floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = floor_materials.pick_random()
+			floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = theme.floor_materials.pick_random()
 			floor.position = Vector3(pos.x, 0, pos.y)
 			floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 
 static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictionary,
-							on_enemy_selected: Callable, on_chest_selected: Callable) -> void:
+							on_enemy_selected: Callable, on_chest_selected: Callable,
+							on_dungeon_selected: Callable) -> void:
 	for ent in data.get("entities", []):
 		var ent_pos_data = ent.get("pos", [])
 		if ent_pos_data is String:
@@ -93,6 +101,8 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_set_player_start(pos, parent, automap_grid)
 			"decoration":
 				_spawn_decor(pos, parent)
+			"dungeon":
+				_spawn_dungeon(pos, ent["data_resource"], parent, on_dungeon_selected)
 
 static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int, 
 						 parent: Node, on_enemy_selected: Callable) -> void:
@@ -147,3 +157,21 @@ static func _spawn_decor(pos: Vector2i, parent: Node) -> void:
 	var decor = decor_scene.instantiate()
 	parent.add_child(decor)
 	decor.position = Vector3(pos.x, 0, pos.y)
+
+static func _spawn_dungeon(grid_pos: Vector2i, data_path: String, 
+						 parent: Node, on_dungeon_selected: Callable) -> void:
+	var res = load(data_path) as DungeonData
+	
+	var dungeon_scene_resource = load(res.scene_path)
+	print("dungeon  res: ", res, " dungeon scene: ", dungeon_scene_resource)
+	var dungeon = dungeon_scene_resource.instantiate()
+	parent.add_child(dungeon)
+	
+	dungeon.grid_position = grid_pos
+	dungeon.position = Vector3(grid_pos.x, -0.5, grid_pos.y)
+	
+	if FileAccess.file_exists(data_path):
+		dungeon.dungeon_data = res.duplicate()
+	
+	if not on_dungeon_selected.is_null():
+		dungeon.connect("selected", on_dungeon_selected)

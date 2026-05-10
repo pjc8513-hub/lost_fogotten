@@ -3,6 +3,7 @@ extends Node
 signal selected_enemy_changed(enemy)
 
 var selected_enemy: Enemy = null
+var selected_dungeon: Dungeon = null
 var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
 var enemies: Array = []         # Placeholder for future enemy nodes
@@ -138,6 +139,13 @@ func set_selected_chest(chest: TreasureChest):
 	if chest:
 		print("Selected chest:", chest.treasure_data.chest_name)
 
+func set_selected_dungeon(dungeon: Dungeon):
+	selected_dungeon = dungeon
+	selected_enemy = null
+	CombatState.clear_target()
+	selected_enemy_changed.emit(null)
+	if dungeon:
+		print("Selected dungeon: ", dungeon.dungeon_data.dungeon_name)
 
 func get_player():
 	return player_ref

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://btwnl8622op54"]
+
+[ext_resource type="Material" uid="uid://da6x4ra0tdlup" path="res://assets/textures/MossWall_Mat.tres" id="1_peojr"]
+[ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xf5sl"]
+[ext_resource type="Material" uid="uid://byrmj2dnb8lts" path="res://assets/textures/MossyWall_Mat2.tres" id="2_1f2vf"]
+[ext_resource type="Material" uid="uid://cywkww3ncdolw" path="res://assets/textures/MossyPit.tres" id="3_diyux"]
+[ext_resource type="PackedScene" uid="uid://citsomkx0f8di" path="res://FloorMarsh.tscn" id="4_qcl7j"]
+[ext_resource type="PackedScene" uid="uid://cr4alb0lll0yu" path="res://MossyWall.tscn" id="6_27vsx"]
+
+[resource]
+script = ExtResource("1_xf5sl")
+wall_scene = ExtResource("6_27vsx")
+floor_scene = ExtResource("4_qcl7j")
+floor_materials = Array[Material]([ExtResource("1_peojr"), ExtResource("2_1f2vf"), ExtResource("3_diyux")])
+metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

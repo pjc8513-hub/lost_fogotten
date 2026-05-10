@@ -45,11 +45,23 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_t0xf4")
 metadata/_snap_enabled = true
 
+[sub_resource type="Gradient" id="Gradient_jmh4p"]
+colors = PackedColorArray(0.9411765, 0.8627451, 0, 0.77254903, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ry3xo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g3fef"]
+noise = SubResource("FastNoiseLite_ry3xo")
+color_ramp = SubResource("Gradient_jmh4p")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry3xo"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.9647059, 0.98039216, 0.28235295, 0.8235294)
 albedo_texture = SubResource("GradientTexture2D_jmh4p")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_g3fef")
+refraction_texture_channel = 3
 
 [sub_resource type="SphereMesh" id="SphereMesh_g3fef"]
 material = SubResource("StandardMaterial3D_ry3xo")

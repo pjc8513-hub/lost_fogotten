@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://5hs1qf0xj6u2"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_v2dv8"]
+
+[resource]
+script = ExtResource("1_v2dv8")
+scene_path = "res://BonePit.tscn"
+DungeonID = "bone_pit"
+DungeonName = "Bone Pit"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"
