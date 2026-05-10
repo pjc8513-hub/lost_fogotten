@@ -10,6 +10,8 @@
 [resource]
 script = ExtResource("1_xf5sl")
 wall_scene = ExtResource("6_27vsx")
+random_wall_variation = true
 floor_scene = ExtResource("4_qcl7j")
 floor_materials = Array[Material]([ExtResource("1_peojr"), ExtResource("2_1f2vf"), ExtResource("3_diyux")])
+random_floor_variation = true
 metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

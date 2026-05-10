@@ -65,16 +65,22 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			
 			wall.position = Vector3(pos.x, 0, pos.y)
 			wall.position += Vector3(randf_range(-0.05, 0.05), 0, randf_range(-0.05, 0.05))
-			var scale_variation = randf_range(0.95, 1.05)
-			wall.scale = Vector3(scale_variation, 1, scale_variation)
-			wall.rotation_degrees.y = [0, 90, 180, 270].pick_random()
+			
+			#for random variations in cave walls and outdoor
+			if theme.random_wall_variation == true:
+				var scale_variation = randf_range(0.95, 1.05)
+				wall.scale = Vector3(scale_variation, 1, scale_variation)
+				wall.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 		else:
 			automap_grid[pos] = 0
 			var floor = theme.floor_scene.instantiate()
 			parent.add_child(floor)
-			floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = theme.floor_materials.pick_random()
-			floor.position = Vector3(pos.x, 0, pos.y)
-			floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
+			if theme.floor_materials.size() > 0:
+				floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = theme.floor_materials.pick_random()
+			floor.position = Vector3(pos.x, -1, pos.y)
+			
+			if theme.random_floor_variation == true:
+				floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 
 static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictionary,
 							on_enemy_selected: Callable, on_chest_selected: Callable,

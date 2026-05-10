@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://dvttt8ryvu0nq"]
+
+[ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_1aard"]
+[ext_resource type="PackedScene" uid="uid://djkot2d8hoyv3" path="res://assets/models/CastleFloor2.glb" id="1_tqa35"]
+[ext_resource type="PackedScene" uid="uid://b74aedqm34hag" path="res://assets/models/CastleWall1.glb" id="3_1uutu"]
+
+[resource]
+script = ExtResource("1_1aard")
+wall_scene = ExtResource("3_1uutu")
+floor_scene = ExtResource("1_tqa35")
+random_floor_variation = true
+metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

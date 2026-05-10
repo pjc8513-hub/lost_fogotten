@@ -7,4 +7,6 @@ script = ExtResource("1_v2dv8")
 scene_path = "res://BonePit.tscn"
 DungeonID = "bone_pit"
 DungeonName = "Bone Pit"
+ThemePath = "res://data/maps/themes/castle_theme.tres"
+Description = "Abandoned fortress now used mostly by goblins and rats"
 metadata/_custom_type_script = "uid://dh6a7cxep8vlh"
