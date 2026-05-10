@@ -145,7 +145,7 @@ func set_selected_dungeon(dungeon: Dungeon):
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if dungeon:
-		print("Selected dungeon: ", dungeon.dungeon_data.dungeon_name)
+		print("Selected dungeon: ", dungeon.dungeon_data.DungeonName)
 
 func get_player():
 	return player_ref
