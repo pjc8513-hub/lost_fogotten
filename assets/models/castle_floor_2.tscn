@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://djy3qgdqpksdq"]
+
+[ext_resource type="PackedScene" uid="uid://djkot2d8hoyv3" path="res://assets/models/CastleFloor2.glb" id="1_u1gac"]
+
+[node name="CastleFloor2" unique_id=1091790556 instance=ExtResource("1_u1gac")]
+
+[node name="Cube" parent="." index="0" unique_id=490881132]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, -1, 0)

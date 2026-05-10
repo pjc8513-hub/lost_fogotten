@@ -37,8 +37,8 @@ func _ready():
 	var swamp_theme = load("res://data/maps/themes/castle_theme.tres") #testing
 	#var swamp_theme = load("res://data/maps/themes/swamp_theme.tres")
 	# Load the new JSON format we exported from the TileMap
-	var data = MapBuilder.load_room_data("res://data/maps/cave_level_1.json")
-	#var data = MapBuilder.load_room_data("res://data/maps/BonePit.json") #testing
+	#var data = MapBuilder.load_room_data("res://data/maps/cave_level_1.json")
+	var data = MapBuilder.load_room_data("res://data/maps/BonePit.json") #testing
 	if data:
 		var result = MapBuilder.build(
 			data, self, 

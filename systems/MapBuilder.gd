@@ -37,6 +37,24 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 		load("res://assets/textures/MossyPit.tres")
 	]
 	
+	var cell_types := {}
+	for cell in data.get("cells", []):
+		var pos_data = cell.get("pos", [])
+		if pos_data is String:
+			pos_data = JSON.parse_string(pos_data)
+		var atlas_data = cell.get("atlas", [])
+		if atlas_data is String:
+			atlas_data = JSON.parse_string(atlas_data)
+			
+		if pos_data is Array and atlas_data is Array and pos_data.size() >= 2 and atlas_data.size() >= 2:
+			var pos = Vector2i(int(pos_data[0]), int(pos_data[1]))
+			var atlas_x = int(atlas_data[0])
+			var atlas_y = int(atlas_data[1])
+			if atlas_x == 0 and atlas_y == 0:
+				cell_types[pos] = "wall"
+			else:
+				cell_types[pos] = "floor"
+				
 	for cell in data.get("cells", []):
 		var pos_data = cell.get("pos", [])
 		if pos_data is String:
@@ -59,25 +77,31 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			var wall = theme.wall_scene.instantiate()
 			parent.add_child(wall)
 			
+			wall.position = Vector3(pos.x, 0, pos.y)
 			# random wall materials if the array exists
 			if theme.wall_materials.size() > 0:
 				wall.get_node("MeshInstance3D").material_override = theme.wall_materials.pick_random()
+				wall.position += Vector3(randf_range(-0.05, 0.05), 0, randf_range(-0.05, 0.05))
 			
-			wall.position = Vector3(pos.x, 0, pos.y)
-			wall.position += Vector3(randf_range(-0.05, 0.05), 0, randf_range(-0.05, 0.05))
-			
+			var east_is_floor = cell_types.get(pos + Vector2i(1, 0), "wall") == "floor"
+			var west_is_floor = cell_types.get(pos + Vector2i(0, -1), "wall") == "floor"
+			var test_is_floor = cell_types.get(pos + Vector2i(0, 1), "wall") == "floor"
+			if east_is_floor and not west_is_floor and not test_is_floor:
+				wall.rotation_degrees.y = 90
+
+
+
 			#for random variations in cave walls and outdoor
 			if theme.random_wall_variation == true:
 				var scale_variation = randf_range(0.95, 1.05)
 				wall.scale = Vector3(scale_variation, 1, scale_variation)
-				wall.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 		else:
 			automap_grid[pos] = 0
 			var floor = theme.floor_scene.instantiate()
 			parent.add_child(floor)
 			if theme.floor_materials.size() > 0:
 				floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = theme.floor_materials.pick_random()
-			floor.position = Vector3(pos.x, -1, pos.y)
+			floor.position = Vector3(pos.x, 0, pos.y)
 			
 			if theme.random_floor_variation == true:
 				floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
@@ -109,6 +133,8 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_decor(pos, parent)
 			"dungeon":
 				_spawn_dungeon(pos, ent["data_resource"], parent, on_dungeon_selected)
+			"door":
+				_spawn_door(pos, ent["data_resource"], parent)
 
 static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int, 
 						 parent: Node, on_enemy_selected: Callable) -> void:
@@ -132,6 +158,16 @@ static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int,
 	# We emit a signal so Main can handle this, or pass a callable
 	# See note below about the selected signal
 
+static func _spawn_door(grid_pos: Vector2i, data_path: String,
+						parent: Node) -> void:
+	var res = load(data_path) as DoorData
+	var door_scene_resource = load(res.scene_path)
+	var door = door_scene_resource.instantiate()
+	parent.add_child(door)
+	door.grid_position = grid_pos
+	door.position = Vector3(grid_pos.x, -0.5, grid_pos.y)
+	door.rotation_degrees.y = res.rotation
+	
 static func _spawn_chest(grid_pos: Vector2i, data_path: String, 
 						 parent: Node, on_chest_selected: Callable) -> void:
 	var res = load(data_path) as TreasureData
