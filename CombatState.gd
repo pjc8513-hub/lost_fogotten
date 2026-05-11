@@ -121,6 +121,15 @@ func clear_party_combat_statuses() -> void:
 	for member in PartyState.active_party:
 		GameEvents.combat_status_changed.emit(member, CombatStatus.IDLE)
 
+func reset() -> void:
+	targeted_enemy = null
+	current_actor = null
+	combatants.clear()
+	engaged_enemies.clear()
+	turn_index = 0
+	acting_member_index = 0
+	clear_party_combat_statuses()
+
 func get_current_actor():
 	# During PLAYER_INPUT, the actor should be the selected party member
 	if TurnStateMachine.state == TurnStateMachine.State.PLAYER_INPUT:

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://yftkdw3bqcye"]
+
+[ext_resource type="PackedScene" uid="uid://b3yy1jjb82myy" path="res://assets/models/BoneWall1.glb" id="1_d2bjf"]
+
+[node name="BoneWall1" unique_id=2073383932 instance=ExtResource("1_d2bjf")]
+
+[node name="Cube" parent="." index="0" unique_id=321047981]
+transform = Transform3D(-2.190095e-08, 0, 0.5194803, 0, 1, 0, -0.50103533, 0, -2.2707205e-08, 0, 0, 0)

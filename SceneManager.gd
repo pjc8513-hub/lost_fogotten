@@ -20,9 +20,15 @@ func change_scene(path: String) -> void:
 	print("[FRAME ", Engine.get_process_frames(), "] SceneManager fade in finished")
 
 func _clear_world_state() -> void:
-	#CombatState.reset()
+	CombatState.reset()
 	World.selected_enemy = null
 	World.selected_chest = null
+	World.selected_dungeon = null
 	World.enemies.clear()
 	World.treasure_chests.clear()
+	World.doors.clear()
+	World.doors_by_position.clear()
+	World.doors_by_id.clear()
+	World.doors_by_switch_id.clear()
 	World.player_ref = null
+	World.map_data.clear()

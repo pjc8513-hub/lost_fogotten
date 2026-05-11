@@ -10,3 +10,5 @@ class_name MapTheme
 @export var floor_scene: PackedScene
 @export var floor_materials: Array[Material] = []
 @export var random_floor_variation: bool = false
+
+@export var music_path: String= ""

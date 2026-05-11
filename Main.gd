@@ -35,8 +35,8 @@ func _ready():
 		GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
 	var dungeon_data := World.current_dungeon_data
-	var map_path := "res://data/maps/cave_level_1.json"
-	var theme_path := "res://data/maps/themes/swamp_theme.tres"
+	var map_path := "res://data/maps/BonePit.json"
+	var theme_path := "res://data/maps/themes/castle_theme.tres"
 	if dungeon_data != null:
 		if not dungeon_data.map_data_path.is_empty():
 			map_path = dungeon_data.map_data_path
@@ -44,6 +44,7 @@ func _ready():
 			theme_path = dungeon_data.ThemePath
 	var map_theme = load(theme_path)
 	#var map_theme = load("res://data/maps/themes/swamp_theme.tres") #testing
+	_play_map_music(map_theme)
 	
 	# Load the new JSON format we exported from the TileMap
 	var data = MapBuilder.load_room_data(map_path)
@@ -119,6 +120,20 @@ func load_room_data(file_path: String) -> Dictionary:
 	else:
 		print("JSON Parse Error: ", json.get_error_message())
 		return {}
+
+func _play_map_music(map_theme: MapTheme) -> void:
+	if map_theme == null or map_theme.music_path.is_empty():
+		return
+	if not ResourceLoader.exists(map_theme.music_path):
+		push_warning("Map music not found: " + map_theme.music_path)
+		return
+
+	var stream := load(map_theme.music_path) as AudioStream
+	if stream == null:
+		push_warning("Failed to load map music: " + map_theme.music_path)
+		return
+
+	MusicManager.play_music(stream)
 
 
 func spawn_light_here(posx, posy):
