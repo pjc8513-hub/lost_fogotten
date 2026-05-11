@@ -37,6 +37,7 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 		load("res://assets/textures/MossyPit.tres")
 	]
 	
+	var wall_counter := 0 
 	var cell_types := {}
 	for cell in data.get("cells", []):
 		var pos_data = cell.get("pos", [])
@@ -91,7 +92,9 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			elif test_is_floor and not west_is_floor:
 				wall.rotation_degrees.y = 90
 
-
+			wall_counter += 1
+			if wall_counter % 3 == 0:
+				wall.rotation_degrees.y += 180
 
 			#for random variations in cave walls and outdoor
 			if theme.random_wall_variation == true:

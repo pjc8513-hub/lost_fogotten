@@ -7,4 +7,4 @@
 script = ExtResource("2_keiey")
 
 [node name="Cube" parent="." index="0" unique_id=1303169289]
-transform = Transform3D(0.25, 0, 0, 0, 1, 0, 0, 0, 0.71298707, 0, 0, -0.10461867)
+transform = Transform3D(0.25, 0, 0, 0, 1.5, 0, 0, 0, 0.713, 0, 0, 0)
