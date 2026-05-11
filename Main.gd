@@ -34,17 +34,26 @@ func _ready():
 	if not GameEvents.chest_opened.is_connected(LootDistributor.distribute_chest_loot):
 		GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
-	#var swamp_theme = load("res://data/maps/themes/castle_theme.tres") #testing
-	var swamp_theme = load("res://data/maps/themes/swamp_theme.tres")
+	var dungeon_data := World.current_dungeon_data
+	var map_path := "res://data/maps/cave_level_1.json"
+	var theme_path := "res://data/maps/themes/swamp_theme.tres"
+	if dungeon_data != null:
+		if not dungeon_data.map_data_path.is_empty():
+			map_path = dungeon_data.map_data_path
+		if not dungeon_data.ThemePath.is_empty():
+			theme_path = dungeon_data.ThemePath
+	var map_theme = load(theme_path)
+	#var map_theme = load("res://data/maps/themes/swamp_theme.tres") #testing
+	
 	# Load the new JSON format we exported from the TileMap
-	var data = MapBuilder.load_room_data("res://data/maps/cave_level_1.json")
+	var data = MapBuilder.load_room_data(map_path)
 	#var data = MapBuilder.load_room_data("res://data/maps/BonePit.json") #testing
 	if data:
 		World.reset_world_state()
 		var result = MapBuilder.build(
 			data, self, 
 			$SubViewportContainer/SubViewport,
-			swamp_theme,
+			map_theme,
 			_on_enemy_selected,
 			_on_chest_selected,
 			_on_dungeon_selected
