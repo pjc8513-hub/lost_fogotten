@@ -7,6 +7,18 @@ func execute():
 	var target = actor.grid_position + actor.forward_vector
 	#print("MoveForwardCommand: target = ", target)
 
+	var door := World.get_door_at(target)
+	if door != null and not door.is_open:
+		print("Door!")
+		if door.is_locked:
+			SfxManager.play_sfx("thud")
+			GameEvents.message_logged.emit("[color=gray]The door will not budge.[/color]")
+			print("MoveForwardCommand: locked door at ", target)
+			emit_signal("finished")
+			return
+
+		door.open_door()
+
 	if not World.is_walkable(target):
 		SfxManager.play_sfx("thud")
 		print("MoveForwardCommand: target NOT walkable")

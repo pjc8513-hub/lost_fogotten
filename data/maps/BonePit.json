@@ -930,17 +930,6 @@
 				0
 			],
 			"pos": [
-				10,
-				5
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
-				1,
-				0
-			],
-			"pos": [
 				11,
 				5
 			],
@@ -1740,7 +1729,7 @@
 		},
 		{
 			"atlas": [
-				1,
+				3,
 				0
 			],
 			"pos": [
@@ -7158,6 +7147,17 @@
 			"pos": [
 				31,
 				18
+			],
+			"source_id": 2
+		},
+		{
+			"atlas": [
+				4,
+				0
+			],
+			"pos": [
+				10,
+				5
 			],
 			"source_id": 2
 		}
@@ -7182,6 +7182,15 @@
 			"type": "door"
 		},
 		{
+			"aggro_group": 1,
+			"data_resource": "res://data/enemies/MosherData.tres",
+			"pos": [
+				17,
+				11
+			],
+			"type": "enemy"
+		},
+		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NorthUnlockedDoor.tres",
 			"pos": [
@@ -7207,6 +7216,15 @@
 				6
 			],
 			"type": "door"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/enemies/goblin.tres",
+			"pos": [
+				10,
+				5
+			],
+			"type": "enemy"
 		}
 	],
 	"triggers": []

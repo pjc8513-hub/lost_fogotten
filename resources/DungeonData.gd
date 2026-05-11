@@ -4,6 +4,7 @@ extends Resource
 class_name DungeonData
 
 @export var scene_path: String = ""
+@export var map_data_path: String = ""
 @export var DungeonID: String = ""
 @export var DungeonName: String = ""
 @export var ThemePath: String = ""

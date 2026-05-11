@@ -85,8 +85,10 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			
 			var east_is_floor = cell_types.get(pos + Vector2i(1, 0), "wall") == "floor"
 			var west_is_floor = cell_types.get(pos + Vector2i(0, -1), "wall") == "floor"
-			var test_is_floor = cell_types.get(pos + Vector2i(0, 1), "wall") == "floor"
-			if east_is_floor and not west_is_floor and not test_is_floor:
+			var test_is_floor = cell_types.get(pos + Vector2i(-1, 0), "wall") == "floor"
+			if east_is_floor and not west_is_floor:
+				wall.rotation_degrees.y = 90
+			elif test_is_floor and not west_is_floor:
 				wall.rotation_degrees.y = 90
 
 
@@ -163,11 +165,14 @@ static func _spawn_door(grid_pos: Vector2i, data_path: String,
 	var res = load(data_path) as DoorData
 	var door_scene_resource = load(res.scene_path)
 	var door = door_scene_resource.instantiate()
-	parent.add_child(door)
 	door.grid_position = grid_pos
+	if FileAccess.file_exists(data_path):
+		door.door_data = res.duplicate()
+		door.is_locked = door.door_data.is_locked
 	door.position = Vector3(grid_pos.x, -0.5, grid_pos.y)
 	door.rotation_degrees.y = res.rotation
-	
+	parent.add_child(door)
+
 static func _spawn_chest(grid_pos: Vector2i, data_path: String, 
 						 parent: Node, on_chest_selected: Callable) -> void:
 	var res = load(data_path) as TreasureData

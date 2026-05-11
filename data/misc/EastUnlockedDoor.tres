@@ -5,5 +5,7 @@
 [resource]
 script = ExtResource("1_kvibl")
 DoorID = "EastDoor"
-scene_path = "res://assets/models/DoorScene.tscn"
+scene_path = "res://assets/models/EastDoorScene.tscn"
+is_locked = true
+switchID = "switch1"
 metadata/_custom_type_script = "uid://cqlc30nwctr2"

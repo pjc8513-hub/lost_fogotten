@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_v2dv8")
 scene_path = "res://BonePit.tscn"
+map_data_path = "res://data/maps/BonePit.json"
 DungeonID = "bone_pit"
 DungeonName = "Bone Pit"
 ThemePath = "res://data/maps/themes/castle_theme.tres"

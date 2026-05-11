@@ -55,6 +55,8 @@ func _queue_context_action():
 		_queue_player_attack(actor)
 	#elif World.selected_npc: # future
 		#_queue_talk_to_npc(actor)
+	elif World.selected_dungeon and is_instance_valid(World.selected_dungeon):
+		_enter_selected_dungeon()
 	else:
 		World.set_selected_enemy(null)
 		GameEvents.message_logged.emit("[color=gray]Nothing to interact with.[/color]")
@@ -97,3 +99,16 @@ func _queue_open_chest(actor: ClassData):
 func _start_player_action():
 	TurnStateMachine.last_action_was_party_wide = false
 	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
+
+func _enter_selected_dungeon() -> void:
+	var dungeon := World.selected_dungeon
+	if dungeon == null or not is_instance_valid(dungeon) or dungeon.dungeon_data == null:
+		GameEvents.message_logged.emit("[color=gray]There is no dungeon entrance here.[/color]")
+		return
+
+	if not World.are_adjacent(self, dungeon):
+		GameEvents.message_logged.emit("[color=gray]You need to move closer to enter %s.[/color]" % dungeon.dungeon_data.DungeonName)
+		return
+
+	World.set_current_dungeon(dungeon.dungeon_data)
+	SceneManager.change_scene("res://Main.tscn")

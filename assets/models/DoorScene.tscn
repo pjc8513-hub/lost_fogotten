@@ -7,4 +7,4 @@
 script = ExtResource("2_uasvc")
 
 [node name="Cube" parent="." index="0" unique_id=1303169289]
-transform = Transform3D(0.25, 0, 0, 0, 1, 0, 0, 0, 0.50594217, 0, 0, 0.31850278)
+transform = Transform3D(0.10176135, 0, 0, 0, 1, 0, 0, 0, 0.50594217, 0, 0, 0.31850278)

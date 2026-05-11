@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dwddr835gy208"]
+
+[ext_resource type="PackedScene" uid="uid://csy7e01ysa11a" path="res://assets/models/door.glb" id="1_wx8gb"]
+[ext_resource type="Script" uid="uid://bt3caekq60bkq" path="res://assets/models/DungeonDoor.gd" id="2_keiey"]
+
+[node name="door" unique_id=217328854 instance=ExtResource("1_wx8gb")]
+script = ExtResource("2_keiey")
+
+[node name="Cube" parent="." index="0" unique_id=1303169289]
+transform = Transform3D(0.25, 0, 0, 0, 1, 0, 0, 0, 0.71298707, 0, 0, -0.10461867)
