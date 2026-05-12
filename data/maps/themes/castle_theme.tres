@@ -1,13 +1,16 @@
 [gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://dvttt8ryvu0nq"]
 
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_1aard"]
-[ext_resource type="PackedScene" uid="uid://djy3qgdqpksdq" path="res://assets/models/castle_floor_2.tscn" id="1_tqa35"]
+[ext_resource type="PackedScene" uid="uid://ch13d05oifdlt" path="res://assets/models/ceiling1.tscn" id="1_1uutu"]
+[ext_resource type="PackedScene" uid="uid://daaf0m63joqx4" path="res://assets/models/floor_1.tscn" id="1_tqa35"]
 [ext_resource type="PackedScene" uid="uid://yftkdw3bqcye" path="res://assets/models/bone_wall_1.tscn" id="3_tqa35"]
 
 [resource]
 script = ExtResource("1_1aard")
 wall_scene = ExtResource("3_tqa35")
 floor_scene = ExtResource("1_tqa35")
-random_floor_variation = true
+has_ceiling = true
+ceiling_scene = ExtResource("1_1uutu")
+random_ceiling_variation = true
 music_path = "res://assets/audio/music/BoneTemple.wav"
 metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

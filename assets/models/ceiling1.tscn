@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ch13d05oifdlt"]
+
+[ext_resource type="PackedScene" uid="uid://ems1o7hdqm6d" path="res://assets/models/floor1.glb" id="1_5kb16"]
+
+[node name="floor1" unique_id=190735109 instance=ExtResource("1_5kb16")]
+
+[node name="Cube" parent="." index="0" unique_id=1555464207]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.004, -0.5, 0)

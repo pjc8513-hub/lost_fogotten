@@ -111,6 +111,20 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			if theme.random_floor_variation == true:
 				floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
 
+			if theme.has_ceiling and theme.ceiling_scene:
+				var ceiling = theme.ceiling_scene.instantiate()
+				parent.add_child(ceiling)
+				if theme.ceiling_materials.size() > 0:
+					var ceiling_mesh = ceiling.get_node_or_null("StaticBody3D/CSGBakedMeshInstance3D")
+					if ceiling_mesh:
+						ceiling_mesh.material_override = theme.ceiling_materials.pick_random()
+				
+				# Place ceiling above the floor (adjust the Y value if your walls are a different height)
+				ceiling.position = Vector3(pos.x, 2.0, pos.y)
+				
+				if theme.random_ceiling_variation:
+					ceiling.rotation_degrees.y = [0, 90, 180, 270].pick_random()
+
 static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictionary,
 							on_enemy_selected: Callable, on_chest_selected: Callable,
 							on_dungeon_selected: Callable) -> void:

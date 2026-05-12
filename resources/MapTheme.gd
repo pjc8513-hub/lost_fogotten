@@ -11,4 +11,10 @@ class_name MapTheme
 @export var floor_materials: Array[Material] = []
 @export var random_floor_variation: bool = false
 
+@export_group("Ceiling Settings")
+@export var has_ceiling: bool = false
+@export var ceiling_scene: PackedScene
+@export var ceiling_materials: Array[Material] = []
+@export var random_ceiling_variation: bool = false
+
 @export var music_path: String= ""
