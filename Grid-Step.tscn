@@ -4,8 +4,9 @@
 
 [sub_resource type="Environment" id="Environment_t0xf4"]
 background_mode = 1
-fog_light_color = Color(0.4153237, 0.6066189, 0.40268263, 1)
-fog_height_density = -5.2784
+ambient_light_color = Color(0.1830093, 0.31619072, 0.60685736, 1)
+fog_mode = 1
+fog_light_color = Color(0.2602695, 0.8708797, 0.9378262, 1)
 volumetric_fog_density = 0.6686
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0xf4"]

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://c8g0ycv2ysr82"]
+
+[ext_resource type="Script" uid="uid://bwts7khh71f82" path="res://LeverScene.gd" id="1_1var6"]
+[ext_resource type="Texture2D" uid="uid://bvbtfqecyevvj" path="res://assets/sprites/entities/lever1.png" id="1_ts5ly"]
+
+[sub_resource type="Animation" id="Animation_1var6"]
+length = 0.8666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_tf1r2"]
+resource_name = "lever_pull"
+length = 0.8666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gftd0"]
+_data = {
+&"RESET": SubResource("Animation_1var6"),
+&"lever_pull": SubResource("Animation_tf1r2")
+}
+
+[node name="Node3D" type="Node3D" unique_id=47624282]
+script = ExtResource("1_1var6")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1488633657]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+billboard = 2
+texture = ExtResource("1_ts5ly")
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" unique_id=821145762]
+libraries/ = SubResource("AnimationLibrary_gftd0")

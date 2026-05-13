@@ -1729,17 +1729,6 @@
 		},
 		{
 			"atlas": [
-				3,
-				0
-			],
-			"pos": [
-				17,
-				11
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
 				1,
 				0
 			],
@@ -5690,7 +5679,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				2
 			],
 			"pos": [
 				29,
@@ -7160,6 +7149,17 @@
 				5
 			],
 			"source_id": 2
+		},
+		{
+			"atlas": [
+				1,
+				0
+			],
+			"pos": [
+				17,
+				11
+			],
+			"source_id": 2
 		}
 	],
 	"entities": [
@@ -7182,15 +7182,6 @@
 			"type": "door"
 		},
 		{
-			"aggro_group": 1,
-			"data_resource": "res://data/enemies/MosherData.tres",
-			"pos": [
-				17,
-				11
-			],
-			"type": "enemy"
-		},
-		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NorthUnlockedDoor.tres",
 			"pos": [
@@ -7201,7 +7192,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/EastUnlockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/doors/EastUnlockedDoor.tres",
 			"pos": [
 				24,
 				4
@@ -7210,12 +7201,21 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/EastUnlockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/doors/EastUnlockedDoor.tres",
 			"pos": [
 				35,
 				6
 			],
 			"type": "door"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/dungeons/BonePit/levers/BonePit_Lever.tres",
+			"pos": [
+				29,
+				17
+			],
+			"type": "trigger"
 		},
 		{
 			"aggro_group": 2,

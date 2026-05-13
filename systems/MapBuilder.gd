@@ -154,6 +154,8 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_dungeon(pos, ent["data_resource"], parent, on_dungeon_selected)
 			"door":
 				_spawn_door(pos, ent["data_resource"], parent)
+			"trigger":
+				_spawn_trigger(pos, ent["data_resource"], parent)
 
 static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int, 
 						 parent: Node, on_enemy_selected: Callable) -> void:
@@ -177,6 +179,15 @@ static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int,
 	# We emit a signal so Main can handle this, or pass a callable
 	# See note below about the selected signal
 
+static func _spawn_trigger (grid_pos: Vector2i, data_path: String,
+						parent: Node) -> void:
+	var res = load(data_path) as TriggerData
+	var trigger_scene_resource = load(res.scene_path)
+	var trigger = trigger_scene_resource.instantiate()
+	trigger.grid_position = grid_pos
+	trigger.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	parent.add_child(trigger)
+	
 static func _spawn_door(grid_pos: Vector2i, data_path: String,
 						parent: Node) -> void:
 	var res = load(data_path) as DoorData

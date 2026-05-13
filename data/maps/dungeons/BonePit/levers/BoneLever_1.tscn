@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://h5mn7joxem2l"]
+
+[ext_resource type="PackedScene" uid="uid://c8g0ycv2ysr82" path="res://LeverScene.tscn" id="1_65if4"]
+
+[node name="Node3D" unique_id=47624282 instance=ExtResource("1_65if4")]

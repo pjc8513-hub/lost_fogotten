@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DoorTriggerEffect" format=3 uid="uid://h8mjea48hwtr"]
+
+[ext_resource type="Script" uid="uid://da78ootpsr5d8" path="res://resources/effects/DoorTriggerEffect.gd" id="1_fhyth"]
+
+[resource]
+script = ExtResource("1_fhyth")
+door_ids = Array[String](["BonePitEastDoor1"])
+metadata/_custom_type_script = "uid://da78ootpsr5d8"
