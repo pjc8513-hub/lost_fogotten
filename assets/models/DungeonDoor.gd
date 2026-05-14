@@ -28,3 +28,16 @@ func open_door() -> void:
 	# "Sinking" into the floor or sliding up? 
 	# Let's go with sliding up 2 units.
 	tween.tween_property(self, "position:y", 2.5, 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+func close_door() -> void:
+	if !is_open:
+		return
+	is_open = false
+	
+	var tween = create_tween()
+	tween.tween_property(self, "position:y", 0, 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+func lock_and_close() -> void:
+	close_door()
+	is_open = false
+	is_locked = true
