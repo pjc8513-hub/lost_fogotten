@@ -38,7 +38,7 @@ func play_pull_animation() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == &"pull_lever":
+	if anim_name == &"lever_pull":
 		pull_lever_completed.emit()
 
 func _emit_pull_animation_completed() -> void:

@@ -197,6 +197,8 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 func set_selected_enemy(enemy):
 	selected_enemy = enemy
 	selected_chest = null # deselect chest if enemy selected
+	selected_trigger = null
+	selected_dungeon = null
 	if enemy != null and is_instance_valid(enemy) and enemy.enemy_data.hp > 0:
 		CombatState.set_target(enemy)
 	else:
@@ -223,6 +225,7 @@ func remove_treasure_chest(chest: TreasureChest) -> void:
 func set_selected_chest(chest: TreasureChest):
 	selected_chest = chest
 	selected_enemy = null # deselect enemy if chest selected
+	selected_trigger = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if chest:
@@ -239,6 +242,7 @@ func set_selected_trigger(trigger: Trigger):
 func set_selected_dungeon(dungeon: Dungeon):
 	selected_dungeon = dungeon
 	selected_enemy = null
+	selected_trigger = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if dungeon:
