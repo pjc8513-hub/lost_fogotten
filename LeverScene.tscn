@@ -34,11 +34,30 @@ tracks/0/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_gftd0"]
+resource_name = "lever_pull_two"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gftd0"]
 _data = {
 &"RESET": SubResource("Animation_1var6"),
-&"lever_pull": SubResource("Animation_tf1r2")
+&"lever_pull": SubResource("Animation_tf1r2"),
+&"lever_pull_two": SubResource("Animation_gftd0")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1var6"]
 
 [node name="Node3D" type="Node3D" unique_id=47624282]
 script = ExtResource("1_1var6")
@@ -51,3 +70,10 @@ hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" unique_id=821145762]
 libraries/ = SubResource("AnimationLibrary_gftd0")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=980505260]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1183740618]
+shape = SubResource("BoxShape3D_1var6")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

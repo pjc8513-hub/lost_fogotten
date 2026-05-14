@@ -7,6 +7,7 @@ func _ready():
 	GameEvents.enemy_took_damage.connect(_on_enemy_took_damage)
 	GameEvents.movement_animation_started.connect(_on_movement_started)
 	GameEvents.open_chest_animation_started.connect(_on_open_chest_started)
+	GameEvents.pull_lever_animation_started.connect(_on_lever_pull_started)
 	GameEvents.spell_projectile_cast.connect(_on_spell_projectile_cast)
 
 func _on_attack_started(attacker, target, damage):
@@ -32,6 +33,11 @@ func _on_movement_started(actor, destination):
 	if actor.has_method("animate_move_to"):
 		actor.animate_move_to(destination)
 	pass
+
+func _on_lever_pull_started(trigger):
+	print ("_on_lever_pull")
+	if trigger and trigger.has_method("play_pull_animation"):
+		trigger.play_pull_animation()
 
 func _on_open_chest_started(chest):
 	if chest and chest.has_method("play_open_animation"):

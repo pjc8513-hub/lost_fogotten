@@ -45,11 +45,13 @@ func _unhandled_input(event):
 func _queue_context_action():
 	var actor: ClassData = CombatState.get_acting_member()
 	
-	# Priority order: Chest > Enemy > NPC > nothing
+	# Priority order: Chest > Trigger > Enemy > Dungeon > NPC > nothing
 	# Only one thing can be selected at a time thanks to World.set_selected_*()
 	
 	if World.selected_chest and not World.selected_chest.is_opened:
 		_queue_open_chest(actor)
+	if World.selected_trigger:
+		_queue_toggle_lever(actor)
 	elif World.selected_enemy and is_instance_valid(World.selected_enemy) and World.selected_enemy.enemy_data.hp > 0:
 		CombatState.set_target(World.selected_enemy)
 		_queue_player_attack(actor)
@@ -85,6 +87,13 @@ func _queue_player_attack(actor: ClassData):
 
 func _queue_open_chest(actor: ClassData):
 	var cmd := PlayerOpenChestCommand.new()
+	cmd.actor = actor
+	CommandQueue.add_command(cmd)
+	_start_player_action()
+	
+func _queue_toggle_lever(actor: ClassData):
+	print("lever toggled")
+	var cmd := PlayerToggleTriggerCommand.new()
 	cmd.actor = actor
 	CommandQueue.add_command(cmd)
 	_start_player_action()

@@ -5,6 +5,7 @@ signal selected_enemy_changed(enemy)
 var selected_enemy: Enemy = null
 var selected_dungeon: Dungeon = null
 var current_dungeon_data: DungeonData = null
+var selected_trigger: Trigger = null
 var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
 var enemies: Array = []         # Placeholder for future enemy nodes
@@ -30,6 +31,7 @@ func reset_world_state() -> void:
 	selected_enemy = null
 	selected_chest = null
 	selected_dungeon = null
+	selected_trigger = null
 	
 
 func is_walkable(pos: Vector2i) -> bool:
@@ -224,7 +226,15 @@ func set_selected_chest(chest: TreasureChest):
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if chest:
-		print("Selected chest:", chest.treasure_data.chest_name)
+		print("Selected chest: ", chest.treasure_data.chest_name)
+
+func set_selected_trigger(trigger: Trigger):
+	selected_trigger = trigger
+	selected_enemy = null # deselect enemy if chest selected
+	CombatState.clear_target()
+	selected_enemy_changed.emit(null)
+	if trigger:
+		print("Selected trigger: ", trigger.trigger_data.trigger_id)
 
 func set_selected_dungeon(dungeon: Dungeon):
 	selected_dungeon = dungeon
