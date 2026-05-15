@@ -13,6 +13,8 @@ var enemies: Array = []         # Placeholder for future enemy nodes
 # --- Treasure Chests ---
 var treasure_chests: Array[TreasureChest] = []
 var selected_chest: TreasureChest = null
+var dungeons: Array[Dungeon] = []
+var exits: Array[DungeonExit] = []
 var doors: Array[DungeonDoor] = []
 var doors_by_position: Dictionary = {}
 var doors_by_id: Dictionary = {}
@@ -24,6 +26,8 @@ func set_map_data(data: Dictionary) -> void:
 func reset_world_state() -> void:
 	enemies.clear()
 	treasure_chests.clear()
+	dungeons.clear()
+	exits.clear()
 	doors.clear()
 	doors_by_position.clear()
 	doors_by_id.clear()
@@ -49,6 +53,15 @@ func is_walkable(pos: Vector2i) -> bool:
 
 	# Check if an enemy occupies the tile
 	if is_occupied_by_enemy(pos):
+		return false
+
+	if is_occupied_by_chest(pos):
+		return false
+
+	if is_occupied_by_dungeon(pos):
+		return false
+
+	if is_occupied_by_exit(pos):
 		return false
 
 	return true
@@ -208,6 +221,24 @@ func set_selected_enemy(enemy):
 	if selected_enemy:
 		print("Selected enemy:", selected_enemy.enemy_data.enemy_name)
 
+func is_occupied_by_chest(pos: Vector2i) -> bool:
+	for c in treasure_chests:
+		if c.grid_position == pos:
+			return true
+	return false
+
+func is_occupied_by_dungeon(pos: Vector2i) -> bool:
+	for d in dungeons:
+		if d.grid_position == pos:
+			return true
+	return false
+
+func is_occupied_by_exit(pos: Vector2i) -> bool:
+	for e in exits:
+		if e.grid_position == pos:
+			return true
+	return false
+
 # === TREASURE CHEST MANAGEMENT ===
 func register_treasure_chest(chest: TreasureChest):
 	if not treasure_chests.has(chest):
@@ -238,6 +269,30 @@ func set_selected_trigger(trigger: Trigger):
 	selected_enemy_changed.emit(null)
 	if trigger:
 		print("Selected trigger: ", trigger.trigger_data.trigger_id)
+
+func register_dungeon(dungeon: Dungeon):
+	if not dungeons.has(dungeon):
+		dungeons.append(dungeon)
+
+func get_dungeons() -> Array[Dungeon]:
+	return dungeons.duplicate()
+
+func remove_dungeon(dungeon: Dungeon) -> void:
+	dungeons.erase(dungeon)
+	if selected_dungeon == dungeon:
+		set_selected_dungeon(null)
+	dungeon.queue_free()
+
+func register_exit(exit: DungeonExit):
+	if not exits.has(exit):
+		exits.append(exit)
+
+func get_exits() -> Array[DungeonExit]:
+	return exits.duplicate()
+
+func remove_exit(exit: DungeonExit) -> void:
+	exits.erase(exit)
+	exit.queue_free()
 
 func set_selected_dungeon(dungeon: Dungeon):
 	selected_dungeon = dungeon

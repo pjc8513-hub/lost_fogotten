@@ -50,7 +50,7 @@ func _queue_context_action():
 	
 	if World.selected_chest and not World.selected_chest.is_opened:
 		_queue_open_chest(actor)
-	if World.selected_trigger:
+	elif World.selected_trigger:
 		_queue_toggle_lever(actor)
 	elif World.selected_enemy and is_instance_valid(World.selected_enemy) and World.selected_enemy.enemy_data.hp > 0:
 		CombatState.set_target(World.selected_enemy)
