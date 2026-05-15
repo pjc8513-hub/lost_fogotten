@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_fhyth")
-door_ids = Array[String](["BonePitEastDoor1"])
+door_ids = Array[String](["BonePitEastDoor1", "BonePitEastDoor2"])
 metadata/_custom_type_script = "uid://da78ootpsr5d8"

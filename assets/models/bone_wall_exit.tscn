@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b467jslscpnxs"]
+
+[ext_resource type="PackedScene" uid="uid://b72irckryajnc" path="res://assets/models/BoneWallExit.glb" id="1_u03dl"]
+[ext_resource type="Script" uid="uid://c1dap10nj37ku" path="res://assets/models/dungeon_exit.gd" id="2_wuhuq"]
+[ext_resource type="Resource" uid="uid://bmisinxoaqs1h" path="res://data/maps/dungeons/Swamp1.tres" id="3_gbabs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gbabs"]
+size = Vector3(1, 1.9638672, 1)
+
+[node name="BoneWallExit" unique_id=91671887 instance=ExtResource("1_u03dl")]
+script = ExtResource("2_wuhuq")
+dungeon_data = ExtResource("3_gbabs")
+
+[node name="Cube" parent="." index="0" unique_id=1924532855]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="2" unique_id=1804192297]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=608568663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0043945313, 0)
+shape = SubResource("BoxShape3D_gbabs")

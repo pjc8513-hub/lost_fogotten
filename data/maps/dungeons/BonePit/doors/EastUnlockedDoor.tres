@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DoorData" format=3 uid="uid://di35bspwvgird"]
+[gd_resource type="Resource" script_class="DoorData" format=3 uid="uid://cvmlpj2345357"]
 
 [ext_resource type="Script" uid="uid://cqlc30nwctr2" path="res://resources/DoorData.gd" id="1_lnw0n"]
 
@@ -6,6 +6,5 @@
 script = ExtResource("1_lnw0n")
 DoorID = "BonePitEastDoor1"
 scene_path = "res://assets/models/EastDoorScene.tscn"
-is_locked = true
 switchID = "switch1"
 metadata/_custom_type_script = "uid://cqlc30nwctr2"

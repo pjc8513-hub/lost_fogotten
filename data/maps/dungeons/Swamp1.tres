@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://bmisinxoaqs1h"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_avr46"]
+
+[resource]
+script = ExtResource("1_avr46")
+scene_path = "res://assets/models/bone_wall_exit.tscn"
+map_data_path = "res://data/maps/cave_level_1.json"
+DungeonID = "swamp_1"
+DungeonName = "South Swamp"
+ThemePath = "res://data/maps/themes/swamp_theme.tres"
+Description = "South Swamp"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

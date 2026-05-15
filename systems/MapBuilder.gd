@@ -106,7 +106,7 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			parent.add_child(floor)
 			if theme.floor_materials.size() > 0:
 				floor.get_node("StaticBody3D/CSGBakedMeshInstance3D").material_override = theme.floor_materials.pick_random()
-			floor.position = Vector3(pos.x, 0, pos.y)
+			floor.position = Vector3(pos.x, -0.5, pos.y)
 			
 			if theme.random_floor_variation == true:
 				floor.rotation_degrees.y = [0, 90, 180, 270].pick_random()
@@ -156,6 +156,8 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_door(pos, ent["data_resource"], parent)
 			"trigger":
 				_spawn_trigger(pos, ent["data_resource"], parent)
+			"exit":
+				_spawn_exit(pos, ent["data_resource"], parent)
 
 static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int, 
 						 parent: Node, on_enemy_selected: Callable) -> void:
@@ -187,6 +189,19 @@ static func _spawn_trigger (grid_pos: Vector2i, data_path: String,
 	trigger.grid_position = grid_pos
 	trigger.position = Vector3(grid_pos.x, 0, grid_pos.y)
 	parent.add_child(trigger)
+	
+static func _spawn_exit(grid_pos: Vector2i, data_path: String,
+						parent: Node) -> void:
+	var res = load(data_path) as DungeonData
+	var exit_scene_resource = load(res.scene_path)
+	var exit = exit_scene_resource.instantiate()
+	if "grid_position" in exit:
+		exit.grid_position = grid_pos
+	if FileAccess.file_exists(data_path):
+		if "dungeon_data" in exit:
+			exit.dungeon_data = res.duplicate()
+	exit.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	parent.add_child(exit)
 	
 static func _spawn_door(grid_pos: Vector2i, data_path: String,
 						parent: Node) -> void:
