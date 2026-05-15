@@ -4,6 +4,7 @@ signal selected_enemy_changed(enemy)
 
 var selected_enemy: Enemy = null
 var selected_dungeon: Dungeon = null
+var selected_exit: DungeonExit = null
 var current_dungeon_data: DungeonData = null
 var selected_trigger: Trigger = null
 var player_ref
@@ -13,6 +14,7 @@ var enemies: Array = []         # Placeholder for future enemy nodes
 # --- Treasure Chests ---
 var treasure_chests: Array[TreasureChest] = []
 var selected_chest: TreasureChest = null
+
 var dungeons: Array[Dungeon] = []
 var exits: Array[DungeonExit] = []
 var doors: Array[DungeonDoor] = []
@@ -36,6 +38,7 @@ func reset_world_state() -> void:
 	selected_chest = null
 	selected_dungeon = null
 	selected_trigger = null
+	selected_exit = null
 	
 
 func is_walkable(pos: Vector2i) -> bool:
@@ -257,6 +260,7 @@ func set_selected_chest(chest: TreasureChest):
 	selected_chest = chest
 	selected_enemy = null # deselect enemy if chest selected
 	selected_trigger = null
+	selected_exit = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if chest:
@@ -265,10 +269,22 @@ func set_selected_chest(chest: TreasureChest):
 func set_selected_trigger(trigger: Trigger):
 	selected_trigger = trigger
 	selected_enemy = null # deselect enemy if chest selected
+	selected_chest = null
+	selected_exit = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if trigger:
 		print("Selected trigger: ", trigger.trigger_data.trigger_id)
+
+func set_selected_exit(exit: DungeonExit):
+	selected_exit = exit
+	selected_trigger = null
+	selected_chest = null
+	selected_enemy = null # deselect enemy if chest selected
+	CombatState.clear_target()
+	selected_enemy_changed.emit(null)
+	if exit:
+		print("Set selected dungeon: ", exit.dungeon_data.DungeonName)
 
 func register_dungeon(dungeon: Dungeon):
 	if not dungeons.has(dungeon):

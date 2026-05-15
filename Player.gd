@@ -47,7 +47,7 @@ func _queue_context_action():
 	
 	# Priority order: Chest > Trigger > Enemy > Dungeon > NPC > nothing
 	# Only one thing can be selected at a time thanks to World.set_selected_*()
-	
+	print("selected: ", World.selected_exit)
 	if World.selected_chest and not World.selected_chest.is_opened:
 		_queue_open_chest(actor)
 	elif World.selected_trigger:
@@ -59,6 +59,8 @@ func _queue_context_action():
 		#_queue_talk_to_npc(actor)
 	elif World.selected_dungeon and is_instance_valid(World.selected_dungeon):
 		_enter_selected_dungeon()
+	elif World.selected_exit and is_instance_valid(World.selected_exit):
+		_exit_dungeon()
 	else:
 		World.set_selected_enemy(null)
 		GameEvents.message_logged.emit("[color=gray]Nothing to interact with.[/color]")
@@ -111,6 +113,7 @@ func _start_player_action():
 
 func _enter_selected_dungeon() -> void:
 	var dungeon := World.selected_dungeon
+	
 	if dungeon == null or not is_instance_valid(dungeon) or dungeon.dungeon_data == null:
 		GameEvents.message_logged.emit("[color=gray]There is no dungeon entrance here.[/color]")
 		return
@@ -120,4 +123,18 @@ func _enter_selected_dungeon() -> void:
 		return
 
 	World.set_current_dungeon(dungeon.dungeon_data)
+	SceneManager.change_scene("res://Main.tscn")
+	
+func _exit_dungeon() -> void:
+	var exit := World.selected_exit
+	
+	if exit == null or not is_instance_valid(exit) or exit.dungeon_data == null:
+		GameEvents.message_logged.emit("[color=gray]There is no dungeon entrance here.[/color]")
+		return
+
+	if not World.are_adjacent(self, exit):
+		GameEvents.message_logged.emit("[color=gray]You need to move closer to enter %s.[/color]" % exit.dungeon_data.DungeonName)
+		return
+
+	World.set_current_dungeon(exit.dungeon_data)
 	SceneManager.change_scene("res://Main.tscn")

@@ -203,6 +203,7 @@ static func _spawn_exit(grid_pos: Vector2i, data_path: String,
 	exit.position = Vector3(grid_pos.x, 0, grid_pos.y)
 	parent.add_child(exit)
 	
+
 static func _spawn_door(grid_pos: Vector2i, data_path: String,
 						parent: Node) -> void:
 	var res = load(data_path) as DoorData
