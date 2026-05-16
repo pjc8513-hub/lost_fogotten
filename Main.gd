@@ -51,13 +51,15 @@ func _ready():
 	#var data = MapBuilder.load_room_data("res://data/maps/BonePit.json") #testing
 	if data:
 		World.reset_world_state()
+		var spawn_id := dungeon_data.spawn_id if dungeon_data != null else ""
 		var result = MapBuilder.build(
 			data, self, 
 			$SubViewportContainer/SubViewport,
 			map_theme,
 			_on_enemy_selected,
 			_on_chest_selected,
-			_on_dungeon_selected
+			_on_dungeon_selected,
+			spawn_id
 		)
 		var automap_grid = result.automap_grid
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")

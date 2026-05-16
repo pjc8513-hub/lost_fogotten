@@ -6,11 +6,12 @@ static func build(data: Dictionary, geometry_parent: Node, entity_parent: Node,
 				theme: MapTheme, 
 				on_enemy_selected: Callable = Callable(), 
 				on_chest_selected: Callable = Callable(),
-				on_dungeon_selected: Callable = Callable()) -> Dictionary:
+				on_dungeon_selected: Callable = Callable(),
+				spawn_id: String = "") -> Dictionary:
 	var automap_grid := {}
 	
 	_build_geometry(data, geometry_parent, automap_grid, theme)
-	_spawn_entities(data, entity_parent, automap_grid, on_enemy_selected, on_chest_selected, on_dungeon_selected)
+	_spawn_entities(data, entity_parent, automap_grid, on_enemy_selected, on_chest_selected, on_dungeon_selected, spawn_id)
 	
 	return { "automap_grid": automap_grid }
 
@@ -127,7 +128,13 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 
 static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictionary,
 							on_enemy_selected: Callable, on_chest_selected: Callable,
-							on_dungeon_selected: Callable) -> void:
+							on_dungeon_selected: Callable,
+							spawn_id: String = "") -> void:
+	var player_spawn_was_set := false
+	var fallback_spawn_position := Vector2i.ZERO
+	var fallback_spawn_data_path := ""
+	var has_fallback_spawn := false
+
 	for ent in data.get("entities", []):
 		var ent_pos_data = ent.get("pos", [])
 		if ent_pos_data is String:
@@ -147,7 +154,15 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_chest(pos, ent["data_resource"], parent, on_chest_selected)
 			# ...
 			"player":
-				_set_player_start(pos, parent, automap_grid)
+				if not has_fallback_spawn:
+					fallback_spawn_position = pos
+					fallback_spawn_data_path = ent.get("data_resource", "")
+					has_fallback_spawn = true
+				if spawn_id.is_empty() and player_spawn_was_set:
+					automap_grid[pos] = 0
+					continue
+				if _set_player_start(pos, ent.get("data_resource", ""), parent, automap_grid, spawn_id):
+					player_spawn_was_set = true
 			"decoration":
 				_spawn_decor(pos, parent)
 			"dungeon":
@@ -158,6 +173,11 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_trigger(pos, ent["data_resource"], parent)
 			"exit":
 				_spawn_exit(pos, ent["data_resource"], parent)
+
+	if not player_spawn_was_set and has_fallback_spawn:
+		if not spawn_id.is_empty():
+			push_warning("Player spawn '%s' was not found. Using the first player spawn in the map." % spawn_id)
+		_set_player_start(fallback_spawn_position, fallback_spawn_data_path, parent, automap_grid)
 
 static func _spawn_enemy(grid_pos: Vector2i, data_path: String, aggro_id: int, 
 						 parent: Node, on_enemy_selected: Callable) -> void:
@@ -233,15 +253,38 @@ static func _spawn_chest(grid_pos: Vector2i, data_path: String,
 	if not on_chest_selected.is_null():
 		chest.connect("selected", on_chest_selected)
 
-static func _set_player_start(grid_pos: Vector2i, parent: Node, automap_grid: Dictionary) -> void:
+static func _set_player_start(grid_pos: Vector2i, data_path: String, parent: Node, automap_grid: Dictionary, spawn_id: String = "") -> bool:
+	var spawn_data: PlayerSpawnData = null
+	if not data_path.is_empty() and FileAccess.file_exists(data_path):
+		spawn_data = load(data_path) as PlayerSpawnData
+
+	if not _should_use_player_spawn(spawn_data, spawn_id):
+		automap_grid[grid_pos] = 0
+		return false
+
 	# Player lives in the SubViewport already as a scene child
 	# We need to find it relative to parent
 	var player = parent.get_node_or_null("Player")
 	if player:
-		player.position = Vector3(grid_pos.x, 0, grid_pos.y)
-		if "grid_position" in player:
-			player.grid_position = grid_pos
+		if player.has_method("apply_spawn"):
+			player.apply_spawn(grid_pos, spawn_data)
+		else:
+			player.position = Vector3(grid_pos.x, 0, grid_pos.y)
+			if "grid_position" in player:
+				player.grid_position = grid_pos
 		automap_grid[grid_pos] = 0
+		return true
+
+	return false
+
+static func _should_use_player_spawn(spawn_data: PlayerSpawnData, requested_spawn_id: String) -> bool:
+	if requested_spawn_id.is_empty():
+		return true
+
+	if spawn_data == null:
+		return false
+
+	return spawn_data.SpawnID == requested_spawn_id
 
 static func _spawn_decor(pos: Vector2i, parent: Node) -> void:
 	var decor_scene: PackedScene = load("res://MarshTree.tscn")

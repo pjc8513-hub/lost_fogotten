@@ -26,6 +26,35 @@ func move_to(target: Vector2i):
 	emit_signal("player_moved", grid_position)
 	emit_signal("movement_done")
 
+func apply_spawn(spawn_grid_position: Vector2i, spawn_data: PlayerSpawnData = null) -> void:
+	grid_position = spawn_grid_position
+	global_position.x = spawn_grid_position.x
+	global_position.z = spawn_grid_position.y
+
+	if spawn_data != null:
+		_apply_facing_rotation(spawn_data.rotation)
+
+	emit_signal("player_moved", grid_position)
+
+func _apply_facing_rotation(rotation_degrees_y: int) -> void:
+	var normalized_rotation := posmod(rotation_degrees_y, 360)
+	rotation_degrees.y = normalized_rotation
+
+	match normalized_rotation:
+		0:
+			forward_vector = Vector2i(0, -1)
+		90:
+			forward_vector = Vector2i(-1, 0)
+		180:
+			forward_vector = Vector2i(0, 1)
+		270:
+			forward_vector = Vector2i(1, 0)
+		_:
+			forward_vector = Vector2i(
+				roundi(-sin(deg_to_rad(normalized_rotation))),
+				roundi(-cos(deg_to_rad(normalized_rotation)))
+			)
+
 func _unhandled_input(event):
 	if TurnStateMachine.state != TurnStateMachine.State.PLAYER_INPUT:
 		return

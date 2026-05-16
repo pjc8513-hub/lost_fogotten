@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerSpawnData" format=3 uid="uid://bp5ssfhuiii1j"]
+
+[ext_resource type="Script" uid="uid://vtughe3haunl" path="res://resources/PlayerSpawnData.gd" id="1_waay0"]
+
+[resource]
+script = ExtResource("1_waay0")
+SpawnID = "SwampSouth2"
+metadata/_custom_type_script = "uid://vtughe3haunl"
