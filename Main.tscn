@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c4c4blrojhq5d" path="res://GoldUI.tscn" id="11_20pc6"]
 [ext_resource type="PackedScene" uid="uid://2t0xkthjrfs7" path="res://casting_scene.tscn" id="12_5vvyt"]
 [ext_resource type="PackedScene" uid="uid://cfl7ouks8wtu8" path="res://EnemyCardScene.tscn" id="13_enemy_card"]
+[ext_resource type="PackedScene" uid="uid://76lc3eevcy1o" path="res://systems/Dialogue/DialogueUI.tscn" id="14_dialogue_ui"]
 
 [sub_resource type="Environment" id="Environment_20pc6"]
 
@@ -184,3 +185,5 @@ offset_bottom = -1.0
 mouse_filter = 2
 
 [node name="EnemyCardScene" parent="SubViewportContainer" instance=ExtResource("13_enemy_card")]
+
+[node name="DialogueUI" parent="." instance=ExtResource("14_dialogue_ui")]

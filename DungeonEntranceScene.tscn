@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cv1s55uayit71" path="res://DungeonEntranceScene.gd" id="1_m3m3f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m3m3f"]
-size = Vector3(1.0545654, 1, 0.7290039)
+size = Vector3(1.3739319, 0.7185669, 0.7290039)
 
 [node name="Dungeon" type="Node3D" unique_id=1015003909]
 script = ExtResource("1_m3m3f")
