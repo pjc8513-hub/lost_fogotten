@@ -2,52 +2,82 @@
 extends Node
 
 func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
-	# Add gold to party
+
 	PartyState.party_gold += gold
-	
-	# Handle items
+
+	if gold > 0:
+		GameEvents.message_logged.emit(
+			"[color=gold]Found %d gold![/color]" % gold
+		)
+
+	var loot_names := []
+
 	for item_id in loot_ids:
-		var item_instance := LootManager.create_item_instance(item_id)
-		if item_instance != null:
-			# Add to a random party member's inventory
-			var selected_member = PartyState.get_selected()
-			selected_member.inventory.append(item_instance)
-			GameEvents.inventory_changed.emit(selected_member)
-		else:
-			print("No item data found for: ", item_id)
+
+		var item_instance = LootManager.create_item_instance(item_id)
+
+		if item_instance == null:
+			continue
+
+		var selected_member = PartyState.get_selected()
+
+		InventoryManager.add_item(selected_member, item_instance)
+
+		loot_names.append(
+			item_id.replace("_", " ").capitalize()
+		)
+
+		GameEvents.message_logged.emit(
+			"[color=yellow]%s[/color] [color=cyan]Found: %s[/color]"
+			% [selected_member.member_name, item_instance.item_data.name]
+		)
 
 func distribute_enemy_loot(enemy: Enemy):
-	var enemy_data = enemy.enemy_data
-	
-	# Add enemy gold
-	PartyState.party_gold += enemy_data.gold
-	GameEvents.message_logged.emit("[color=gold]Found %d gold![/color]" % enemy.enemy_data.gold)
 
-	#print("enemy loot table: ", enemy.enemy_data.loot_table)
-	# Roll loot tables
-	if not (enemy.enemy_data.loot_table):
+	var enemy_data = enemy.enemy_data
+
+	PartyState.party_gold += enemy_data.gold
+
+	GameEvents.message_logged.emit(
+		"[color=gold]Found %d gold![/color]" % enemy_data.gold
+	)
+
+	if not enemy_data.loot_table:
 		return
-	
-	var loot_ids = LootManager.roll_loot(enemy_data.loot_table, 0)  # Add luck bonus later
+
+	var loot_ids = LootManager.roll_loot(enemy_data.loot_table, 0)
+
+	var loot_names := []
+
 	for item_id in loot_ids:
-		var item_instance := LootManager.create_item_instance(item_id)
-		if item_instance != null:
-			var random_member = PartyState.active_party.pick_random()
-			random_member.inventory.append(item_instance)
-			GameEvents.inventory_changed.emit(random_member)
-			var loot_names = loot_ids.map(func(id): return id.replace("_", " ").capitalize())
-			GameEvents.message_logged.emit("[color=yellow]%s[/color] [color=cyan]Found: %s[/color]" % [random_member.member_name, ", ".join(loot_names)])
+
+		var item_instance = LootManager.create_item_instance(item_id)
+
+		if item_instance == null:
+			continue
+
+		var random_member = PartyState.active_party.pick_random()
+
+		InventoryManager.add_item(random_member, item_instance)
+
+		loot_names.append(
+			item_id.replace("_", " ").capitalize()
+		)
+
+		GameEvents.message_logged.emit(
+			"[color=yellow]%s[/color] [color=cyan]Found: %s[/color]"
+			% [random_member.member_name, item_instance.item_data.name]
+		)
 
 func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 	PartyState.party_gold += gold
 	PartyState.party_food += food
 	
 	for item_id in item_ids:
-		var item_instance := LootManager.create_item_instance(item_id)
+		var item_instance = LootManager.create_item_instance(item_id)
 		if item_instance != null:
 			var random_member = PartyState.active_party.pick_random()
-			random_member.inventory.append(item_instance)
-			GameEvents.inventory_changed.emit(random_member)
+			InventoryManager.add_item(random_member, item_instance)
 
 # LootDistributor
 func distribute_xp(xp: int = 0):

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://76lc3eevcy1o"]
+
+[ext_resource type="Script" uid="uid://6tcn1gwb7xdk" path="res://systems/Dialogue/DialogueUI.gd" id="1_qoio0"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1220336515]
+
+[node name="DialogueUI" type="Control" parent="." unique_id=883254764]
+custom_minimum_size = Vector2(350, 150)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 250.0
+offset_top = 233.0
+offset_right = 600.0
+offset_bottom = 383.0
+mouse_filter = 2
+script = ExtResource("1_qoio0")
+
+[node name="Panel" type="Panel" parent="DialogueUI" unique_id=1452473940]
+custom_minimum_size = Vector2(350, 150)
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 150.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueUI/Panel" unique_id=1069614496]
+custom_minimum_size = Vector2(350, 150)
+layout_mode = 0
+offset_right = 5.0
+offset_bottom = 27.0
+
+[node name="DialogueContainer" type="VBoxContainer" parent="DialogueUI/Panel/HBoxContainer" unique_id=2126642794]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.47
+
+[node name="NPCNameLabel" type="Label" parent="DialogueUI/Panel/HBoxContainer/DialogueContainer" unique_id=479010398]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="DialogueText" type="RichTextLabel" parent="DialogueUI/Panel/HBoxContainer/DialogueContainer" unique_id=749946265]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PasswordInput" type="LineEdit" parent="DialogueUI/Panel/HBoxContainer/DialogueContainer" unique_id=261871811]
+visible = false
+layout_mode = 2
+context_menu_enabled = false
+emoji_menu_enabled = false
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="DialogueUI/Panel/HBoxContainer" unique_id=151572248]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

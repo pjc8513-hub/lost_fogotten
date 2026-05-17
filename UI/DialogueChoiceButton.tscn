@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://2c6wcto5e7go"]
+
+[node name="DialogueChoiceButton" type="Button" unique_id=897618808]
+size_flags_horizontal = 3
+size_flags_vertical = 4
+flat = true

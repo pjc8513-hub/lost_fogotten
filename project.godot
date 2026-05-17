@@ -40,6 +40,9 @@ SpellResolver="*res://SpellResolver.gd"
 SpellGateway="*res://SpellGateway.gd"
 SpellExecutor="*res://SpellExecutor.gd"
 SfxManager="*uid://dhq138hmbhoxb"
+DialogueManager="*uid://c1l3h5sqhxc40"
+InventoryManager="*uid://dc1u85n8f60ru"
+QuestManager="*uid://d4lqrdl1bjli8"
 
 [display]
 
