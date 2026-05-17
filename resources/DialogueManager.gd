@@ -12,6 +12,7 @@ var ui = null
 
 func _ready():
 	load_dialogue_file("res://data/dialogue/dialogue.json")
+	
 
 func register_ui(dialogue_ui):
 	ui = dialogue_ui
@@ -227,6 +228,35 @@ func check_condition(condition: String) -> bool:
 
 		_:
 			return true
+
+func show_confirmation(prompt_text: String, yes_callback: Callable, no_callback: Callable = Callable()) -> void:
+	#Show a simple Yes/No confirmation dialog with dynamic text.
+	if ui == null:
+		push_error("Dialogue UI not registered")
+		return
+	
+	ui.show()
+	ui.npc_name_label.text = ""  # Clear NPC name for generic confirmations
+	ui.dialogue_text.text = prompt_text
+	ui.clear_choices()
+	ui.password_input.hide()
+	
+	# Yes button
+	var yes_button = ui.choice_button_scene.instantiate()
+	yes_button.text = "Yes"
+	ui.choice_container.add_child(yes_button)
+	yes_button.pressed.connect(func():
+		yes_callback.call()
+		close_dialogue()
+	)
+	
+	# No button
+	var no_button = ui.choice_button_scene.instantiate()
+	no_button.pressed.connect(func():
+		if no_callback.is_valid():
+			no_callback.call()
+		close_dialogue()
+	)
 
 func close_dialogue():
 

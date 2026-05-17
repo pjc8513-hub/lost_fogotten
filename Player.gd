@@ -151,6 +151,12 @@ func _enter_selected_dungeon() -> void:
 		GameEvents.message_logged.emit("[color=gray]You need to move closer to enter %s.[/color]" % dungeon.dungeon_data.DungeonName)
 		return
 
+	var prompt = "Enter %s?" % dungeon.dungeon_data.DungeonName
+	DialogueManager.show_confirmation(prompt, func():
+		_perform_enter_dungeon(dungeon)
+	)
+
+func _perform_enter_dungeon(dungeon: Node) -> void:
 	World.set_current_dungeon(dungeon.dungeon_data)
 	SceneManager.change_scene("res://Main.tscn")
 	

@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bprxk2db45jta"]
-
-[ext_resource type="PackedScene" uid="uid://btscupunbqeil" path="res://DungeonEntranceScene.tscn" id="1_gjaff"]
-[ext_resource type="Resource" uid="uid://5hs1qf0xj6u2" path="res://data/maps/dungeons/BonePit.tres" id="2_wpbrj"]
-
-[node name="Dungeon" unique_id=1015003909 instance=ExtResource("1_gjaff")]
-dungeon_data = ExtResource("2_wpbrj")
