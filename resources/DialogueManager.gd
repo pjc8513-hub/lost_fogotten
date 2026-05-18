@@ -252,6 +252,8 @@ func show_confirmation(prompt_text: String, yes_callback: Callable, no_callback:
 	
 	# No button
 	var no_button = ui.choice_button_scene.instantiate()
+	no_button.text = "No"
+	ui.choice_container.add_child(no_button)
 	no_button.pressed.connect(func():
 		if no_callback.is_valid():
 			no_callback.call()

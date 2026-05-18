@@ -7165,7 +7165,7 @@
 	"entities": [
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/Swamp1.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/BonePitExit.tres",
 			"pos": [
 				9,
 				8
@@ -7192,7 +7192,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NorthUnlockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
 			"pos": [
 				13,
 				6
@@ -7219,7 +7219,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NorthUnlockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
 			"pos": [
 				13,
 				10
@@ -7273,7 +7273,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit/doors/EastLockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastLockedDoor.tres",
 			"pos": [
 				35,
 				6
@@ -7309,7 +7309,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit/levers/BonePit_Lever.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/levers/BonePit_Lever.tres",
 			"pos": [
 				29,
 				17
@@ -7336,7 +7336,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit/doors/EastUnlockedDoor.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastUnlockedDoor.tres",
 			"pos": [
 				24,
 				4

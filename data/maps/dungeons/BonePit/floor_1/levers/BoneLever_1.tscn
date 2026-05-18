@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://h5mn7joxem2l"]
 
 [ext_resource type="PackedScene" uid="uid://c8g0ycv2ysr82" path="res://LeverScene.tscn" id="1_65if4"]
-[ext_resource type="Resource" uid="uid://copdgm0e4goso" path="res://data/maps/dungeons/BonePit/levers/BonePit_Lever.tres" id="2_qivjs"]
+[ext_resource type="Resource" uid="uid://copdgm0e4goso" path="res://data/maps/dungeons/BonePit/floor_1/levers/BonePit_Lever.tres" id="2_qivjs"]
 
 [node name="Node3D" unique_id=47624282 instance=ExtResource("1_65if4")]
 trigger_data = ExtResource("2_qivjs")

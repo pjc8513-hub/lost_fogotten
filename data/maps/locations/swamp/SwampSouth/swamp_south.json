@@ -3238,7 +3238,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit.tres",
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/BonePit.tres",
 			"pos": [
 				6,
 				15

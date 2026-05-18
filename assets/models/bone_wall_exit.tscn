@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b72irckryajnc" path="res://assets/models/BoneWallExit.glb" id="1_u03dl"]
 [ext_resource type="Script" uid="uid://c1dap10nj37ku" path="res://assets/models/dungeon_exit.gd" id="2_wuhuq"]
-[ext_resource type="Resource" uid="uid://bmisinxoaqs1h" path="res://data/maps/dungeons/Swamp1.tres" id="3_gbabs"]
+[ext_resource type="Resource" uid="uid://bmisinxoaqs1h" path="res://data/maps/dungeons/BonePit/floor_1/BonePitExit.tres" id="3_gbabs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gbabs"]
 size = Vector3(1, 1.9638672, 1)

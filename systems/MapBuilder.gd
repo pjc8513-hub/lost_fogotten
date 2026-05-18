@@ -287,7 +287,7 @@ static func _should_use_player_spawn(spawn_data: PlayerSpawnData, requested_spaw
 	return spawn_data.SpawnID == requested_spawn_id
 
 static func _spawn_decor(pos: Vector2i, parent: Node) -> void:
-	var decor_scene: PackedScene = load("res://MarshTree.tscn")
+	var decor_scene: PackedScene = load("res://data/maps/locations/swamp/MarshTree.tscn")
 	var decor = decor_scene.instantiate()
 	parent.add_child(decor)
 	decor.position = Vector3(pos.x, 0, pos.y)

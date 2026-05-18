@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_avr46")
 scene_path = "res://assets/models/bone_wall_exit.tscn"
-map_data_path = "res://data/maps/cave_level_1.json"
-DungeonID = "swamp_1"
+map_data_path = "res://data/maps/locations/swamp/SwampSouth/swamp_south.json"
+DungeonID = "south_swamp"
 DungeonName = "South Swamp"
 ThemePath = "res://data/maps/themes/swamp_theme.tres"
 spawn_id = "SwampSouth2"

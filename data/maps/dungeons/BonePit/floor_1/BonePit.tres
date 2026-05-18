@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_v2dv8")
-scene_path = "res://data/maps/dungeons/BonePit/BonePitEntrance.tscn"
-map_data_path = "res://data/maps/BonePit.json"
-DungeonID = "bone_pit"
+scene_path = "res://data/maps/locations/swamp/SwampSouth/BonePitEntrance.tscn"
+map_data_path = "res://data/maps/dungeons/BonePit/floor_1/BonePit1.json"
+DungeonID = "bone_pit_1"
 DungeonName = "Bone Pit"
 ThemePath = "res://data/maps/themes/castle_theme.tres"
 Description = "Abandoned fortress now used mostly by goblins and rats"
