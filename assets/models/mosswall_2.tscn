@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://rc5cqfinora8"]
+
+[ext_resource type="PackedScene" uid="uid://dcxxbyk1n6kp2" path="res://assets/models/mosswall2.glb" id="1_j8icm"]
+
+[node name="mosswall2" unique_id=1625083910 instance=ExtResource("1_j8icm")]
+
+[node name="Cube" parent="." index="0" unique_id=390966966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)

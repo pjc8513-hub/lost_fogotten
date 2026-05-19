@@ -30,8 +30,8 @@ static func load_room_data(file_path: String) -> Dictionary:
 		return {}
 
 static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictionary, theme: MapTheme) -> void:
-	var wall_scene: PackedScene = load("res://MossyWall.tscn")
-	var floor_scene: PackedScene = load("res://FloorMarsh.tscn")
+	var wall_scene: PackedScene = load("res://data/maps/locations/swamp/MossyWall.tscn")
+	var floor_scene: PackedScene = load("res://data/maps/locations/swamp/SwampSouth/FloorMarsh.tscn")
 	var floor_materials = [
 		load("res://assets/textures/MossWall_Mat.tres"),
 		load("res://assets/textures/MossyWall_Mat2.tres"),

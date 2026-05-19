@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ChangeMapEffect" format=3 uid="uid://cieckdnaagu4u"]
+
+[ext_resource type="Script" uid="uid://ejph31qi1gss" path="res://resources/effects/ChangeMapEffect.gd" id="1_18mik"]
+
+[resource]
+script = ExtResource("1_18mik")
+target_map_path = "res://data/maps/locations/swamp/SwampCentral/Samp_Central.json"
+target_spawn_id = "res://data/maps/locations/swamp/SwampCentral/spawns/spawn_central_south.tres"
+metadata/_custom_type_script = "uid://ejph31qi1gss"

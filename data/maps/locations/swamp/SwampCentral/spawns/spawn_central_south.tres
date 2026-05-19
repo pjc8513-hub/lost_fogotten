@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerSpawnData" format=3 uid="uid://boxw3he5pfnwo"]
+
+[ext_resource type="Script" uid="uid://vtughe3haunl" path="res://resources/PlayerSpawnData.gd" id="1_htxxe"]
+
+[resource]
+script = ExtResource("1_htxxe")
+SpawnID = "CentralSouth1"
+metadata/_custom_type_script = "uid://vtughe3haunl"

@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://cc1yiwtb3koeh"]
 
 [ext_resource type="Script" uid="uid://6dadgcxgqvct" path="res://data/maps/MapExporter.gd" id="1_3cnyl"]
-[ext_resource type="TileSet" uid="uid://caty3lnfp317n" path="res://data/maps/tile_sets/World_TileSet.tres" id="2_vkcs7"]
+[ext_resource type="TileSet" uid="uid://caty3lnfp317n" path="res://data/maps/tile_sets/Swamp_TileSet.tres" id="2_vkcs7"]
 
 [node name="BonePit" type="Node3D" unique_id=1469071315]
 script = ExtResource("1_3cnyl")
