@@ -30,5 +30,8 @@ func _clear_world_state() -> void:
 	World.doors_by_position.clear()
 	World.doors_by_id.clear()
 	World.doors_by_switch_id.clear()
+	World.step_triggers.clear()
+	World.step_triggers_by_position.clear()
+	World._last_step_event_position = null
 	World.player_ref = null
 	World.map_data.clear()

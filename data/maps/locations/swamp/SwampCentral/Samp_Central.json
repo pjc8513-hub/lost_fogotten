@@ -4624,7 +4624,7 @@
 	"entities": [
 		{
 			"aggro_group": 0,
-			"data_resource": "",
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/triggers/CM_swamp_central_south_tile.tres",
 			"pos": [
 				13,
 				19
@@ -4633,7 +4633,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/triggers/CM_swamp_central_south_tile.tres",
 			"pos": [
 				12,
 				19
@@ -4642,7 +4642,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/triggers/CM_swamp_central_south_tile.tres",
 			"pos": [
 				11,
 				19

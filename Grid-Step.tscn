@@ -121,7 +121,7 @@ angular_velocity_max = 0.4
 scale_amount_min = 0.65
 scale_amount_max = 1.1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2000327109]
+[node name="Player" type="CollisionShape3D" parent="." unique_id=2000327109]
 shape = SubResource("BoxShape3D_t0xf4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=551365150 groups=["world_environment"]]

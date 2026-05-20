@@ -42,6 +42,10 @@ func _ready():
 			map_path = dungeon_data.map_data_path
 		if not dungeon_data.ThemePath.is_empty():
 			theme_path = dungeon_data.ThemePath
+	elif not World.current_map_path.is_empty():
+		map_path = World.current_map_path
+		if not World.current_map_theme_path.is_empty():
+			theme_path = World.current_map_theme_path
 	var map_theme = load(theme_path)
 	#var map_theme = load("res://data/maps/themes/swamp_theme.tres") #testing
 	_play_map_music(map_theme)
@@ -51,7 +55,7 @@ func _ready():
 	#var data = MapBuilder.load_room_data("res://data/maps/BonePit.json") #testing
 	if data:
 		World.reset_world_state()
-		var spawn_id := dungeon_data.spawn_id if dungeon_data != null else ""
+		var spawn_id := dungeon_data.spawn_id if dungeon_data != null else World.current_map_spawn_id
 		var result = MapBuilder.build(
 			data, self, 
 			$SubViewportContainer/SubViewport,
@@ -65,6 +69,9 @@ func _ready():
 		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
 		automap.set_map_data(automap_grid)
 		World.set_map_data(automap_grid)
+		World.current_map_path = map_path
+		World.current_map_theme_path = theme_path
+		World.current_map_spawn_id = spawn_id
 		PartyState.selected_index = 0
 		print("[FRAME ", Engine.get_process_frames(), "] Main map build complete, selected index: ", PartyState.selected_index)
 		print("[FRAME ", Engine.get_process_frames(), "] Main selected member: ", PartyState.get_selected())

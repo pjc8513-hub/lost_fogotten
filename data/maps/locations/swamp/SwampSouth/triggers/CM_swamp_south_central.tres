@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_18mik")
 target_map_path = "res://data/maps/locations/swamp/SwampCentral/Samp_Central.json"
-target_spawn_id = "res://data/maps/locations/swamp/SwampCentral/spawns/spawn_central_south.tres"
+target_spawn_id = "CentralSouth1"
+target_theme_path = "res://data/maps/themes/swamp_theme.tres"
 metadata/_custom_type_script = "uid://ejph31qi1gss"

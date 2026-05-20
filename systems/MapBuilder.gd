@@ -207,6 +207,8 @@ static func _spawn_trigger (grid_pos: Vector2i, data_path: String,
 	var trigger_scene_resource = load(res.scene_path)
 	var trigger = trigger_scene_resource.instantiate()
 	trigger.grid_position = grid_pos
+	if FileAccess.file_exists(data_path):
+		trigger.trigger_data = res.duplicate()
 	trigger.position = Vector3(grid_pos.x, 0, grid_pos.y)
 	parent.add_child(trigger)
 	

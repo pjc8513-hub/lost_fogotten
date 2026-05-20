@@ -5128,36 +5128,36 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				19,
 				0
 			],
-			"source_id": 2
+			"source_id": 1
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				20,
 				0
 			],
-			"source_id": 2
+			"source_id": 1
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				21,
 				0
 			],
-			"source_id": 2
+			"source_id": 1
 		},
 		{
 			"atlas": [
@@ -5227,14 +5227,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				2
 			],
 			"pos": [
 				20,
 				1
 			],
-			"source_id": 2
+			"source_id": 1
 		},
 		{
 			"atlas": [
@@ -6371,7 +6371,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/BonePit.tres",
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/SwampSouth2.tres",
 			"pos": [
 				6,
 				14
@@ -6530,6 +6530,42 @@
 				12
 			],
 			"type": "decoration"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"pos": [
+				19,
+				0
+			],
+			"type": "trigger"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"pos": [
+				20,
+				0
+			],
+			"type": "trigger"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"pos": [
+				21,
+				0
+			],
+			"type": "trigger"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/spawn_south_central.tres",
+			"pos": [
+				20,
+				1
+			],
+			"type": "player"
 		},
 		{
 			"aggro_group": 0,

@@ -10,6 +10,12 @@ var selected_trigger: Trigger = null
 var player_ref
 var map_data: Dictionary = {}   # Vector2i -> int (0 floor, 1 wall)
 var enemies: Array = []         # Placeholder for future enemy nodes
+var current_map_path: String = ""
+var current_map_theme_path: String = ""
+var current_map_spawn_id: String = ""
+var step_triggers: Array = []
+var step_triggers_by_position: Dictionary = {}
+var _last_step_event_position: Variant = null
 
 # --- Treasure Chests ---
 var treasure_chests: Array[TreasureChest] = []
@@ -34,6 +40,9 @@ func reset_world_state() -> void:
 	doors_by_position.clear()
 	doors_by_id.clear()
 	doors_by_switch_id.clear()
+	step_triggers.clear()
+	step_triggers_by_position.clear()
+	_last_step_event_position = null
 	selected_enemy = null
 	selected_chest = null
 	selected_dungeon = null
@@ -84,8 +93,18 @@ func remove_enemy(enemy) -> void:
 	enemy.queue_free()
 
 func process_step_events() -> void:
-	# Placeholder for traps, pressure plates, etc.
-	pass
+	var player = get_player()
+	if player == null or not is_instance_valid(player):
+		return
+
+	var player_position: Vector2i = player.grid_position
+	if _last_step_event_position == player_position:
+		return
+
+	_last_step_event_position = player_position
+	var trigger = get_step_trigger_at(player_position)
+	if trigger != null and trigger.has_method("execute"):
+		trigger.execute()
 
 func world_to_grid(pos: Vector3) -> Vector2i:
 	return Vector2i(roundi(pos.x), roundi(pos.z))
@@ -149,6 +168,33 @@ func get_door_by_id(door_id: String) -> DungeonDoor:
 
 	if door != null:
 		doors_by_id.erase(door_id)
+	return null
+
+func register_step_trigger(trigger) -> void:
+	if trigger == null or not is_instance_valid(trigger):
+		return
+
+	if not step_triggers.has(trigger):
+		step_triggers.append(trigger)
+
+	step_triggers_by_position[trigger.grid_position] = trigger
+
+func unregister_step_trigger(trigger) -> void:
+	if trigger == null:
+		return
+
+	step_triggers.erase(trigger)
+
+	if step_triggers_by_position.get(trigger.grid_position) == trigger:
+		step_triggers_by_position.erase(trigger.grid_position)
+
+func get_step_trigger_at(pos: Vector2i):
+	var trigger = step_triggers_by_position.get(pos, null)
+	if trigger != null and is_instance_valid(trigger):
+		return trigger
+
+	if trigger != null:
+		step_triggers_by_position.erase(pos)
 	return null
 
 func unlock_doors_for_switch(switch_id: String) -> void:
@@ -321,6 +367,12 @@ func set_selected_dungeon(dungeon: Dungeon):
 	
 func set_current_dungeon(dungeon_data: DungeonData) -> void:
 	current_dungeon_data = dungeon_data
+
+func set_current_map(map_path: String, spawn_id: String = "", theme_path: String = "") -> void:
+	current_dungeon_data = null
+	current_map_path = map_path
+	current_map_spawn_id = spawn_id
+	current_map_theme_path = theme_path
 
 func get_player():
 	return player_ref
