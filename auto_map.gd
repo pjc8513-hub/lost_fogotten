@@ -1,10 +1,14 @@
 # auto_map.gd
 
 extends Control
-@onready var automap: ColorRect = $PanelContainer/VBoxContainer/automap
+@onready var automap_rect: ColorRect = $PanelContainer/VBoxContainer/automap
 @onready var compass: Label = $PanelContainer/VBoxContainer/compass
 
 
+func _ready():
+	if is_instance_valid(automap_rect):
+		automap_rect.draw.connect(_on_automap_draw)
+		automap_rect.clip_contents = true
 
 var map_data := {}
 var tile_size := 8
@@ -17,13 +21,52 @@ var padding := 10
 
 func set_map_data(data: Dictionary):
 	map_data = data
-	queue_redraw()
+	if is_instance_valid(automap_rect):
+		automap_rect.queue_redraw()
+	else:
+		queue_redraw()
 
 func on_player_moved(grid_pos: Vector2):   # ✅ Called by signal
 	player_pos = grid_pos
-	queue_redraw()
+	if is_instance_valid(automap_rect):
+		automap_rect.queue_redraw()
+	else:
+		queue_redraw()
 
 func _draw():
+	if not is_instance_valid(automap_rect):
+		_draw_old_behavior()
+
+func _on_automap_draw():
+	if map_data.is_empty():
+		return
+
+	var rect_size = automap_rect.size
+	var center_x = rect_size.x / 2.0
+	var center_y = rect_size.y / 2.0
+	
+	# Draw background
+	automap_rect.draw_rect(Rect2(Vector2.ZERO, rect_size), background_color)
+
+	# Draw tiles relative to player
+	for pos in map_data.keys():
+		var dx = pos.x - player_pos.x
+		var dy = pos.y - player_pos.y
+		
+		var draw_x = center_x + dx * tile_size - (tile_size / 2.0)
+		var draw_y = center_y + dy * tile_size - (tile_size / 2.0)
+		
+		var rect = Rect2(draw_x, draw_y, tile_size - 1, tile_size - 1)
+		
+		# Only draw if roughly within bounds
+		if rect.intersects(Rect2(Vector2.ZERO, rect_size)):
+			automap_rect.draw_rect(rect, wall_color if map_data[pos] == 1 else floor_color)
+
+	# Draw player dot at the center
+	var player_rect = Rect2(center_x - (tile_size / 2.0), center_y - (tile_size / 2.0), tile_size - 1, tile_size - 1)
+	automap_rect.draw_rect(player_rect, player_color)
+
+func _draw_old_behavior():
 	if map_data.is_empty():
 		return
 

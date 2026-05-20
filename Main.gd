@@ -66,8 +66,9 @@ func _ready():
 			spawn_id
 		)
 		var automap_grid = result.automap_grid
-		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
-		automap.set_map_data(automap_grid)
+		var automap = get_node("automap")
+		if automap:
+			automap.set_map_data(automap_grid)
 		World.set_map_data(automap_grid)
 		World.current_map_path = map_path
 		World.current_map_theme_path = theme_path
@@ -81,8 +82,9 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("map"):  # Set this up in Project > Input Map
 		map_open = !map_open
-		var automap = get_node("SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
-		automap.visible = map_open
+		var automap = get_node("automap")
+		if automap:
+			automap.visible = map_open
 		
 	if event.is_action_pressed("compose"):
 		var owner_char := PartyState.get_selected()

@@ -11,8 +11,9 @@ func _ready():
 	World.register_player(self)
 	grid_position = Vector2i(roundi(global_position.x), roundi(global_position.z))
 
-	var automap = get_node("/root/Main/SubViewportContainer/SubViewport/CanvasLayer/AutoMap")
-	player_moved.connect(automap.on_player_moved)
+	var automap = get_node("/root/Main/automap")
+	if automap:
+		player_moved.connect(automap.on_player_moved)
 
 	emit_signal("player_moved", grid_position)
 	
