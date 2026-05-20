@@ -1,6 +1,10 @@
 # auto_map.gd
 
 extends Control
+@onready var automap: ColorRect = $PanelContainer/VBoxContainer/automap
+@onready var compass: Label = $PanelContainer/VBoxContainer/compass
+
+
 
 var map_data := {}
 var tile_size := 8

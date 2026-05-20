@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://7c7qegomnwn5"]
+
+[ext_resource type="PackedScene" uid="uid://bbew4v05syobc" path="res://assets/models/GnarlTree.glb" id="1_v1y32"]
+
+[node name="GnarlTree" unique_id=1697927426 instance=ExtResource("1_v1y32")]
+
+[node name="Plane" parent="." index="0" unique_id=125347111]
+transform = Transform3D(-0.3779055, -0.17248493, 0.9096353, -0.41521838, 0.9097218, 0, -0.82751507, -0.3776973, -0.41540775, 0, -1, 0)
+
+[node name="Cylinder" parent="." index="1" unique_id=915986256]
+transform = Transform3D(-0.17826335, 0, 0, 0, -0.17826335, 0, 0, 0, -0.17826335, -0.154, 0, 0.494)

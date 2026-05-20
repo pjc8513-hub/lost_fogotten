@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://b8lmwkamr1i7r"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_12kun"]
+
+[resource]
+script = ExtResource("1_12kun")
+scene_path = "res://data/maps/locations/swamp/SwampCentral/WitchEntrance1.tscn"
+map_data_path = "res://data/maps/dungeons/BonePit/floor_1/BonePit1.json"
+DungeonID = "WitchTree1"
+DungeonName = "Witch Tree"
+ThemePath = "res://data/maps/themes/castle_theme.tres"
+Description = "Witch Tree"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

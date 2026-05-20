@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://xbcv3a5dvjqa"]
+
+[ext_resource type="Script" uid="uid://dil5ux2l1cg4u" path="res://auto_map.gd" id="1_u74pc"]
+
+[node name="Control" type="Control" unique_id=1195651344]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_u74pc")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=695206296]
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 140.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1584292434]
+layout_mode = 2
+
+[node name="automap" type="ColorRect" parent="PanelContainer/VBoxContainer" unique_id=1607813830]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="compass" type="Label" parent="PanelContainer/VBoxContainer" unique_id=74159708]
+layout_mode = 2
+horizontal_alignment = 1
