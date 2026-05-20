@@ -16,18 +16,34 @@ var wall_color := Color(0.9, 0.85, 0.7)
 var floor_color := Color(0.2, 0.2, 0.25)
 var background_color := Color(0.05, 0.05, 0.1, 0.85)
 var player_color := Color(0.2, 0.9, 0.4)   # ✅ Green dot
-var player_pos := Vector2.ZERO              # ✅ Tracked here
+var player_pos := Vector2i.ZERO              # ✅ Tracked here
 var padding := 10
+var vision_radius := 4
+
+func _update_fog_of_war():
+	var map_path = World.current_map_path
+	if map_path.is_empty():
+		return
+		
+	for x in range(-vision_radius, vision_radius + 1):
+		for y in range(-vision_radius, vision_radius + 1):
+			var check_pos = player_pos + Vector2i(x, y)
+			if Vector2(check_pos).distance_to(Vector2(player_pos)) <= vision_radius:
+				if map_data.has(check_pos):
+					World.add_discovered_tile(map_path, check_pos)
+
 
 func set_map_data(data: Dictionary):
 	map_data = data
+	_update_fog_of_war()
 	if is_instance_valid(automap_rect):
 		automap_rect.queue_redraw()
 	else:
 		queue_redraw()
 
-func on_player_moved(grid_pos: Vector2):   # ✅ Called by signal
+func on_player_moved(grid_pos: Vector2i):   # ✅ Called by signal
 	player_pos = grid_pos
+	_update_fog_of_war()
 	if is_instance_valid(automap_rect):
 		automap_rect.queue_redraw()
 	else:
@@ -48,8 +64,13 @@ func _on_automap_draw():
 	# Draw background
 	automap_rect.draw_rect(Rect2(Vector2.ZERO, rect_size), background_color)
 
+	var discovered = World.get_discovered_tiles(World.current_map_path)
+
 	# Draw tiles relative to player
 	for pos in map_data.keys():
+		if not discovered.has(pos):
+			continue
+			
 		var dx = pos.x - player_pos.x
 		var dy = pos.y - player_pos.y
 		
@@ -80,7 +101,12 @@ func _draw_old_behavior():
 	var map_pixel_h = (max_y - min_y + 1) * tile_size + padding * 2
 	draw_rect(Rect2(0, 0, map_pixel_w, map_pixel_h), background_color)
 
+	var discovered = World.get_discovered_tiles(World.current_map_path)
+
 	for pos in map_data.keys():
+		if not discovered.has(pos):
+			continue
+			
 		var draw_x = (pos.x - min_x) * tile_size + padding
 		var draw_y = (pos.y - min_y) * tile_size + padding
 		var rect = Rect2(draw_x, draw_y, tile_size - 1, tile_size - 1)

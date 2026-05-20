@@ -13,6 +13,8 @@ var enemies: Array = []         # Placeholder for future enemy nodes
 var current_map_path: String = ""
 var current_map_theme_path: String = ""
 var current_map_spawn_id: String = ""
+var map_discovered_tiles: Dictionary = {} # String (map_path) -> Dictionary (Vector2i -> bool)
+
 var step_triggers: Array = []
 var step_triggers_by_position: Dictionary = {}
 var _last_step_event_position: Variant = null
@@ -373,6 +375,16 @@ func set_current_map(map_path: String, spawn_id: String = "", theme_path: String
 	current_map_path = map_path
 	current_map_spawn_id = spawn_id
 	current_map_theme_path = theme_path
+
+func get_discovered_tiles(map_path: String) -> Dictionary:
+	if not map_discovered_tiles.has(map_path):
+		map_discovered_tiles[map_path] = {}
+	return map_discovered_tiles[map_path]
+
+func add_discovered_tile(map_path: String, pos: Vector2i) -> void:
+	if not map_discovered_tiles.has(map_path):
+		map_discovered_tiles[map_path] = {}
+	map_discovered_tiles[map_path][pos] = true
 
 func get_player():
 	return player_ref
