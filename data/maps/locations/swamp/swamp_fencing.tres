@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FencingData" format=3 uid="uid://cobaslpex0low"]
+
+[ext_resource type="Script" uid="uid://b4e7oekoxhtne" path="res://resources/FencingData.gd" id="1_8vsd8"]
+[ext_resource type="PackedScene" uid="uid://dhg854wwj1ypx" path="res://data/maps/locations/swamp/swamp_flower1.tscn" id="1_ci5w4"]
+[ext_resource type="PackedScene" uid="uid://bmirg0gv8240d" path="res://data/maps/locations/swamp/swamp_flower2.tscn" id="2_wtuvs"]
+[ext_resource type="PackedScene" uid="uid://i51guwr8k15l" path="res://data/maps/locations/swamp/swamp_flower3.tscn" id="3_6mqnt"]
+
+[resource]
+script = ExtResource("1_8vsd8")
+fence_variants = Array[PackedScene]([ExtResource("1_ci5w4"), ExtResource("2_wtuvs"), ExtResource("3_6mqnt")])
+metadata/_custom_type_script = "uid://b4e7oekoxhtne"

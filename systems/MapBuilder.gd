@@ -165,6 +165,9 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 					player_spawn_was_set = true
 			"decoration":
 				_spawn_decor(pos, parent)
+			"fencing":
+				# ent["data_resource"] will point to your "swamp_fencing.tres"
+				_spawn_fencing(pos, ent["data_resource"], parent)
 			"dungeon":
 				_spawn_dungeon(pos, ent["data_resource"], parent, on_dungeon_selected)
 			"door":
@@ -256,6 +259,42 @@ static func _spawn_chest(grid_pos: Vector2i, data_path: String,
 	
 	if not on_chest_selected.is_null():
 		chest.connect("selected", on_chest_selected)
+
+static func _spawn_fencing(grid_pos: Vector2i, data_path: String, parent: Node) -> void:
+	if data_path.is_empty() or not FileAccess.file_exists(data_path):
+		push_error("Fencing data file not found: " + data_path)
+		return
+		
+	var res = load(data_path)
+	if not res or not ("fence_variants" in res) or res.fence_variants.size() == 0:
+		push_error("Fencing data resource is missing 'fence_variants' or it is empty.")
+		return
+
+	# Define the 4 sides of the tile: [Offset Direction, Rotation Angle]
+	# Assuming 1 unit = 1 tile size based on your wall.position setup
+	var sides = [
+		{"offset": Vector3(0, 0, -0.49), "rotation": 0},    # North (Pull back slightly from 0.5 to prevent wall clipping)
+		{"offset": Vector3(0.49, 0, 0),  "rotation": 90},   # East
+		{"offset": Vector3(0, 0, 0.49),  "rotation": 180},  # South
+		{"offset": Vector3(-0.49, 0, 0), "rotation": 270}   # West
+	]
+
+	for side in sides:
+		# Pick a random swamp flower/reed PackedScene from your .tres array
+		var flower_scene: PackedScene = res.fence_variants.pick_random()
+		if not flower_scene:
+			continue
+			
+		var flower = flower_scene.instantiate()
+		parent.add_child(flower)
+		
+		# Position the flower at the tile center, then push it to the specific edge
+		# We add a microscopic random offset so they don't look perfectly robotic
+		var organic_fuzz = Vector3(randf_range(-0.04, 0.04), 0, randf_range(-0.04, 0.04))
+		flower.position = Vector3(grid_pos.x, 0, grid_pos.y) + side["offset"] + organic_fuzz
+		
+		# Rotate it to align with the tile edge
+		flower.rotation_degrees.y = side["rotation"]
 
 static func _set_player_start(grid_pos: Vector2i, data_path: String, parent: Node, automap_grid: Dictionary, spawn_id: String = "") -> bool:
 	var spawn_data: PlayerSpawnData = null
