@@ -6317,7 +6317,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/SwampSouth1.tres",
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceEast.tres",
 			"pos": [
 				1,
 				2
@@ -6371,7 +6371,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/SwampSouth2.tres",
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceNorth.tres",
 			"pos": [
 				6,
 				14

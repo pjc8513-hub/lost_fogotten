@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://dyhy1lry14bqh"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_77hpm"]
+
+[resource]
+script = ExtResource("1_77hpm")
+scene_path = "res://assets/models/dirt_exit.tscn"
+map_data_path = "res://data/maps/locations/swamp/SwampCentral/Swamp_Central.json"
+DungeonID = "CentralSwamp"
+DungeonName = "Central Swamp"
+ThemePath = "res://data/maps/themes/swamp_theme.tres"
+spawn_id = "FaceSouth1"
+rotation = 90
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

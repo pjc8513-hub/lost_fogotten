@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://2rsh6nvcqd03" path="res://PlayerInput.gd" id="1_r0du0"]
 [ext_resource type="Script" uid="uid://dlpkupeacr0qm" path="res://debug_click.gd" id="2_lgr22"]
 [ext_resource type="PackedScene" uid="uid://duaicc2jefihn" path="res://Grid-Step.tscn" id="2_uu6xs"]
-[ext_resource type="Script" uid="uid://dil5ux2l1cg4u" path="res://auto_map.gd" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://cx3bqh3bvbhkd" path="res://PartyManager.gd" id="5_3dxm6"]
 [ext_resource type="Script" uid="uid://cq773fy0p7cy5" path="res://scroll_container.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://q60jlfp1yofx" path="res://debug_subview.gd" id="6_trn2v"]
@@ -65,7 +64,6 @@ distance_fade_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3875208, 0, 3.453848)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=1297943387]
-
 
 [node name="PlayerInput" type="Node" parent="SubViewportContainer/SubViewport/CanvasLayer" unique_id=1411427721]
 script = ExtResource("1_r0du0")
@@ -177,6 +175,6 @@ mouse_filter = 2
 
 [node name="automap" parent="." unique_id=1195651344 instance=ExtResource("15_j4qnp")]
 offset_left = -275.0
-offset_top = -128.0
+offset_top = -143.0
 offset_right = -275.0
-offset_bottom = -128.0
+offset_bottom = -143.0

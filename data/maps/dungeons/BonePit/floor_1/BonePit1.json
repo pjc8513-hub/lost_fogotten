@@ -167,17 +167,6 @@
 		},
 		{
 			"atlas": [
-				2,
-				0
-			],
-			"pos": [
-				10,
-				8
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
 				0,
 				0
 			],
@@ -3110,17 +3099,6 @@
 			"pos": [
 				35,
 				5
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
-				0,
-				2
-			],
-			"pos": [
-				35,
-				6
 			],
 			"source_id": 2
 		},
@@ -7158,6 +7136,28 @@
 			"pos": [
 				24,
 				4
+			],
+			"source_id": 2
+		},
+		{
+			"atlas": [
+				2,
+				0
+			],
+			"pos": [
+				10,
+				8
+			],
+			"source_id": 2
+		},
+		{
+			"atlas": [
+				0,
+				2
+			],
+			"pos": [
+				35,
+				6
 			],
 			"source_id": 2
 		}
@@ -7174,24 +7174,6 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
-			"pos": [
-				10,
-				8
-			],
-			"type": "player"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				6,
-				3
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
 			"pos": [
 				13,
@@ -7209,15 +7191,6 @@
 			"type": "chest"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				4,
-				12
-			],
-			"type": "enemy"
-		},
-		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
 			"pos": [
@@ -7227,15 +7200,6 @@
 			"type": "door"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				21,
-				3
-			],
-			"type": "enemy"
-		},
-		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
 			"pos": [
@@ -7243,60 +7207,6 @@
 				4
 			],
 			"type": "chest"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				21,
-				4
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				21,
-				5
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				21,
-				12
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 0,
-			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastLockedDoor.tres",
-			"pos": [
-				35,
-				6
-			],
-			"type": "door"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				32,
-				8
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				32,
-				5
-			],
-			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -7317,29 +7227,29 @@
 			"type": "trigger"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				39,
-				12
-			],
-			"type": "enemy"
-		},
-		{
-			"aggro_group": 2,
-			"data_resource": "res://data/enemies/goblin.tres",
-			"pos": [
-				38,
-				12
-			],
-			"type": "enemy"
-		},
-		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastUnlockedDoor.tres",
 			"pos": [
 				24,
 				4
+			],
+			"type": "door"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceEast.tres",
+			"pos": [
+				10,
+				8
+			],
+			"type": "player"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastLockedDoor.tres",
+			"pos": [
+				35,
+				6
 			],
 			"type": "door"
 		}

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dncrlmmlpylle"]
+
+[ext_resource type="PackedScene" uid="uid://ilq12qfs2nmf" path="res://assets/models/dirt_wall.glb" id="1_2k4tc"]
+
+[node name="dirt_wall" unique_id=202924543 instance=ExtResource("1_2k4tc")]
+
+[node name="Cube" parent="." index="0" unique_id=1929935143]
+transform = Transform3D(-3.2914677e-08, 0, 0.7, 0, 1.5, 0, -0.753, 0, -3.059797e-08, 0, 0, 0)

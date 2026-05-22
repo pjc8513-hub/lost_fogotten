@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_12kun")
 scene_path = "res://data/maps/locations/swamp/SwampCentral/WitchEntrance1.tscn"
-map_data_path = "res://data/maps/dungeons/BonePit/floor_1/BonePit1.json"
+map_data_path = "res://data/maps/dungeons/WitchTree/WitchTree_1/witchtree_1.json"
 DungeonID = "WitchTree1"
 DungeonName = "Witch Tree"
-ThemePath = "res://data/maps/themes/castle_theme.tres"
+ThemePath = "res://data/maps/themes/dirt_theme.tres"
 Description = "Witch Tree"
 metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

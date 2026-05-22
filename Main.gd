@@ -35,8 +35,8 @@ func _ready():
 		GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
 	var dungeon_data := World.current_dungeon_data
-	var map_path := "res://data/maps/dungeons/BonePit/floor_1/BonePit1.json"
-	var theme_path := "res://data/maps/themes/castle_theme.tres"
+	var map_path := "res://data/maps/dungeons/WitchTree/WitchTree_1/witchtree_1.json"
+	var theme_path := "res://data/maps/themes/dirt_theme.tres"
 	if dungeon_data != null:
 		if not dungeon_data.map_data_path.is_empty():
 			map_path = dungeon_data.map_data_path

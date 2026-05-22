@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c416811vcc0i8"]
+
+[ext_resource type="PackedScene" uid="uid://cudu50hobsci3" path="res://assets/models/dirt_floor.glb" id="1_b6vfv"]
+
+[node name="dirt_floor" unique_id=388591014 instance=ExtResource("1_b6vfv")]
+
+[node name="Cube" parent="." index="0" unique_id=110784566]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.004, -0.75, 0.132)

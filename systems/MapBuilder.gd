@@ -223,6 +223,8 @@ static func _spawn_exit(grid_pos: Vector2i, data_path: String,
 		if "dungeon_data" in exit:
 			exit.dungeon_data = res.duplicate()
 	exit.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	if res.rotation != null and res.rotation !=0:
+		exit.rotation_degrees.y = res.rotation
 	parent.add_child(exit)
 	
 

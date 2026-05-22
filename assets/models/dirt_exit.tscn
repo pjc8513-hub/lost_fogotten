@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://glk7l21jm72y"]
+
+[ext_resource type="PackedScene" uid="uid://blqq0uihoyiew" path="res://assets/models/dirt_exit.glb" id="1_sgpfb"]
+[ext_resource type="Script" uid="uid://c1dap10nj37ku" path="res://assets/models/dungeon_exit.gd" id="2_g2sy5"]
+[ext_resource type="Resource" uid="uid://dyhy1lry14bqh" path="res://data/maps/dungeons/WitchTree/WitchTree_1/witchtree_1_exit.tres" id="3_6w2vr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g2sy5"]
+
+[node name="dirt_exit" unique_id=851505602 instance=ExtResource("1_sgpfb")]
+script = ExtResource("2_g2sy5")
+dungeon_data = ExtResource("3_6w2vr")
+
+[node name="Cube" parent="." index="0" unique_id=1399203872]
+transform = Transform3D(0.75, 0, 0, 0, 1.5, 0, 0, 0, 0.7, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="1" unique_id=616804732]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1101590140]
+shape = SubResource("BoxShape3D_g2sy5")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

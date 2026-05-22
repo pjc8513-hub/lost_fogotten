@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://dmjejvgp8ja0q"]
+
+[ext_resource type="PackedScene" uid="uid://c416811vcc0i8" path="res://assets/models/dirt_floor.tscn" id="1_nfwbj"]
+[ext_resource type="PackedScene" uid="uid://d1lnhxsevd7nj" path="res://assets/models/dirt_ceiling.tscn" id="1_wa45m"]
+[ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xpc5q"]
+[ext_resource type="PackedScene" uid="uid://dncrlmmlpylle" path="res://assets/models/dirt_wall.tscn" id="3_wa45m"]
+
+[resource]
+script = ExtResource("1_xpc5q")
+wall_scene = ExtResource("3_wa45m")
+random_wall_variation = true
+floor_scene = ExtResource("1_nfwbj")
+has_ceiling = true
+ceiling_scene = ExtResource("1_wa45m")
+random_ceiling_variation = true
+metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

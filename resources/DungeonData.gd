@@ -10,5 +10,6 @@ class_name DungeonData
 @export var ThemePath: String = ""
 @export var spawn_id: String = ""
 @export var Description: String = ""
+@export var rotation: int = 0
 
 @export var RequiredKey: String = ""

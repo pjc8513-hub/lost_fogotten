@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlayerSpawnData" format=3 uid="uid://dfqs2f7tsx6cl"]
+
+[ext_resource type="Script" uid="uid://vtughe3haunl" path="res://resources/PlayerSpawnData.gd" id="1_jy45l"]
+
+[resource]
+script = ExtResource("1_jy45l")
+SpawnID = "FaceSouth1"
+rotation = 180
+metadata/_custom_type_script = "uid://vtughe3haunl"

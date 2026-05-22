@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bbew4v05syobc"
-path="res://.godot/imported/GnarlTree.glb-457e113c98445e8c9cbaf56bbe1c4d86.scn"
+uid="uid://blqq0uihoyiew"
+path="res://.godot/imported/dirt_exit.glb-a4c8821857af2acc861916e5170c674d.scn"
 
 [deps]
 
-source_file="res://assets/models/GnarlTree.glb"
-dest_files=["res://.godot/imported/GnarlTree.glb-457e113c98445e8c9cbaf56bbe1c4d86.scn"]
+source_file="res://assets/models/dirt_exit.glb"
+dest_files=["res://.godot/imported/dirt_exit.glb-a4c8821857af2acc861916e5170c674d.scn"]
 
 [params]
 
