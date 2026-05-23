@@ -3,7 +3,6 @@
 extends Command
 class_name RangedAttackCommand
 
-# Set these before queuing the command
 var element: String = "physical"
 var is_player_attacker: bool = false
 
@@ -38,23 +37,56 @@ func execute():
 	actor.enemy_data.cooldown = 8
 	emit_signal("finished")
 
+
+# Returns the grid position of any actor type (Enemy or ClassData/player).
+func _get_actor_grid_pos(a) -> Vector2i:
+	if a is Enemy:
+		return a.grid_position
+	# ClassData actors — get position via the player node.
+	var player = World.get_player()
+	if player != null:
+		return player.grid_position
+	return Vector2i(-9999, -9999)
+
+
+# Returns the grid position of any target type (ClassData or Enemy).
+func _get_target_grid_pos(t) -> Vector2i:
+	if t is Enemy:
+		return t.grid_position
+	var player = World.get_player()
+	if player != null:
+		return player.grid_position
+	return Vector2i(-9999, -9999)
+
+
 func _perform_single_ranged_attack(target) -> void:
-	# 1. Accuracy roll
-	var accuracy : int = actor.get_accuracy() if actor.has_method("get_accuracy") else 0
-	
-	var target_ac = target.get_armor_class() if target.has_method("get_armor_class") else target.armor_class
-	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
-	
-	var target_pos = Vector3.ZERO
+	# --- NEW: line-of-sight check ---
+	var from_pos := _get_actor_grid_pos(actor)
+	var to_pos   := _get_target_grid_pos(target)
+
+	if not World.has_line_of_sight(from_pos, to_pos):
+		var attacker_name = actor.enemy_data.enemy_name if actor is Enemy else (actor as ClassData).member_name
+		var target_name   = target.member_name if target is ClassData else (target as Enemy).enemy_data.enemy_name
+		var blocked_msg := "[color=gray]%s can't get a clear shot at %s — something is in the way.[/color]" % [attacker_name, target_name]
+		GameEvents.message_logged.emit(blocked_msg)
+		return
+	# --------------------------------
+
+	# 1. Fire projectile visual first (only when LOS is confirmed)
+	var target_pos := Vector3.ZERO
 	if target is Enemy:
 		target_pos = target.global_position
 	else:
 		var p = World.get_player()
 		if p != null:
 			target_pos = p.global_position
-			
 	GameEvents.spell_projectile_cast.emit(actor.global_position, target_pos, "res://ArrowScene.tscn")
 	await actor.get_tree().create_timer(0.5).timeout
+
+	# 2. Accuracy roll
+	var accuracy : int = actor.get_accuracy() if actor.has_method("get_accuracy") else 0
+	var target_ac = target.get_armor_class() if target.has_method("get_armor_class") else target.armor_class
+	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
 	
 	if outcome == "miss":
 		var msg = "[color=gray]%s[/color] fires at %s — [color=gray]miss![/color]" % [
@@ -63,27 +95,19 @@ func _perform_single_ranged_attack(target) -> void:
 		GameEvents.message_logged.emit(msg)
 		return
 	
-	# 2. Roll dice
+	# 3. Roll dice
 	var raw := CombatLogic.roll_dice(actor.enemy_data.dice_rolls, actor.enemy_data.dice_sides, actor.enemy_data.bonus_damage)
 	if outcome == "crit":
 		raw *= 2
 	
-	# 3. Might bonus (enemies don't have might; only player actors would)
 	if is_player_attacker and actor.has_method("get_might"):
 		raw += CombatLogic.might_bonus(actor.get_might())
 	
-	# 4. Resistance
 	var resist : int = target.get_resistance(element) if target.has_method("get_resistance") else 0
 	var final_damage := CombatLogic.apply_resistance(raw, resist)
 	
-	# 5. Status proc
-	CombatLogic.proc_status(
-		actor.enemy_data.ailment,
-		5,
-		target
-	)
+	CombatLogic.proc_status(actor.enemy_data.ailment, 5, target)
 	
-	# 6. Emit and apply
 	var crit_tag := " [color=yellow]CRITICAL![/color]" if outcome == "crit" else ""
 	var msg := "[color=red]%s[/color] fires at [color=white]%s[/color] for [color=orange]%d[/color] damage!%s" % [
 		actor.enemy_data.enemy_name, target.member_name, final_damage, crit_tag
