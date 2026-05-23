@@ -295,7 +295,7 @@ func _is_adjacent_to_player() -> bool:
 
 	# 8-directional adjacency
 	var diff = (grid_position - player.grid_position).abs()
-	return diff.x <= 1 and diff.y <= 1 and not (diff.x == 0 and diff.y == 0)
+	return diff.x <= 1 and diff.y <= 1 and not (diff.x == 0 and diff.y == 0) and World.has_line_of_sight(grid_position, player.grid_position)
 
 func _queue_attack() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_queue_attack")
@@ -315,7 +315,10 @@ func _is_within_ranged_distance() -> bool:
 		return false
 	
 	var distance = _get_distance_to_player()
-	return distance <= enemy_data.ranged_tiles and distance > 1
+	var player = World.get_player()
+	if player == null:
+		return false
+	return distance <= enemy_data.ranged_tiles and distance > 1 and World.has_line_of_sight(grid_position, player.grid_position)
 
 func _try_ranged_attack_with_remaining_movement() -> bool:
 	if movement_remaining <= 0 or not _is_within_ranged_distance():
@@ -342,11 +345,11 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		get_viewport().set_input_as_handled()
 		print("Enemy clicked:", enemy_data.enemy_name)
-		var msg := "[color=gray]Targeted %s.[/color]" % enemy_data.enemy_name
-		GameEvents.message_logged.emit(msg)
 		World.set_selected_enemy(self)
-		CombatState.set_target(self)
-		emit_signal("selected", self)
+		if World.selected_enemy == self:
+			var msg := "[color=gray]Targeted %s.[/color]" % enemy_data.enemy_name
+			GameEvents.message_logged.emit(msg)
+			emit_signal("selected", self)
 		
 # Animations
 func animate_move_to(target: Vector2i, duration: float = 0.25):

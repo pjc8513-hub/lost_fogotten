@@ -24,6 +24,11 @@ func execute() -> void:
 		emit_signal("finished")
 		return
 
+	if not World.has_line_of_sight(player_node.grid_position, target_enemy.grid_position):
+		GameEvents.message_logged.emit("[color=gray]%s is behind cover. Turn wasted.[/color]" % target_enemy.enemy_data.enemy_name)
+		emit_signal("finished")
+		return
+
 	# Calculate 8-directional distance for range check
 	var grid_diff = (player_node.grid_position - target_enemy.grid_position).abs()
 	var dist: float = max(grid_diff.x, grid_diff.y)  # Chebyshev distance for 8-directional
@@ -107,10 +112,18 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		GameEvents.message_logged.emit(msg)
 		return
 
+	var player_node = World.get_player()
+	if player_node == null or not World.has_line_of_sight(player_node.grid_position, target.grid_position):
+		GameEvents.message_logged.emit("[color=gray]%s can't get a clear shot at %s. Turn wasted.[/color]" % [
+			attacker.member_name,
+			target.enemy_data.enemy_name
+		])
+		return
+
 	# Ranged attack — same pipeline, no resist override needed (will use weapon element later)
 	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
 
-	var p = World.get_player()
+	var p = player_node
 	if p != null:
 		GameEvents.spell_projectile_cast.emit(p.global_position, target.global_position, "res://ArrowScene.tscn")
 		await p.get_tree().create_timer(0.5).timeout

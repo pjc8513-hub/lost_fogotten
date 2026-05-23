@@ -229,37 +229,69 @@ func unlock_doors_for_switch(switch_id: String) -> void:
 			door.unlock_and_open()
 
 func has_line_of_sight(from_pos: Vector2i, to_pos: Vector2i) -> bool:
-	var dx = to_pos.x - from_pos.x
-	var dy = to_pos.y - from_pos.y
+	if from_pos == to_pos:
+		return _is_line_of_sight_tile_clear(from_pos)
 
-	var steps = max(abs(dx), abs(dy))
-	if steps == 0:
-		return true
-
-	var step_x = float(dx) / steps
-	var step_y = float(dy) / steps
-
-	var x = float(from_pos.x)
-	var y = float(from_pos.y)
-
-	for i in range(steps):
-		x += step_x
-		y += step_y
-		var check = Vector2i(roundi(x), roundi(y))
-
-		# Skip the starting tile
+	for check in _get_supercover_line(from_pos, to_pos):
 		if check == from_pos:
 			continue
-
-		# Allow the destination tile to be occupied by an enemy and only care about walls.
-		if check == to_pos:
-			return map_data.has(check) and map_data[check] == 0
-
-		# If we hit a wall, LOS is blocked
-		if not is_walkable(check):
+		if not _is_line_of_sight_tile_clear(check):
 			return false
 
 	return true
+
+func can_player_see_enemy(enemy: Enemy) -> bool:
+	var player = get_player()
+	if player == null or enemy == null or not is_instance_valid(enemy):
+		return false
+	return has_line_of_sight(player.grid_position, enemy.grid_position)
+
+func _is_line_of_sight_tile_clear(pos: Vector2i) -> bool:
+	if not map_data.has(pos):
+		return false
+	if map_data[pos] != 0:
+		return false
+
+	var door := get_door_at(pos)
+	return door == null or door.is_open
+
+func _get_supercover_line(from_pos: Vector2i, to_pos: Vector2i) -> Array[Vector2i]:
+	var points: Array[Vector2i] = []
+	points.append(from_pos)
+	var current := from_pos
+	var dx := to_pos.x - from_pos.x
+	var dy := to_pos.y - from_pos.y
+	var nx = abs(dx)
+	var ny = abs(dy)
+	var step_x := _sign_step(dx)
+	var step_y := _sign_step(dy)
+	var ix := 0
+	var iy := 0
+
+	while ix < nx or iy < ny:
+		var decision = (1 + 2 * ix) * ny - (1 + 2 * iy) * nx
+		if decision == 0:
+			points.append(Vector2i(current.x + step_x, current.y))
+			points.append(Vector2i(current.x, current.y + step_y))
+			current = Vector2i(current.x + step_x, current.y + step_y)
+			ix += 1
+			iy += 1
+		elif decision < 0:
+			current = Vector2i(current.x + step_x, current.y)
+			ix += 1
+		else:
+			current = Vector2i(current.x, current.y + step_y)
+			iy += 1
+		points.append(current)
+
+	return points
+
+func _sign_step(value: int) -> int:
+	if value > 0:
+		return 1
+	if value < 0:
+		return -1
+	return 0
 
 func can_see_player(enemy_pos: Vector2i, vision_range: int) -> bool:
 	var player = get_player()
@@ -279,13 +311,18 @@ func is_occupied_by_enemy(pos: Vector2i) -> bool:
 	return false
 
 func set_selected_enemy(enemy):
-	selected_enemy = enemy
 	selected_chest = null # deselect chest if enemy selected
 	selected_trigger = null
 	selected_dungeon = null
 	selected_npc = null
 	if enemy != null and is_instance_valid(enemy) and enemy.enemy_data.hp > 0:
-		CombatState.set_target(enemy)
+		if can_player_see_enemy(enemy):
+			selected_enemy = enemy
+			CombatState.set_target(enemy)
+		else:
+			selected_enemy = null
+			CombatState.clear_target()
+			GameEvents.message_logged.emit("[color=gray]You can't get a clear view of %s.[/color]" % enemy.enemy_data.enemy_name)
 	else:
 		selected_enemy = null
 		CombatState.clear_target()

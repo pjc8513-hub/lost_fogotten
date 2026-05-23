@@ -57,7 +57,7 @@ func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> D
 		if is_instance_valid(effect_target) and effect_target.enemy_data.hp > 0:
 			var damage_distance := _get_spell_target_distance(effect_target)
 			var player_node = World.get_player()
-			if damage_distance <= SPELL_DAMAGE_RANGE and player_node != null:
+			if damage_distance <= SPELL_DAMAGE_RANGE and player_node != null and World.has_line_of_sight(player_node.grid_position, effect_target.grid_position):
 				GameEvents.spell_projectile_cast.emit(
 					player_node.global_position,
 					effect_target.global_position,
@@ -142,6 +142,12 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 			])
 		return
 
+	var player_node = World.get_player()
+	if player_node == null or not World.has_line_of_sight(player_node.grid_position, target_enemy.grid_position):
+		if _has_damage_component(result):
+			GameEvents.message_logged.emit("[color=gray]%s is behind cover, so the spell can't reach it.[/color]" % target_enemy.enemy_data.enemy_name)
+		return
+
 	var total_damage := 0
 	var splash_damage := 0
 
@@ -200,6 +206,9 @@ func _apply_chord_statuses(target_enemy: Enemy, result: SpellResult) -> void:
 	if target_enemy == null or not is_instance_valid(target_enemy) or target_enemy.enemy_data.hp <= 0:
 		return
 	if _get_spell_target_distance(target_enemy) > SPELL_DAMAGE_RANGE:
+		return
+	var player_node = World.get_player()
+	if player_node == null or not World.has_line_of_sight(player_node.grid_position, target_enemy.grid_position):
 		return
 
 	for chord_entry in result.chord_entries:
