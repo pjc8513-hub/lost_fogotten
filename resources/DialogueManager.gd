@@ -8,6 +8,10 @@ var dialogue_data = {}
 var current_node = ""
 var current_npc = ""
 
+var _password_success_callback: Callable = Callable()
+var _password_fail_callback: Callable = Callable()
+var _expected_password: String = ""
+
 var ui = null
 
 func _ready():
@@ -259,6 +263,48 @@ func show_confirmation(prompt_text: String, yes_callback: Callable, no_callback:
 			no_callback.call()
 		close_dialogue()
 	)
+	
+func show_password_prompt(password: String, success_callback: Callable, fail_callback: Callable = Callable()) -> void:
+	"""Show a password input dialog for dungeon entrance or other purposes."""
+	if ui == null:
+		push_error("Dialogue UI not registered")
+		return
+	
+	ui.show()
+	ui.npc_name_label.text = ""
+	ui.dialogue_text.text = "Enter the password:"
+	ui.clear_choices()
+	ui.password_input.show()
+	ui.password_input.text = ""
+	ui.password_input.placeholder_text = "Password"
+	
+	# Disconnect any existing connections
+	if ui.password_input.text_submitted.is_connected(_on_password_submitted):
+		ui.password_input.text_submitted.disconnect(_on_password_submitted)
+	
+	# Store callbacks in temporary variables for this submission
+	_password_success_callback = success_callback
+	_password_fail_callback = fail_callback
+	_expected_password = password
+	
+	ui.password_input.text_submitted.connect(_on_password_submitted)
+	ui.password_input.grab_focus()
+
+func _on_password_submitted(text: String) -> void:
+	"""Handle password submission for custom password prompts."""
+	if text.to_lower() == _expected_password.to_lower():
+		close_dialogue()
+		if _password_success_callback.is_valid():
+			_password_success_callback.call()
+	else:
+		close_dialogue()
+		if _password_fail_callback.is_valid():
+			_password_fail_callback.call()
+	
+	# Clear callbacks
+	_password_success_callback = Callable()
+	_password_fail_callback = Callable()
+	_expected_password = ""
 
 func close_dialogue():
 

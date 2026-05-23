@@ -13,3 +13,5 @@ class_name DungeonData
 @export var rotation: int = 0
 
 @export var RequiredKey: String = ""
+@export var PasswordRequired: bool = false
+@export var RequiredPassword: String = ""

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dcwljnxatycn1"]
+
+[ext_resource type="PackedScene" uid="uid://btscupunbqeil" path="res://DungeonEntranceScene.tscn" id="1_2ud1r"]
+[ext_resource type="Texture2D" uid="uid://b00klrxwvr48q" path="res://data/maps/locations/swamp/SwampCentral/WitchTree.png" id="3_gbotq"]
+
+[node name="Dungeon" unique_id=1015003909 instance=ExtResource("1_2ud1r")]
+
+[node name="Sprite3D" parent="." index="0" unique_id=475153216]
+texture = ExtResource("3_gbotq")
+
+[node name="CollisionShape3D" parent="StaticBody3D" parent_id_path=PackedInt32Array(2075651509) index="0" unique_id=418678643]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.12767029, 1.0840759, 0)

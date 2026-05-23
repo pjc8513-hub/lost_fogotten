@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://cxkccd0lom06k"]
 
 [ext_resource type="PackedScene" uid="uid://btscupunbqeil" path="res://DungeonEntranceScene.tscn" id="1_hvnnb"]
-[ext_resource type="Resource" uid="uid://5hs1qf0xj6u2" path="res://data/maps/dungeons/BonePit/floor_1/BonePit.tres" id="2_oh0im"]
 [ext_resource type="Texture2D" uid="uid://b00klrxwvr48q" path="res://data/maps/locations/swamp/SwampCentral/WitchTree.png" id="3_vmrp5"]
 
 [node name="Dungeon" unique_id=1015003909 instance=ExtResource("1_hvnnb")]
-dungeon_data = ExtResource("2_oh0im")
 
 [node name="Sprite3D" parent="." index="0" unique_id=475153216]
 texture = ExtResource("3_vmrp5")

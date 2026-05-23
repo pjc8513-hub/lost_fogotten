@@ -27712,17 +27712,17 @@
 		{
 			"atlas": [
 				1,
-				0
+				3
 			],
 			"pos": [
 				40,
 				13
 			],
-			"source_id": 2
+			"source_id": 3
 		},
 		{
 			"atlas": [
-				1,
+				4,
 				0
 			],
 			"pos": [
@@ -43626,7 +43626,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				30,
 				49
@@ -43698,7 +43698,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				1,
 				53
@@ -43743,7 +43743,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				2,
 				53
@@ -43752,7 +43752,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				3,
 				53
@@ -43905,7 +43905,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				8,
 				47
@@ -43923,7 +43923,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				9,
 				25
@@ -43950,7 +43950,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				9,
 				46
@@ -44121,7 +44121,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				13,
 				25
@@ -44283,7 +44283,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				21,
 				48
@@ -44337,7 +44337,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				22,
 				23
@@ -44355,7 +44355,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				22,
 				50
@@ -44373,7 +44373,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				23,
 				62
@@ -44418,7 +44418,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				24,
 				23
@@ -44436,7 +44436,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				24,
 				59
@@ -44670,7 +44670,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				29,
 				46
@@ -44787,7 +44787,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				28,
 				8
@@ -44796,7 +44796,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				29,
 				8
@@ -44949,7 +44949,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				38,
 				3
@@ -45048,6 +45048,24 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/spawns/FaceSouth2.tres",
+			"pos": [
+				40,
+				13
+			],
+			"type": "player"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"pos": [
+				40,
+				12
+			],
+			"type": "dungeon"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
 			"pos": [
 				40,
@@ -45066,7 +45084,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				40,
 				2
@@ -45201,7 +45219,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				43,
 				26
@@ -45246,7 +45264,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				41,
 				49
@@ -45282,7 +45300,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				40,
 				53
@@ -45408,7 +45426,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				45,
 				26
@@ -45426,7 +45444,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				45,
 				16
@@ -45570,7 +45588,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				47,
 				16
@@ -45615,7 +45633,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				48,
 				37
@@ -45651,7 +45669,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				49,
 				37
@@ -45705,7 +45723,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				50,
 				37
@@ -45975,7 +45993,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				56,
 				14
@@ -46074,7 +46092,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				58,
 				14
@@ -46083,7 +46101,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				58,
 				16
@@ -46254,7 +46272,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				61,
 				14
@@ -46605,7 +46623,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				52,
 				60
@@ -46614,7 +46632,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				52,
 				61
@@ -46623,7 +46641,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"pos": [
 				52,
 				62
