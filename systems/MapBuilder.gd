@@ -176,6 +176,8 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_trigger(pos, ent["data_resource"], parent)
 			"exit":
 				_spawn_exit(pos, ent["data_resource"], parent)
+			"NPC":
+				_spawn_NPC(pos, ent["data_resource"], parent)
 
 	if not player_spawn_was_set and has_fallback_spawn:
 		if not spawn_id.is_empty():
@@ -214,7 +216,18 @@ static func _spawn_trigger (grid_pos: Vector2i, data_path: String,
 		trigger.trigger_data = res.duplicate()
 	trigger.position = Vector3(grid_pos.x, 0, grid_pos.y)
 	parent.add_child(trigger)
-	
+
+static func _spawn_NPC (grid_pos: Vector2i, data_path: String,
+						parent: Node) -> void:
+	var res = load(data_path) as NPCData
+	var NPC_scene_resource = load(res.scene_path)
+	var NPC = NPC_scene_resource.instantiate()
+	NPC.grid_position = grid_pos
+	if FileAccess.file_exists(data_path):
+		NPC.npc_data = res.duplicate()
+	NPC.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	parent.add_child(NPC)
+
 static func _spawn_exit(grid_pos: Vector2i, data_path: String,
 						parent: Node) -> void:
 	var res = load(data_path) as DungeonData

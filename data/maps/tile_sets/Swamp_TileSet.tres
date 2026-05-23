@@ -206,6 +206,39 @@ texture_region_size = Vector2i(32, 32)
 3:4/0 = 0
 4:4/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6yny3"]
+resource_name = "NPC-Swamp"
+texture = ExtResource("1_hgp8g")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(1, 1, 0.019607844, 1)
+0:1/0/custom_data_0 = "NPC"
+0:1/0/custom_data_2 = "res://data/NPC/tree_insc_1.tres"
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+
 [resource]
 tile_size = Vector2i(32, 32)
 custom_data_layer_0/name = "entity_type"
@@ -220,3 +253,4 @@ sources/2 = SubResource("TileSetAtlasSource_ugtc7")
 sources/0 = SubResource("TileSetAtlasSource_yc6ji")
 sources/1 = SubResource("TileSetAtlasSource_3k3aa")
 sources/3 = SubResource("TileSetAtlasSource_7n4vp")
+sources/4 = SubResource("TileSetAtlasSource_6yny3")

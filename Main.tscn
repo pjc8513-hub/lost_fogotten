@@ -172,6 +172,7 @@ offset_bottom = -1.0
 mouse_filter = 2
 
 [node name="DialogueUI" parent="." unique_id=707445060 instance=ExtResource("14_dialogue_ui")]
+follow_viewport_enabled = true
 
 [node name="automap" parent="." unique_id=1195651344 instance=ExtResource("15_j4qnp")]
 offset_left = -275.0

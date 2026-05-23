@@ -139,6 +139,7 @@ func _queue_toggle_lever(actor: ClassData):
 func _queue_talk_to_npc(actor: ClassData):
 	var cmd := PlayerTalkCommand.new()
 	cmd.actor = actor
+	cmd.target_npc = World.selected_npc
 	CommandQueue.add_command(cmd)
 	_start_player_action()
 	

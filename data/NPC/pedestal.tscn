@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ug63ducjxrbs"]
+
+[ext_resource type="PackedScene" uid="uid://c67qf8cgx4p3b" path="res://npc.tscn" id="1_v1ruy"]
+[ext_resource type="Texture2D" uid="uid://baw428aa01irg" path="res://assets/sprites/entities/pedestal-1.png" id="2_ix5gm"]
+
+[node name="NPC" unique_id=1617775948 instance=ExtResource("1_v1ruy")]
+
+[node name="Sprite3D" parent="." index="0" unique_id=807355338]
+billboard = 2
+texture = ExtResource("2_ix5gm")

@@ -10496,14 +10496,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				34,
 				11
 			],
-			"source_id": 2
+			"source_id": 4
 		},
 		{
 			"atlas": [
@@ -13681,6 +13681,15 @@
 				6
 			],
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/tree_insc_1.tres",
+			"pos": [
+				34,
+				11
+			],
+			"type": "NPC"
 		},
 		{
 			"aggro_group": 0,
