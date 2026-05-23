@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c67qf8cgx4p3b"]
+
+[ext_resource type="Script" uid="uid://bc287duakog4a" path="res://npc.gd" id="1_ideak"]
+
+[node name="NPC" type="Node3D" unique_id=1617775948]
+script = ExtResource("1_ideak")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=807355338]

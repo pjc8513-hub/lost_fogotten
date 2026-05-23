@@ -19,6 +19,10 @@ var step_triggers: Array = []
 var step_triggers_by_position: Dictionary = {}
 var _last_step_event_position: Variant = null
 
+# --- NPCs ---
+var npcs: Array[NPC] = []
+var selected_npc: NPC = null
+
 # --- Treasure Chests ---
 var treasure_chests: Array[TreasureChest] = []
 var selected_chest: TreasureChest = null
@@ -50,7 +54,7 @@ func reset_world_state() -> void:
 	selected_dungeon = null
 	selected_trigger = null
 	selected_exit = null
-	
+	selected_npc = null
 
 func is_walkable(pos: Vector2i) -> bool:
 	# First check if the tile exists in the map
@@ -93,6 +97,22 @@ func remove_enemy(enemy) -> void:
 	enemies.erase(enemy)
 	CombatState.disengage_enemy(enemy)
 	enemy.queue_free()
+	
+func register_npc(npc: NPC):
+	if not npcs.has(npc):
+		npcs.append(npc)
+	NPCManager.register_npc(npc)
+
+func set_selected_npc(npc: NPC):
+	selected_npc = npc
+	selected_enemy = null
+	selected_chest = null
+	selected_trigger = null
+	selected_exit = null
+	CombatState.clear_target()
+	selected_enemy_changed.emit(null)
+	if npc:
+		print("Selected NPC: ", npc.npc_data.npc_name)
 
 func process_step_events() -> void:
 	var player = get_player()
@@ -263,6 +283,7 @@ func set_selected_enemy(enemy):
 	selected_chest = null # deselect chest if enemy selected
 	selected_trigger = null
 	selected_dungeon = null
+	selected_npc = null
 	if enemy != null and is_instance_valid(enemy) and enemy.enemy_data.hp > 0:
 		CombatState.set_target(enemy)
 	else:
@@ -309,6 +330,7 @@ func set_selected_chest(chest: TreasureChest):
 	selected_enemy = null # deselect enemy if chest selected
 	selected_trigger = null
 	selected_exit = null
+	selected_npc = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if chest:
@@ -319,6 +341,7 @@ func set_selected_trigger(trigger: Trigger):
 	selected_enemy = null # deselect enemy if chest selected
 	selected_chest = null
 	selected_exit = null
+	selected_npc = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if trigger:
@@ -328,6 +351,7 @@ func set_selected_exit(exit: DungeonExit):
 	selected_exit = exit
 	selected_trigger = null
 	selected_chest = null
+	selected_npc = null
 	selected_enemy = null # deselect enemy if chest selected
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
@@ -362,6 +386,7 @@ func set_selected_dungeon(dungeon: Dungeon):
 	selected_dungeon = dungeon
 	selected_enemy = null
 	selected_trigger = null
+	selected_npc = null
 	CombatState.clear_target()
 	selected_enemy_changed.emit(null)
 	if dungeon:

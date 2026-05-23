@@ -1,0 +1,11 @@
+{
+    "tree_inscription_1": {
+        "text": "The tree inscription reads: 'The soul of the witch Digs deep into the swamp Like the roots of these trees'",
+        "choices": [
+            {
+                "text": "Close",
+                "close": true
+            }
+        ]
+    }
+}

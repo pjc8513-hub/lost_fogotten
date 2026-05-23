@@ -89,8 +89,8 @@ func _queue_context_action():
 	elif World.selected_enemy and is_instance_valid(World.selected_enemy) and World.selected_enemy.enemy_data.hp > 0:
 		CombatState.set_target(World.selected_enemy)
 		_queue_player_attack(actor)
-	#elif World.selected_npc: # future
-		#_queue_talk_to_npc(actor)
+	elif World.selected_npc:
+		_queue_talk_to_npc(actor)
 	elif World.selected_dungeon and is_instance_valid(World.selected_dungeon):
 		_enter_selected_dungeon()
 	elif World.selected_exit and is_instance_valid(World.selected_exit):
@@ -136,12 +136,12 @@ func _queue_toggle_lever(actor: ClassData):
 	CommandQueue.add_command(cmd)
 	_start_player_action()
 
-#func _queue_talk_to_npc(actor: ClassData):
-	# var cmd := PlayerTalkCommand.new()
-	# cmd.actor = actor
-	# CommandQueue.add_command(cmd)
-	# _start_player_action()
-	#pass
+func _queue_talk_to_npc(actor: ClassData):
+	var cmd := PlayerTalkCommand.new()
+	cmd.actor = actor
+	CommandQueue.add_command(cmd)
+	_start_player_action()
+	
 
 func _start_player_action():
 	TurnStateMachine.last_action_was_party_wide = false
