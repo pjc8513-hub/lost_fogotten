@@ -34795,14 +34795,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				51,
 				9
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -35818,14 +35818,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				53,
 				28
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -36258,14 +36258,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				54,
 				16
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -37534,14 +37534,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				56,
 				25
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -39976,14 +39976,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				60,
 				8
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -40064,14 +40064,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				60,
 				16
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -40130,14 +40130,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				60,
 				22
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -45813,6 +45813,15 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				51,
+				9
+			],
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
 			"pos": [
 				52,
@@ -45837,6 +45846,15 @@
 				31
 			],
 			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				53,
+				28
+			],
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -45891,6 +45909,15 @@
 				9
 			],
 			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				54,
+				16
+			],
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -45952,6 +45979,15 @@
 			"pos": [
 				56,
 				14
+			],
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				56,
+				25
 			],
 			"type": "enemy"
 		},
@@ -46119,6 +46155,15 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				60,
+				8
+			],
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "",
 			"pos": [
 				60,
@@ -46128,12 +46173,30 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				60,
+				16
+			],
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
 			"pos": [
 				60,
 				19
 			],
 			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/tentacle.tres",
+			"pos": [
+				60,
+				22
+			],
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
