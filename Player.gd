@@ -2,6 +2,7 @@ extends Node3D
 class_name Player
 
 signal player_moved(grid_pos: Vector2i)
+signal player_rotated(forward_vector: Vector2i)
 signal movement_done
 
 var grid_position: Vector2i
@@ -14,8 +15,10 @@ func _ready():
 	var automap = get_node("/root/Main/automap")
 	if automap:
 		player_moved.connect(automap.on_player_moved)
+		player_rotated.connect(automap.update_compass)
 
 	emit_signal("player_moved", grid_position)
+	emit_signal("player_rotated", forward_vector)
 	
 
 func move_to(target: Vector2i):
@@ -55,6 +58,7 @@ func _apply_facing_rotation(rotation_degrees_y: int) -> void:
 				roundi(-sin(deg_to_rad(normalized_rotation))),
 				roundi(-cos(deg_to_rad(normalized_rotation)))
 			)
+	emit_signal("player_rotated", forward_vector)
 
 func _unhandled_input(event):
 	if TurnStateMachine.state != TurnStateMachine.State.PLAYER_INPUT:
@@ -99,10 +103,12 @@ func _queue_context_action():
 func rotate_left():
 	forward_vector = Vector2i(forward_vector.y, -forward_vector.x)
 	rotation.y += deg_to_rad(90)
+	emit_signal("player_rotated", forward_vector)
 
 func rotate_right():
 	forward_vector = Vector2i(-forward_vector.y, forward_vector.x)
 	rotation.y -= deg_to_rad(90)
+	emit_signal("player_rotated", forward_vector)
 
 
 

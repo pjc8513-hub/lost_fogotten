@@ -10,6 +10,18 @@ func _ready():
 		automap_rect.draw.connect(_on_automap_draw)
 		automap_rect.clip_contents = true
 
+func update_compass(forward_vector: Vector2i):
+	var dir_str = ""
+	match forward_vector:
+		Vector2i(0, -1): dir_str = "North"
+		Vector2i(0, 1): dir_str = "South"
+		Vector2i(-1, 0): dir_str = "West"
+		Vector2i(1, 0): dir_str = "East"
+		_: dir_str = "Unknown"
+	
+	if compass:
+		compass.text = "Facing: " + dir_str
+
 var map_data := {}
 var tile_size := 8
 var wall_color := Color(0.9, 0.85, 0.7)
