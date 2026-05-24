@@ -174,6 +174,18 @@ static func _spawn_entities(data: Dictionary, parent: Node, automap_grid: Dictio
 				_spawn_door(pos, ent["data_resource"], parent)
 			"trigger":
 				_spawn_trigger(pos, ent["data_resource"], parent)
+			"briar_trap":
+				# Extract both resource paths from the exporter's JSON format
+				var fence_path = ent.get("fencing_resource", "")
+				var trigger_path = ent.get("trigger_resource", "")
+				
+				# 1. Spawn the visual wrapper using your existing fencing code
+				if not fence_path.is_empty():
+					_spawn_fencing(pos, fence_path, parent)
+				
+				# 2. Spawn the custom mechanical trigger data
+				if not trigger_path.is_empty():
+					_spawn_briar_trigger(pos, trigger_path, parent)
 			"exit":
 				_spawn_exit(pos, ent["data_resource"], parent)
 			"NPC":
@@ -216,6 +228,29 @@ static func _spawn_trigger (grid_pos: Vector2i, data_path: String,
 		trigger.trigger_data = res.duplicate()
 	trigger.position = Vector3(grid_pos.x, 0, grid_pos.y)
 	parent.add_child(trigger)
+	
+static func _spawn_briar_trigger(grid_pos: Vector2i, data_path: String, parent: Node) -> void:
+	if not FileAccess.file_exists(data_path):
+		push_error("Briar trigger resource data file not found: " + data_path)
+		return
+
+	# Load the specialized TriggerData resource (e.g., PoisonBriar, HeavyDamageBriar)
+	var res = load(data_path) as TriggerData 
+	if res == null:
+		push_error("Failed to load TriggerData resource at: " + data_path)
+		return
+
+	# Instantiate the hidden step-checker tile
+	var bump_tile_scene = load(res.scene_path)
+	var bump_tile = bump_tile_scene.instantiate()
+	
+	bump_tile.grid_position = grid_pos 
+	bump_tile.position = Vector3(grid_pos.x, 0, grid_pos.y) 
+	
+	# Duplicate the resource so runtime modifications don't bleed into your save files
+	bump_tile.trigger_data = res.duplicate() 
+	
+	parent.add_child(bump_tile)
 
 static func _spawn_NPC (grid_pos: Vector2i, data_path: String,
 						parent: Node) -> void:

@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_u55ky")
 trigger_id = "briars"
+scene_path = "res://data/maps/bump_tile.tscn"
 metadata/_custom_type_script = "uid://3c1a7cylutet"

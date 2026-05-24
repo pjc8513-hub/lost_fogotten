@@ -37,6 +37,8 @@ func export_to_json():
 					"type": type,
 					"pos": [coords.x, coords.y],
 					"data_resource": tile_data.get_custom_data("data_path"),
+					"fencing_resource": tile_data.get_custom_data("fencing_resource"),
+					"trigger_resource": tile_data.get_custom_data("trigger_resource"),
 					"aggro_group": tile_data.get_custom_data("aggro_id")
 				}
 				map_data["entities"].append(entity_info)
