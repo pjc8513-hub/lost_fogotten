@@ -10,8 +10,8 @@
 script = ExtResource("2_g2sy5")
 dungeon_data = ExtResource("3_6w2vr")
 
-[node name="Cube" parent="." index="0" unique_id=1399203872]
-transform = Transform3D(0.75, 0, 0, 0, 1.5, 0, 0, 0, 0.7, 0, 0, 0)
+[node name="Cube" parent="." index="0" unique_id=1893495470]
+transform = Transform3D(0.75, 0, 0, 0, 1.5, 0, 0, 0, 0.5493589, 0.41465807, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="." index="1" unique_id=616804732]
 

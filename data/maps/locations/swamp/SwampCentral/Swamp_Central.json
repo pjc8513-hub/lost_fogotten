@@ -27777,19 +27777,19 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				3
 			],
 			"pos": [
 				40,
 				7
 			],
-			"source_id": 2
+			"source_id": 3
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				40,
@@ -45081,6 +45081,24 @@
 				9
 			],
 			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/spawns/FaceSouth3.tres",
+			"pos": [
+				40,
+				7
+			],
+			"type": "player"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree3.tres",
+			"pos": [
+				40,
+				6
+			],
+			"type": "dungeon"
 		},
 		{
 			"aggro_group": 0,

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_0gq6e")
-scene_path = "res://data/maps/locations/swamp/SwampCentral/WitchEntrance2.tscn"
+scene_path = "res://data/maps/locations/swamp/SwampCentral/WitchEntrance1.tscn"
 map_data_path = "res://data/maps/dungeons/WitchTree/WitchTree_2/witchtree_2.json"
 DungeonID = "WitchTree2"
 DungeonName = "Witch Tree"

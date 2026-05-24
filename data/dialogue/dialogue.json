@@ -1,6 +1,15 @@
 {
 	"tree_inscription_1": {
-		"text": "The tree inscription reads: 'The soul of the witch Digs deep into the swamp Like the roots of these trees'",
+		"text": "The tree inscription reads:\n'The soul of the witch\nDigs deep into the swamp\nLike the [color=gold]roots[/color] of these trees'",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
+	},
+	"tree_inscription_2": {
+		"text": "The tree inscription reads:\n'What the [color=gold]water[/color] swallows\nIt does not destroy\nIt only keeps safe'",
 		"choices": [
 			{
 				"text": "Close",
