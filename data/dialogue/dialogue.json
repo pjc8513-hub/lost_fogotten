@@ -34,5 +34,14 @@
 				"close": true
 			}
 		]
+	},
+	"Fen_Greetings": {
+		"text": "Greetings, Stranger! Are you lost in my bog?",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
 	}
 }

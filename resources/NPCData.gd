@@ -4,6 +4,8 @@ class_name NPCData
 
 @export var npc_id: String
 @export var npc_name: String
+@export var rotation: int
+
 @export var dialogue_start_node: String  # Which dialogue node to start with
 @export var scene_path: String  # Path to the NPC scene
 

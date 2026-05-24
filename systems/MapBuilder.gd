@@ -261,6 +261,8 @@ static func _spawn_NPC (grid_pos: Vector2i, data_path: String,
 	if FileAccess.file_exists(data_path):
 		NPC.npc_data = res.duplicate()
 	NPC.position = Vector3(grid_pos.x, 0, grid_pos.y)
+	if res.rotation != null and res.rotation !=0:
+		NPC.rotation_degrees.y = res.rotation
 	parent.add_child(NPC)
 
 static func _spawn_exit(grid_pos: Vector2i, data_path: String,

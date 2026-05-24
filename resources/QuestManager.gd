@@ -5,8 +5,29 @@ signal quest_started(quest_id)
 signal quest_completed(quest_id)
 signal quest_updated(quest_id)
 
+var quest_data = {}
 var active_quests := {}
 var completed_quests := {}
+
+func _ready():
+	load_quest_file("res://data/quests/quests.json")
+
+func load_quest_file(path: String):
+	if not FileAccess.file_exists(path):
+		push_error("Quest file missing: " + path)
+		return
+
+	var file = FileAccess.open(path, FileAccess.READ)
+	var text = file.get_as_text()
+
+	var json = JSON.new()
+	var result = json.parse(text)
+
+	if result != OK:
+		push_error("Failed to parse quest JSON")
+		return
+
+	quest_data = json.data
 
 func accept_quest(quest_id: String):
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://cmvg8ch7y22sd"]
+
+[ext_resource type="Script" uid="uid://dy21dtedkuf0s" path="res://resources/NPCData.gd" id="1_kmy66"]
+
+[resource]
+script = ExtResource("1_kmy66")
+npc_id = "Fen"
+npc_name = "Fen Exiled Witch"
+rotation = 100
+dialogue_start_node = "Fen_Greetings"
+scene_path = "res://assets/scenes/house.tscn"
+available_quests = Array[String](["witch_sandwich"])
+metadata/_custom_type_script = "uid://dy21dtedkuf0s"

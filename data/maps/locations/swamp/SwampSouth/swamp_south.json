@@ -4435,8 +4435,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				4
 			],
 			"pos": [
 				25,
@@ -4512,14 +4512,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				4
 			],
 			"pos": [
 				23,
 				17
 			],
-			"source_id": 2
+			"source_id": 4
 		},
 		{
 			"atlas": [
@@ -4655,8 +4655,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				24,
@@ -4666,8 +4666,8 @@
 		},
 		{
 			"atlas": [
-				2,
-				1
+				1,
+				0
 			],
 			"pos": [
 				23,
@@ -4765,8 +4765,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				4
 			],
 			"pos": [
 				24,
@@ -4776,8 +4776,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				4
 			],
 			"pos": [
 				23,
@@ -4787,8 +4787,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				4
 			],
 			"pos": [
 				22,
@@ -4886,8 +4886,8 @@
 		},
 		{
 			"atlas": [
-				2,
-				1
+				1,
+				0
 			],
 			"pos": [
 				24,
@@ -6264,811 +6264,1035 @@
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				1,
 				5
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				5
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				4
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				7,
 				4
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				6,
 				4
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				9,
 				2
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				5
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				15,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				15,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				9,
 				10
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				10
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				11,
 				10
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				13,
 				9
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				11,
 				9
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				9
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				9,
 				9
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				17,
 				10
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceEast.tres",
+			"fencing_resource": "",
 			"pos": [
 				1,
 				2
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				2,
 				16
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				11,
 				13
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				11,
 				12
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				12
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				12
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/BonePit.tres",
+			"fencing_resource": "",
 			"pos": [
 				6,
 				15
 			],
+			"trigger_resource": "",
 			"type": "dungeon"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				7,
 				16
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				15
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				13
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceNorth.tres",
+			"fencing_resource": "",
 			"pos": [
 				6,
 				14
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				6,
 				18
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				22,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				25,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				22,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				25,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				25,
 				5
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				19,
 				6
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				8
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				8
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				7
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				6
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				7
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				6
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				21,
 				8
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				17,
 				14
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				13
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				16
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				17
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				13
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				14,
 				15
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				15,
 				15
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
+			"pos": [
+				25,
+				12
+			],
+			"trigger_resource": "",
+			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/Fen.tres",
+			"fencing_resource": "",
+			"pos": [
+				23,
+				17
+			],
+			"trigger_resource": "",
+			"type": "NPC"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				18,
 				17
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
-				23,
-				15
+				24,
+				14
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				18,
 				15
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
+			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
-				13
+				12
 			],
-			"type": "decoration"
+			"trigger_resource": "",
+			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
+			"pos": [
+				23,
+				12
+			],
+			"trigger_resource": "",
+			"type": "fencing"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
+			"pos": [
+				22,
+				12
+			],
+			"trigger_resource": "",
+			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				19,
 				12
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"fencing_resource": "",
 			"pos": [
 				19,
 				0
 			],
+			"trigger_resource": "",
 			"type": "trigger"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"fencing_resource": "",
 			"pos": [
 				20,
 				0
 			],
+			"trigger_resource": "",
 			"type": "trigger"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/triggers/CM_swamp_south_central_tile.tres",
+			"fencing_resource": "",
 			"pos": [
 				21,
 				0
 			],
+			"trigger_resource": "",
 			"type": "trigger"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/spawn_south_central.tres",
+			"fencing_resource": "",
 			"pos": [
 				20,
 				1
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				22,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				25,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				26,
 				1
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				26,
 				2
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				26,
 				3
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				27,
 				10
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				12
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				13
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				14
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				14
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				27,
 				14
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				27,
 				13
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				27,
 				12
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				12
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				13
 			],
+			"trigger_resource": "",
 			"type": "fencing"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				9
 			],
+			"trigger_resource": "",
 			"type": "decoration"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				8,
 				10
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				7
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				10
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/goblin.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				3
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		}
 	],
