@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TriggerData" format=3 uid="uid://cjmghlucar5jh"]
+
+[ext_resource type="Script" uid="uid://djxiqee1ahk42" path="res://resources/TriggerEffect.gd" id="1_c6y7m"]
+[ext_resource type="Script" uid="uid://3c1a7cylutet" path="res://resources/TriggerData.gd" id="2_u55ky"]
+
+[resource]
+script = ExtResource("2_u55ky")
+trigger_id = "briars"
+metadata/_custom_type_script = "uid://3c1a7cylutet"

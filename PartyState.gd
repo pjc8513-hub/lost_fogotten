@@ -156,3 +156,21 @@ func _set_selected_index(value: int) -> void:
 
 	_selected_index = clamp(value, 0, active_party.size() - 1)
 	GameEvents.selected_character_changed.emit(get_selected())
+	
+	# Environmental damage
+	# Inside PartyState.gd
+
+## Picks one random living party member and applies the damage to them
+func damage_random_member(amount: int) -> String:
+	var living_members = []
+	
+	for member in active_party:
+		if member.class_data and member.class_data.current_hp > 0:
+			living_members.append(member)
+			
+	if living_members.size() > 0:
+		var target = living_members.pick_random()
+		target.class_data.take_damage(amount)
+		return target.character_name # Returns name so you can print it in a log
+		
+	return ""

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ChipDamageEffect" format=3 uid="uid://bl68h4lofww1a"]
+
+[ext_resource type="Script" uid="uid://bretjnhtypu4a" path="res://resources/effects/ChipDamageEffect.gd" id="1_ibir1"]
+
+[resource]
+script = ExtResource("1_ibir1")
+is_random_target = false
+metadata/_custom_type_script = "uid://bretjnhtypu4a"

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b31fahqqxabf4"]
+
+[ext_resource type="Texture2D" uid="uid://b4s48am6p78hn" path="res://assets/sprites/entities/briar-1.png" id="1_pklk0"]
+
+[node name="Fencing" type="Node3D" unique_id=2112762878]
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=250324014]
+texture = ExtResource("1_pklk0")

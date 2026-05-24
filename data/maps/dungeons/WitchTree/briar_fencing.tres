@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FencingData" format=3 uid="uid://dvsmnh5louusj"]
+
+[ext_resource type="PackedScene" uid="uid://b31fahqqxabf4" path="res://data/maps/dungeons/WitchTree/briar_1.tscn" id="1_06w7s"]
+[ext_resource type="Script" uid="uid://b4e7oekoxhtne" path="res://resources/FencingData.gd" id="1_n1xc2"]
+[ext_resource type="PackedScene" uid="uid://dy6klfk60lma2" path="res://data/maps/dungeons/WitchTree/briar_2.tscn" id="2_japvc"]
+
+[resource]
+script = ExtResource("1_n1xc2")
+fence_variants = Array[PackedScene]([ExtResource("1_06w7s"), ExtResource("2_japvc")])
+metadata/_custom_type_script = "uid://b4e7oekoxhtne"
