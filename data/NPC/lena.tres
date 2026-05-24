@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://u15xyqriuyjs"]
+
+[ext_resource type="Script" uid="uid://dy21dtedkuf0s" path="res://resources/NPCData.gd" id="1_necjy"]
+
+[resource]
+script = ExtResource("1_necjy")
+npc_id = "Lena"
+npc_name = "Lena"
+dialogue_start_node = "Lena_without_quest"
+scene_path = "res://data/NPC/Lena.tscn"
+metadata/_custom_type_script = "uid://dy21dtedkuf0s"

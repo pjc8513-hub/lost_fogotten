@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cck16k6iqplm8" path="res://assets/icons/inventory.png" id="2_dqydg"]
 [ext_resource type="Texture2D" uid="uid://de4tjocijq1sh" path="res://assets/icons/info.png" id="3_gll0b"]
 [ext_resource type="Script" uid="uid://buwmdirknn8vc" path="res://InventoryList.gd" id="5_gll0b"]
+[ext_resource type="Texture2D" uid="uid://bkljd6vi7oi1c" path="res://assets/icons/quests.png" id="5_hhyp4"]
 [ext_resource type="Script" uid="uid://5cs83qgtrkjq" path="res://popup_menu_inventory.gd" id="6_5kfkf"]
 [ext_resource type="Script" uid="uid://cbo7fw5t114tf" path="res://StatsView.gd" id="7_ce36d"]
 
@@ -47,6 +48,11 @@ size_flags_horizontal = 3
 toggle_mode = true
 button_group = SubResource("ButtonGroup_5c8wo")
 icon = ExtResource("3_gll0b")
+
+[node name="QuestButton" type="Button" parent="ButtonBar" unique_id=14885262]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("5_hhyp4")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=557946407]
 layout_mode = 2
@@ -111,5 +117,10 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Questsview" type="VBoxContainer" parent="TabContainer" unique_id=642754814]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
 
 [connection signal="gui_input" from="TabContainer/InventoryView/ItemList" to="TabContainer/InventoryView/ItemList" method="_on_gui_input"]

@@ -7,6 +7,7 @@ func _ready():
 	$ButtonBar/InventoryButton.pressed.connect(_on_inventory)
 	$ButtonBar/SkillsButton.pressed.connect(_on_skills)
 	$ButtonBar/StatsButton.pressed.connect(_on_stats)
+	$ButtonBar/QuestButton.pressed.connect(_on_quests)
 
 func _on_inventory():
 	tabs.current_tab = 0
@@ -19,6 +20,10 @@ func _on_skills():
 func _on_stats():
 	tabs.current_tab = 2
 	_set_active_button($ButtonBar/StatsButton)
+
+func _on_quests():
+	tabs.current_tab = 3
+	_set_active_button($ButtonBar/QuestButton)
 
 func _set_active_button(active_button):
 	for b in $ButtonBar.get_children():

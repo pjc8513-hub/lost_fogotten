@@ -16,5 +16,23 @@
 				"close": true
 			}
 		]
+	},
+	"tree_inscription_3": {
+		"text": "The tree inscription reads:\n'The dead do not leave\nThey only [color=gold]forget[/color] the way\nBack to what they loved'",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
+	},
+	"Lena_without_quest": {
+		"text": "...For your own good, stay away from the remaining trees. You are not nearly strong enough to handle them.",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
 	}
 }

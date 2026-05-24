@@ -165,12 +165,12 @@ func damage_random_member(amount: int) -> String:
 	var living_members = []
 	
 	for member in active_party:
-		if member.class_data and member.class_data.current_hp > 0:
+		if member and member.current_hp > 0:
 			living_members.append(member)
 			
 	if living_members.size() > 0:
 		var target = living_members.pick_random()
-		target.class_data.take_damage(amount)
+		target.take_damage(amount)
 		return target.character_name # Returns name so you can print it in a log
 		
 	return ""
@@ -178,7 +178,7 @@ func damage_random_member(amount: int) -> String:
 ## Damages all living party members by a specified amount
 func damage_entire_party(amount: int) -> void:
 	
-	# composed of instances that contain a ClassData resource (e.g. member.class_data)
+	# active_party contains ClassData instances directly
 	for member in active_party:
-		if member.class_data and member.class_data.current_hp > 0:
-			member.class_data.take_damage(amount)
+		if member and member.current_hp > 0:
+			member.take_damage(amount)

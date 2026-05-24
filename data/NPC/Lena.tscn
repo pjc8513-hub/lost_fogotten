@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dtlysvfx4a1kp"]
+
+[ext_resource type="PackedScene" uid="uid://c67qf8cgx4p3b" path="res://npc.tscn" id="1_tetxy"]
+[ext_resource type="Texture2D" uid="uid://b0bjmcdw067ay" path="res://assets/sprites/NPCs/sister_witch-1.png" id="2_p43cl"]
+
+[node name="NPC" unique_id=1617775948 instance=ExtResource("1_tetxy")]
+
+[node name="Sprite3D" parent="." index="0" unique_id=807355338]
+texture = ExtResource("2_p43cl")

@@ -36,7 +36,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				24,
@@ -168,7 +168,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				14,
@@ -179,7 +179,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				13,
@@ -498,7 +498,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				5,
@@ -630,7 +630,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				2,
@@ -1114,7 +1114,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				7,
@@ -1125,7 +1125,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				7,
@@ -1235,7 +1235,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				9,
@@ -1752,7 +1752,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				9,
@@ -1763,7 +1763,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				10,
@@ -1774,7 +1774,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				10,
@@ -2093,7 +2093,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				13,
@@ -2104,7 +2104,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				14,
@@ -2489,7 +2489,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				23,
@@ -2654,7 +2654,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -3094,7 +3094,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -3160,7 +3160,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				23,
@@ -3171,7 +3171,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				24,
@@ -3248,7 +3248,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				25,
@@ -3688,7 +3688,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				26,
@@ -3765,7 +3765,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				26,
@@ -3776,7 +3776,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				25,
@@ -3787,7 +3787,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				27,
@@ -3864,7 +3864,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				27,
@@ -3963,7 +3963,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4040,7 +4040,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4051,7 +4051,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4061,30 +4061,30 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				2,
+				1
 			],
 			"pos": [
 				28,
 				31
 			],
-			"source_id": 2
+			"source_id": 4
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				3
 			],
 			"pos": [
 				28,
 				32
 			],
-			"source_id": 2
+			"source_id": 4
 		},
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4095,7 +4095,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4106,7 +4106,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -4205,7 +4205,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				29,
@@ -4282,7 +4282,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				11,
@@ -4392,7 +4392,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				14,
@@ -4986,7 +4986,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				21,
@@ -4997,7 +4997,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				21,
@@ -5217,7 +5217,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				3,
@@ -5481,7 +5481,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				7,
@@ -5492,7 +5492,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				8,
@@ -5580,7 +5580,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				9,
@@ -5888,7 +5888,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				14,
@@ -6218,7 +6218,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -6229,7 +6229,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -6240,7 +6240,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -7131,7 +7131,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -7186,7 +7186,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				29,
@@ -7615,7 +7615,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -7670,7 +7670,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				29,
@@ -7725,7 +7725,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				30,
@@ -7835,7 +7835,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				31,
@@ -7945,7 +7945,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				32,
@@ -8187,7 +8187,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				16,
@@ -8220,7 +8220,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -8231,7 +8231,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -8286,7 +8286,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -8396,7 +8396,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				15,
@@ -8715,7 +8715,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				18,
@@ -8726,7 +8726,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -9287,7 +9287,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				4,
@@ -9452,7 +9452,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				30,
@@ -10058,182 +10058,893 @@
 	"entities": [
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				24,
+				29
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				14,
+				26
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				13,
+				26
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				5,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				2,
+				10
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				7,
+				20
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				7,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				9,
+				23
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				2,
 				27
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				26
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				27
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				5,
 				27
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				9,
+				24
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				10,
+				24
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				10,
+				23
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				13,
+				27
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				14,
+				27
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				23,
+				29
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				31
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				32
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				23,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				24,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				25,
+				29
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				26,
 				25
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				26,
+				28
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				26,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				25,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				27,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				27,
+				28
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				29
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				30
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/tree_insc_3.tres",
+			"fencing_resource": "",
+			"pos": [
+				28,
+				31
+			],
+			"trigger_resource": "",
+			"type": "NPC"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/lena.tres",
+			"fencing_resource": "",
+			"pos": [
+				28,
+				32
+			],
+			"trigger_resource": "",
+			"type": "NPC"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				33
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				34
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				35
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				29,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				11,
+				5
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				14,
+				6
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				20,
 				3
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				21,
+				6
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				21,
+				5
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				8
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				3,
+				10
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				4,
 				7
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				7,
+				10
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				8,
+				10
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				9,
+				10
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				12,
 				16
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				14,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				24
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				23
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				22
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				16,
 				14
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				15
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				15
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				29,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				11
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				12
 			],
+			"trigger_resource": "",
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				11
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				29,
+				11
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				10
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				30,
+				11
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				31,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				32,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				16,
+				30
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				30
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				31
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				32
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				20,
 				2
 			],
+			"trigger_resource": "",
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				15,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				15,
 				13
 			],
+			"trigger_resource": "",
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				18,
+				12
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				12
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				28,
 				13
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				4,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceEast.tres",
+			"fencing_resource": "",
 			"pos": [
 				19,
 				20
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				30,
+				21
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/WitchTree/WitchTree_3/witchtree_3_exit.tres",
+			"fencing_resource": "",
 			"pos": [
 				19,
 				21
 			],
+			"trigger_resource": "",
 			"type": "exit"
 		}
 	],
