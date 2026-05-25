@@ -227,7 +227,13 @@ func process_action(choice: Dictionary):
 			close_dialogue()
 
 func check_condition(condition: String) -> bool:
+	var conditions = condition.split(",")
+	for cond in conditions:
+		if not _check_single_condition(cond.strip_edges()):
+			return false
+	return true
 
+func _check_single_condition(condition: String) -> bool:
 	var parts = condition.split(":")
 
 	if parts.size() < 2:
@@ -241,8 +247,11 @@ func check_condition(condition: String) -> bool:
 		"quest_started":
 			return QuestManager.has_quest(value)
 
-		"quest_complete":
+		"quest_complete", "quest_completed":
 			return QuestManager.is_complete(value)
+			
+		"quest_not_complete", "quest_not_completed":
+			return not QuestManager.is_complete(value)
 
 		"has_item":
 			return InventoryManager.party_has_item(value)

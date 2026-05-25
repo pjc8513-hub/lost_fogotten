@@ -79,6 +79,12 @@
 				"condition": "quest_not_completed:witch_sandwich_RedJelly"
 			},
 			{
+				"text": "Quest: Spider Liver",
+				"goto": "witch_Quest_sandwich_spider",
+				"condition": "quest_completed:witch_sandwich_RedJelly",
+				"condition": "quest_not_completed:witch_sandwich_spider"
+			},
+			{
 				"text": "Just passing through.",
 				"close": true
 			}
@@ -122,6 +128,48 @@
 				"text": "Goodbye.",
 				"action": "complete_quest",
 				"quest_id": "witch_sandwich_RedJelly",
+				"close": true
+			}
+		]
+	},
+	"witch_Quest_sandwich_spider": {
+		"text": "Get me a spider liver!",
+		"condition": "quest_started:witch_sandwich_spider",
+		"fail_goto": "witch_QuestOffer_sandwich_spider",
+		"choices": [
+			{
+				"text": "turn in.",
+				"condition": "quest_ready:witch_sandwich_spider",
+				"goto": "witch_Quest_sandwich_spider_HandIn"
+			},
+			{
+				"text": "I am looking!",
+				"close": true
+			},
+		]
+	},
+	"witch_QuestOffer_sandwich_spider": {
+		"text": "I am trying to make a sandwich, but I am missing the Spider's Liver! If you could bring me one, I would be very grateful.",
+	"choices": [
+		{
+			"text": "Accept.",
+			"action": "accept_quest",
+			"quest_id": "witch_sandwich_spider",
+			"close": true
+		},
+		{
+			"text": "Nope.",
+			"close": true
+		}
+		]
+	},
+	"witch_Quest_sandwich_spider_HandIn": {
+		"text": "I am pleased with this spider liver. Thank you.",
+		"choices": [
+			{
+				"text": "Goodbye",
+				"action": "complete_quest",
+				"quest_id": "witch_sandwich_spider",
 				"close": true
 			}
 		]
