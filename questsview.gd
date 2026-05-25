@@ -28,10 +28,10 @@ func update_quest_log() -> void:
 	
 	for quest_id in QuestManager.active_quests:
 		# Safeguard if the quest isn't defined in our static database yet
-		if not QuestManager.QUEST_DATABASE.has(quest_id):
+		if not QuestManager.quest_data.has(quest_id):
 			continue
 			
-		var data = QuestManager.QUEST_DATABASE[quest_id]
+		var data = QuestManager.quest_data[quest_id]
 		var current_progress = QuestManager.get_progress(quest_id)
 		
 		# Build the string layout using BBCode formatting

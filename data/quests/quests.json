@@ -1,10 +1,11 @@
 {
-	"witch_sandwich": {
+	"witch_sandwich_RedJelly": {
 		"name": "Witch Sandwich",
 		"objective": "Collect 5 Red Jam for Fen",
 		"area": "Swamp",
 		"description": "Fen wants to make a sandwich.",
-		"target_amount": 5
+		"target_amount": 5,
+		"quest_item_id": "red_jam" 
 	},
 	"sister_witch": {
 		"name": "Sister-Witch",

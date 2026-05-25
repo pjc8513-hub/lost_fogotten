@@ -26,8 +26,23 @@
 			}
 		]
 	},
+	"Lena_Entry": {
+		"condition": "quest_started:sister_witch",
+		"text": "Yes, I am Lena, the sister of Fendor. The swamp is my home now. I have no interest in returning to the city.",
+		"fail_goto": "Lena_without_quest",
+		"choices": [
+			{
+				"text": "He's worried about you.",
+				"goto": "Lena_QuestUpdate"
+			},
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
+	},
 	"Lena_without_quest": {
-		"text": "...For your own good, stay away from the remaining trees. You are not nearly strong enough to handle them.",
+		"text": "...I would stay away if I were you. I am much stronger than I look.",
 		"choices": [
 			{
 				"text": "Close",
@@ -35,11 +50,78 @@
 			}
 		]
 	},
-	"Fen_Greetings": {
+	"Lena_QuestUpdate": {
+		"text": "Of course he is, that is all that he does after our parents died. But I have to defend Fendor and the kingdom in my own way. And that means becoming a witch.",
+		"choices": [
+			{
+				"text": "I will tell him you are safe.",
+				"action": "update_quest",
+				"quest_id": "sister_witch",
+				"goto": "Lena_Fairwell"
+			}
+		]
+	},
+	"Lena_Fairwell": {
+		"text": "Thank you. I hope he can understand that this is what I need to do./n For your own good, stay away from the remaining trees. You are not nearly strong enough to handle them.",
+		"choices": [
+			{
+				"text": "Bye now",
+				"close": true
+			}
+		]
+	},
+	"Fen_Entry": {
 		"text": "Greetings, Stranger! Are you lost in my bog?",
 		"choices": [
 			{
-				"text": "Close",
+				"text": "Quest: Witch Sandwich, Red Jelly",
+				"goto": "Fen_Quest_RedJelly"
+				
+			},
+			{
+				"text": "Just passing through.",
+				"close": true
+			}
+		]
+	},
+	"Fen_Quest_RedJelly": {
+		"text": "Bring me Red Jelly!",
+		"condition": "quest_started:witch_sandwich_RedJelly",
+		"fail_goto": "Fen_QuestOffer_RedJelly",
+		"choices": [
+			{
+				"text": "Here is the Red Jelly!",
+				"condition": "quest_started:witch_sandwich_RedJelly",
+				"goto": "witch_sandwich_RedJelly_HandIn"
+			},
+			{
+				"text": "I am looking!",
+				"close": true
+			}
+		]
+	},
+	"Fen_QuestOffer_RedJelly": {
+		"text": "I am trying to make a sandwich, but I am missing the Red Jelly! If you could bring me 5 Red Jam, I would be very grateful.",
+		"choices": [
+			{
+				"text": "I will get you the Red Jelly.",
+				"action": "accept_quest",
+				"quest_id": "witch_sandwich_RedJelly",
+				"close": true
+			},
+			{
+				"text": "Sorry, not right now.",
+				"close": true
+			}
+		]
+	},
+	"witch_sandwich_RedJelly_HandIn": {
+		"text": "Thank you so much for the Red Jelly! I can finally make my sandwich!",
+		"choices": [
+			{
+				"text": "You're welcome.",
+				"action": "complete_quest",
+				"quest_id": "witch_sandwich_RedJelly",
 				"close": true
 			}
 		]
