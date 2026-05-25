@@ -74,7 +74,7 @@
 		"text": "Greetings, Stranger! Are you lost in my bog?",
 		"choices": [
 			{
-				"text": "Quest: Witch Sandwich, Red Jelly",
+				"text": "Quest: Red Jelly",
 				"goto": "Fen_Quest_RedJelly"
 				
 			},
@@ -90,7 +90,7 @@
 		"fail_goto": "Fen_QuestOffer_RedJelly",
 		"choices": [
 			{
-				"text": "Here is the Red Jelly!",
+				"text": "Turn in.",
 				"condition": "quest_started:witch_sandwich_RedJelly",
 				"goto": "witch_sandwich_RedJelly_HandIn"
 			},
@@ -104,13 +104,13 @@
 		"text": "I am trying to make a sandwich, but I am missing the Red Jelly! If you could bring me 5 Red Jam, I would be very grateful.",
 		"choices": [
 			{
-				"text": "I will get you the Red Jelly.",
+				"text": "Accept.",
 				"action": "accept_quest",
 				"quest_id": "witch_sandwich_RedJelly",
 				"close": true
 			},
 			{
-				"text": "Sorry, not right now.",
+				"text": "Decline.",
 				"close": true
 			}
 		]

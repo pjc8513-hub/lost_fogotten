@@ -206,11 +206,19 @@ func process_action(choice: Dictionary):
 				close_dialogue()
 
 		"quest_ready":
-			if not QuestManager.has_quest(value):
-				return false
-			var progress = QuestManager.get_progress(value)
-			var target   = QuestManager.QUEST_DATABASE.get(value, {}).get("target_amount", 0)
-			return progress >= target and target > 0
+			var qid = choice.get("quest_id", "")
+			if not QuestManager.has_quest(qid):
+				close_dialogue()
+				return
+			var progress = QuestManager.get_progress(qid)
+			var target = QuestManager.quest_data.get(qid, {}).get("target_amount", 0)
+			if progress >= target and target > 0:
+				if choice.has("goto"):
+					show_node(choice["goto"])
+				else:
+					close_dialogue()
+			else:
+				close_dialogue()
 
 		"start_battle":
 			#Spawn enemy trigger when that gets added

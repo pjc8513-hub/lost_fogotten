@@ -51,8 +51,8 @@ func distribute_enemy_loot(enemy: Enemy):
 
 	for item_id in loot_ids:
 		# Check if this item belongs to a quest that is active
-        if _is_quest_item_blocked(item_id):
-            continue
+		if _is_quest_item_blocked(item_id):
+			continue
 
 		var item_instance = LootManager.create_item_instance(item_id)
 
@@ -73,17 +73,17 @@ func distribute_enemy_loot(enemy: Enemy):
 		)
 
 func _is_quest_item_blocked(item_id: String) -> bool:
-    for quest_id in QuestManager.quest_data:
-        var q = QuestManager.quest_data[quest_id]
-        if q.get("quest_item_id", "") != item_id:
-            continue
-        # Drop only if quest is active AND progress is below target
-        if not QuestManager.has_quest(quest_id):
-            return true  # quest not started — suppress drop
-        var progress = QuestManager.get_progress(quest_id)
-        var target   = q.get("target_amount", 0)
-        return progress >= target  # suppress if already full
-    return false  # not a quest item — always allow
+	for quest_id in QuestManager.quest_data:
+		var q = QuestManager.quest_data[quest_id]
+		if q.get("quest_item_id", "") != item_id:
+			continue
+		# Drop only if quest is active AND progress is below target
+		if not QuestManager.has_quest(quest_id):
+			return true  # quest not started — suppress drop
+		var progress = QuestManager.get_progress(quest_id)
+		var target   = q.get("target_amount", 0)
+		return progress >= target  # suppress if already full
+	return false  # not a quest item — always allow
 
 func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 	PartyState.party_gold += gold

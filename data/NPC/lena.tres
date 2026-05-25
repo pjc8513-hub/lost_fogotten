@@ -6,6 +6,6 @@
 script = ExtResource("1_necjy")
 npc_id = "Lena"
 npc_name = "Lena"
-dialogue_start_node = "Lena_without_quest"
+dialogue_start_node = "Lena_Entry"
 scene_path = "res://data/NPC/Lena.tscn"
 metadata/_custom_type_script = "uid://dy21dtedkuf0s"
