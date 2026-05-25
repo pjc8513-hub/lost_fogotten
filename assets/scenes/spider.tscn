@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dk0n7veafkjth"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_shvcm"]
+[ext_resource type="Resource" uid="uid://jiif60jjq8k8" path="res://data/enemies/spider.tres" id="2_8sdsk"]
+[ext_resource type="Texture2D" uid="uid://bogmi1mkhaenv" path="res://assets/sprites/enemies/spider.png" id="2_fhyjo"]
+
+[sub_resource type="Animation" id="Animation_8sdsk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bk1w7"]
+resource_name = "attack"
+length = 1.4666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.3, 0.5, 0.76666665, 1.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_86k2n"]
+_data = {
+&"RESET": SubResource("Animation_8sdsk"),
+&"attack": SubResource("Animation_bk1w7")
+}
+
+[node name="Enemy" unique_id=1461009798 instance=ExtResource("1_shvcm")]
+enemy_data = ExtResource("2_8sdsk")
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+texture = ExtResource("2_fhyjo")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
+libraries/ = SubResource("AnimationLibrary_86k2n")

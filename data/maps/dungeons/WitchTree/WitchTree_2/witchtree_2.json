@@ -1004,7 +1004,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -1356,7 +1356,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				23,
@@ -5019,7 +5019,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				23,
@@ -5063,7 +5063,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -6515,7 +6515,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				1
 			],
 			"pos": [
 				13,
@@ -6713,7 +6713,7 @@
 		{
 			"atlas": [
 				1,
-				4
+				0
 			],
 			"pos": [
 				14,
@@ -7164,7 +7164,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -7175,7 +7175,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -7186,7 +7186,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				19,
@@ -8494,14 +8494,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				2
 			],
 			"pos": [
 				32,
 				3
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -9298,7 +9298,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				4
 			],
 			"pos": [
 				28,
@@ -9947,7 +9947,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				1
 			],
 			"pos": [
 				23,
@@ -11707,7 +11707,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				1
 			],
 			"pos": [
 				35,
@@ -11729,7 +11729,7 @@
 		{
 			"atlas": [
 				1,
-				0
+				1
 			],
 			"pos": [
 				35,
@@ -14450,6 +14450,17 @@
 			"data_resource": "",
 			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
 			"pos": [
+				28,
+				17
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
 				27,
 				16
 			],
@@ -14485,6 +14496,17 @@
 			"pos": [
 				18,
 				8
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				23,
+				14
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
@@ -14692,6 +14714,28 @@
 			"data_resource": "",
 			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
 			"pos": [
+				23,
+				15
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				15
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
 				11,
 				2
 			],
@@ -14744,14 +14788,14 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
-			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
-				14,
-				18
+				13,
+				16
 			],
-			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
-			"type": "briar_trap"
+			"trigger_resource": "",
+			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
@@ -14793,6 +14837,39 @@
 			"pos": [
 				14,
 				22
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				18
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				17
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				19,
+				16
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
@@ -14953,6 +15030,28 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/enemies/spider.tres",
+			"fencing_resource": "",
+			"pos": [
+				32,
+				3
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				28,
+				18
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "",
 			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
 			"pos": [
@@ -14972,6 +15071,17 @@
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
+			"pos": [
+				23,
+				10
+			],
+			"trigger_resource": "",
+			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
@@ -15137,6 +15247,28 @@
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
+			"pos": [
+				35,
+				2
+			],
+			"trigger_resource": "",
+			"type": "chest"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
+			"pos": [
+				35,
+				4
+			],
+			"trigger_resource": "",
+			"type": "chest"
 		},
 		{
 			"aggro_group": 0,

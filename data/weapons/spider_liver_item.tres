@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b4xfr3kk7xgxd"]
+
+[ext_resource type="Script" uid="uid://bu7pej4ncrf45" path="res://resources/ItemData.gd" id="1_ay8bv"]
+
+[resource]
+script = ExtResource("1_ay8bv")
+item_id = "spider_liver_item"
+name = "Spider Liver"
+item_type = 2
+is_stackable = true
+metadata/_custom_type_script = "uid://bu7pej4ncrf45"

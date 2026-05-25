@@ -5,6 +5,7 @@
 
 [node name="Node3D" type="Node3D" unique_id=691918173]
 script = ExtResource("1_kpihx")
+export_path = "res://data/maps/dungeons/WitchTree/WitchTree_3/witchtree_3.json"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=703980473]
 position = Vector2(1, 12)

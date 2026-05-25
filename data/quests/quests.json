@@ -22,7 +22,7 @@
 		"description": "Fen wants to make a sandwich.",
 		"target_amount": 1,
 		"target_item": "Spider liver",
-		"quest_item_id": "spidr_liver_item" 
+		"quest_item_id": "spider_liver_item" 
 	},
 	
 	"sister_witch": {
