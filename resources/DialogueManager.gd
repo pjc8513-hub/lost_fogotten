@@ -208,7 +208,7 @@ func execute_action(action_dict: Dictionary):
 					)
 
 		"take_item":
-			InventoryManager.remove_item(action_dict.get("item_id", ""), action_dict.get("amount", 1))
+			InventoryManager.remove_item_by_id(action_dict.get("item_id", ""), action_dict.get("amount", 1))
 
 		"update_quest":
 			var qid = action_dict.get("quest_id", "")

@@ -81,8 +81,7 @@
 			{
 				"text": "Quest: Spider Liver",
 				"goto": "witch_Quest_sandwich_spider",
-				"condition": "quest_completed:witch_sandwich_RedJelly",
-				"condition": "quest_not_completed:witch_sandwich_spider"
+				"condition": "quest_completed:witch_sandwich_RedJelly,quest_not_completed:witch_sandwich_spider"
 			},
 			{
 				"text": "Just passing through.",

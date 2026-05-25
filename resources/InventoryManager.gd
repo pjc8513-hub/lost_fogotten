@@ -150,3 +150,39 @@ func mark_as_junk(character, item_instance: ItemInstance, junk := true):
 	item_instance.is_marked_junk = junk
 
 	GameEvents.inventory_changed.emit(character)
+
+
+func remove_item_by_id(item_id: String, amount: int) -> int:
+	"""Remove items by ID from party inventory. Returns the number actually removed."""
+	var removed := 0
+	
+	if amount <= 0:
+		return 0
+	
+	# Loop through each active party member
+	for member in PartyState.active_party:
+		if member == null or removed >= amount:
+			continue
+		
+		# Find all instances of this item in this member's inventory
+		var items_to_remove = []
+		for item_instance in member.inventory:
+			if item_instance == null or item_instance.item_data == null:
+				continue
+			
+			if item_instance.item_data.item_id == item_id and removed < amount:
+				items_to_remove.append(item_instance)
+				removed += 1
+		
+		# Remove the collected items
+		for item_instance in items_to_remove:
+			member.inventory.erase(item_instance)
+			GameEvents.inventory_changed.emit(member)
+	
+	# Log the removal
+	if removed > 0:
+		GameEvents.message_logged.emit(
+			"[color=red]Used: %s x%d[/color]" % [item_id.replace("_", " ").capitalize(), removed]
+		)
+	
+	return removed
