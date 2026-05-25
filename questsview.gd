@@ -41,7 +41,7 @@ func update_quest_log() -> void:
 		
 		# Conditional progress format based on whether it's a collection or state quest
 		if data["target_amount"] > 0:
-			full_text += "-%s: %d/%d\n" % [data["name"], current_progress, data["target_amount"]]
+			full_text += "-%s: %d/%d\n" % [data["name"], current_progress, int(data["target_amount"])]
 		else:
 			full_text += "-In Progress\n"
 			

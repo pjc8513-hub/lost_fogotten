@@ -101,7 +101,7 @@
 		]
 	},
 	"Fen_QuestOffer_RedJelly": {
-		"text": "I am trying to make a sandwich, but I am missing the Red Jelly! If you could bring me 5 Red Jam, I would be very grateful.",
+		"text": "I am trying to make a sandwich, but I am missing the Red Jelly! If you could bring me 5 Red Jelly, I would be very grateful.",
 		"choices": [
 			{
 				"text": "Accept.",

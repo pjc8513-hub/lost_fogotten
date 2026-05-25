@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://76lc3eevcy1o"]
 
 [ext_resource type="Script" uid="uid://6tcn1gwb7xdk" path="res://systems/Dialogue/DialogueUI.gd" id="1_qoio0"]
-[ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="2_01weu"]
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1220336515]
 
@@ -49,15 +48,6 @@ size_flags_vertical = 1
 [node name="DialogueText" type="RichTextLabel" parent="DialogueUI/Panel/HBoxContainer/DialogueContainer" unique_id=749946265]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("2_01weu")
-theme_override_fonts/bold_font = ExtResource("2_01weu")
-theme_override_fonts/bold_italics_font = ExtResource("2_01weu")
-theme_override_fonts/italics_font = ExtResource("2_01weu")
-theme_override_font_sizes/normal_font_size = 21
-theme_override_font_sizes/bold_font_size = 21
-theme_override_font_sizes/bold_italics_font_size = 21
-theme_override_font_sizes/italics_font_size = 21
-theme_override_font_sizes/mono_font_size = 21
 bbcode_enabled = true
 
 [node name="PasswordInput" type="LineEdit" parent="DialogueUI/Panel/HBoxContainer/DialogueContainer" unique_id=261871811]

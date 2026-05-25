@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cofmgtqwxvhe2"]
+
+[ext_resource type="Script" uid="uid://bu7pej4ncrf45" path="res://resources/ItemData.gd" id="1_krp74"]
+
+[resource]
+script = ExtResource("1_krp74")
+item_id = "red_jelly"
+name = "Red Jelly"
+item_type = 2
+is_stackable = true
+metadata/_custom_type_script = "uid://bu7pej4ncrf45"

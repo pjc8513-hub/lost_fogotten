@@ -137,6 +137,10 @@ func _on_input_submitted(text: String, node: Dictionary):
 
 func process_choice(choice: Dictionary):
 
+	if choice.has("action"):
+		process_action(choice)
+		return
+
 	if choice.has("goto"):
 		show_node(choice["goto"])
 		return
@@ -144,9 +148,6 @@ func process_choice(choice: Dictionary):
 	if choice.get("close", false):
 		close_dialogue()
 		return
-
-	if choice.has("action"):
-		process_action(choice)
 
 func process_action(choice: Dictionary):
 
@@ -250,7 +251,7 @@ func check_condition(condition: String) -> bool:
 			return InventoryManager.party_has_item(value)
 
 		"missing_item":
-			return InventoryManager.party_has_item(value)
+			return not InventoryManager.party_has_item(value)
 
 		_:
 			return true
