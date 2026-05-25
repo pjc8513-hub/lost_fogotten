@@ -32,6 +32,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var movement: int = 5
 @export var sprite_texture: Texture2D
 @export var loot_table: Array[LootManager.Loot_Table] = []
+@export var quest_item_ids: Array[String] = []
 
 @export var resist_fire: int = 0
 @export var resist_physical: int = 0
