@@ -125,12 +125,12 @@ layout_mode = 2
 script = ExtResource("9_poj6t")
 metadata/_tab_index = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Questsview" unique_id="55831161"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Questsview" unique_id=55831161]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="quest_display" type="RichTextLabel" parent="TabContainer/Questsview/ScrollContainer" unique_id="612204229"]
+[node name="quest_display" type="RichTextLabel" parent="TabContainer/Questsview/ScrollContainer" unique_id=612204229]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -12,4 +12,5 @@ attack_speed = 1.0
 name = "Rusty Dagger"
 icon = ExtResource("1_fcynr")
 sell_value = 5
+equip_slot = 1
 metadata/_custom_type_script = "uid://cogina04lplf3"

@@ -9,6 +9,7 @@ enum ItemType {
 }
 
 enum Equip_Slot {
+	NONE,
 	WEAPON,
 	RANGE,
 	ARMOR,

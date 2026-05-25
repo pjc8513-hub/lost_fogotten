@@ -184,7 +184,19 @@ func process_action(choice: Dictionary):
 				close_dialogue()
 
 		"give_item":
-			#InventoryManager.add_item(choice.get("item_id", ""), choice.get("amount", 1))
+			var item_id = choice.get("item_id", "")
+			var amount = choice.get("amount", 1)
+			
+			for i in range(amount):
+				# Optional: you could check if it's blocked here, but usually NPCs giving items is intentional
+				var item_instance = LootManager.create_item_instance(item_id)
+				if item_instance:
+					var target_member = PartyState.active_party.pick_random()
+					InventoryManager.add_item(target_member, item_instance)
+					GameEvents.message_logged.emit(
+						"[color=yellow]%s[/color] [color=cyan]Received: %s[/color]"
+						% [target_member.member_name, item_instance.item_data.name]
+					)
 
 			if choice.has("goto"):
 				show_node(choice["goto"])

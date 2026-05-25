@@ -13,6 +13,10 @@ func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
 	var loot_names := []
 
 	for item_id in loot_ids:
+		
+		# Check if this item belongs to a quest that is active
+		if _is_quest_item_blocked(item_id):
+			continue
 
 		var item_instance = LootManager.create_item_instance(item_id)
 

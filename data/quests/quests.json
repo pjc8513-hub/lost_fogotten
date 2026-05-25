@@ -5,7 +5,8 @@
 		"area": "Swamp",
 		"description": "Fen wants to make a sandwich.",
 		"target_amount": 5,
-		"quest_item_id": "red_jelly" 
+		"target_item": "Red Jelly",
+		"quest_item_id": "red_jelly_item" 
 	},
 	"sister_witch": {
 		"name": "Sister-Witch",
