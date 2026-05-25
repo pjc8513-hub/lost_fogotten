@@ -42,10 +42,15 @@ func distribute_enemy_loot(enemy: Enemy):
 		"[color=gold]Found %d gold![/color]" % enemy_data.gold
 	)
 
-	if not enemy_data.loot_table:
-		return
+	var loot_ids: Array = []
+	if enemy_data.loot_table:
+		loot_ids.append_array(LootManager.roll_loot(enemy_data.loot_table, 0))
 
-	var loot_ids = LootManager.roll_loot(enemy_data.loot_table, 0)
+	if enemy_data.get("quest_item_ids"):
+		loot_ids.append_array(enemy_data.quest_item_ids)
+
+	if loot_ids.is_empty():
+		return
 
 	var loot_names := []
 

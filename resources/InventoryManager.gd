@@ -12,6 +12,16 @@ func add_item(character, item_instance: ItemInstance) -> bool:
 
 	character.inventory.append(item_instance)
 
+	# Check if this item advances an active quest
+	var item_id = item_instance.item_data.item_id
+	for quest_id in QuestManager.active_quests:
+		var q_data = QuestManager.quest_data.get(quest_id)
+		if q_data != null and q_data.get("quest_item_id") == item_id:
+			var target = q_data.get("target_amount", 0)
+			var current = QuestManager.get_progress(quest_id)
+			if current < target:
+				QuestManager.add_progress(quest_id, 1)
+
 	GameEvents.inventory_changed.emit(character)
 
 	return true
@@ -48,7 +58,7 @@ func has_item(character, item_id: String) -> bool:
 		if inst.item_data == null:
 			continue
 
-		if inst.item_data.id == item_id:
+		if inst.item_data.item_id == item_id:
 			return true
 
 	return false
@@ -80,7 +90,7 @@ func get_item_count(character, item_id: String) -> int:
 		if inst.item_data == null:
 			continue
 
-		if inst.item_data.id == item_id:
+		if inst.item_data.item_id == item_id:
 			count += 1
 
 	return count

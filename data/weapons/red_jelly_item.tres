@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_krp74")
-item_id = "red_jelly"
+item_id = "red_jelly_item"
 name = "Red Jelly"
 item_type = 2
 is_stackable = true

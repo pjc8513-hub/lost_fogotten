@@ -91,7 +91,7 @@
 		"choices": [
 			{
 				"text": "Turn in.",
-				"condition": "quest_started:witch_sandwich_RedJelly",
+				"condition": "quest_ready:witch_sandwich_RedJelly",
 				"goto": "witch_sandwich_RedJelly_HandIn"
 			},
 			{
@@ -119,7 +119,7 @@
 		"text": "Thank you so much for the Red Jelly! I can finally make my sandwich!",
 		"choices": [
 			{
-				"text": "You're welcome.",
+				"text": "Goodbye.",
 				"action": "complete_quest",
 				"quest_id": "witch_sandwich_RedJelly",
 				"close": true

@@ -19,5 +19,5 @@ ai_behavior = "Hunter"
 movement = 4
 sprite_texture = ExtResource("2_uskm6")
 loot_table = Array[int]([0])
-quest_item_ids = Array[String](["red_jelly"])
+quest_item_ids = Array[String](["red_jelly_item"])
 vision_range = 5
