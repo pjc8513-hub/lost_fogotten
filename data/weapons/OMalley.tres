@@ -12,5 +12,5 @@ step_count = 4
 loot_table = 6
 name = "OMalley"
 sell_value = 150
-equip_slot = 3
+equip_slot = 4
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

@@ -8,6 +8,17 @@
 		"target_item": "Red Jelly",
 		"quest_item_id": "red_jelly_item" 
 	},
+	
+	"witch_sandwich_spider": {
+		"name": "Witch Spider",
+		"objective": "Collect 1 Spider Liver",
+		"area": "Swamp",
+		"description": "Fen wants to make a sandwich.",
+		"target_amount": 1,
+		"target_item": "Spider liver",
+		"quest_item_id": "spidr_liver_item" 
+	},
+	
 	"sister_witch": {
 		"name": "Sister-Witch",
 		"objective": "Find Lena in the swamp",

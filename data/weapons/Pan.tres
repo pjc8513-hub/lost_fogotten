@@ -12,5 +12,5 @@ step_count = 4
 loot_table = 6
 name = "Pan"
 sell_value = 100
-equip_slot = 3
+equip_slot = 4
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

@@ -12,5 +12,5 @@ complexity = 16
 loot_table = 7
 name = "DE"
 sell_value = 300
-equip_slot = 3
+equip_slot = 4
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

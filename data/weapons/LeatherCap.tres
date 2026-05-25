@@ -7,5 +7,5 @@ script = ExtResource("1_eamnn")
 armor_class = -1
 name = "LeatherCap"
 sell_value = 10
-equip_slot = 4
+equip_slot = 5
 metadata/_custom_type_script = "uid://04yxrplu6cft"

@@ -11,5 +11,5 @@ min_strings = 5
 loot_table = 7
 name = "Winter Wizard"
 sell_value = 350
-equip_slot = 3
+equip_slot = 4
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

@@ -13,5 +13,5 @@ complexity = 20
 loot_table = 8
 name = "THRONE"
 sell_value = 600
-equip_slot = 3
+equip_slot = 4
 metadata/_custom_type_script = "uid://mw50tsrlfvns"

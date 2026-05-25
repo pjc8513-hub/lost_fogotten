@@ -8,5 +8,5 @@ script = ExtResource("1_8ue2b")
 armor_class = -1
 name = "Cloth Robe"
 sell_value = 12
-equip_slot = 2
+equip_slot = 3
 metadata/_custom_type_script = "uid://04yxrplu6cft"

@@ -11,5 +11,5 @@ tile_range = 5
 weapon_type = 1
 name = "Simple Bow"
 sell_value = 10
-equip_slot = 1
+equip_slot = 2
 metadata/_custom_type_script = "uid://cogina04lplf3"
