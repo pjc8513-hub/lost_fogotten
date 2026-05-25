@@ -6,7 +6,13 @@
 		"description": "Fen wants to make a sandwich.",
 		"target_amount": 5,
 		"target_item": "Red Jelly",
-		"quest_item_id": "red_jelly_item" 
+		"quest_item_id": "red_jelly_item",
+		"rewards": [
+			{
+				"gold": 500,
+				"exp": 200
+			}
+		] 
 	},
 	
 	"witch_sandwich_spider": {

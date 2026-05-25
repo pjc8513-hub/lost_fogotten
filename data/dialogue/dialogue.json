@@ -126,8 +126,10 @@
 		"choices": [
 			{
 				"text": "Goodbye.",
-				"action": "complete_quest",
-				"quest_id": "witch_sandwich_RedJelly",
+				"actions": [
+					{ "action": "take_item", "item_id": "red_jelly_item", "amount": 5 },
+					{ "action": "complete_quest", "quest_id": "witch_sandwich_RedJelly" }
+				],
 				"close": true
 			}
 		]

@@ -138,3 +138,30 @@ func distribute_xp(xp: int = 0):
 		
 		# Only emit once after all level ups are done
 		GameEvents.party_member_stats_changed.emit(member)		
+
+func distribute_individual_xp(xp: int = 0):
+	if xp <= 0:
+		return
+		
+	var members: Array[ClassData] = PartyState.get_active_party()
+	if members.is_empty():
+		return
+	
+	GameEvents.message_logged.emit("[color=green]Each party member gained %s xp[/color]" % [xp])
+	
+	for i in members.size():
+		var member: ClassData = members[i]
+		member.xp += xp
+		
+		# Handle multiple level ups
+		while member.xp >= member.xp_to_next_level:
+			var xp_for_level: int = member.xp_to_next_level
+			member.xp -= xp_for_level # subtract cost, keep overflow
+			
+			var points = member.roll_level_up_points()
+			member.gain_level(points) # this should update xp_to_next_level internally
+			
+			GameEvents.message_logged.emit("[color=yellow]%s reached level %s![/color]" % [member.member_name, member.level])
+		
+		# Only emit once after all level ups are done
+		GameEvents.party_member_stats_changed.emit(member)

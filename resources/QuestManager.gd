@@ -67,6 +67,23 @@ func complete_quest(quest_id: String):
 		% prettify_quest_name(quest_id)
 	)
 
+	# Award quest rewards
+	if quest_data.has(quest_id):
+		var quest = quest_data[quest_id]
+		if quest.has("rewards") and quest["rewards"] is Array:
+			for reward in quest["rewards"]:
+				if reward.has("gold"):
+					var gold_amount = reward["gold"]
+					PartyState.party_gold += gold_amount
+					GameEvents.message_logged.emit(
+						"[color=gold]Rewarded: %d gold![/color]" % gold_amount
+					)
+				
+				if reward.has("exp") or reward.has("xp"):
+					var xp_amount = reward.get("exp", reward.get("xp", 0))
+					if xp_amount > 0:
+						LootDistributor.distribute_individual_xp(xp_amount)
+
 	emit_signal("quest_completed", quest_id)
 
 

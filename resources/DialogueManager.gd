@@ -136,11 +136,34 @@ func _on_input_submitted(text: String, node: Dictionary):
 			close_dialogue()
 
 func process_choice(choice: Dictionary):
-
-	if choice.has("action"):
-		process_action(choice)
+	# Handle array of actions (new format)
+	if choice.has("actions"):
+		var actions = choice["actions"]
+		for act in actions:
+			execute_action(act)
+		
+		# Apply transition after all actions are processed
+		if choice.has("goto"):
+			show_node(choice["goto"])
+		elif choice.get("close", false):
+			close_dialogue()
+		else:
+			close_dialogue()
 		return
 
+	# Handle single action (backwards compatibility)
+	if choice.has("action"):
+		execute_action(choice)
+		# Apply transition after action
+		if choice.has("goto"):
+			show_node(choice["goto"])
+		elif choice.get("close", false):
+			close_dialogue()
+		else:
+			close_dialogue()
+		return
+
+	# Handle direct navigation
 	if choice.has("goto"):
 		show_node(choice["goto"])
 		return
@@ -149,43 +172,29 @@ func process_choice(choice: Dictionary):
 		close_dialogue()
 		return
 
-func process_action(choice: Dictionary):
-
-	var action = choice["action"]
+func execute_action(action_dict: Dictionary):
+	"""Execute a single action without handling navigation."""
+	var action = action_dict.get("action", "")
 
 	match action:
 
 		"open_shop":
-			#ShopManager.open_shop(choice.get("shop_id", ""))
-			close_dialogue()
+			#ShopManager.open_shop(action_dict.get("shop_id", ""))
+			pass
 
 		"accept_quest":
-			QuestManager.accept_quest(choice.get("quest_id", ""))
-
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
+			QuestManager.accept_quest(action_dict.get("quest_id", ""))
 
 		"complete_quest":
-			QuestManager.complete_quest(choice.get("quest_id", ""))
-
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
+			QuestManager.complete_quest(action_dict.get("quest_id", ""))
 
 		"rotate_object":
-			#PuzzleManager.rotate(choice.get("target", ""))
-
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
+			#PuzzleManager.rotate(action_dict.get("target", ""))
+			pass
 
 		"give_item":
-			var item_id = choice.get("item_id", "")
-			var amount = choice.get("amount", 1)
+			var item_id = action_dict.get("item_id", "")
+			var amount = action_dict.get("amount", 1)
 			
 			for i in range(amount):
 				# Optional: you could check if it's blocked here, but usually NPCs giving items is intentional
@@ -198,33 +207,20 @@ func process_action(choice: Dictionary):
 						% [target_member.member_name, item_instance.item_data.name]
 					)
 
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
-
 		"take_item":
-			#InventoryManager.remove_item(choice.get("item_id", ""), choice.get("amount", 1))
+			InventoryManager.remove_item(action_dict.get("item_id", ""), action_dict.get("amount", 1))
 
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
 		"update_quest":
-			var qid = choice.get("quest_id", "")
+			var qid = action_dict.get("quest_id", "")
 			QuestManager.add_progress(qid, 1)
-			if choice.has("goto"):
-				show_node(choice["goto"])
-			else:
-				close_dialogue()
 
 		"start_battle":
 			#Spawn enemy trigger when that gets added
-			close_dialogue()
+			pass
 
 		_:
-			push_warning("Unknown dialogue action: " + action)
-			close_dialogue()
+			if action != "":
+				push_warning("Unknown dialogue action: " + action)
 
 func check_condition(condition: String) -> bool:
 	var conditions = condition.split(",")
