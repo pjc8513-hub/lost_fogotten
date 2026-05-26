@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cgvlqyigdjmxs"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_c2qil"]
+[ext_resource type="Texture2D" uid="uid://bmjdvfg8u6yxo" path="res://assets/sprites/enemies/witch.png" id="2_c2qil"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_c2qil")
+enemy_name = "Witch"
+scene_path = "uid://uy45laq5613c"
+hp = 5
+armor_class = 5
+dice_sides = 6
+bonus_damage = 3
+is_ranged = true
+ranged_tiles = 4
+accuracy = 2
+critical_chance = 2
+attack_speed = 2
+xp = 70
+gold = 30
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("2_c2qil")
+loot_table = Array[int]([1])
+resist_fire = 1
+resist_cold = 1
+resist_earth = 1
+resist_dark = 1

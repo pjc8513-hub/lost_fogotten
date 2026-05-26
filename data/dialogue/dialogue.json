@@ -62,7 +62,7 @@
 		]
 	},
 	"Lena_Fairwell": {
-		"text": "Thank you. I hope he can understand that this is what I need to do./n For your own good, stay away from the remaining trees. You are not nearly strong enough to handle them.",
+		"text": "Thank you. I hope he can understand that this is what I need to do.\n For your own good, stay away from the remaining trees. You are not nearly strong enough to handle them.",
 		"choices": [
 			{
 				"text": "Bye now",
@@ -146,7 +146,7 @@
 			{
 				"text": "I am looking!",
 				"close": true
-			},
+			}
 		]
 	},
 	"witch_QuestOffer_sandwich_spider": {

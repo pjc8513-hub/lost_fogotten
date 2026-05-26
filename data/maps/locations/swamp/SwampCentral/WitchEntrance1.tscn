@@ -6,7 +6,8 @@
 [node name="Dungeon" unique_id=1015003909 instance=ExtResource("1_hvnnb")]
 
 [node name="Sprite3D" parent="." index="0" unique_id=475153216]
+shaded = false
 texture = ExtResource("3_vmrp5")
 
 [node name="CollisionShape3D" parent="StaticBody3D" parent_id_path=PackedInt32Array(2075651509) index="0" unique_id=418678643]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.12767029, 1.0840759, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.12767029, 1.0840759, 0)
