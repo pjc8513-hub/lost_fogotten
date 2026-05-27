@@ -35,7 +35,7 @@ func _ready():
 		GameEvents.chest_opened.connect(LootDistributor.distribute_chest_loot)
 	set_process_unhandled_input(true)
 	var dungeon_data := World.current_dungeon_data
-	var map_path := "res://data/maps/dungeons/WitchTree/WitchTree_4/witchtree_4.json"
+	var map_path := "res://data/maps/locations/swamp/SwampSouth/swamp_south.json"
 	var theme_path := "res://data/maps/themes/dirt_theme.tres"
 	if dungeon_data != null:
 		if not dungeon_data.map_data_path.is_empty():

@@ -27,7 +27,7 @@ const LOOT_POOLS = {
 		"chance": 0.5
 	},
 	Loot_Table.ITEM_1: {
-		"items": ["health_potion_small", "bread", "torch"],
+		"items": ["minor_health_potion", "bread", "minor_mana_potion"],
 		"rolls": 2, # tier 1 items drop more often
 		"chance": 1.0
 	},

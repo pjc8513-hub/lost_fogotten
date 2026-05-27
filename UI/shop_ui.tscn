@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://wncs8u3ouvms"]
+
+[ext_resource type="Script" uid="uid://bq10fqs41ondq" path="res://UI/shop_ui.gd" id="1_r8gjt"]
+
+[node name="ShopUI" type="Control" unique_id=1705231141]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r8gjt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=889563288]
+layout_mode = 0
+offset_right = 550.0
+offset_bottom = 350.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1854819944]
+layout_mode = 2
+theme_override_constants/separation = 200
+
+[node name="ShopName" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=763295012]
+layout_mode = 2
+text = "Jo's Goods"
+
+[node name="PlayerLabel" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=1169510813]
+layout_mode = 2
+text = "Character's Inventory"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=451483379]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer" unique_id=2017486110]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StoreInventory" type="ItemList" parent="VBoxContainer/HBoxContainer/ScrollContainer" unique_id=1035439949]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer" unique_id=1912625324]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CharacterInventory" type="ItemList" parent="VBoxContainer/HBoxContainer/ScrollContainer2" unique_id=513499768]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="VBoxContainer" unique_id=937127519]
+layout_mode = 2
+
+[node name="Amount" type="Label" parent="VBoxContainer" unique_id=1699737787]
+layout_mode = 2
+text = "Gold:"
