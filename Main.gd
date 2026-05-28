@@ -14,6 +14,7 @@ var automap_grid := {}  # Dictionary of Vector2 -> int
 @onready var sub_viewport_container: SubViewportContainer = $SubViewportContainer
 @onready var sub_viewport: SubViewport = $SubViewportContainer/SubViewport
 @onready var casting_scene: Control = $CastingScene
+@onready var world_environment: WorldEnvironment = $SubViewportContainer/SubViewport/WorldEnvironment
 
 func _enter_tree():
 	print("[FRAME ", Engine.get_process_frames(), "] Main _enter_tree")
@@ -36,7 +37,7 @@ func _ready():
 	set_process_unhandled_input(true)
 	var dungeon_data := World.current_dungeon_data
 	var map_path := "res://data/maps/locations/swamp/SwampSouth/swamp_south.json"
-	var theme_path := "res://data/maps/themes/dirt_theme.tres"
+	var theme_path := "res://data/maps/themes/swamp_theme.tres"
 	if dungeon_data != null:
 		if not dungeon_data.map_data_path.is_empty():
 			map_path = dungeon_data.map_data_path
@@ -49,6 +50,8 @@ func _ready():
 	var map_theme = load(theme_path)
 	#var map_theme = load("res://data/maps/themes/swamp_theme.tres") #testing
 	_play_map_music(map_theme)
+	
+	apply_world_environment(map_theme)
 	
 	# Load the new JSON format we exported from the TileMap
 	var data = MapBuilder.load_room_data(map_path)
@@ -65,6 +68,7 @@ func _ready():
 			_on_dungeon_selected,
 			spawn_id
 		)
+		
 		var automap_grid = result.automap_grid
 		var automap = get_node("automap")
 		if automap:
@@ -78,7 +82,28 @@ func _ready():
 		print("[FRAME ", Engine.get_process_frames(), "] Main selected member: ", PartyState.get_selected())
 	print("[FRAME ", Engine.get_process_frames(), "] Main _ready end")
 	$Control/MarginContainer/VBoxContainer.refresh_party_ui()
+
+func apply_world_environment(theme: MapTheme) -> void:
+	if theme and theme.environment:
+		print("Applying world environment")
 		
+		# 1. Safely update the WorldEnvironment node if it exists
+		if is_instance_valid(world_environment):
+			world_environment.environment = theme.environment
+		
+		# 2. Safely fetch the SubViewport dynamically to avoid the null instance error
+		var active_viewport = get_node_or_null("SubViewportContainer/SubViewport")
+		if active_viewport and active_viewport.get_world_3d():
+			active_viewport.get_world_3d().environment = theme.environment
+		else:
+			# If it's still initializing, defer the assignment by one frame
+			(func(): 
+				if is_instance_valid(sub_viewport) and sub_viewport.get_world_3d():
+					sub_viewport.get_world_3d().environment = theme.environment
+			).call_deferred()
+	else:
+		print("Warning: Theme or Environment resource is missing!")
+
 func _input(event):
 	if event.is_action_pressed("map"):  # Set this up in Project > Input Map
 		map_open = !map_open

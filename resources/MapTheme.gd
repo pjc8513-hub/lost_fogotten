@@ -1,6 +1,10 @@
 extends Resource
 class_name MapTheme
 
+@export_group("World Environment")
+## Holds the custom sky, fog, ambient light, and tonemapping for this theme.
+@export var environment: Environment
+
 @export_group("Wall Settings")
 @export var wall_scene: PackedScene
 @export var wall_materials: Array[Material] = []

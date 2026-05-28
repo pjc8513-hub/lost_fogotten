@@ -1,17 +1,33 @@
 [gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://btwnl8622op54"]
 
+[ext_resource type="Texture2D" uid="uid://co5jpgxnjmcc1" path="res://assets/textures/qwantani_night_puresky_1k.hdr" id="1_1f2vf"]
 [ext_resource type="Material" uid="uid://da6x4ra0tdlup" path="res://assets/textures/MossWall_Mat.tres" id="1_peojr"]
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xf5sl"]
-[ext_resource type="Material" uid="uid://byrmj2dnb8lts" path="res://assets/textures/MossyWall_Mat2.tres" id="2_1f2vf"]
-[ext_resource type="Material" uid="uid://cywkww3ncdolw" path="res://assets/textures/MossyPit.tres" id="3_diyux"]
+[ext_resource type="Material" uid="uid://yrw022mgcxij" path="res://assets/textures/mud_floor.tres" id="2_5gcf0"]
 [ext_resource type="PackedScene" uid="uid://citsomkx0f8di" path="res://data/maps/locations/swamp/SwampSouth/FloorMarsh.tscn" id="4_qcl7j"]
+[ext_resource type="Material" uid="uid://dd5vncr4p0ip8" path="res://assets/textures/grass_rock.tres" id="6_diyux"]
 [ext_resource type="PackedScene" uid="uid://rc5cqfinora8" path="res://assets/models/mosswall_2.tscn" id="6_peojr"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qcl7j"]
+panorama = ExtResource("1_1f2vf")
+
+[sub_resource type="Sky" id="Sky_27vsx"]
+sky_material = SubResource("PanoramaSkyMaterial_qcl7j")
+
+[sub_resource type="Environment" id="Environment_877u2"]
+background_mode = 2
+sky = SubResource("Sky_27vsx")
+tonemap_mode = 3
+fog_enabled = true
+fog_light_color = Color(0.7411765, 0.8509804, 0.60784316, 1)
 
 [resource]
 script = ExtResource("1_xf5sl")
+environment = SubResource("Environment_877u2")
 wall_scene = ExtResource("6_peojr")
+wall_materials = Array[Material]([ExtResource("6_diyux")])
 random_wall_variation = true
 floor_scene = ExtResource("4_qcl7j")
-floor_materials = Array[Material]([ExtResource("1_peojr"), ExtResource("2_1f2vf"), ExtResource("3_diyux")])
+floor_materials = Array[Material]([ExtResource("1_peojr"), ExtResource("2_5gcf0")])
 random_floor_variation = true
 metadata/_custom_type_script = "uid://bxbgg1cuuqxex"

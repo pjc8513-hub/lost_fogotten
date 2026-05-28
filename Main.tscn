@@ -15,8 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://76lc3eevcy1o" path="res://systems/Dialogue/DialogueUI.tscn" id="14_dialogue_ui"]
 [ext_resource type="PackedScene" uid="uid://xbcv3a5dvjqa" path="res://automap.tscn" id="15_j4qnp"]
 
-[sub_resource type="Environment" id="Environment_20pc6"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lgr22"]
@@ -55,7 +53,6 @@ size = Vector2i(827, 512)
 render_target_update_mode = 4
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport" unique_id=917973934]
-environment = SubResource("Environment_20pc6")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1741699624]
 distance_fade_enabled = true

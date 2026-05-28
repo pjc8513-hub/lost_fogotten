@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dd5vncr4p0ip8"]
+
+[ext_resource type="Texture2D" uid="uid://bc3mr0jpeu7jl" path="res://assets/textures/grass_rock.jpg" id="1_vakhm"]
+
+[resource]
+albedo_texture = ExtResource("1_vakhm")
+roughness = 0.8

@@ -2,16 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c34xmu5o88q7e" path="res://Player.gd" id="1_t0xf4"]
 
-[sub_resource type="Environment" id="Environment_t0xf4"]
-background_mode = 1
-background_color = Color(0.21960784, 0.23921569, 0.14509805, 1)
-background_energy_multiplier = 0.1
-ambient_light_color = Color(0.1830093, 0.31619072, 0.60685736, 1)
-fog_mode = 1
-fog_light_color = Color(0.2602695, 0.8708797, 0.9378262, 1)
-fog_density = 1.0
-volumetric_fog_density = 0.6686
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0xf4"]
 shading_mode = 0
 
@@ -74,8 +64,6 @@ height = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t0xf4"]
 
-[sub_resource type="Environment" id="Environment_jmh4p"]
-
 [node name="Node3D" type="CharacterBody3D" unique_id=2005319369]
 script = ExtResource("1_t0xf4")
 
@@ -85,7 +73,6 @@ distance_fade_enabled = true
 omni_range = 8.0
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2122015874]
-environment = SubResource("Environment_t0xf4")
 current = true
 
 [node name="AudioListener3D" type="AudioListener3D" parent="Camera3D" unique_id=102069800]
@@ -125,6 +112,3 @@ scale_amount_max = 1.1
 
 [node name="Player" type="CollisionShape3D" parent="." unique_id=2000327109]
 shape = SubResource("BoxShape3D_t0xf4")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=551365150 groups=["world_environment"]]
-environment = SubResource("Environment_jmh4p")

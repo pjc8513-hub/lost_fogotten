@@ -82,7 +82,7 @@ static func _build_geometry(data: Dictionary, parent: Node, automap_grid: Dictio
 			wall.position = Vector3(pos.x, 0, pos.y)
 			# random wall materials if the array exists
 			if theme.wall_materials.size() > 0:
-				wall.get_node("MeshInstance3D").material_override = theme.wall_materials.pick_random()
+				wall.get_node("Cube").material_override = theme.wall_materials.pick_random()
 				wall.position += Vector3(randf_range(-0.05, 0.05), 0, randf_range(-0.05, 0.05))
 			
 			var east_is_floor = cell_types.get(pos + Vector2i(1, 0), "wall") == "floor"

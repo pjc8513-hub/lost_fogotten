@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://yrw022mgcxij"]
+
+[ext_resource type="Texture2D" uid="uid://yjnx2dm2mkst" path="res://assets/textures/brown_mud.jpg" id="1_b0tt2"]
+[ext_resource type="Texture2D" uid="uid://dq4d81yqdpch4" path="res://assets/textures/brown_mud_leaves_01_nor_gl_1k.png" id="2_iny6u"]
+
+[resource]
+albedo_texture = ExtResource("1_b0tt2")
+roughness = 0.3
+normal_enabled = true
+normal_texture = ExtResource("2_iny6u")
+uv1_triplanar = true
