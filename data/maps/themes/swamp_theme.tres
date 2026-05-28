@@ -20,6 +20,7 @@ sky = SubResource("Sky_27vsx")
 tonemap_mode = 3
 fog_enabled = true
 fog_light_color = Color(0.7411765, 0.8509804, 0.60784316, 1)
+fog_sky_affect = 0.0
 
 [resource]
 script = ExtResource("1_xf5sl")
