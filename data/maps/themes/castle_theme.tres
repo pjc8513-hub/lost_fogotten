@@ -3,10 +3,22 @@
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_1aard"]
 [ext_resource type="PackedScene" uid="uid://ch13d05oifdlt" path="res://assets/models/ceiling1.tscn" id="1_1uutu"]
 [ext_resource type="PackedScene" uid="uid://daaf0m63joqx4" path="res://assets/models/floor_1.tscn" id="1_tqa35"]
+[ext_resource type="Texture2D" uid="uid://c5q8jlvf4tbps" path="res://assets/textures/ferndale_studio_05_1k.hdr" id="2_cfai7"]
 [ext_resource type="PackedScene" uid="uid://yftkdw3bqcye" path="res://assets/models/bone_wall_1.tscn" id="3_tqa35"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2t777"]
+panorama = ExtResource("2_cfai7")
+
+[sub_resource type="Sky" id="Sky_xrlat"]
+sky_material = SubResource("PanoramaSkyMaterial_2t777")
+
+[sub_resource type="Environment" id="Environment_jn8y4"]
+background_mode = 2
+sky = SubResource("Sky_xrlat")
 
 [resource]
 script = ExtResource("1_1aard")
+environment = SubResource("Environment_jn8y4")
 wall_scene = ExtResource("3_tqa35")
 floor_scene = ExtResource("1_tqa35")
 has_ceiling = true

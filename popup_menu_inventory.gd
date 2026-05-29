@@ -134,9 +134,8 @@ func _use_item(inst: ItemInstance) -> void:
 		return
 
 	# ── Apply consumable effect here ──────────────────────────────────────
-	# Example: owner_char.current_hp = min(owner_char.current_hp + 20, owner_char.max_hp)
-	# Extend this block (or delegate to inst.item_data) for real effects.
-	# ──────────────────────────────────────────────────────────────────────
+	if inst.item_data is ConsumableData:
+		(inst.item_data as ConsumableData).apply_to_character(owner_char)
 
 	# Remove one instance of the item after use
 	owner_char.inventory.erase(inst)

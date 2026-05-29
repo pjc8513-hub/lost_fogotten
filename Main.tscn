@@ -47,9 +47,9 @@ focus_behavior_recursive = 2
 script = ExtResource("2_lgr22")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
+own_world_3d = true
 handle_input_locally = false
 physics_object_picking = true
-own_world_3d = true
 size = Vector2i(827, 512)
 render_target_update_mode = 4
 
