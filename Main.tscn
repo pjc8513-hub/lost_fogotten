@@ -13,7 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://2t0xkthjrfs7" path="res://casting_scene.tscn" id="12_5vvyt"]
 [ext_resource type="PackedScene" uid="uid://cfl7ouks8wtu8" path="res://EnemyCardScene.tscn" id="13_enemy_card"]
 [ext_resource type="PackedScene" uid="uid://76lc3eevcy1o" path="res://systems/Dialogue/DialogueUI.tscn" id="14_dialogue_ui"]
+[ext_resource type="Shader" uid="uid://cn103gqkartfp" path="res://data/shaders/Main_shader.gdshader" id="15_fpfj3"]
 [ext_resource type="PackedScene" uid="uid://xbcv3a5dvjqa" path="res://automap.tscn" id="15_j4qnp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sc1dx"]
+shader = ExtResource("15_fpfj3")
+shader_parameter/pixel_size = 4.0
+shader_parameter/dither_strength = 0.6
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fos0i"]
 
@@ -52,6 +58,17 @@ handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(827, 512)
 render_target_update_mode = 4
+
+[node name="ShaderDitheringLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=1916408999]
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ShaderDitheringLayer" unique_id=367553248]
+material = SubResource("ShaderMaterial_sc1dx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport" unique_id=917973934]
 
