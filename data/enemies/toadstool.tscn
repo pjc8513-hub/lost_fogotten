@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b6i6ikx6ur76f"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_bx32f"]
+[ext_resource type="Resource" uid="uid://ced3pdodrh46v" path="res://data/enemies/toadstool.tres" id="2_kvx1c"]
+[ext_resource type="Texture2D" uid="uid://6k20t7r5mtpb" path="res://assets/sprites/enemies/toadstool-1.png" id="3_3e415"]
+
+[node name="Enemy" unique_id=1461009798 instance=ExtResource("1_bx32f")]
+enemy_data = ExtResource("2_kvx1c")
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+texture = ExtResource("3_3e415")

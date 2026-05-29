@@ -174,5 +174,19 @@
 				"close": true
 			}
 		]
+	},
+	"Mary_Entry": {
+		"text": "Welcome to Swamp Mary's Shop!",
+		"choices": [
+			{
+				"text": "Shop",
+				"action": "open_shop",
+				"shop_id": "swamp_shop"
+			},
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
 	}
 }

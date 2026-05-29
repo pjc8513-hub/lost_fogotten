@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://ced3pdodrh46v"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_1ndyi"]
+[ext_resource type="Texture2D" uid="uid://6k20t7r5mtpb" path="res://assets/sprites/enemies/toadstool-1.png" id="2_1ndyi"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_1ndyi")
+enemy_name = "Toadstool"
+scene_path = "uid://b6i6ikx6ur76f"
+hp = 5
+armor_class = 8
+dice_sides = 6
+critical_chance = 2
+ailment = "stun"
+attack_speed = 1
+xp = 70
+gold = 30
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("2_1ndyi")
+loot_table = Array[int]([0])
+custom_scale = Vector3(1.2, 1.2, 1)
+custom_position = Vector3(0, 0, 0.5)
+custom_pixel_size = 2

@@ -1267,14 +1267,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				4,
 				12
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -2378,14 +2378,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				21,
 				3
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -2653,14 +2653,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				21,
 				5
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -2895,14 +2895,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				21,
 				12
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -3841,14 +3841,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				32,
 				8
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -4490,14 +4490,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				32,
 				5
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -7166,91 +7166,221 @@
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/BonePitExit.tres",
+			"fencing_resource": "",
 			"pos": [
 				9,
 				8
 			],
+			"trigger_resource": "",
 			"type": "exit"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"fencing_resource": "",
+			"pos": [
+				6,
+				3
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
+			"fencing_resource": "",
 			"pos": [
 				13,
 				6
 			],
+			"trigger_resource": "",
 			"type": "door"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				12
 			],
+			"trigger_resource": "",
 			"type": "chest"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
+			"pos": [
+				4,
+				12
+			],
+			"trigger_resource": "",
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/NorthUnlockedDoor.tres",
+			"fencing_resource": "",
 			"pos": [
 				13,
 				10
 			],
+			"trigger_resource": "",
 			"type": "door"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
 			"pos": [
-				18,
-				4
+				21,
+				3
 			],
-			"type": "chest"
+			"trigger_resource": "",
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
+			"pos": [
+				18,
+				4
+			],
+			"trigger_resource": "",
+			"type": "chest"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"fencing_resource": "",
+			"pos": [
+				21,
+				4
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
+			"pos": [
+				21,
+				5
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
+			"pos": [
+				21,
+				12
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
+			"pos": [
+				32,
+				8
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
+			"fencing_resource": "",
+			"pos": [
+				32,
+				5
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				9,
 				16
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/levers/BonePit_Lever.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				17
 			],
+			"trigger_resource": "",
 			"type": "trigger"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"fencing_resource": "",
+			"pos": [
+				39,
+				12
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
+		},
+		{
+			"aggro_group": 2,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"fencing_resource": "",
+			"pos": [
+				38,
+				12
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastUnlockedDoor.tres",
+			"fencing_resource": "",
 			"pos": [
 				24,
 				4
 			],
+			"trigger_resource": "",
 			"type": "door"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceEast.tres",
+			"fencing_resource": "",
 			"pos": [
 				10,
 				8
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/BonePit/floor_1/doors/EastLockedDoor.tres",
+			"fencing_resource": "",
 			"pos": [
 				35,
 				6
 			],
+			"trigger_resource": "",
 			"type": "door"
 		}
 	],

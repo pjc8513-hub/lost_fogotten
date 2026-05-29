@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://nisq1ffkjjpe"]
+
+[ext_resource type="Script" uid="uid://dy21dtedkuf0s" path="res://resources/NPCData.gd" id="1_7kbc6"]
+
+[resource]
+script = ExtResource("1_7kbc6")
+npc_id = "Mary"
+npc_name = "Mary"
+rotation = 100
+dialogue_start_node = "Mary_Entry"
+scene_path = "res://assets/scenes/house.tscn"
+shop_id = "swamp_shop"
+metadata/_custom_type_script = "uid://dy21dtedkuf0s"
