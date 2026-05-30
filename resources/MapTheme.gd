@@ -1,6 +1,12 @@
 extends Resource
 class_name MapTheme
 
+@export_group("Visual Style")
+@export var palette_texture: Texture2D
+@export var pixel_size: float = 8.0
+@export var dither_strength: float = 0.15
+@export var contrast: float = 1.4
+
 @export_group("World Environment")
 ## Holds the custom sky, fog, ambient light, and tonemapping for this theme.
 @export var environment: Environment
