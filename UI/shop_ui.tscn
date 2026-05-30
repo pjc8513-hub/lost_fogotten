@@ -2,8 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bq10fqs41ondq" path="res://UI/shop_ui.gd" id="1_r8gjt"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8gjt"]
+bg_color = Color(0.2051174, 0.20511746, 0.20511732, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5pilf"]
+bg_color = Color(0.2051174, 0.20511746, 0.20511732, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xok0"]
+bg_color = Color(0.2051174, 0.20511746, 0.20511732, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imt7e"]
+bg_color = Color(0.2051174, 0.20511746, 0.20511732, 1)
+
 [node name="ShopUI" type="Control" unique_id=1705231141]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,10 +34,12 @@ theme_override_constants/separation = 200
 
 [node name="ShopName" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=763295012]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_r8gjt")
 text = "Jo's Goods"
 
 [node name="PlayerLabel" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=1169510813]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_5pilf")
 text = "Character's Inventory"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=451483379]
@@ -53,7 +66,13 @@ size_flags_vertical = 3
 
 [node name="Description" type="Label" parent="VBoxContainer" unique_id=937127519]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7xok0")
 
 [node name="Amount" type="Label" parent="VBoxContainer" unique_id=1699737787]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_imt7e")
 text = "Gold:"
+
+[node name="CloseButton" type="Button" parent="VBoxContainer" unique_id=1692957322]
+layout_mode = 2
+text = "Close"

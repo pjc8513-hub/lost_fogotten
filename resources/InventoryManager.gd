@@ -75,6 +75,13 @@ func party_has_item(item_id: String) -> bool:
 
 	return false
 
+func get_items(character) -> Array:
+
+	if character == null:
+		return []
+
+	return character.inventory
+
 func get_item_count(character, item_id: String) -> int:
 
 	if character == null:

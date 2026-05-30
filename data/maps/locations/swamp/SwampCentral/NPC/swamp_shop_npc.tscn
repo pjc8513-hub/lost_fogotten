@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dpf6waocy5la7" path="res://data/maps/locations/swamp/SwampCentral/NPC/shop_component.gd" id="2_jubkb"]
 [ext_resource type="Script" uid="uid://xkc3nvk136u0" path="res://data/maps/locations/swamp/SwampCentral/NPC/shop_data_component.gd" id="3_052by"]
 [ext_resource type="Script" uid="uid://20m0oifjja3h" path="res://data/maps/locations/swamp/SwampCentral/NPC/transaction_component.gd" id="4_gmjcv"]
+[ext_resource type="PackedScene" uid="uid://br3gis8r73mxp" path="res://assets/scenes/house.tscn" id="5_jubkb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ideak"]
 
@@ -24,8 +25,11 @@ script = ExtResource("2_jubkb")
 
 [node name="ShopDataComponent" type="Node" parent="ShopComponent" unique_id=1206523965]
 script = ExtResource("3_052by")
+shop_id = "swamp_shop"
 
 [node name="TransactionComponent" type="Node" parent="ShopComponent" unique_id=355231755]
 script = ExtResource("4_gmjcv")
+
+[node name="house" parent="." unique_id=447586318 instance=ExtResource("5_jubkb")]
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

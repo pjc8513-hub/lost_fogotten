@@ -27,6 +27,17 @@ enum Equip_Slot {
 @export var is_stackable: bool = false
 @export var sell_value: int = 0
 @export var equip_slot: Equip_Slot
+@export var description: String = ""
+
+var value: int:
+	get:
+		return sell_value
+	set(val):
+		sell_value = val
+
+static func get_item(item_id: String) -> ItemData:
+	return ItemDatabase.get_item(item_id)
+
 
 @export_group("Stat Bonuses")
 @export var might_bonus: int = 0

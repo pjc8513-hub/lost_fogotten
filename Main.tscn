@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://76lc3eevcy1o" path="res://systems/Dialogue/DialogueUI.tscn" id="14_dialogue_ui"]
 [ext_resource type="Shader" uid="uid://cn103gqkartfp" path="res://data/shaders/Main_shader.gdshader" id="15_fpfj3"]
 [ext_resource type="PackedScene" uid="uid://xbcv3a5dvjqa" path="res://automap.tscn" id="15_j4qnp"]
+[ext_resource type="PackedScene" uid="uid://wncs8u3ouvms" path="res://UI/shop_ui.tscn" id="16_fpfj3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sc1dx"]
 shader = ExtResource("15_fpfj3")
@@ -51,6 +52,9 @@ scale = Vector2(0.92, 0.9200001)
 focus_mode = 2
 focus_behavior_recursive = 2
 script = ExtResource("2_lgr22")
+
+[node name="ShopUI" parent="SubViewportContainer" unique_id=1705231141 instance=ExtResource("16_fpfj3")]
+layout_mode = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1540803516]
 own_world_3d = true

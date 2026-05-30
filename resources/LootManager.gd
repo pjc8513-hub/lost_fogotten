@@ -83,11 +83,12 @@ func roll_loot(tables: Array[Loot_Table], bonus_luck: int = 0) -> Array[String]:
 
 # Helper if you want to convert item_id -> ItemData resource later
 func get_item_data(item_id: String) -> Resource:
-	var path = "res://data/weapons/%s.tres" % item_id
-	if ResourceLoader.exists(path):
-		return load(path)
-	push_warning("LootManager: ItemData not found: %s" % path)
+	var item_data = ItemDatabase.get_item(item_id)
+	if item_data != null:
+		return item_data
+	push_warning("LootManager: ItemData not found: %s" % item_id)
 	return null
+
 
 func create_item_instance(item_id: String) -> ItemInstance:
 	var item_data := get_item_data(item_id)

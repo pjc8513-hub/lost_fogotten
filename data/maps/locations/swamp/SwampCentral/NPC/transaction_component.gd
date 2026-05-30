@@ -7,12 +7,21 @@ signal transaction_failed(reason: String)
 # We can pass a reference to the local shop's data if needed
 @export var shop_data: ShopDataComponent
 
+func _ready() -> void:
+	if shop_data == null:
+		shop_data = get_node_or_null("../ShopDataComponent") as ShopDataComponent
+
 func buy_item(item_id: String, buyer) -> bool:
+	if buyer == null:
+		transaction_failed.emit("No buyer selected")
+		return false
+
 	var item_data = ItemDatabase.get_item(item_id)
 	if not item_data:
 		return false
 		
-	var price = item_data.value
+	var modifier = shop_data.get_buy_markup() if shop_data else 1.0
+	var price = int(item_data.value * modifier)
 	
 	# Rule 1: Can we afford it?
 	if PartyState.gold < price:
@@ -34,7 +43,7 @@ func sell_item(seller, item_instance: ItemInstance) -> bool:
 		return false
 		
 	# Use the modifier from the attached shop data, or default to 0.5
-	var modifier = shop_data.base_sell_modifier if shop_data else 0.5
+	var modifier = shop_data.get_sell_ratio() if shop_data else 0.5
 	var sell_price = int(item_instance.item_data.value * modifier)
 	
 	InventoryManager.remove_item(seller, item_instance)
