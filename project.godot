@@ -45,6 +45,7 @@ InventoryManager="*uid://dc1u85n8f60ru"
 QuestManager="*uid://d4lqrdl1bjli8"
 NPCManager="*uid://ckvfobf8qnfsn"
 ShopDatabase="*uid://cfluiaquhkyp7"
+ShopManager="*uid://bufupkxggwb81"
 
 [display]
 

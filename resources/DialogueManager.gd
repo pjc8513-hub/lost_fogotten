@@ -179,8 +179,7 @@ func execute_action(action_dict: Dictionary):
 	match action:
 
 		"open_shop":
-			#ShopManager.open_shop(action_dict.get("shop_id", ""))
-			pass
+			ShopManager.open_shop(action_dict.get("shop_id", ""))
 
 		"accept_quest":
 			QuestManager.accept_quest(action_dict.get("quest_id", ""))
