@@ -607,14 +607,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				6,
 				3
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -2565,14 +2565,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				21,
 				4
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -6635,14 +6635,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				39,
 				12
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -6822,14 +6822,14 @@
 		},
 		{
 			"atlas": [
-				4,
-				0
+				0,
+				3
 			],
 			"pos": [
 				38,
 				12
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -7175,15 +7175,15 @@
 			"type": "exit"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
 			"fencing_resource": "",
 			"pos": [
 				6,
 				3
 			],
 			"trigger_resource": "",
-			"type": "dungeon"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -7252,15 +7252,15 @@
 			"type": "chest"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
 			"fencing_resource": "",
 			"pos": [
 				21,
 				4
 			],
 			"trigger_resource": "",
-			"type": "dungeon"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -7329,26 +7329,26 @@
 			"type": "trigger"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
 			"fencing_resource": "",
 			"pos": [
 				39,
 				12
 			],
 			"trigger_resource": "",
-			"type": "dungeon"
+			"type": "enemy"
 		},
 		{
-			"aggro_group": 2,
-			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree2.tres",
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/toadstool.tres",
 			"fencing_resource": "",
 			"pos": [
 				38,
 				12
 			],
 			"trigger_resource": "",
-			"type": "dungeon"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
