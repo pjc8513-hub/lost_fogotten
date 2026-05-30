@@ -24,12 +24,14 @@ func buy_item(item_id: String, buyer) -> bool:
 	var price = int(item_data.value * modifier)
 	
 	# Rule 1: Can we afford it?
-	if PartyState.gold < price:
+	if PartyState.party_gold < price:
 		transaction_failed.emit("Not enough gold")
 		return false
 		
 	# Execute the trade
-	PartyState.remove_gold(price)
+	if not PartyState.remove_gold(price):
+		transaction_failed.emit("Not enough gold")
+		return false
 	
 	var instance = ItemInstance.new()
 	instance.item_data = item_data

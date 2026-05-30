@@ -26,6 +26,22 @@ var party_gold: int = 0:
 	set(value):
 		party_gold = max(0, value)
 		GameEvents.gold_changed.emit(party_gold)
+
+func add_gold(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	party_gold += amount
+
+func remove_gold(amount: int) -> bool:
+	if amount <= 0:
+		return true
+
+	if party_gold < amount:
+		return false
+
+	party_gold -= amount
+	return true
 		
 var party_food: int = 5:
 	set(value):

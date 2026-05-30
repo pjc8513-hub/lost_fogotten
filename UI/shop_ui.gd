@@ -33,6 +33,9 @@ func _ready() -> void:
 	character_inventory.item_selected.connect(_on_character_item_selected)
 	character_inventory.item_activated.connect(_on_character_item_double_clicked)
 
+	if close_button and not close_button.pressed.is_connected(_on_close_button_pressed):
+		close_button.pressed.connect(_on_close_button_pressed)
+
 
 func _on_shop_manager_opened(shop_id: String) -> void:
 	var shop_data := ShopDatabase.get_shop(shop_id)
@@ -72,6 +75,10 @@ func close_shop():
 	current_shop_data = null
 	active_buyer = null
 	visible = false
+
+
+func _on_close_button_pressed() -> void:
+	ShopManager.close_shop()
 
 
 # 2. REFRESH: Redraw lists based on components and global data state
@@ -185,7 +192,10 @@ func _buy_item(item_id: String) -> void:
 		GameEvents.message_logged.emit("Not enough gold")
 		return
 
-	PartyState.remove_gold(price)
+	if not PartyState.remove_gold(price):
+		GameEvents.message_logged.emit("Not enough gold")
+		return
+
 	var instance := ItemInstance.new()
 	instance.item_data = item_data
 	InventoryManager.add_item(active_buyer, instance)
