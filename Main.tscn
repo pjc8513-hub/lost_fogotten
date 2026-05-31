@@ -77,9 +77,6 @@ mouse_filter = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport" unique_id=917973934]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1741699624]
-distance_fade_enabled = true
-
 [node name="Player" parent="SubViewportContainer/SubViewport" unique_id=2005319369 instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3875208, 0, 3.453848)
 

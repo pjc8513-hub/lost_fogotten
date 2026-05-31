@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://duaicc2jefihn"]
 
 [ext_resource type="Script" uid="uid://c34xmu5o88q7e" path="res://Player.gd" id="1_t0xf4"]
+[ext_resource type="Script" uid="uid://cnnano1hydq54" path="res://omni_light_3d.gd" id="2_jmh4p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0xf4"]
 shading_mode = 0
@@ -71,6 +72,8 @@ script = ExtResource("1_t0xf4")
 light_energy = 0.7
 distance_fade_enabled = true
 omni_range = 8.0
+omni_attenuation = 2.0
+script = ExtResource("2_jmh4p")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2122015874]
 current = true
