@@ -52,8 +52,19 @@ func _ready():
 	if map_theme == null:
 		push_warning("Failed to load map theme: " + theme_path)
 	#var map_theme = load("res://data/maps/themes/swamp_theme.tres") #testing
-	_play_map_music(map_theme)
+
+	# --- NEW: Update the post-processing shader with this theme's properties ---
+	if map_theme != null and $SubViewportContainer/SubViewport/ShaderDitheringLayer/ColorRect != null:
+		var mat = $SubViewportContainer/SubViewport/ShaderDitheringLayer/ColorRect.material as ShaderMaterial
+		if mat:
+			if map_theme.palette_texture:
+				mat.set_shader_parameter("palette_texture", map_theme.palette_texture)
+			mat.set_shader_parameter("pixel_size", map_theme.pixel_size)
+			mat.set_shader_parameter("dither_strength", map_theme.dither_strength)
+			mat.set_shader_parameter("contrast", map_theme.contrast)
+	# ----------------------------------------------------------------------------
 	
+	_play_map_music(map_theme)	
 	apply_world_environment(map_theme)
 	call_deferred("_debug_world_environment_state", "after apply deferred")
 	
