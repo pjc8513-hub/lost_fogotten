@@ -70,9 +70,11 @@ script = ExtResource("1_t0xf4")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1826462715]
 light_energy = 0.7
+light_volumetric_fog_energy = 0.7
+shadow_enabled = true
 distance_fade_enabled = true
 omni_range = 8.0
-omni_attenuation = 2.0
+omni_attenuation = 0.02
 script = ExtResource("2_jmh4p")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2122015874]
