@@ -3,10 +3,23 @@
 [ext_resource type="PackedScene" uid="uid://c416811vcc0i8" path="res://assets/models/dirt_floor.tscn" id="1_nfwbj"]
 [ext_resource type="PackedScene" uid="uid://d1lnhxsevd7nj" path="res://assets/models/dirt_ceiling.tscn" id="1_wa45m"]
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xpc5q"]
+[ext_resource type="Texture2D" uid="uid://6bs4htwghmem" path="res://assets/palettes/natural.png" id="3_3rcxl"]
 [ext_resource type="PackedScene" uid="uid://dncrlmmlpylle" path="res://assets/models/dirt_wall.tscn" id="3_wa45m"]
+
+[sub_resource type="Environment" id="Environment_o8ydx"]
+ambient_light_source = 2
+ambient_light_color = Color(0.10072347, 0.034894697, 0.21163273, 1)
+tonemap_mode = 3
+ssao_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.15
+volumetric_fog_albedo = Color(0.11858138, 0.11858138, 0.11858138, 1)
 
 [resource]
 script = ExtResource("1_xpc5q")
+palette_texture = ExtResource("3_3rcxl")
+environment = SubResource("Environment_o8ydx")
+torch_base_energy = 0.8
 wall_scene = ExtResource("3_wa45m")
 random_wall_variation = true
 floor_scene = ExtResource("1_nfwbj")

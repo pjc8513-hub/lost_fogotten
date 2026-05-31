@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://ced3pdodrh46v"]
 
 [ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_1ndyi"]
-[ext_resource type="Texture2D" uid="uid://6k20t7r5mtpb" path="res://assets/sprites/enemies/toadstool-1.png" id="2_1ndyi"]
+[ext_resource type="Texture2D" uid="uid://cnks2t86tp8sw" path="res://assets/sprites/enemies/Toadstool.png" id="2_1ndyi"]
 
 [resource]
 resource_local_to_scene = true

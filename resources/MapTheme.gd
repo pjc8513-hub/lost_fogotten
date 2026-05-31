@@ -11,6 +11,14 @@ class_name MapTheme
 ## Holds the custom sky, fog, ambient light, and tonemapping for this theme.
 @export var environment: Environment
 
+@export_group("Player Torch Settings")
+@export var enable_flicker: bool = true
+@export var torch_base_energy: float = 1.0
+@export var torch_omni_range: float = 10.0
+@export var torch_flicker_amount: float = 0.15
+@export var torch_flicker_speed: float = 15.0
+@export var torch_color: Color = Color(0.923, 0.822, 0.6, 1.0) # Warm torch light
+
 @export_group("Wall Settings")
 @export var wall_scene: PackedScene
 @export var wall_materials: Array[Material] = []

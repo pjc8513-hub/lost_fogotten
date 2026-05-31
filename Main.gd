@@ -107,6 +107,16 @@ func apply_world_environment(theme: MapTheme) -> void:
 		return
 	print("[WorldEnv] Theme: ", theme.resource_path)
 	print("[WorldEnv] Theme environment: ", _describe_environment(theme.environment))
+	
+	# --- NEW: Find your player's OmniLight3D and apply the theme settings ---
+	# Adjust this path to wherever your torch light node lives inside the sub_viewport
+	var player_torch = sub_viewport.find_child("TorchLight", true, false) as OmniLight3D
+	if player_torch and player_torch.has_method("configure_torch"):
+		player_torch.configure_torch(theme)
+	else:
+		push_warning("[WorldEnv] Player TorchLight node not found or missing configuration method.")
+	# ------------------------------------------------------------------------
+	
 	if theme.environment == null:
 		push_warning("Map theme has no environment assigned: " + str(theme.resource_path))
 		return

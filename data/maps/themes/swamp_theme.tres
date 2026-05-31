@@ -5,31 +5,41 @@
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xf5sl"]
 [ext_resource type="Material" uid="uid://yrw022mgcxij" path="res://assets/textures/mud_floor.tres" id="2_5gcf0"]
 [ext_resource type="PackedScene" uid="uid://citsomkx0f8di" path="res://data/maps/locations/swamp/SwampSouth/FloorMarsh.tscn" id="4_qcl7j"]
-[ext_resource type="Texture2D" uid="uid://dfgtt3a4jg841" path="res://assets/palettes/adventure.png" id="5_diyux"]
+[ext_resource type="Texture2D" uid="uid://d2l8ua56sk84b" path="res://assets/palettes/windows-95-256-colours-1x.png" id="5_diyux"]
 [ext_resource type="Material" uid="uid://dd5vncr4p0ip8" path="res://assets/textures/grass_rock.tres" id="6_diyux"]
 [ext_resource type="PackedScene" uid="uid://rc5cqfinora8" path="res://assets/models/mosswall_2.tscn" id="6_peojr"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qcl7j"]
 panorama = ExtResource("1_1f2vf")
+energy_multiplier = 0.5
 
 [sub_resource type="Sky" id="Sky_27vsx"]
 sky_material = SubResource("PanoramaSkyMaterial_qcl7j")
+radiance_size = 2
 
 [sub_resource type="Environment" id="Environment_877u2"]
 background_mode = 2
 sky = SubResource("Sky_27vsx")
-tonemap_mode = 3
-fog_enabled = true
+ambient_light_source = 2
+tonemap_exposure = 1.04
+ssao_enabled = true
 fog_light_color = Color(0.7411765, 0.8509804, 0.60784316, 1)
 fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.7806912, 1, 0.75936747, 1)
+volumetric_fog_emission_energy = 0.5
+volumetric_fog_gi_inject = 0.5
+volumetric_fog_sky_affect = 0.0
 
 [resource]
 script = ExtResource("1_xf5sl")
 palette_texture = ExtResource("5_diyux")
 pixel_size = 6.0
 dither_strength = 0.05
-contrast = 2.0
+contrast = 1.0
 environment = SubResource("Environment_877u2")
+enable_flicker = false
 wall_scene = ExtResource("6_peojr")
 wall_materials = Array[Material]([ExtResource("6_diyux")])
 random_wall_variation = true

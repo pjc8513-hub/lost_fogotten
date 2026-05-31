@@ -1,11 +1,73 @@
 [gd_scene format=3 uid="uid://b6i6ikx6ur76f"]
 
 [ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_bx32f"]
-[ext_resource type="Resource" uid="uid://ced3pdodrh46v" path="res://data/enemies/toadstool.tres" id="2_kvx1c"]
-[ext_resource type="Texture2D" uid="uid://6k20t7r5mtpb" path="res://assets/sprites/enemies/toadstool-1.png" id="3_3e415"]
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="2_bx32f"]
+[ext_resource type="Texture2D" uid="uid://cnks2t86tp8sw" path="res://assets/sprites/enemies/Toadstool.png" id="3_kvx1c"]
+
+[sub_resource type="Resource" id="Resource_3e415"]
+resource_local_to_scene = true
+script = ExtResource("2_bx32f")
+enemy_name = "Toadstool"
+scene_path = "uid://b6i6ikx6ur76f"
+hp = 5
+armor_class = 8
+dice_sides = 6
+critical_chance = 2
+ailment = "stun"
+attack_speed = 1
+xp = 70
+gold = 30
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("3_kvx1c")
+loot_table = Array[int]([0])
+custom_scale = Vector3(1.2, 1.2, 1)
+custom_position = Vector3(0, 0, 0.5)
+custom_pixel_size = 2
+
+[sub_resource type="Animation" id="Animation_32xcy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xvbb4"]
+resource_name = "attack"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.19999999, 0.36666667, 0.56666666, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bfmds"]
+_data = {
+&"RESET": SubResource("Animation_32xcy"),
+&"attack": SubResource("Animation_xvbb4")
+}
 
 [node name="Enemy" unique_id=1461009798 instance=ExtResource("1_bx32f")]
-enemy_data = ExtResource("2_kvx1c")
+enemy_data = SubResource("Resource_3e415")
 
 [node name="Sprite3D" parent="." index="0" unique_id=727538149]
-texture = ExtResource("3_3e415")
+texture = ExtResource("3_kvx1c")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
+libraries/ = SubResource("AnimationLibrary_bfmds")
