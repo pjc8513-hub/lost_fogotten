@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3]
+
+[ext_resource type="Script" path="res://resources/EnemySkillData.gd" id="1_curse"]
+
+[resource]
+script = ExtResource("1_curse")
+skill_id = "withering_curse"
+display_name = "Withering Curse"
+description = "Lowers the whole party's combat accuracy."
+target_mode = 2
+priority = 7
+use_chance = 60
+cooldown_turns = 3
+consumes_movement = 1
+range_tiles = 5
+requires_line_of_sight = true
+stat_modifiers = {
+"accuracy": -2
+}
+status_effect = "none"
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

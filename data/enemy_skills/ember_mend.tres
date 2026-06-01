@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3]
+
+[ext_resource type="Script" path="res://resources/EnemySkillData.gd" id="1_mend"]
+
+[resource]
+script = ExtResource("1_mend")
+skill_id = "ember_mend"
+display_name = "Ember Mend"
+description = "Restores HP and briefly empowers the enemy."
+target_mode = 0
+priority = 8
+use_chance = 100
+cooldown_turns = 4
+consumes_movement = 1
+range_tiles = 1
+requires_line_of_sight = false
+heal_rolls = 1
+heal_die_sides = 6
+bonus_healing = 2
+stat_modifiers = {
+"bonus_damage": 2
+}
+status_effect = "none"
+cast_message = "[color=green]{enemy}[/color] gathers embers around itself."

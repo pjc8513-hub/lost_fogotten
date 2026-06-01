@@ -106,6 +106,8 @@ func _clear_end_of_combat_effects() -> void:
 	for enemy in World.get_enemies():
 		if "stun" in enemy.enemy_data.status_effects:
 			enemy.enemy_data.status_effects.erase("stun")
+		if enemy.enemy_data.has_method("clear_combat_buffs"):
+			enemy.enemy_data.clear_combat_buffs()
 
 	CombatState.clear_party_combat_statuses()
 

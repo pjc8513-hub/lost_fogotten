@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3]
+
+[ext_resource type="Script" path="res://resources/EnemySkillData.gd" id="1_fireball"]
+
+[resource]
+script = ExtResource("1_fireball")
+skill_id = "fireball"
+display_name = "Fireball"
+description = "A reusable ranged fire attack for enemies."
+target_mode = 1
+priority = 10
+use_chance = 75
+cooldown_turns = 2
+consumes_movement = 1
+range_tiles = 4
+requires_line_of_sight = true
+dice_rolls = 2
+dice_sides = 6
+bonus_damage = 1
+element = "fire"
+uses_accuracy_roll = true
+can_crit = true
+status_effect = "burn"
+status_chance = 20
+cast_message = "[color=red]{enemy}[/color] conjures [color=orange]{skill}[/color]!"
+projectile_scene_path = "res://FireballScene.tscn"
+projectile_travel_time = 0.5

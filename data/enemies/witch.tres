@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_c2qil"]
 [ext_resource type="Texture2D" uid="uid://bmjdvfg8u6yxo" path="res://assets/sprites/enemies/witch.png" id="2_c2qil"]
+[ext_resource type="Resource" path="res://data/enemy_skills/fireball.tres" id="3_fireball"]
+[ext_resource type="Resource" path="res://data/enemy_skills/withering_curse.tres" id="4_curse"]
 
 [resource]
 resource_local_to_scene = true
@@ -14,6 +16,7 @@ dice_sides = 6
 bonus_damage = 3
 is_ranged = true
 ranged_tiles = 4
+skills = Array[Resource]([ExtResource("3_fireball"), ExtResource("4_curse")])
 accuracy = 2
 critical_chance = 2
 attack_speed = 2

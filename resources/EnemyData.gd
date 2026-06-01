@@ -18,6 +18,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var is_ranged: bool = false
 @export var ranged_tiles: int = 0
 @export var status_effects: Array[String] = []
+@export var skills: Array[Resource] = []
 @export var accuracy: int = 0   # flat bonus to hit rolls
 @export var critical_chance: int = 0
 @export var magic_bonus: int = 0
@@ -50,6 +51,8 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var custom_position:Vector3 = Vector3(0, 0, 0)
 @export var custom_pixel_size: int = 0.01
 
+var combat_buffs: Dictionary = {}
+
 func get_ai_enum() -> AIBehavior:
 	match ai_behavior:
 		"Hunter": return AIBehavior.HUNTER
@@ -76,4 +79,47 @@ func get_resistance(element: String) -> int:
 	return 0
 	
 func get_accuracy() -> int:
-	return accuracy
+	return accuracy + _get_combat_bonus("accuracy")
+
+func get_armor_class() -> int:
+	return armor_class + _get_combat_bonus("armor_class")
+
+func get_bonus_damage() -> int:
+	return bonus_damage + _get_combat_bonus("bonus_damage")
+
+func get_magic_bonus() -> int:
+	return magic_bonus + _get_combat_bonus("magic_bonus")
+
+func apply_combat_buff(stat_name: String, value: int) -> void:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty() or value == 0:
+		return
+
+	var current_value := int(combat_buffs.get(normalized, 0))
+	if value > 0:
+		combat_buffs[normalized] = max(current_value, value)
+	elif value < 0:
+		combat_buffs[normalized] = min(current_value, value)
+
+func clear_combat_buffs() -> void:
+	combat_buffs.clear()
+
+func _get_combat_bonus(stat_name: String) -> int:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty():
+		return 0
+	return int(combat_buffs.get(normalized, 0))
+
+func _normalize_combat_buff_key(stat_name: String) -> String:
+	var key := stat_name.to_lower().strip_edges()
+	match key:
+		"accuracy":
+			return "accuracy"
+		"ac_bonus", "armor_class":
+			return "armor_class"
+		"bonus_damage", "damage":
+			return "bonus_damage"
+		"magic", "magic_bonus", "magic_amp":
+			return "magic_bonus"
+		_:
+			return ""

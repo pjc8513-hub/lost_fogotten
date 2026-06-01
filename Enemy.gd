@@ -22,6 +22,8 @@ var forward_vector: Vector2i = Vector2i(0, 1) # default facing south
 var _pending_commands: int = 0
 var movement_remaining: int = 0
 var damage_flash_tween: Tween = null
+var _skill_cooldowns: Dictionary = {}
+const EnemySkillCommandScript = preload("res://commands/EnemySkillCommand.gd")
 
 
 
@@ -92,6 +94,7 @@ func move_to(target: Vector2i):
 
 func take_turn():
 	movement_remaining = max(0, enemy_data.movement)
+	_tick_skill_cooldowns()
 	print("[Enemy]", enemy_data.enemy_name, "take_turn movement=", movement_remaining, " ai=", enemy_data.get_ai_enum())
 	# Placeholder AI — enemy does nothing for now
 	#print(enemy_data.enemy_name, " takes its turn (placeholder)")
@@ -113,6 +116,9 @@ func _take_turn_hunter() -> void:
 		emit_signal("turn_finished")
 		return
 
+	if _try_skill_with_remaining_movement():
+		return
+
 	# Try melee attack if adjacent
 	if _try_attack_with_remaining_movement():
 		return
@@ -127,6 +133,8 @@ func _take_turn_hunter() -> void:
 
 	while movement_remaining > 0:
 		# Check for attacks after each movement
+		if _try_skill_with_remaining_movement():
+			return
 		if _try_attack_with_remaining_movement():
 			return
 		if _try_ranged_attack_with_remaining_movement():
@@ -140,6 +148,8 @@ func _take_turn_hunter() -> void:
 		break
 
 	# Final attempt at attack after movement
+	if _try_skill_with_remaining_movement():
+		return
 	if _try_attack_with_remaining_movement():
 		return
 	if _try_ranged_attack_with_remaining_movement():
@@ -149,12 +159,20 @@ func _take_turn_hunter() -> void:
 
 	
 func _take_turn_guard():
-	print('Guard took turn (placeholder!)')
+	if _try_skill_with_remaining_movement():
+		return
+	if _try_attack_with_remaining_movement():
+		return
+	if _try_ranged_attack_with_remaining_movement():
+		return
+	print('Guard took turn without acting.')
 	emit_signal("turn_finished")
 	
 func _take_turn_random() -> void:
 	while movement_remaining > 0:
 		# Try attacks before moving
+		if _try_skill_with_remaining_movement():
+			return
 		if _try_attack_with_remaining_movement():
 			return
 		if _try_ranged_attack_with_remaining_movement():
@@ -171,6 +189,8 @@ func _take_turn_random() -> void:
 			break
 
 	# Final attack attempt after movement
+	if _try_skill_with_remaining_movement():
+		return
 	if _try_attack_with_remaining_movement():
 		return
 	if _try_ranged_attack_with_remaining_movement():
@@ -332,6 +352,105 @@ func _try_ranged_attack_with_remaining_movement() -> bool:
 func _queue_ranged_attack() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_queue_ranged_attack")
 	_queue_command(RangedAttackCommand.new())
+
+func _try_skill_with_remaining_movement() -> bool:
+	var skill: Resource = _choose_available_skill()
+	if skill == null:
+		return false
+	if movement_remaining < max(0, skill.consumes_movement):
+		return false
+
+	movement_remaining -= max(0, skill.consumes_movement)
+	print("[Enemy]", enemy_data.enemy_name, "_try_skill_with_remaining_movement -> queue skill ", skill.get_log_name(), " movement now=", movement_remaining)
+	_queue_skill(skill)
+	return true
+
+func _choose_available_skill() -> Resource:
+	if enemy_data == null or enemy_data.skills.is_empty():
+		return null
+
+	var usable: Array[Resource] = []
+	for skill in enemy_data.skills:
+		if _can_use_skill(skill):
+			usable.append(skill)
+
+	if usable.is_empty():
+		return null
+
+	usable.sort_custom(func(a: Resource, b: Resource): return int(a.priority) > int(b.priority))
+	var highest_priority: int = int(usable[0].priority)
+	var choices: Array[Resource] = usable.filter(func(skill: Resource): return int(skill.priority) == highest_priority)
+	return choices.pick_random()
+
+func _can_use_skill(skill: Resource) -> bool:
+	if skill == null:
+		return false
+	var key: String = _get_skill_key(skill)
+	if int(_skill_cooldowns.get(key, 0)) > 0:
+		return false
+	if movement_remaining < max(0, skill.consumes_movement):
+		return false
+	if skill.use_chance < 100 and randi_range(1, 100) > skill.use_chance:
+		return false
+	if not _skill_has_valid_target(skill):
+		return false
+	return true
+
+func _skill_has_valid_target(skill: Resource) -> bool:
+	match skill.target_mode:
+		0:
+			if skill.has_healing() and enemy_data.hp >= max_hp:
+				return false
+			return enemy_data.hp > 0
+		1, 2:
+			return _has_living_party_target_in_skill_range(skill)
+		3, 4:
+			return not CombatState.get_engaged_enemies().is_empty()
+	return false
+
+func _has_living_party_target_in_skill_range(skill: Resource) -> bool:
+	var player = World.get_player()
+	if player == null:
+		return false
+	for member in PartyState.active_party:
+		if member == null or member.current_hp <= 0:
+			continue
+		if not _is_player_position_in_skill_range(skill, player.grid_position):
+			continue
+		return true
+	return false
+
+func _is_player_position_in_skill_range(skill: Resource, player_pos: Vector2i) -> bool:
+	var diff = (grid_position - player_pos).abs()
+	var distance: int = max(diff.x, diff.y)
+	if distance > max(1, skill.range_tiles):
+		return false
+	if skill.requires_line_of_sight and not World.has_line_of_sight(grid_position, player_pos):
+		return false
+	return true
+
+func _queue_skill(skill: Resource) -> void:
+	var cmd: Command = EnemySkillCommandScript.new()
+	cmd.skill = skill
+	_queue_command(cmd)
+
+func set_skill_cooldown(skill: Resource, turns: int) -> void:
+	if skill == null or turns <= 0:
+		return
+	_skill_cooldowns[_get_skill_key(skill)] = turns
+
+func _tick_skill_cooldowns() -> void:
+	for key in _skill_cooldowns.keys():
+		var remaining: int = int(_skill_cooldowns[key]) - 1
+		if remaining <= 0:
+			_skill_cooldowns.erase(key)
+		else:
+			_skill_cooldowns[key] = remaining
+
+func _get_skill_key(skill: Resource) -> String:
+	if not skill.skill_id.strip_edges().is_empty():
+		return skill.skill_id
+	return skill.resource_path
 	
 func _on_turn_complete() -> void:
 	print("[Enemy]", enemy_data.enemy_name, "_on_turn_complete emit turn_finished")

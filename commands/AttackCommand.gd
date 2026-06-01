@@ -63,7 +63,8 @@ func _perform_single_attack(target) -> void:
 		return
 	
 	# 2. Roll dice
-	var raw := CombatLogic.roll_dice(actor.enemy_data.dice_rolls, actor.enemy_data.dice_sides, actor.enemy_data.bonus_damage)
+	var damage_bonus = actor.enemy_data.get_bonus_damage() if actor.enemy_data.has_method("get_bonus_damage") else actor.enemy_data.bonus_damage
+	var raw := CombatLogic.roll_dice(actor.enemy_data.dice_rolls, actor.enemy_data.dice_sides, damage_bonus)
 	if outcome == "crit":
 		raw *= 2
 	
