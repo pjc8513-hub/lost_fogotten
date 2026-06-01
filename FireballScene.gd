@@ -3,7 +3,6 @@ extends Node3D
 @onready var sprite: Sprite3D = $Sprite3D
 @onready var anim_player: AnimationPlayer = $Sprite3D/AnimationPlayer
 var cast_particles: Node = null
-@onready var cpu_particles_3d: CPUParticles3D = $Sprite3D/CPUParticles3D
 
 
 var start_pos: Vector3
