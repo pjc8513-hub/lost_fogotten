@@ -51,6 +51,13 @@ func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_pa
 		var fireball_scene = load(anim_path)
 		if fireball_scene:
 			var fireball = fireball_scene.instantiate()
-			get_tree().root.add_child(fireball)
+			# Add the projectile to the SubViewport so it renders in the game world
+			var main = get_tree().root.get_node_or_null("Main")
+			if main and main.has_node("SubViewportContainer/SubViewport"):
+				var sub_viewport = main.get_node("SubViewportContainer/SubViewport")
+				sub_viewport.add_child(fireball)
+			else:
+				# Fallback to root if Main/SubViewport not found
+				get_tree().root.add_child(fireball)
 			if fireball.has_method("launch"):
 				fireball.launch(caster_pos, target_pos, 0.5)

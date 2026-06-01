@@ -45,6 +45,5 @@ func launch(from: Vector3, to: Vector3, travel_time: float = 0.5) -> void:
 
 func _on_impact() -> void:
 	# Emit impact signal or play impact animation
-	cpu_particles_3d.restart()
 	GameEvents.spell_impact_animation_finished.emit()
 	queue_free()
