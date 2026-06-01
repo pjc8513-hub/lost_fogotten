@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c416811vcc0i8" path="res://assets/models/dirt_floor.tscn" id="1_nfwbj"]
 [ext_resource type="PackedScene" uid="uid://d1lnhxsevd7nj" path="res://assets/models/dirt_ceiling.tscn" id="1_wa45m"]
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xpc5q"]
-[ext_resource type="Texture2D" uid="uid://6bs4htwghmem" path="res://assets/palettes/natural.png" id="3_3rcxl"]
+[ext_resource type="Texture2D" uid="uid://d2l8ua56sk84b" path="res://assets/palettes/windows-95-256-colours-1x.png" id="3_3rcxl"]
 [ext_resource type="PackedScene" uid="uid://dncrlmmlpylle" path="res://assets/models/dirt_wall.tscn" id="3_wa45m"]
 
 [sub_resource type="Environment" id="Environment_o8ydx"]
@@ -18,6 +18,7 @@ volumetric_fog_albedo = Color(0.11858138, 0.11858138, 0.11858138, 1)
 [resource]
 script = ExtResource("1_xpc5q")
 palette_texture = ExtResource("3_3rcxl")
+dither_strength = 0.1
 environment = SubResource("Environment_o8ydx")
 torch_base_energy = 0.8
 wall_scene = ExtResource("3_wa45m")

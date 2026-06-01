@@ -71,3 +71,6 @@ vframes = 2
 
 [node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
 libraries/ = SubResource("AnimationLibrary_bfmds")
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1117340174) index="0" unique_id=849891854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002313614, -0.17694092, 0.013864517)

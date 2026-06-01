@@ -27,3 +27,5 @@ func _process(delta: float) -> void:
 	
 	# Flicker around the base energy and range defined by the theme
 	light_energy = theme_ref.torch_base_energy + (noise * theme_ref.torch_flicker_amount)
+
+	omni_range = theme_ref.torch_omni_range + noise * 0.15

@@ -82,6 +82,11 @@ initial_velocity_max = 0.3
 angular_velocity_min = 0.2
 angular_velocity_max = 0.3
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Sprite3D" unique_id=937091929]
+light_color = Color(1, 0.23529412, 0.2901961, 1)
+light_energy = 1.8
+light_volumetric_fog_energy = 0.0
+
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=421532213]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=79402193]

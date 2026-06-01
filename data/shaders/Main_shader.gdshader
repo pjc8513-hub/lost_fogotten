@@ -53,7 +53,7 @@ void fragment() {
     vec2 pixelated_uv = floor(SCREEN_UV * size) / size;
 
     vec3 color = texture(SCREEN_TEXTURE, pixelated_uv).rgb;
-    
+	color = pow(color, vec3(0.9));    
     // Contrast boost (using our uniform)
     color = (color - 0.5) * contrast + 0.5;
     
@@ -62,7 +62,7 @@ void fragment() {
     color = mix(vec3(lum), color, 1.25);
     
     // Optional brightness quantization
-    color = floor(color * 8.0) / 8.0;
+    color = floor(color * 12.0) / 12.0;
     
     // Bayer dithering
     ivec2 pixel_coord = ivec2(mod(FRAGCOORD.xy / pixel_size, 4.0));
