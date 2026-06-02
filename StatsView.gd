@@ -43,13 +43,14 @@ func _refresh_from_character(character):
 	if character == null:
 		return
 
+	# Update available_points FIRST so it's available during stat list building
+	available_points = character.get_available_points()
+
 	var primary_stats = character.get_primary_stats()
 	_build_primary_stat_list(primary_stats)
 
 	var derived_stats = character.get_derived_stats()
 	_build_derived_stat_list(derived_stats)
-
-	available_points = character.get_available_points()
 	
 	# This works in 4.0+ : Dictionary.find_key(value)
 	current_class_name = ClassData.Class_Names.find_key(character.class_names)
