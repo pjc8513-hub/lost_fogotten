@@ -2456,13 +2456,13 @@
 		{
 			"atlas": [
 				1,
-				1
+				2
 			],
 			"pos": [
 				21,
 				29
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -2984,13 +2984,13 @@
 		{
 			"atlas": [
 				1,
-				1
+				2
 			],
 			"pos": [
 				12,
 				25
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -3347,13 +3347,13 @@
 		{
 			"atlas": [
 				1,
-				1
+				2
 			],
 			"pos": [
 				15,
 				29
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -5305,13 +5305,13 @@
 		{
 			"atlas": [
 				1,
-				1
+				2
 			],
 			"pos": [
 				18,
 				30
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -8858,13 +8858,13 @@
 		{
 			"atlas": [
 				1,
-				1
+				2
 			],
 			"pos": [
 				24,
 				21
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -15085,36 +15085,36 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/witch.tres",
 			"fencing_resource": "",
 			"pos": [
 				21,
 				29
 			],
 			"trigger_resource": "",
-			"type": "chest"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/witch.tres",
 			"fencing_resource": "",
 			"pos": [
 				12,
 				25
 			],
 			"trigger_resource": "",
-			"type": "chest"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/witch.tres",
 			"fencing_resource": "",
 			"pos": [
 				15,
 				29
 			],
 			"trigger_resource": "",
-			"type": "chest"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -15217,14 +15217,14 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/witch.tres",
 			"fencing_resource": "",
 			"pos": [
 				18,
 				30
 			],
 			"trigger_resource": "",
-			"type": "chest"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -15272,14 +15272,14 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/misc/NoobChest.tres",
+			"data_resource": "res://data/enemies/witch.tres",
 			"fencing_resource": "",
 			"pos": [
 				24,
 				21
 			],
 			"trigger_resource": "",
-			"type": "chest"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,

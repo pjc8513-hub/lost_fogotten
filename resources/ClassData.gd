@@ -463,6 +463,11 @@ func can_equip_item(item: ItemData) -> bool:
 
 # A rudimentary function to handle taking a hit
 func take_damage(amount: int):
+	# DEBUG: God mode invulnerability - prevent dropping below 1 HP
+	if PartyState.god_mode_active:
+		current_hp = max(1, current_hp - amount)
+		return false
+	
 	# Subtraction triggers the 'set(value)' logic above
 	current_hp -= amount
 	

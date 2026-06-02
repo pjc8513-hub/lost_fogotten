@@ -48,6 +48,9 @@ var party_food: int = 5:
 		party_food = max(0, value)
 		GameEvents.food_changed.emit(party_food)
 
+# DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
+var god_mode_active: bool = false
+
 func _ready():
 	roster.clear()
 	active_party.clear()
@@ -178,6 +181,10 @@ func _set_selected_index(value: int) -> void:
 
 ## Picks one random living party member and applies the damage to them
 func damage_random_member(amount: int) -> String:
+	# DEBUG: Skip damage in god mode
+	if god_mode_active:
+		return ""
+	
 	var living_members = []
 	
 	for member in active_party:
@@ -193,6 +200,9 @@ func damage_random_member(amount: int) -> String:
 
 ## Damages all living party members by a specified amount
 func damage_entire_party(amount: int) -> void:
+	# DEBUG: Skip damage in god mode
+	if god_mode_active:
+		return
 	
 	# active_party contains ClassData instances directly
 	for member in active_party:
