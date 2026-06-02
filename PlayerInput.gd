@@ -25,6 +25,9 @@ func _unhandled_input(event):
 	if event.is_action_pressed("restart"):
 		SceneManager.change_scene("res://Main.tscn")
 
+	if event.is_action("god_mode"):
+		pass
+
 
 	if event.is_action_pressed("select_member_1"):
 		_try_select_party_member(0)

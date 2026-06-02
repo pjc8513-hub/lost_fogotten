@@ -120,6 +120,10 @@ func distribute_xp(xp: int = 0):
 	
 	for i in members.size():
 		var member: ClassData = members[i]
+		# Skip dead party members
+		if member.current_hp <= 0:
+			continue
+		
 		var gained: int = xp_per_member
 		if i < remainder: # distribute remainder 1 by 1
 			gained += 1
@@ -133,6 +137,10 @@ func distribute_xp(xp: int = 0):
 			
 			var points = member.roll_level_up_points()
 			member.gain_level(points) # this should update xp_to_next_level internally
+			
+			# Restore HP and MP on level up
+			member.current_hp = member.get_max_hp()
+			member.current_mp = member.get_max_mp()
 			
 			GameEvents.message_logged.emit("[color=yellow]%s reached level %s![/color]" % [member.member_name, member.level])
 		
@@ -151,6 +159,10 @@ func distribute_individual_xp(xp: int = 0):
 	
 	for i in members.size():
 		var member: ClassData = members[i]
+		# Skip dead party members
+		if member.current_hp <= 0:
+			continue
+		
 		member.xp += xp
 		
 		# Handle multiple level ups
@@ -160,6 +172,10 @@ func distribute_individual_xp(xp: int = 0):
 			
 			var points = member.roll_level_up_points()
 			member.gain_level(points) # this should update xp_to_next_level internally
+			
+			# Restore HP and MP on level up
+			member.current_hp = member.get_max_hp()
+			member.current_mp = member.get_max_mp()
 			
 			GameEvents.message_logged.emit("[color=yellow]%s reached level %s![/color]" % [member.member_name, member.level])
 		
