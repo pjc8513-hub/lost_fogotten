@@ -64,7 +64,7 @@ func _apply_setup(data: ClassData, index: int) -> void:
 	if not data:
 		return
 
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup index=", index, " member=", data.member_name, " texture=", data.sprite_texture)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup index=", index, " member=", data.member_name, " texture=", data.sprite_texture)
 	member_index = index
 	# Use the variable names from your ClassData.gd
 	portrait.texture = null
@@ -85,7 +85,7 @@ func _apply_setup(data: ClassData, index: int) -> void:
 
 	update_ui()
 	call_deferred("_update_border")
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup done texture=", portrait.texture)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _apply_setup done texture=", portrait.texture)
 	call_deferred("show")
 
 func _on_stats_changed(updated_data: ClassData):
@@ -112,6 +112,8 @@ func update_ui():
 	_last_hp_value = my_member_data.current_hp
 	if my_member_data.current_hp <=0:
 		portrait.texture = preload("res://assets/portraits/dead_p.png")
+	else:
+		portrait.texture = my_member_data.sprite_texture
 
 func _flash_portrait_on_damage() -> void:
 	if portrait == null:
