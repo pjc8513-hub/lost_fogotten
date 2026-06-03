@@ -12,3 +12,8 @@ stencil_flags = 2
 
 [node name="Icosphere" parent="." index="0" unique_id=1506948766]
 surface_material_override/0 = SubResource("StandardMaterial3D_pnxv6")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Icosphere" index="0" unique_id=1773309329]
+light_color = Color(1, 0.2784314, 0.25490198, 1)
+light_energy = 2.5
+shadow_enabled = true
