@@ -12,7 +12,7 @@ static func build(data: Dictionary, geometry_parent: Node, entity_parent: Node,
 	
 	_build_geometry(data, geometry_parent, automap_grid, theme)
 	_spawn_entities(data, entity_parent, automap_grid, on_enemy_selected, on_chest_selected, on_dungeon_selected, spawn_id)
-	
+	_spawn_lights(data, entity_parent, theme)
 	return { "automap_grid": automap_grid }
 
 static func load_room_data(file_path: String) -> Dictionary:
@@ -402,3 +402,78 @@ static func _spawn_dungeon(grid_pos: Vector2i, data_path: String,
 	
 	if not on_dungeon_selected.is_null():
 		dungeon.connect("selected", on_dungeon_selected)
+
+static func _spawn_lights(data: Dictionary, parent: Node, theme: MapTheme) -> void:
+	for entry in data.get("lights", []):
+		var pos_data = entry.get("pos", [])
+		if pos_data is String:
+			pos_data = JSON.parse_string(pos_data)
+		if not (pos_data is Array and pos_data.size() >= 2):
+			push_error("Malformed light entry: " + str(entry))
+			continue
+
+		var pos     = Vector2i(int(pos_data[0]), int(pos_data[1]))
+		var ltype   = entry.get("light_type", "")
+		var dpath   = entry.get("data_resource", "")
+
+		match ltype:
+			"brazier":
+				_spawn_brazier(pos, dpath, parent, theme)
+			"black_out":
+				_spawn_blackout_trigger(pos, dpath, parent)
+			"light_restore":
+				_spawn_light_restore_trigger(pos, dpath, parent)
+			_:
+				push_warning("Unknown light_type: " + ltype)
+
+
+static func _spawn_brazier(grid_pos: Vector2i, data_path: String,
+							parent: Node, theme: MapTheme) -> void:
+	if data_path.is_empty() or not FileAccess.file_exists(data_path):
+		push_error("BrazierData not found: " + data_path)
+		return
+
+	var res = load(data_path) as BrazierData
+	if res == null:
+		push_error("Failed to cast BrazierData at: " + data_path)
+		return
+
+	var brazier = load(res.scene_path).instantiate()
+	brazier.grid_position = grid_pos
+	brazier.position      = Vector3(grid_pos.x, 0, grid_pos.y)
+	brazier.brazier_data  = res.duplicate()
+	# Pass theme so the brazier can fall back to theme defaults if its own
+	# data fields are left blank (matches your omni_light_3d.gd pattern)
+	if brazier.has_method("configure"):
+		brazier.configure(theme)
+	parent.add_child(brazier)
+
+
+static func _spawn_blackout_trigger(grid_pos: Vector2i, data_path: String,
+									 parent: Node) -> void:
+	if data_path.is_empty() or not FileAccess.file_exists(data_path):
+		push_error("BlackoutTriggerData not found: " + data_path)
+		return
+
+	var res = load(data_path) as TriggerData
+	var trigger = load(res.scene_path).instantiate()
+	trigger.grid_position = grid_pos
+	trigger.position      = Vector3(grid_pos.x, 0, grid_pos.y)
+	trigger.trigger_data  = res.duplicate()
+	parent.add_child(trigger)
+
+
+static func _spawn_light_restore_trigger(grid_pos: Vector2i, data_path: String,
+										  parent: Node) -> void:
+	# Identical shape to blackout — kept separate so they get distinct
+	# TriggerData scene_paths and execute() logic without a shared type
+	if data_path.is_empty() or not FileAccess.file_exists(data_path):
+		push_error("LightRestoreData not found: " + data_path)
+		return
+
+	var res = load(data_path) as TriggerData
+	var trigger = load(res.scene_path).instantiate()
+	trigger.grid_position = grid_pos
+	trigger.position      = Vector3(grid_pos.x, 0, grid_pos.y)
+	trigger.trigger_data  = res.duplicate()
+	parent.add_child(trigger)

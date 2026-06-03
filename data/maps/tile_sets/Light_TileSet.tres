@@ -1,0 +1,52 @@
+[gd_resource type="TileSet" format=3 uid="uid://rfn3mb1lplqq"]
+
+[ext_resource type="Texture2D" uid="uid://df4iuakurtbc3" path="res://data/maps/tile_sets/SwampTileSetBlank.png" id="1_3gw46"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3gw46"]
+resource_name = "light_type"
+texture = ExtResource("1_3gw46")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(1, 0.32941177, 0.14509805, 1)
+0:1/0/custom_data_0 = "brazier"
+0:1/0/custom_data_2 = "res://data/misc/Brazier.tres"
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+custom_data_layer_0/name = "light_type"
+custom_data_layer_0/type = 4
+custom_data_layer_1/name = "aggro_id"
+custom_data_layer_1/type = 2
+custom_data_layer_2/name = "data_path"
+custom_data_layer_2/type = 4
+custom_data_layer_3/name = "player_start"
+custom_data_layer_3/type = 2
+custom_data_layer_4/name = "fencing_resource"
+custom_data_layer_4/type = 4
+custom_data_layer_5/name = "trigger_resource"
+custom_data_layer_5/type = 4
+sources/5 = SubResource("TileSetAtlasSource_3gw46")

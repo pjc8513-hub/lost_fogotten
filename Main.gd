@@ -38,7 +38,7 @@ func _ready():
 	set_process_unhandled_input(true)
 	var dungeon_data := World.current_dungeon_data
 	var map_path := "res://data/maps/locations/1_test_enemy_map/test_enemy_map.json"
-	var theme_path := "res://data/maps/themes/dirt_theme.tres"
+	var theme_path := "res://data/maps/themes/castle_theme.tres"
 	if dungeon_data != null:
 		if not dungeon_data.map_data_path.is_empty():
 			map_path = dungeon_data.map_data_path

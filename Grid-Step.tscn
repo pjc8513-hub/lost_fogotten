@@ -69,6 +69,7 @@ height = 0.1
 script = ExtResource("1_t0xf4")
 
 [node name="TorchLight" type="OmniLight3D" parent="." unique_id=1826462715]
+visible = false
 light_volumetric_fog_energy = 0.7
 shadow_enabled = true
 distance_fade_enabled = true

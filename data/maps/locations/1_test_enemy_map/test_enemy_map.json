@@ -15304,5 +15304,54 @@
 			"type": "enemy"
 		}
 	],
-	"triggers": []
+	"lights": [
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				5,
+				29
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				30,
+				30
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				22,
+				34
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				12,
+				34
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				27,
+				23
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				4,
+				21
+			]
+		}
+	]
 }
