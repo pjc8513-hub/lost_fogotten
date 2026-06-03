@@ -23,7 +23,13 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 	
 	if event.is_action_pressed("toggle_torch"):
-		# Assuming your player reference has access to the torch node
+	# Ensure the party actually has torches to light
+		if PartyState.party_torches <= 0:
+			SfxManager.play_sfx("thud") # Or an inventory-error sound
+			GameEvents.message_logged.emit("[color=gray]You don't have any torches left to light.[/color]")
+			get_viewport().set_input_as_handled()
+			return
+			
 		if player and player.has_node("TorchLight"):
 			player.get_node("TorchLight").toggle_torch()
 			get_viewport().set_input_as_handled()

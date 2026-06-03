@@ -15,7 +15,7 @@ func hook_up_torch(torch_node: Node) -> void:
 		torch_node.torch_durability_changed.connect(_on_torch_durability_changed)
 		
 		# Immediately catch up to the torch's current values
-		_on_torch_durability_changed(torch_node.current_durability, torch_node.max_durability, torch_node.is_lit)
+		_on_torch_durability_changed(torch_node.current_durability, torch_node.max_durability, PartyState.is_torch_lit)
 		show()
 
 func _on_torch_durability_changed(current: float, max_val: float, torch_is_lit: bool) -> void:

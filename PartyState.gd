@@ -52,6 +52,7 @@ var party_torches: int = 2:
 	set(value):
 		party_torches = max(0, value)
 		GameEvents.torch_changed.emit(party_torches)
+var is_torch_lit: bool = false # Defaults to off when entering the first zone
 
 # DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
 var god_mode_active: bool = false
