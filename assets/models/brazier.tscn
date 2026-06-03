@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://kyy1ro2jvove"]
+
+[ext_resource type="PackedScene" uid="uid://ci2wk3b35j4la" path="res://assets/models/brazier.glb" id="1_pnxv6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnxv6"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.7764706, 0.23529412, 0, 1)
+stencil_flags = 2
+
+[node name="brazier" unique_id=979701869 instance=ExtResource("1_pnxv6")]
+
+[node name="Icosphere" parent="." index="0" unique_id=1506948766]
+surface_material_override/0 = SubResource("StandardMaterial3D_pnxv6")
