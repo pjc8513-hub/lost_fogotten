@@ -39,7 +39,6 @@ pixel_size = 6.0
 dither_strength = 0.05
 contrast = 1.0
 environment = SubResource("Environment_877u2")
-enable_flicker = false
 wall_scene = ExtResource("6_peojr")
 wall_materials = Array[Material]([ExtResource("6_diyux")])
 random_wall_variation = true

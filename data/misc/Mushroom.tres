@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BrazierData" format=3 uid="uid://dhk3qfy1wbblo"]
+
+[ext_resource type="Script" uid="uid://c8erat5cnqm10" path="res://resources/BrazierData.gd" id="1_dqy7e"]
+
+[resource]
+script = ExtResource("1_dqy7e")
+scene_path = "res://assets/models/mushroom.tscn"
+light_color = Color(0.5804584, 0.9345951, 0.921897, 1)
+base_energy = 1.5
+omni_range = 8.0
+flicker_speed = 7.0
+flicker_amount = 0.1
+enable_flicker = false
+metadata/_custom_type_script = "uid://c8erat5cnqm10"

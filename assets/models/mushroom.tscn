@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cha4uk0kkmu4g"]
+
+[ext_resource type="PackedScene" uid="uid://e2gofd15fe3s" path="res://assets/models/mushroom.glb" id="1_ttcn4"]
+[ext_resource type="Script" uid="uid://biuneboko3ti" path="res://assets/models/brazier.gd" id="2_rgtkn"]
+
+[node name="mushroom" unique_id=584615093 instance=ExtResource("1_ttcn4")]
+script = ExtResource("2_rgtkn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="1" unique_id=889309028]
