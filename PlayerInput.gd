@@ -27,6 +27,8 @@ func _unhandled_input(event):
 		if player and player.has_node("TorchLight"):
 			player.get_node("TorchLight").toggle_torch()
 			get_viewport().set_input_as_handled()
+		else:
+			push_error("Player or torchlight node not found")
 
 	if event.is_action_pressed("restart"):
 		SceneManager.change_scene("res://Main.tscn")

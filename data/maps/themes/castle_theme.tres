@@ -31,7 +31,6 @@ pixel_size = 7.0
 dither_strength = 0.08
 contrast = 1.2
 environment = SubResource("Environment_jn8y4")
-enable_flicker = false
 torch_base_energy = 0.8
 torch_color = Color(0.7763932, 0.65048915, 0.3633478, 1)
 wall_scene = ExtResource("3_tqa35")

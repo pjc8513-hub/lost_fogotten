@@ -48,6 +48,11 @@ var party_food: int = 5:
 		party_food = max(0, value)
 		GameEvents.food_changed.emit(party_food)
 
+var party_torches: int = 2:
+	set(value):
+		party_torches = max(0, value)
+		GameEvents.torch_changed.emit(party_torches)
+
 # DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
 var god_mode_active: bool = false
 

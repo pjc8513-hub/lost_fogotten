@@ -18,6 +18,20 @@ func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
 		if _is_quest_item_blocked(item_id):
 			continue
 
+		# Handle consumable resources
+		if item_id == "bread":
+			PartyState.party_food += 1
+			GameEvents.message_logged.emit(
+				"[color=cyan]Found: Bread[/color]"
+			)
+			continue
+		if item_id == "torch":
+			PartyState.party_torches += 1
+			GameEvents.message_logged.emit(
+				"[color=cyan]Found: Torch[/color]"
+			)
+			continue
+
 		var item_instance = LootManager.create_item_instance(item_id)
 
 		if item_instance == null:
@@ -63,6 +77,20 @@ func distribute_enemy_loot(enemy: Enemy):
 		if _is_quest_item_blocked(item_id):
 			continue
 
+		# Handle consumable resources
+		if item_id == "bread":
+			PartyState.party_food += 1
+			GameEvents.message_logged.emit(
+				"[color=cyan]Found: Bread[/color]"
+			)
+			continue
+		if item_id == "torch":
+			PartyState.party_torches += 1
+			GameEvents.message_logged.emit(
+				"[color=cyan]Found: Torch[/color]"
+			)
+			continue
+
 		var item_instance = LootManager.create_item_instance(item_id)
 
 		if item_instance == null:
@@ -99,6 +127,14 @@ func distribute_quest_reward(gold: int, food: int, item_ids: Array = []):
 	PartyState.party_food += food
 	
 	for item_id in item_ids:
+		# Handle consumable resources
+		if item_id == "bread":
+			PartyState.party_food += 1
+			continue
+		if item_id == "torch":
+			PartyState.party_torches += 1
+			continue
+		
 		var item_instance = LootManager.create_item_instance(item_id)
 		if item_instance != null:
 			var random_member = PartyState.active_party.pick_random()

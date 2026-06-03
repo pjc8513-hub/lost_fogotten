@@ -14,6 +14,7 @@ func _ready():
 func update_display():
 	gold_label.text = str(PartyState.party_gold)
 	food_label.text = str(PartyState.party_food)
+	torch_label.text = str(PartyState.party_torches)
 
 func _on_gold_changed(new_amount: int):
 	gold_label.text = str(new_amount)

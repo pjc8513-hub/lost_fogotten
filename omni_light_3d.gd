@@ -78,12 +78,12 @@ func toggle_torch() -> void:
 	print("Torch toggled. Active: ", is_lit)
 
 func _try_consume_next_inventory_torch() -> void:
-	if PartyState.total_torches > 0:
-		PartyState.total_torches -= 1
+	if PartyState.party_torches > 0:
+		PartyState.party_torches -= 1
 		current_durability = max_durability 
 		_update_light_energy()
-		print("Consumed a torch! Torches remaining: ", PartyState.total_torches)
-		GameEvents.message_logged.emit("Consumed a torch! Torches remaining: %d" % PartyState.total_torches)
+		print("Consumed a torch! Torches remaining: ", PartyState.party_torches)
+		GameEvents.message_logged.emit("Consumed a torch! Torches remaining: %d" % PartyState.party_torches)
 	else:
 		is_lit = false
 		visible = false
