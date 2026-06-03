@@ -39,10 +39,6 @@ theme_override_font_sizes/font_size = 21
 text = "0"
 horizontal_alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=203979734]
-layout_mode = 2
-size_flags_vertical = 3
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=642227025]
 layout_mode = 2
 
@@ -53,6 +49,24 @@ theme_override_font_sizes/font_size = 21
 text = "Food:"
 
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=751111126]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_2rcu2")
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=322637009]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1174619568]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_2rcu2")
+theme_override_font_sizes/font_size = 21
+text = "TORCHES:"
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1298010390]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1

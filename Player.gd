@@ -9,6 +9,7 @@ var grid_position: Vector2i
 var forward_vector: Vector2i = Vector2i(0, -1)   # Facing north
 
 func _ready():
+	
 	World.register_player(self)
 	grid_position = Vector2i(roundi(global_position.x), roundi(global_position.z))
 

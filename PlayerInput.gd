@@ -21,6 +21,12 @@ func _unhandled_input(event):
 	if event.is_action_pressed("ui_right"):
 		_queue_player_turn(player, TurnRightCommand.new())
 		get_viewport().set_input_as_handled()
+	
+	if event.is_action_pressed("toggle_torch"):
+		# Assuming your player reference has access to the torch node
+		if player and player.has_node("TorchLight"):
+			player.get_node("TorchLight").toggle_torch()
+			get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("restart"):
 		SceneManager.change_scene("res://Main.tscn")

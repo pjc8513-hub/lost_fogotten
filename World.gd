@@ -1,6 +1,9 @@
 extends Node
 
 signal selected_enemy_changed(enemy)
+signal player_stepped(total_steps: int)
+
+var total_steps_taken: int = 0
 
 var selected_enemy: Enemy = null
 var selected_dungeon: Dungeon = null
@@ -458,3 +461,7 @@ func are_adjacent(a: Node3D, b: Node3D) -> bool:
 	var pos_b = world_to_grid(b.global_position)
 	var diff = (pos_a - pos_b).abs()
 	return diff.x <= 1 and diff.y <= 1 and not (diff.x == 0 and diff.y == 0) # 8-directional, exclude same tile
+
+func increment_step_count() -> void:
+	total_steps_taken += 1
+	player_stepped.emit(total_steps_taken)

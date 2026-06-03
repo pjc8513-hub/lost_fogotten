@@ -16,13 +16,19 @@ var automap_grid := {}  # Dictionary of Vector2 -> int
 @onready var casting_scene: Control = $CastingScene
 @onready var world_environment: WorldEnvironment = $SubViewportContainer/SubViewport/WorldEnvironment
 
-func _enter_tree():
-	print("[FRAME ", Engine.get_process_frames(), "] Main _enter_tree")
+#func _enter_tree():
+	#print("[FRAME ", Engine.get_process_frames(), "] Main _enter_tree")
 
 func _ready():
 	#print("[FRAME ", Engine.get_process_frames(), "] Main _ready start")
 	#print("[FRAME ", Engine.get_process_frames(), "] Main initial focus owner: ", get_viewport().gui_get_focus_owner())
-	
+	var torch_ui = $SubViewportContainer/SubViewport/TorchBar
+	var player_torch = $SubViewportContainer/SubViewport/Player/TorchLight
+	if torch_ui and player_torch:
+		torch_ui.hook_up_torch(player_torch)
+	else:
+		push_error("Main.gd: Could not find torch_ui or player_torch in the scene tree!")
+		
 	casting_scene.visible = false
 	sub_viewport.gui_disable_input = false
 	sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS

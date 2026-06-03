@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ConsumableData" format=3 uid="uid://dnljxomplxajw"]
+
+[ext_resource type="Script" uid="uid://ddwwce1etml1t" path="res://resources/ConsumableData.gd" id="1_5pefw"]
+
+[resource]
+script = ExtResource("1_5pefw")
+item_id = "torch"
+name = "Torch"
+item_type = 1
+is_stackable = true
+sell_value = 10
+metadata/_custom_type_script = "uid://ddwwce1etml1t"

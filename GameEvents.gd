@@ -13,6 +13,7 @@ signal chest_trap_triggered(chest: TreasureChest, damage: int)
 # Resource tracking
 signal gold_changed(new_amount: int)
 signal food_changed(new_amount: int)
+signal torch_changed(new_amount: int)
 
 # Animation events
 

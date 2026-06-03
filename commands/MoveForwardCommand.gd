@@ -26,6 +26,7 @@ func execute():
 		return
 
 	#print("MoveForwardCommand: moving to ", target)
+	World.increment_step_count()
 	actor.connect("movement_done", Callable(self, "_on_done"), CONNECT_ONE_SHOT)
 	actor.move_to(target)
 	

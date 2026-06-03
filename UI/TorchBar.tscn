@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://v4omgfsvp4ea"]
+
+[ext_resource type="Script" uid="uid://bf8hefkagqo4j" path="res://UI/TorchBar.gd" id="1_hfa0n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oewr7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfa0n"]
+bg_color = Color(0.2784314, 0.28235295, 0.7372549, 1)
+
+[node name="TorchBar" type="Control" unique_id=1263475921]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hfa0n")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=332526556]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_oewr7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hfa0n")
+value = 100.0
+show_percentage = false

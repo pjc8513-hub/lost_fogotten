@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://2rsh6nvcqd03" path="res://PlayerInput.gd" id="1_r0du0"]
 [ext_resource type="Script" uid="uid://dlpkupeacr0qm" path="res://debug_click.gd" id="2_lgr22"]
 [ext_resource type="PackedScene" uid="uid://duaicc2jefihn" path="res://Grid-Step.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://v4omgfsvp4ea" path="res://UI/TorchBar.tscn" id="4_sc1dx"]
 [ext_resource type="Script" uid="uid://cx3bqh3bvbhkd" path="res://PartyManager.gd" id="5_3dxm6"]
 [ext_resource type="Script" uid="uid://cq773fy0p7cy5" path="res://scroll_container.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://q60jlfp1yofx" path="res://debug_subview.gd" id="6_trn2v"]
@@ -63,6 +64,18 @@ handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(827, 512)
 render_target_update_mode = 4
+
+[node name="TorchBar" parent="SubViewportContainer/SubViewport" unique_id=1263475921 instance=ExtResource("4_sc1dx")]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -0.4565735
+offset_top = -38.087006
+offset_right = 299.54346
+offset_bottom = -3.0870056
+grow_vertical = 0
 
 [node name="ShaderDitheringLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=1916408999]
 
