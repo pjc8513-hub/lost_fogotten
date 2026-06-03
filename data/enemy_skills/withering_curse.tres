@@ -17,5 +17,6 @@ requires_line_of_sight = true
 stat_modifiers = {
 "accuracy": -2
 }
+stat_modifier_duration_rounds = 1
 status_effect = "none"
 cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

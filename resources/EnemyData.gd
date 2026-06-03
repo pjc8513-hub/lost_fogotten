@@ -52,6 +52,7 @@ enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 @export var custom_pixel_size: int = 0.01
 
 var combat_buffs: Dictionary = {}
+var status_metadata: Dictionary = {}
 
 func get_ai_enum() -> AIBehavior:
 	match ai_behavior:
@@ -90,25 +91,89 @@ func get_bonus_damage() -> int:
 func get_magic_bonus() -> int:
 	return magic_bonus + _get_combat_bonus("magic_bonus")
 
-func apply_combat_buff(stat_name: String, value: int) -> void:
+func apply_combat_buff(stat_name: String, value: int, duration_rounds: int = -1) -> void:
 	var normalized := _normalize_combat_buff_key(stat_name)
 	if normalized.is_empty() or value == 0:
 		return
 
-	var current_value := int(combat_buffs.get(normalized, 0))
+	var current_entry: Dictionary = _get_combat_buff_entry(normalized)
+	var current_value := int(current_entry.get("value", 0))
+	var new_entry := {
+		"value": value,
+		"remaining_rounds": duration_rounds
+	}
 	if value > 0:
-		combat_buffs[normalized] = max(current_value, value)
+		if value >= current_value:
+			combat_buffs[normalized] = new_entry
 	elif value < 0:
-		combat_buffs[normalized] = min(current_value, value)
+		if value <= current_value:
+			combat_buffs[normalized] = new_entry
 
 func clear_combat_buffs() -> void:
 	combat_buffs.clear()
+
+func tick_combat_buff_durations() -> void:
+	for stat_name in combat_buffs.keys():
+		var entry := _get_combat_buff_entry(stat_name)
+		var remaining := int(entry.get("remaining_rounds", -1))
+		if remaining < 0:
+			continue
+		remaining -= 1
+		if remaining <= 0:
+			combat_buffs.erase(stat_name)
+		else:
+			entry["remaining_rounds"] = remaining
+			combat_buffs[stat_name] = entry
 
 func _get_combat_bonus(stat_name: String) -> int:
 	var normalized := _normalize_combat_buff_key(stat_name)
 	if normalized.is_empty():
 		return 0
-	return int(combat_buffs.get(normalized, 0))
+	return int(_get_combat_buff_entry(normalized).get("value", 0))
+
+func _get_combat_buff_entry(stat_name: String) -> Dictionary:
+	var raw = combat_buffs.get(stat_name, {})
+	if raw is Dictionary:
+		return raw
+	return {
+		"value": int(raw),
+		"remaining_rounds": -1
+	}
+
+func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true) -> void:
+	var normalized := status_name.to_lower().strip_edges()
+	if normalized.is_empty() or normalized == "none":
+		return
+	if not status_effects.has(normalized):
+		status_effects.append(normalized)
+	status_metadata[normalized] = {
+		"remaining_rounds": duration_rounds,
+		"persists_after_combat": persists_after_combat
+	}
+
+func clear_status_effect(status_name: String) -> void:
+	var normalized := status_name.to_lower().strip_edges()
+	status_effects.erase(normalized)
+	status_metadata.erase(normalized)
+
+func clear_temporary_combat_statuses() -> void:
+	for status_name in status_effects.duplicate():
+		var metadata: Dictionary = status_metadata.get(status_name, {})
+		if not bool(metadata.get("persists_after_combat", true)):
+			clear_status_effect(status_name)
+
+func tick_status_durations() -> void:
+	for status_name in status_effects.duplicate():
+		var metadata: Dictionary = status_metadata.get(status_name, {})
+		var remaining := int(metadata.get("remaining_rounds", -1))
+		if remaining < 0:
+			continue
+		remaining -= 1
+		if remaining <= 0:
+			clear_status_effect(status_name)
+		else:
+			metadata["remaining_rounds"] = remaining
+			status_metadata[status_name] = metadata
 
 func _normalize_combat_buff_key(stat_name: String) -> String:
 	var key := stat_name.to_lower().strip_edges()

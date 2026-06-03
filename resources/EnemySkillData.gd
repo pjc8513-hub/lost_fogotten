@@ -36,9 +36,12 @@ enum TargetMode {
 @export_group("Status")
 @export var status_effect: String = "none"
 @export_range(0, 100, 1) var status_chance: int = 0
+@export var status_duration_rounds: int = -1
+@export var status_persists_after_combat: bool = true
 
 @export_group("Stat Modifiers")
 @export var stat_modifiers: Dictionary = {}
+@export var stat_modifier_duration_rounds: int = -1
 
 @export_group("Presentation")
 @export var cast_message: String = ""

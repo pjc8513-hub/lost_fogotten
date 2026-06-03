@@ -51,6 +51,8 @@ func _on_world_update():
 	World.process_step_events()
 	CombatState.refresh_combat_state()
 	_apply_poison_effects()
+	if CombatState.is_in_combat():
+		_tick_combat_effect_durations()
 	combat_just_ended = was_in_combat and not CombatState.is_in_combat()
 	if CombatState.is_in_combat():
 		set_state(State.ENEMY_TURN)
@@ -74,6 +76,19 @@ func _apply_poison_effects():
 			if enemy.enemy_data.hp <= 0:
 				GameEvents.message_logged.emit("[color=red]" + enemy.enemy_data.enemy_name + " dies from poison![/color]")
 				World.remove_enemy(enemy)
+
+func _tick_combat_effect_durations() -> void:
+	for member in PartyState.active_party:
+		if member.has_method("tick_combat_buff_durations"):
+			member.tick_combat_buff_durations()
+		if member.has_method("tick_status_durations"):
+			member.tick_status_durations()
+
+	for enemy in World.get_enemies():
+		if enemy.enemy_data.has_method("tick_combat_buff_durations"):
+			enemy.enemy_data.tick_combat_buff_durations()
+		if enemy.enemy_data.has_method("tick_status_durations"):
+			enemy.enemy_data.tick_status_durations()
 
 func _on_enemy_turn():
 	var enemies = CombatState.get_engaged_enemies()
@@ -100,14 +115,24 @@ func _clear_end_of_combat_effects() -> void:
 	for member in PartyState.active_party:
 		member.clear_combat_buffs()
 		if "stun" in member.status_effects:
-			member.status_effects.erase("stun")
+			if member.has_method("clear_status_effect"):
+				member.clear_status_effect("stun")
+			else:
+				member.status_effects.erase("stun")
 			GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")
+		if member.has_method("clear_temporary_combat_statuses"):
+			member.clear_temporary_combat_statuses()
 
 	for enemy in World.get_enemies():
 		if "stun" in enemy.enemy_data.status_effects:
-			enemy.enemy_data.status_effects.erase("stun")
+			if enemy.enemy_data.has_method("clear_status_effect"):
+				enemy.enemy_data.clear_status_effect("stun")
+			else:
+				enemy.enemy_data.status_effects.erase("stun")
 		if enemy.enemy_data.has_method("clear_combat_buffs"):
 			enemy.enemy_data.clear_combat_buffs()
+		if enemy.enemy_data.has_method("clear_temporary_combat_statuses"):
+			enemy.enemy_data.clear_temporary_combat_statuses()
 
 	CombatState.clear_party_combat_statuses()
 
@@ -128,7 +153,10 @@ func _run_enemy_turns(enemies: Array):
 	if "stun" in enemy.enemy_data.status_effects:
 		print("[TurnStateMachine] stunned enemy skips turn:", enemy.enemy_data.enemy_name)
 		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " is stunned and skips their turn![/color]")
-		enemy.enemy_data.status_effects.erase("stun")
+		if enemy.enemy_data.has_method("clear_status_effect"):
+			enemy.enemy_data.clear_status_effect("stun")
+		else:
+			enemy.enemy_data.status_effects.erase("stun")
 		await get_tree().create_timer(0.5).timeout
 		_run_enemy_turns(enemies)
 		return

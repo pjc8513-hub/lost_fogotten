@@ -75,7 +75,7 @@ func _apply_skill_to_target(target) -> void:
 		_apply_stat_modifiers(target)
 
 	if skill.has_status():
-		CombatLogic.proc_status(skill.status_effect.strip_edges().to_lower(), skill.status_chance, target)
+		CombatLogic.proc_status(skill.status_effect.strip_edges().to_lower(), skill.status_chance, target, skill.status_duration_rounds, skill.status_persists_after_combat)
 
 func _apply_damage(target) -> void:
 	if skill.uses_accuracy_roll:
@@ -150,9 +150,9 @@ func _apply_stat_modifiers(target) -> void:
 		if amount == 0:
 			continue
 		if target is ClassData and target.has_method("apply_combat_buff"):
-			target.apply_combat_buff(str(stat_name), amount)
+			target.apply_combat_buff(str(stat_name), amount, skill.stat_modifier_duration_rounds)
 		elif target is Enemy:
-			target.enemy_data.apply_combat_buff(str(stat_name), amount)
+			target.enemy_data.apply_combat_buff(str(stat_name), amount, skill.stat_modifier_duration_rounds)
 
 		var verb: String = "raises" if amount > 0 else "lowers"
 		GameEvents.message_logged.emit("[color=yellow]%s %s %s's %s by %d.[/color]" % [
