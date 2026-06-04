@@ -15293,5 +15293,222 @@
 			"type": "NPC"
 		}
 	],
-	"triggers": []
+	"lights": [
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				6,
+				34
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				20,
+				33
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				29,
+				33
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				26
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				18,
+				29
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				4,
+				25
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				12,
+				25
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				10,
+				18
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				18,
+				18
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				25,
+				15
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				34,
+				18
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				30,
+				23
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				31,
+				29
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				1,
+				20
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				1,
+				10
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				5,
+				6
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				6,
+				1
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				14,
+				6
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				16,
+				8
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				21,
+				8
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				25,
+				1
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				35,
+				9
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				4
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				4,
+				12
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				2,
+				14
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				16,
+				35
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				24,
+				31
+			]
+		}
+	]
 }
