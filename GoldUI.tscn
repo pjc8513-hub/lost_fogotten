@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bm6ugd7hejeat" path="res://GoldUi.gd" id="1_lbfmc"]
 [ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="2_2rcu2"]
+[ext_resource type="Texture2D" uid="uid://d137wkr3kwgod" path="res://assets/icons/torch.png" id="3_oxdc8"]
 
 [node name="Control" type="Control" unique_id=1136315377]
 layout_mode = 3
@@ -74,3 +75,13 @@ theme_override_fonts/font = ExtResource("2_2rcu2")
 theme_override_font_sizes/font_size = 22
 text = "0"
 horizontal_alignment = 2
+
+[node name="buffcontainer1" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1920852889]
+layout_mode = 2
+
+[node name="TorchLightButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/buffcontainer1" unique_id=611794660]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+disabled = true
+icon = ExtResource("3_oxdc8")

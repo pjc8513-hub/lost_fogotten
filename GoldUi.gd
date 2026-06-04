@@ -4,6 +4,7 @@ extends Control
 @onready var gold_label = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Label2
 @onready var food_label = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Label2
 @onready var torch_label: Label = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Label2
+@onready var torch_light_button: Button = $PanelContainer/MarginContainer/VBoxContainer/buffcontainer1/TorchLightButton
 
 func _ready():
 	update_display()
