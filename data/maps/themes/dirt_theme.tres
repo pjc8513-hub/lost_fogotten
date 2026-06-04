@@ -18,6 +18,7 @@ volumetric_fog_albedo = Color(0.11858138, 0.11858138, 0.11858138, 1)
 [resource]
 script = ExtResource("1_xpc5q")
 palette_texture = ExtResource("3_3rcxl")
+pixel_size = 7.0
 dither_strength = 0.1
 environment = SubResource("Environment_o8ydx")
 torch_base_energy = 0.8

@@ -60,17 +60,22 @@ func _on_player_stepped(_total_steps: int) -> void:
 	torch_durability_changed.emit(current_durability, max_durability, is_currently_lit())
 
 func _try_consume_next_inventory_torch() -> void:
-	if PartyState.party_torches > 0:
+	# If we have more than 1 torch, it means we can safely consume a backup from inventory
+	if PartyState.party_torches > 1:
 		PartyState.party_torches -= 1
 		current_durability = max_durability 
 		_update_light_energy()
-		print("Consumed a torch! Torches remaining: ", PartyState.party_torches)
+		print("Consumed a torch! Torches remaining in backup: ", PartyState.party_torches - 1)
 	else:
-		# Out of resources! Kill the flame globally and locally
+		# We were on our last torch (party_torches == 1 or somehow 0) and it just fully expired.
+		PartyState.party_torches = 0
 		PartyState.is_torch_lit = false
 		visible = false
 		set_process(false)
+		
+		GameEvents.message_logged.emit("Your last torch burned out!")
 		print("Your last torch burned out. You are in total darkness.")
+		# e.g., MessageLog.add_message("Your last torch burned out...")
 		
 	torch_durability_changed.emit(current_durability, max_durability, is_currently_lit())
 
