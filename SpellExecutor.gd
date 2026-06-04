@@ -22,6 +22,10 @@ func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> D
 	if caster == null or result == null:
 		return outcome
 
+	# Check if this is a TorchLight spell cast (special handling)
+	if _is_torchlight_spell(result):
+		return _execute_torchlight_spell(caster, result, outcome)
+
 	caster.current_mp -= result.mana_cost
 	outcome["spent_mana"] = result.mana_cost
 	outcome["success"] = true
@@ -277,3 +281,31 @@ func _cleanup_enemy_if_dead(enemy: Enemy) -> void:
 	LootDistributor.distribute_enemy_loot(enemy)
 	LootDistributor.distribute_xp(enemy.enemy_data.xp)
 	World.remove_enemy(enemy)
+
+func _is_torchlight_spell(result: SpellResult) -> bool:
+	# Check if any chord in the spell is the TorchLight chord
+	for chord_entry in result.chord_entries:
+		var chord_data := chord_entry.get("data") as ChordData
+		if chord_data != null and chord_data.chord_id == "TorchLight":
+			return true
+	return false
+
+func _execute_torchlight_spell(caster: ClassData, result: SpellResult, outcome: Dictionary) -> Dictionary:
+	# Deduct mana for casting
+	caster.current_mp -= result.mana_cost
+	outcome["spent_mana"] = result.mana_cost
+	outcome["success"] = true
+
+	# Toggle the magic torch
+	var torch_was_lit = PartyState.is_magic_torch_lit
+	var success = PartyState.toggle_magic_torch(caster)
+	
+	if success:
+		if torch_was_lit:
+			GameEvents.message_logged.emit("[color=cyan]%s[/color] extinguishes the [color=green]magic torch[/color]." % caster.member_name)
+		else:
+			GameEvents.message_logged.emit("[color=cyan]%s[/color] summons a [color=green]magic torch[/color] with a surge of mana!" % caster.member_name)
+	else:
+		GameEvents.message_logged.emit("[color=red]%s[/color] lacks the mana to sustain a magic torch." % caster.member_name)
+	
+	return outcome

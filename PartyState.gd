@@ -54,6 +54,11 @@ var party_torches: int = 2:
 		GameEvents.torch_changed.emit(party_torches)
 var is_torch_lit: bool = false # Defaults to off when entering the first zone
 
+# Magic Torch (Mana-based) tracking
+var is_magic_torch_lit: bool = false
+var magic_torch_caster: ClassData = null  # References who cast the magic torch
+var magic_torch_mana_cost_per_step: int = 2  # Mana consumed each step the torch is active
+
 # DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
 var god_mode_active: bool = false
 
@@ -214,3 +219,36 @@ func damage_entire_party(amount: int) -> void:
 	for member in active_party:
 		if member and member.current_hp > 0:
 			member.take_damage(amount)
+
+## Toggles the magic torch on/off (cast by a party member using mana)
+func toggle_magic_torch(caster: ClassData) -> bool:
+	if is_magic_torch_lit:
+		# Turn off the magic torch
+		is_magic_torch_lit = false
+		magic_torch_caster = null
+		return true
+	else:
+		# Turn on the magic torch (caster must have enough mana)
+		if caster == null or caster.current_mp < magic_torch_mana_cost_per_step:
+			return false
+		is_magic_torch_lit = true
+		magic_torch_caster = caster
+		caster.current_mp -= magic_torch_mana_cost_per_step
+		return true
+
+## Consumes mana for the active magic torch (called each step)
+func drain_magic_torch_mana() -> bool:
+	if not is_magic_torch_lit or magic_torch_caster == null:
+		is_magic_torch_lit = false
+		magic_torch_caster = null
+		return false
+	
+	if magic_torch_caster.current_mp < magic_torch_mana_cost_per_step:
+		# Not enough mana to sustain the torch
+		is_magic_torch_lit = false
+		magic_torch_caster = null
+		GameEvents.message_logged.emit("[color=cyan]The magic torch fades as mana runs dry.[/color]")
+		return false
+	
+	magic_torch_caster.current_mp -= magic_torch_mana_cost_per_step
+	return true
