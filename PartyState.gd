@@ -3,6 +3,7 @@ extends Node
 
 signal roster_changed
 signal active_party_changed
+signal magic_torch_toggled(is_active: bool)  # Emitted when magic torch turns on/off
 
 const DEFAULT_PARTY_TEMPLATES: Array[ClassData] = [
 	preload("res://data/classes/knight.tres"),
@@ -57,7 +58,7 @@ var is_torch_lit: bool = false # Defaults to off when entering the first zone
 # Magic Torch (Mana-based) tracking
 var is_magic_torch_lit: bool = false
 var magic_torch_caster: ClassData = null  # References who cast the magic torch
-var magic_torch_mana_cost_per_step: int = 2  # Mana consumed each step the torch is active
+var magic_torch_step_counter: int = 0  # Counter for 1 mana every 2 steps
 
 # DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
 var god_mode_active: bool = false
@@ -226,29 +227,42 @@ func toggle_magic_torch(caster: ClassData) -> bool:
 		# Turn off the magic torch
 		is_magic_torch_lit = false
 		magic_torch_caster = null
+		magic_torch_step_counter = 0
+		magic_torch_toggled.emit(false)
 		return true
 	else:
-		# Turn on the magic torch (caster must have enough mana)
-		if caster == null or caster.current_mp < magic_torch_mana_cost_per_step:
+		# Turn on the magic torch (caster must have enough mana for initial cast)
+		if caster == null or caster.current_mp < 1:
 			return false
 		is_magic_torch_lit = true
 		magic_torch_caster = caster
-		caster.current_mp -= magic_torch_mana_cost_per_step
+		magic_torch_step_counter = 0
+		caster.current_mp -= 1  # Initial mana cost to activate
+		magic_torch_toggled.emit(true)
 		return true
 
-## Consumes mana for the active magic torch (called each step)
+## Consumes mana for the active magic torch (called each step) - 1 mana per 2 steps
 func drain_magic_torch_mana() -> bool:
 	if not is_magic_torch_lit or magic_torch_caster == null:
 		is_magic_torch_lit = false
 		magic_torch_caster = null
+		magic_torch_step_counter = 0
 		return false
 	
-	if magic_torch_caster.current_mp < magic_torch_mana_cost_per_step:
-		# Not enough mana to sustain the torch
-		is_magic_torch_lit = false
-		magic_torch_caster = null
-		GameEvents.message_logged.emit("[color=cyan]The magic torch fades as mana runs dry.[/color]")
-		return false
+	magic_torch_step_counter += 1
 	
-	magic_torch_caster.current_mp -= magic_torch_mana_cost_per_step
+	# Deduct mana every 2 steps
+	if magic_torch_step_counter >= 2:
+		if magic_torch_caster.current_mp < 1:
+			# Not enough mana to sustain the torch
+			is_magic_torch_lit = false
+			magic_torch_caster = null
+			magic_torch_step_counter = 0
+			magic_torch_toggled.emit(false)
+			GameEvents.message_logged.emit("[color=cyan]The magic torch fades as mana runs dry.[/color]")
+			return false
+		
+		magic_torch_caster.current_mp -= 1
+		magic_torch_step_counter = 0
+	
 	return true

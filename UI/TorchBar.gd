@@ -32,14 +32,19 @@ func _on_torch_durability_changed(current: float, max_val: float, torch_is_lit: 
 	progress_bar.max_value = max_val
 	progress_bar.value = current
 	
-	# The UI bar is only visible if the torch has fuel AND is turned on!
-	visible = current > 0.0 and torch_is_lit
+	# The UI bar is only visible if:
+	# - The torch has fuel AND is turned on (regular torch)
+	# - AND it's NOT a magic torch (magic torch doesn't use durability)
+	visible = current > 0.0 and torch_is_lit and not current_torch_is_magic
 	
 	# Update color based on torch type
 	_update_progress_bar_color()
 
 func _on_torch_type_changed(is_magic: bool) -> void:
 	current_torch_is_magic = is_magic
+	# Hide the bar when magic torch is active
+	if is_magic:
+		visible = false
 	_update_progress_bar_color()
 
 func _update_progress_bar_color() -> void:

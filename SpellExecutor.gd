@@ -291,16 +291,18 @@ func _is_torchlight_spell(result: SpellResult) -> bool:
 	return false
 
 func _execute_torchlight_spell(caster: ClassData, result: SpellResult, outcome: Dictionary) -> Dictionary:
-	# Deduct mana for casting
-	caster.current_mp -= result.mana_cost
-	outcome["spent_mana"] = result.mana_cost
-	outcome["success"] = true
+	# For TorchLight spell, we don't deduct the normal spell cost
+	# Instead, toggle_magic_torch will handle the mana cost
+	outcome["success"] = false
+	outcome["spent_mana"] = 0
 
 	# Toggle the magic torch
 	var torch_was_lit = PartyState.is_magic_torch_lit
 	var success = PartyState.toggle_magic_torch(caster)
 	
 	if success:
+		outcome["success"] = true
+		outcome["spent_mana"] = 1
 		if torch_was_lit:
 			GameEvents.message_logged.emit("[color=cyan]%s[/color] extinguishes the [color=green]magic torch[/color]." % caster.member_name)
 		else:
