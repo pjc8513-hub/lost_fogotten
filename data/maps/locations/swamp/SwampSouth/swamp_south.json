@@ -4006,14 +4006,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				19,
 				18
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -4270,14 +4270,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				0,
+				1
 			],
 			"pos": [
 				16,
 				17
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -4509,17 +4509,6 @@
 				17
 			],
 			"source_id": 2
-		},
-		{
-			"atlas": [
-				0,
-				4
-			],
-			"pos": [
-				23,
-				17
-			],
-			"source_id": 4
 		},
 		{
 			"atlas": [
@@ -5667,8 +5656,8 @@
 		},
 		{
 			"atlas": [
-				2,
-				4
+				1,
+				0
 			],
 			"pos": [
 				29,
@@ -5678,19 +5667,19 @@
 		},
 		{
 			"atlas": [
-				2,
-				4
+				0,
+				1
 			],
 			"pos": [
 				28,
 				14
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
-				2,
-				4
+				1,
+				0
 			],
 			"pos": [
 				27,
@@ -6258,6 +6247,17 @@
 				3
 			],
 			"source_id": 0
+		},
+		{
+			"atlas": [
+				0,
+				4
+			],
+			"pos": [
+				23,
+				17
+			],
+			"source_id": 4
 		}
 	],
 	"entities": [
@@ -6835,6 +6835,17 @@
 		},
 		{
 			"aggro_group": 0,
+			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
+			"pos": [
+				19,
+				18
+			],
+			"trigger_resource": "",
+			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
 			"data_resource": "",
 			"fencing_resource": "",
 			"pos": [
@@ -6865,6 +6876,17 @@
 			],
 			"trigger_resource": "",
 			"type": "decoration"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
+			"pos": [
+				16,
+				17
+			],
+			"trigger_resource": "",
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -6920,17 +6942,6 @@
 			],
 			"trigger_resource": "",
 			"type": "fencing"
-		},
-		{
-			"aggro_group": 0,
-			"data_resource": "res://data/NPC/Fen.tres",
-			"fencing_resource": "",
-			"pos": [
-				23,
-				17
-			],
-			"trigger_resource": "",
-			"type": "NPC"
 		},
 		{
 			"aggro_group": 0,
@@ -7165,36 +7176,14 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
-			"fencing_resource": "",
-			"pos": [
-				29,
-				14
-			],
-			"trigger_resource": "",
-			"type": "fencing"
-		},
-		{
-			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
+			"data_resource": "res://data/enemies/red_jelly.tres",
 			"fencing_resource": "",
 			"pos": [
 				28,
 				14
 			],
 			"trigger_resource": "",
-			"type": "fencing"
-		},
-		{
-			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/swamp_fencing.tres",
-			"fencing_resource": "",
-			"pos": [
-				27,
-				14
-			],
-			"trigger_resource": "",
-			"type": "fencing"
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -7294,7 +7283,91 @@
 			],
 			"trigger_resource": "",
 			"type": "enemy"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/Fen.tres",
+			"fencing_resource": "",
+			"pos": [
+				23,
+				17
+			],
+			"trigger_resource": "",
+			"type": "NPC"
 		}
 	],
-	"triggers": []
+	"lights": [
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				9,
+				17
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				6,
+				11
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				25,
+				17
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				26,
+				9
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				19,
+				3
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				2
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				2,
+				5
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				11,
+				3
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				17,
+				5
+			]
+		}
+	]
 }

@@ -7384,5 +7384,78 @@
 			"type": "door"
 		}
 	],
-	"triggers": []
+	"lights": [
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				18,
+				7
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				16,
+				11
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				19,
+				17
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				11
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				4
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				10,
+				3
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				27,
+				15
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				38,
+				3
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Brazier.tres",
+			"light_type": "brazier",
+			"pos": [
+				34,
+				15
+			]
+		}
+	]
 }

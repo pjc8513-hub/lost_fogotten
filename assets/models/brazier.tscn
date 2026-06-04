@@ -13,11 +13,11 @@ stencil_flags = 2
 script = ExtResource("2_fl8os")
 
 [node name="Icosphere" parent="." index="0" unique_id=1506948766]
-transform = Transform3D(0.5542814, 0, 0, 0, 0.5542814, 0, 0, 0, 0.5542814, 0, 0.46201384, 0)
+transform = Transform3D(0.44718385, 0, 0, 0, 0.5542814, 0, 0, 0, 0.43507755, 0, 0.46201384, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_pnxv6")
 
 [node name="Cube" parent="." index="2" unique_id=1858486370]
-transform = Transform3D(1, 0, 0, 0, 2.7782369, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.7200729, 0, 0, 0, 0.77415293, 0, 0, 0, 0.6398651, 0, 0.19181275, 0)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." index="3" unique_id=1773309329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00929, 0)
