@@ -1,7 +1,7 @@
 @tool
 extends Node3D
 
-@export var export_path: String = "res://data/maps/dungeons/WitchTree/WitchTree_2/witchtree_2.json"
+@export var export_path: String = "res://data/maps/dungeons/WitchTree/WitchTree_1/witchtree_1.json"
 @export var run_export: bool = false : set = _on_run_export
 
 func _on_run_export(_val):

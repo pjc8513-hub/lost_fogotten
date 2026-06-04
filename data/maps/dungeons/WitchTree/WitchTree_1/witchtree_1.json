@@ -13568,174 +13568,445 @@
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/dungeons/WitchTree/WitchTree_1/witchtree_1_exit.tres",
+			"fencing_resource": "",
 			"pos": [
 				13,
 				36
 			],
+			"trigger_resource": "",
 			"type": "exit"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				12
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				2,
 				24
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				24
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/maps/locations/swamp/SwampSouth/spawns/FaceNorth.tres",
+			"fencing_resource": "",
 			"pos": [
 				13,
 				35
 			],
+			"trigger_resource": "",
 			"type": "player"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				3,
 				1
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				7,
 				3
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				21,
 				3
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				22,
 				3
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				22,
 				4
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				23,
 				5
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				30,
 				5
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				30,
 				6
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/NPC/tree_insc_1.tres",
+			"fencing_resource": "",
 			"pos": [
 				34,
 				11
 			],
+			"trigger_resource": "",
 			"type": "NPC"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				31,
 				24
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/misc/NoobChest.tres",
+			"fencing_resource": "",
 			"pos": [
 				21,
 				9
 			],
+			"trigger_resource": "",
 			"type": "chest"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				29,
 				15
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
+			"fencing_resource": "",
 			"pos": [
 				30,
 				14
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
 			"data_resource": "res://data/enemies/MosherData.tres",
+			"fencing_resource": "",
 			"pos": [
 				32,
 				17
 			],
+			"trigger_resource": "",
 			"type": "enemy"
 		}
 	],
-	"triggers": []
+	"lights": [
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				9,
+				32
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				18,
+				33
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				11,
+				29
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				4,
+				30
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				22,
+				29
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				29,
+				28
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				20,
+				35
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				35,
+				24
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				31,
+				18
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				27,
+				13
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				19,
+				13
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				14,
+				26
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				29,
+				25
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				25,
+				20
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				17,
+				17
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				19,
+				22
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				12,
+				19
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				1,
+				17
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				5,
+				6
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				8,
+				12
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				14,
+				11
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				16,
+				9
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				20,
+				7
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				24,
+				2
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				28,
+				7
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				31,
+				10
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				35,
+				8
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				11,
+				3
+			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				17,
+				3
+			]
+		}
+	]
 }
