@@ -12,6 +12,7 @@ var is_magic_torch: bool = false  # True when magic torch is active
 
 func _ready() -> void:
 	World.player_stepped.connect(_on_player_stepped)
+	PartyState.magic_torch_toggled.connect(_on_magic_torch_toggled)
 
 func configure_torch(theme: MapTheme) -> void:
 	theme_ref = theme
@@ -62,6 +63,30 @@ func toggle_torch() -> void:
 	
 	torch_durability_changed.emit(current_durability, max_durability, visible)
 	print("Torch toggled via PartyState. Active: ", visible)
+
+func _on_magic_torch_toggled(is_active: bool) -> void:
+	# Immediately respond to magic torch state changes
+	if is_active:
+		# Magic torch turned on - show it immediately
+		is_magic_torch = true
+		visible = true
+		_apply_magic_torch_appearance()
+		torch_type_changed.emit(true)
+		torch_durability_changed.emit(current_durability, max_durability, true)
+	else:
+		# Magic torch turned off - hide it immediately
+		is_magic_torch = false
+		if theme_ref != null and PartyState.is_torch_lit and PartyState.party_torches > 0:
+			# Switch back to regular torch if it's still active
+			visible = true
+			light_color = theme_ref.torch_color
+			set_process(true)
+		else:
+			# No regular torch, just hide the light
+			visible = false
+			set_process(false)
+		torch_type_changed.emit(false)
+		torch_durability_changed.emit(current_durability, max_durability, is_currently_lit())
 
 func _on_player_stepped(_total_steps: int) -> void:
 	# Check if magic torch is still active and has mana
