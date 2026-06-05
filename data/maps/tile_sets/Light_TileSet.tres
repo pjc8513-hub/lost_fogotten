@@ -37,6 +37,8 @@ texture_region_size = Vector2i(32, 32)
 2:4/0 = 0
 3:4/0 = 0
 4:4/0 = 0
+4:4/0/modulate = Color(0.0253638, 0.0253638, 0.025363795, 1)
+4:4/0/custom_data_0 = "black_out"
 
 [resource]
 tile_size = Vector2i(32, 32)

@@ -420,6 +420,8 @@ static func _spawn_lights(data: Dictionary, parent: Node, theme: MapTheme) -> vo
 			"brazier":
 				_spawn_brazier(pos, dpath, parent, theme)
 			"black_out":
+				_spawn_blackout(pos, parent)
+			"black_out_trigger":
 				_spawn_blackout_trigger(pos, dpath, parent)
 			"light_restore":
 				_spawn_light_restore_trigger(pos, dpath, parent)
@@ -448,6 +450,11 @@ static func _spawn_brazier(grid_pos: Vector2i, data_path: String,
 		brazier.configure(theme)
 	parent.add_child(brazier)
 
+static func _spawn_blackout(pos: Vector2i, parent: Node) -> void:
+	var blackout_scene: PackedScene = load("res://black_out.tscn")
+	var blackout = blackout_scene.instantiate()
+	parent.add_child(blackout)
+	blackout.position = Vector3(pos.x, 0, pos.y)
 
 static func _spawn_blackout_trigger(grid_pos: Vector2i, data_path: String,
 									 parent: Node) -> void:
