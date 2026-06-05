@@ -22134,17 +22134,6 @@
 		},
 		{
 			"atlas": [
-				3,
-				2
-			],
-			"pos": [
-				44,
-				16
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
 				1,
 				0
 			],
@@ -22175,17 +22164,6 @@
 				13
 			],
 			"source_id": 3
-		},
-		{
-			"atlas": [
-				4,
-				2
-			],
-			"pos": [
-				44,
-				12
-			],
-			"source_id": 2
 		},
 		{
 			"atlas": [
@@ -43405,6 +43383,28 @@
 				17
 			],
 			"source_id": 3
+		},
+		{
+			"atlas": [
+				3,
+				2
+			],
+			"pos": [
+				44,
+				16
+			],
+			"source_id": 2
+		},
+		{
+			"atlas": [
+				4,
+				2
+			],
+			"pos": [
+				44,
+				12
+			],
+			"source_id": 2
 		}
 	],
 	"entities": [
@@ -45049,14 +45049,25 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree4.tres",
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/spawns/FaceSouth5.tres",
 			"fencing_resource": "",
 			"pos": [
 				44,
-				16
+				13
 			],
 			"trigger_resource": "",
-			"type": "dungeon"
+			"type": "player"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/spawns/FaceSouth6.tres",
+			"fencing_resource": "",
+			"pos": [
+				44,
+				7
+			],
+			"trigger_resource": "",
+			"type": "player"
 		},
 		{
 			"aggro_group": 0,
@@ -47422,6 +47433,28 @@
 			],
 			"trigger_resource": "",
 			"type": "player"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree4.tres",
+			"fencing_resource": "",
+			"pos": [
+				44,
+				16
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/maps/locations/swamp/SwampCentral/WitchTree5.tres",
+			"fencing_resource": "",
+			"pos": [
+				44,
+				12
+			],
+			"trigger_resource": "",
+			"type": "dungeon"
 		}
 	],
 	"lights": [

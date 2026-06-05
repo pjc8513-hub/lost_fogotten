@@ -26,6 +26,24 @@
 			}
 		]
 	},
+	"tree_inscription_4": {
+		"text": "The tree inscription reads:\n'Close your eyes to see\nWhat the swamp has always known\n[color=gold]Light[/color] is a stranger here'",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
+	},
+	"tree_inscription_5": {
+	"text": "The tree inscription reads:\n'I did not come here\nI grew here, slow and crooked\nThe swamp is my [color=gold]blood[/color]'",
+		"choices": [
+			{
+				"text": "Close",
+				"close": true
+			}
+		]
+	},
 	"Lena_Entry": {
 		"condition": "quest_started:sister_witch",
 		"text": "Yes, I am Lena, the sister of Fendor. The swamp is my home now. I have no interest in returning to the city.",

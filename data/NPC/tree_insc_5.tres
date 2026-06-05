@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://dyg6df32xboj1"]
+
+[ext_resource type="Script" uid="uid://dy21dtedkuf0s" path="res://resources/NPCData.gd" id="1_p4nj4"]
+
+[resource]
+script = ExtResource("1_p4nj4")
+npc_id = "tree_insc_5"
+npc_name = "Pedestal"
+dialogue_start_node = "tree_inscription_5"
+scene_path = "res://data/NPC/pedestal.tscn"
+metadata/_custom_type_script = "uid://dy21dtedkuf0s"

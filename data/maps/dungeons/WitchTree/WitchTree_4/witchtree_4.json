@@ -3401,14 +3401,14 @@
 		},
 		{
 			"atlas": [
-				1,
-				0
+				3,
+				1
 			],
 			"pos": [
 				2,
 				18
 			],
-			"source_id": 2
+			"source_id": 4
 		},
 		{
 			"atlas": [
@@ -13938,6 +13938,17 @@
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/NPC/tree_insc_4.tres",
+			"fencing_resource": "",
+			"pos": [
+				2,
+				18
+			],
+			"trigger_resource": "",
+			"type": "NPC"
 		},
 		{
 			"aggro_group": 0,
