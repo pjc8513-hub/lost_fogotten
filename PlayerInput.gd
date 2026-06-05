@@ -48,7 +48,9 @@ func _unhandled_input(event):
 	if event.is_action_pressed("god_mode"):
 		_toggle_god_mode()
 		get_viewport().set_input_as_handled()
-
+	if event.is_action_pressed("debug_console"):
+		_open_debug_console()
+		get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed("select_member_1"):
 		_try_select_party_member(0)
@@ -131,3 +133,20 @@ func _toggle_god_mode() -> void:
 		GameEvents.message_logged.emit("[color=gold]GOD MODE ACTIVATED[/color] - All party members revived and leveled up!")
 	else:
 		GameEvents.message_logged.emit("[color=gray]God mode deactivated[/color]")
+
+func _open_debug_console() -> void:
+	var debug_enabled = false
+	if ProjectSettings.has_setting("debug/toggle_debug"):
+		debug_enabled = ProjectSettings.get_setting("debug/toggle_debug")
+	elif ProjectSettings.has_setting("toggle_debug"):
+		debug_enabled = ProjectSettings.get_setting("toggle_debug")
+	elif ProjectSettings.has_setting("application/config/toggle_debug"):
+		debug_enabled = ProjectSettings.get_setting("application/config/toggle_debug")
+	else:
+		debug_enabled = OS.is_debug_build()
+
+	if not debug_enabled:
+		return
+
+	if DialogueManager.has_method("show_command_prompt"):
+		DialogueManager.show_command_prompt()

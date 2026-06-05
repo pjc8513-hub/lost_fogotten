@@ -345,3 +345,289 @@ func close_dialogue():
 	current_node = ""
 
 	emit_signal("dialogue_closed")
+
+
+# ==============================================================================
+# DEBUG / TESTING COMMAND PIPELINE
+# TO REMOVE: Delete everything below this line, and remove show_command_prompt()
+# and _on_command_submitted() references in this file.
+# ==============================================================================
+
+func show_command_prompt() -> void:
+	"""Show a command prompt using the password input UI."""
+	if ui == null:
+		push_error("Dialogue UI not registered")
+		return
+	
+	ui.show()
+	ui.npc_name_label.text = "[DEBUG CONSOLE]"
+	ui.dialogue_text.text = "Enter Cheat / Test Command:"
+	ui.clear_choices()
+	ui.password_input.show()
+	ui.password_input.text = ""
+	ui.password_input.placeholder_text = "e.g., LOADMAP BonePit, GIVEGOLD 100"
+	
+	# Disconnect any existing connections
+	if ui.password_input.text_submitted.is_connected(_on_password_submitted):
+		ui.password_input.text_submitted.disconnect(_on_password_submitted)
+	if ui.password_input.text_submitted.is_connected(_on_command_submitted):
+		ui.password_input.text_submitted.disconnect(_on_command_submitted)
+	
+	ui.password_input.text_submitted.connect(_on_command_submitted)
+	ui.password_input.grab_focus()
+
+func _on_command_submitted(text: String) -> void:
+	"""Handle submission of debug console commands."""
+	close_dialogue()
+	if ui.password_input.text_submitted.is_connected(_on_command_submitted):
+		ui.password_input.text_submitted.disconnect(_on_command_submitted)
+	
+	await execute_debug_command(text)
+
+func execute_debug_command(text: String) -> void:
+	var trimmed := text.strip_edges()
+	if trimmed.is_empty():
+		return
+		
+	var parts := trimmed.split(" ", false)
+	if parts.is_empty():
+		return
+		
+	var cmd_name := parts[0].to_lower()
+	var args := parts.slice(1)
+	var full_arg_string := " ".join(args)
+	
+	match cmd_name:
+		"loadmap":
+			if args.is_empty():
+				GameEvents.message_logged.emit("[color=red]Usage: LOADMAP [MapName/Path][/color]")
+				return
+			_execute_loadmap(full_arg_string)
+			
+		"giveskill":
+			if args.is_empty():
+				GameEvents.message_logged.emit("[color=red]Usage: GIVESKILL [SkillID][/color]")
+				return
+			
+			var skill_id := full_arg_string
+			var skill_data: SkillData = null
+			for s in SkillRegistry._all_skills:
+				if s.skill_id.to_lower() == skill_id.to_lower() or s.display_name.to_lower() == skill_id.to_lower():
+					skill_data = s
+					break
+					
+			if skill_data == null:
+				GameEvents.message_logged.emit("[color=red]Skill not found: %s[/color]" % skill_id)
+				return
+				
+			var target_member = PartyState.get_selected()
+			if target_member == null:
+				target_member = PartyState.active_party[0] if not PartyState.active_party.is_empty() else null
+				
+			if target_member == null:
+				GameEvents.message_logged.emit("[color=red]No active party members to learn skill.[/color]")
+				return
+				
+			if target_member.learned_skills.has(skill_data.skill_id):
+				GameEvents.message_logged.emit("[color=yellow]%s[/color] already knows [color=cyan]%s[/color]" % [target_member.member_name, skill_data.display_name])
+				return
+				
+			target_member.learned_skills.append(skill_data.skill_id)
+			target_member.recalculate_derived_stats(false)
+			GameEvents.party_member_stats_changed.emit(target_member)
+			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] [color=yellow]%s[/color] learned skill: [color=cyan]%s[/color]" % [target_member.member_name, skill_data.display_name])
+			
+		"giveitem":
+			if args.is_empty():
+				GameEvents.message_logged.emit("[color=red]Usage: GIVEITEM [ItemID] [Amount][/color]")
+				return
+			
+			var item_id := args[0]
+			var amount := 1
+			if args.size() > 1:
+				amount = int(args[1])
+				if amount <= 0:
+					amount = 1
+					
+			var target_member = PartyState.get_selected()
+			if target_member == null:
+				target_member = PartyState.active_party[0] if not PartyState.active_party.is_empty() else null
+				
+			if target_member == null:
+				GameEvents.message_logged.emit("[color=red]No active party members to give item.[/color]")
+				return
+				
+			var item_instance = LootManager.create_item_instance(item_id)
+			if item_instance == null:
+				var potential_id := " ".join(args)
+				if args.size() > 1:
+					potential_id = " ".join(args.slice(0, args.size() - 1))
+				item_instance = LootManager.create_item_instance(potential_id)
+				
+			if item_instance == null:
+				GameEvents.message_logged.emit("[color=red]Item not found: %s[/color]" % item_id)
+				return
+				
+			var success := false
+			for i in range(amount):
+				var inst = item_instance if i == 0 else LootManager.create_item_instance(item_instance.item_data.item_id)
+				if inst:
+					if InventoryManager.add_item(target_member, inst):
+						success = true
+						
+			if success:
+				GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Gave [color=yellow]%s[/color] x%d to [color=cyan]%s[/color]" % [item_instance.item_data.name, amount, target_member.member_name])
+				
+		"givegold":
+			if args.is_empty():
+				GameEvents.message_logged.emit("[color=red]Usage: GIVEGOLD [Amount][/color]")
+				return
+			var amount := int(args[0])
+			PartyState.add_gold(amount)
+			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Added [color=gold]%d gold[/color]. Total: [color=gold]%d[/color]" % [amount, PartyState.party_gold])
+			
+		"givetorch":
+			PartyState.party_torches += 1
+			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Received: Torch. Total torches: [color=cyan]%d[/color]" % PartyState.party_torches)
+			
+		"castspell":
+			if args.is_empty():
+				GameEvents.message_logged.emit("[color=red]Usage: CASTSPELL [ChordID][/color]")
+				return
+			
+			var chord_id := full_arg_string
+			var chord_data: ChordData = null
+			for c in ChordRegistry.get_all_chords():
+				if c.chord_id.to_lower() == chord_id.to_lower() or c.display_name.to_lower() == chord_id.to_lower():
+					chord_data = c
+					break
+					
+			if chord_data == null:
+				GameEvents.message_logged.emit("[color=red]Chord not found: %s[/color]" % chord_id)
+				return
+				
+			var caster = PartyState.get_selected()
+			if caster == null:
+				caster = PartyState.active_party[0] if not PartyState.active_party.is_empty() else null
+				
+			if caster == null:
+				GameEvents.message_logged.emit("[color=red]No active party members to cast the spell.[/color]")
+				return
+				
+			var guitar = caster.equipped_guitar if caster.get("equipped_guitar") != null else null
+			if guitar == null:
+				guitar = GuitarData.new()
+				guitar.guitar_name = "Spectral Lute"
+				guitar.min_strings = 3
+				guitar.max_strings = 8
+				guitar.rolled_string_count = 6
+				guitar.rolled_string_elements = [GuitarData.Element.PHYSICAL]
+				
+			var spell_data = SpellData.new()
+			spell_data.caster = caster
+			spell_data.guitar = guitar
+			spell_data.guitar_name = guitar.guitar_name
+			
+			var result = SpellResult.new()
+			result.spell_data = spell_data
+			result.mana_cost = 0
+			result.mana_sufficient = true
+			result.chord_success_chance = 100
+			result.chord_fail_chance = 0
+			result.caster_current_mp = caster.current_mp
+			
+			result.chord_entries.append({
+				"name": chord_data.display_name,
+				"count": 1,
+				"data": chord_data,
+				"summary": chord_data.get_summary_text()
+			})
+			
+			for element in chord_data.required_elements:
+				if SpellResolver.ELEMENT_RULES.has(element):
+					var rule = SpellResolver.ELEMENT_RULES[element]
+					result.element_rolls[element] = {
+						"name": rule["name"],
+						"die": int(rule["die"]),
+						"rolls": 3,
+						"mana_per_roll": int(rule["mana"]),
+						"healing": bool(rule.get("healing", false)),
+						"splash": bool(rule.get("splash", false)),
+						"base_rolls": 3,
+						"bonus_rolls": 0,
+					}
+			
+			if chord_data.required_elements.is_empty() and chord_data.bonus_damage > 0:
+				var physical_rule = SpellResolver.ELEMENT_RULES[GuitarData.Element.PHYSICAL]
+				result.element_rolls[GuitarData.Element.PHYSICAL] = {
+					"name": physical_rule["name"],
+					"die": int(physical_rule["die"]),
+					"rolls": 1,
+					"mana_per_roll": int(physical_rule["mana"]),
+					"healing": false,
+					"splash": false,
+					"base_rolls": 1,
+					"bonus_rolls": 0,
+				}
+				
+			var request = SpellCastRequest.new()
+			request.spell_data = spell_data
+			request.spell_result = result
+			request.caster = caster
+			request.guitar = guitar
+			request.is_valid = true
+			
+			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Casting [color=gold]%s[/color] ignoring requirements..." % chord_data.display_name)
+			await SpellExecutor.execute_request(request)
+			
+		_:
+			GameEvents.message_logged.emit("[color=red]Unknown debug command: %s[/color]" % cmd_name)
+
+func _execute_loadmap(map_path: String) -> void:
+	var path := ""
+	if map_path.begins_with("res://"):
+		path = map_path
+	else:
+		path = _find_file_recursively("res://data/maps", map_path)
+		if path.is_empty():
+			path = _find_file_recursively("res://data", map_path)
+			
+	if path.is_empty() or not ResourceLoader.exists(path):
+		GameEvents.message_logged.emit("[color=red]Map resource not found: %s[/color]" % map_path)
+		return
+		
+	var dungeon_data = load(path) as DungeonData
+	if dungeon_data == null:
+		GameEvents.message_logged.emit("[color=red]Failed to load DungeonData from: %s[/color]" % path)
+		return
+		
+	GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Loading map: %s..." % dungeon_data.DungeonName)
+	World.set_current_dungeon(dungeon_data)
+	SceneManager.change_scene("res://Main.tscn")
+
+func _find_file_recursively(dir_path: String, target_filename: String) -> String:
+	var target := target_filename
+	if not target.contains("."):
+		target += ".tres"
+		
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return ""
+		
+	dir.list_dir_begin()
+	var file_name := dir.get_next()
+	while file_name != "":
+		if dir.current_is_dir():
+			if not file_name.begins_with("."):
+				var found_path := _find_file_recursively(dir_path.path_join(file_name), target_filename)
+				if not found_path.is_empty():
+					dir.list_dir_end()
+					return found_path
+		else:
+			if file_name.to_lower() == target.to_lower() or file_name.get_basename().to_lower() == target_filename.to_lower():
+				var full_path := dir_path.path_join(file_name)
+				dir.list_dir_end()
+				return full_path
+		file_name = dir.get_next()
+	dir.list_dir_end()
+	return ""
