@@ -478,6 +478,31 @@ func execute_debug_command(text: String) -> void:
 			if success:
 				GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Gave [color=yellow]%s[/color] x%d to [color=cyan]%s[/color]" % [item_instance.item_data.name, amount, target_member.member_name])
 				
+		"giveguitar":
+			var item_id := "THRONE"
+			if not args.is_empty():
+				item_id = args[0]
+				
+			var target_member = PartyState.get_selected()
+			if target_member == null:
+				target_member = PartyState.active_party[0] if not PartyState.active_party.is_empty() else null
+				
+			if target_member == null:
+				GameEvents.message_logged.emit("[color=red]No active party members to give guitar.[/color]")
+				return
+				
+			var item_instance = LootManager.create_item_instance(item_id)
+			if item_instance == null:
+				GameEvents.message_logged.emit("[color=red]Guitar not found: %s[/color]" % item_id)
+				return
+				
+			if not item_instance.item_data is GuitarData:
+				GameEvents.message_logged.emit("[color=red]Item %s is not a Guitar.[/color]" % item_instance.item_data.name)
+				return
+				
+			if InventoryManager.add_item(target_member, item_instance):
+				GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Gave rolled guitar [color=yellow]%s[/color] to [color=cyan]%s[/color]" % [item_instance.item_data.guitar_name, target_member.member_name])
+				
 		"givegold":
 			if args.is_empty():
 				GameEvents.message_logged.emit("[color=red]Usage: GIVEGOLD [Amount][/color]")

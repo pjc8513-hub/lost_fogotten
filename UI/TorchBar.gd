@@ -3,6 +3,7 @@ extends Control
 @onready var progress_bar: ProgressBar = $ProgressBar # Adjust path if needed
 
 var current_torch_is_magic: bool = false
+var current_torch_node: Node = null
 
 func _ready() -> void:
 	# Hide the bar by default until a valid torch connects to it
@@ -12,6 +13,8 @@ func _ready() -> void:
 # whenever the active player/torch node is spawned or found.
 func hook_up_torch(torch_node: Node) -> void:
 	if torch_node and torch_node.has_signal("torch_durability_changed"):
+		# Store reference for cleanup
+		current_torch_node = torch_node
 		# Connect the torch updates to our UI updater function
 		torch_node.torch_durability_changed.connect(_on_torch_durability_changed)
 		
@@ -24,6 +27,16 @@ func hook_up_torch(torch_node: Node) -> void:
 		if torch_node.has_meta("is_magic_torch"):
 			current_torch_is_magic = torch_node.get_meta("is_magic_torch")
 		show()
+
+func _exit_tree() -> void:
+	# Disconnect torch signals to prevent orphaned connections
+	if current_torch_node != null and is_instance_valid(current_torch_node):
+		if current_torch_node.torch_durability_changed.is_connected(_on_torch_durability_changed):
+			current_torch_node.torch_durability_changed.disconnect(_on_torch_durability_changed)
+		if current_torch_node.has_signal("torch_type_changed"):
+			if current_torch_node.torch_type_changed.is_connected(_on_torch_type_changed):
+				current_torch_node.torch_type_changed.disconnect(_on_torch_type_changed)
+		current_torch_node = null
 
 func _on_torch_durability_changed(current: float, max_val: float, torch_is_lit: bool) -> void:
 	if progress_bar == null:
