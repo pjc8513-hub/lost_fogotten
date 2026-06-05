@@ -31,8 +31,7 @@ func _ready() -> void:
 	if treasure_data and sprite:
 		_apply_treasure_data()
 	
-	World.register_treasure_chest(self)  # assuming you have this in World.gd
-	pass # Replace with function body.
+	World.register_treasure_chest(self) 
 
 func _apply_treasure_data() -> void:
 	if not treasure_data:

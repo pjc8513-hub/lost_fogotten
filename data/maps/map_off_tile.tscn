@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://copmmxxhmyo6i"]
+
+[ext_resource type="Script" uid="uid://e66g2xvyyunb" path="res://black_out.gd" id="1_pk5dn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lhbto"]
+
+[node name="Area3D" type="Area3D" unique_id=594986275]
+script = ExtResource("1_pk5dn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=198606869]
+shape = SubResource("BoxShape3D_lhbto")

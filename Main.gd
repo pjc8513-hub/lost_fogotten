@@ -20,6 +20,7 @@ var automap_grid := {}  # Dictionary of Vector2 -> int
 	#print("[FRAME ", Engine.get_process_frames(), "] Main _enter_tree")
 
 func _ready():
+	GameEvents.automap_visibility_changed.connect(_on_automap_visibility_changed)
 	#print("[FRAME ", Engine.get_process_frames(), "] Main _ready start")
 	#print("[FRAME ", Engine.get_process_frames(), "] Main initial focus owner: ", get_viewport().gui_get_focus_owner())
 	var torch_ui = $SubViewportContainer/SubViewport/TorchBar
@@ -350,3 +351,8 @@ func _on_chest_selected(chest):
 	
 func _on_dungeon_selected(dungeon):
 	World.set_selected_dungeon(dungeon)
+
+func _on_automap_visibility_changed(should_be_visible: bool) -> void:
+	var automap = get_node_or_null("automap")
+	if automap:
+		automap.visible = should_be_visible

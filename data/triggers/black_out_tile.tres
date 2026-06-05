@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TriggerData" format=3 uid="uid://dibmjniiw6m0o"]
+
+[ext_resource type="Script" uid="uid://djxiqee1ahk42" path="res://resources/TriggerEffect.gd" id="1_r464i"]
+[ext_resource type="Script" uid="uid://3c1a7cylutet" path="res://resources/TriggerData.gd" id="2_acm04"]
+
+[resource]
+script = ExtResource("2_acm04")
+trigger_id = "black_out_tile"
+scene_path = "res://black_out.tscn"
+metadata/_custom_type_script = "uid://3c1a7cylutet"
