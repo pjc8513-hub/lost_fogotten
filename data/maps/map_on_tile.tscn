@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://dkecue8rifdgq"]
 
 [ext_resource type="Script" uid="uid://b5tqild8dfrap" path="res://data/maps/map_on_tile.gd" id="1_1g438"]
+[ext_resource type="Resource" uid="uid://devnm3s22pglw" path="res://data/triggers/map_on_tile.tres" id="2_tol28"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhbto"]
 
 [node name="Area3D" type="Area3D" unique_id=594986275]
 script = ExtResource("1_1g438")
+trigger_data = ExtResource("2_tol28")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=198606869]
 shape = SubResource("BoxShape3D_lhbto")

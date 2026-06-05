@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TriggerData" format=3 uid="uid://devnm3s22pglw"]
+
+[ext_resource type="Script" uid="uid://djxiqee1ahk42" path="res://resources/TriggerEffect.gd" id="1_bf5yf"]
+[ext_resource type="Script" uid="uid://3c1a7cylutet" path="res://resources/TriggerData.gd" id="2_um67f"]
+
+[resource]
+script = ExtResource("2_um67f")
+trigger_id = "map_on_tile"
+scene_path = "res://data/maps/map_on_tile.tscn"
+metadata/_custom_type_script = "uid://3c1a7cylutet"

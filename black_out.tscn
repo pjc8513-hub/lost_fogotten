@@ -1,12 +1,8 @@
 [gd_scene format=3 uid="uid://boldufcksfrly"]
 
 [ext_resource type="PackedScene" uid="uid://cdelfpb7l0bpf" path="res://assets/models/black_out.glb" id="1_c80u4"]
-[ext_resource type="Script" uid="uid://e66g2xvyyunb" path="res://black_out.gd" id="2_40mjc"]
-[ext_resource type="Resource" uid="uid://dibmjniiw6m0o" path="res://data/triggers/black_out_tile.tres" id="3_1wuai"]
 
 [node name="black_out" unique_id=1713434276 instance=ExtResource("1_c80u4")]
-script = ExtResource("2_40mjc")
-trigger_data = ExtResource("3_1wuai")
 
 [node name="Cube" parent="." index="0" unique_id=162792156]
 transform = Transform3D(0.8341143, 0, 0, 0, 1.5, 0, 0, 0, 0.7, 0, 0, 0)
