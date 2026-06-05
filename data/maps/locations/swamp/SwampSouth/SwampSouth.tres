@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://bhl317b6w7ttm"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_vkksa"]
+
+[resource]
+script = ExtResource("1_vkksa")
+map_data_path = "res://data/maps/locations/swamp/SwampSouth/swamp_south.json"
+DungeonID = "SwampSouth"
+DungeonName = "Swamp South"
+ThemePath = "res://data/maps/themes/swamp_theme.tres"
+spawn_id = "FaceEast"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

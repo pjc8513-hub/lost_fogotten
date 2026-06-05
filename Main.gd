@@ -238,12 +238,7 @@ func _describe_environment(environment: Environment) -> String:
 	]
 
 func _input(event):
-	if event.is_action_pressed("map"):  # Set this up in Project > Input Map
-		map_open = !map_open
-		var automap = get_node("automap")
-		if automap:
-			automap.visible = map_open
-		
+
 	if event.is_action_pressed("compose"):
 		var owner_char := PartyState.get_selected()
 		if owner_char == null:

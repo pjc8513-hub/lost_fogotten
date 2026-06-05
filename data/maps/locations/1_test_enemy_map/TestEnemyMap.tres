@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://dwy7n33o4ko0s"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_savb1"]
+
+[resource]
+script = ExtResource("1_savb1")
+map_data_path = "res://data/maps/locations/1_test_enemy_map/test_enemy_map.json"
+DungeonID = "TestEnemyMap"
+DungeonName = "Test Enmy Map"
+ThemePath = "res://data/maps/themes/castle_theme.tres"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"
