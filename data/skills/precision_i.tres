@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_gui8l")
-skill_id = "Precision_I"
-display_name = "Precision I"
+skill_id = "Precision"
+display_name = "Precision"
 description = "Adds 10% chance of chord success"
 min_level = 10
 precision = 10.0

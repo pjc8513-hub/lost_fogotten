@@ -88,7 +88,7 @@ skill_row_prefab = ExtResource("9_xo3aa")
 metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/SkillsView" unique_id=416228458]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
