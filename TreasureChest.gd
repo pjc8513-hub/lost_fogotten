@@ -17,6 +17,10 @@ signal open_animation_completed
 		if is_inside_tree() and sprite:
 			_apply_treasure_data()
 			
+const TRAP_SAVE_BASE_DC := 8
+const TRAP_SAVE_DC_PER_TIER := 3
+const TRAP_DAMAGE_BONUS_PER_TIER := 2
+
 var grid_position: Vector2i
 var is_opened: bool = false
 var is_disarmed: bool = false
@@ -98,15 +102,29 @@ func attempt_unlock(player_skill_bonus: int = 0) -> bool:
 	return success
 
 func _trigger_trap():
-	var damage = 0
-	for i in treasure_data.trap_damage_num_dice:
-		damage += randi_range(1, treasure_data.trap_damage_die)
+	var damage := _roll_trap_damage()
+	var save_dc := _get_trap_save_dc()
 	
-	GameEvents.message_logged.emit("[color=red]Trap triggered! Took %d damage![/color]" % damage)
+	GameEvents.message_logged.emit("[color=red]Trap triggered! Save DC %d or take %d damage![/color]" % [save_dc, damage])
+	PartyState.damage_entire_party_with_save_throw(damage, save_dc, "Trap")
 	chest_trap_triggered.emit(self, damage)
-	# Player.take_damage(damage) - call this however your player handles it
 
+func _roll_trap_damage() -> int:
+	var damage := 0
+	for _i in range(treasure_data.trap_damage_num_dice):
+		damage += randi_range(1, treasure_data.trap_damage_die)
+	return max(1, damage + _get_trap_tier_damage_bonus())
 
+func _get_trap_save_dc() -> int:
+	return TRAP_SAVE_BASE_DC + (_get_trap_tier_index() * TRAP_SAVE_DC_PER_TIER)
+
+func _get_trap_tier_damage_bonus() -> int:
+	return _get_trap_tier_index() * TRAP_DAMAGE_BONUS_PER_TIER
+
+func _get_trap_tier_index() -> int:
+	if treasure_data == null:
+		return 0
+	return max(0, treasure_data.tier - 1)
 
 func open_chest():
 

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_cbcck")
-skill_id = "Arms_Master"
+skill_id = "arms_master"
 display_name = "Arms Master"
 description = "+1 die roll on attack"
 skill_type = 1

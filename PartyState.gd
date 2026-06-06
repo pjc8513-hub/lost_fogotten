@@ -63,6 +63,10 @@ var magic_torch_step_counter: int = 0  # Counter for 1 mana every 2 steps
 # DEBUG/CHEAT: God mode - invulnerability and party buffs for testing
 var god_mode_active: bool = false
 
+const SAVE_THROW_DIE_SIDES := 20
+const SAVE_THROW_DEXTERITY_DIVISOR := 4.0
+const DEFAULT_SAVE_THROW_SKILL := "reflex"
+
 func _ready():
 	roster.clear()
 	active_party.clear()
@@ -190,6 +194,76 @@ func _set_selected_index(value: int) -> void:
 	
 	# Environmental damage
 	# Inside PartyState.gd
+
+func make_save_throw(member: ClassData, dc: int, skill_id: String = DEFAULT_SAVE_THROW_SKILL) -> Dictionary:
+	if member == null:
+		return {}
+
+	var natural_roll := randi_range(1, SAVE_THROW_DIE_SIDES)
+	var dexterity_bonus := _get_save_throw_dexterity_bonus(member)
+	var skill_bonus := member.get_total_skill_bonus(skill_id) if skill_id != "" else 0
+	var total := natural_roll + dexterity_bonus + skill_bonus
+
+	return {
+		"member": member,
+		"dc": dc,
+		"natural_roll": natural_roll,
+		"dexterity_bonus": dexterity_bonus,
+		"skill_id": skill_id,
+		"skill_bonus": skill_bonus,
+		"total": total,
+		"success": total >= dc,
+	}
+
+func damage_entire_party_with_save_throw(amount: int, dc: int, label: String = "Trap", skill_id: String = DEFAULT_SAVE_THROW_SKILL) -> void:
+	if god_mode_active:
+		return
+
+	for member in active_party:
+		if member == null or member.current_hp <= 0:
+			continue
+
+		var save_result := make_save_throw(member, dc, skill_id)
+		_log_save_throw_result(save_result, label)
+		if bool(save_result.get("success", false)):
+			continue
+
+		var died = member.take_damage(amount)
+		GameEvents.message_logged.emit("[color=red]%s takes %d %s damage![/color]" % [
+			member.member_name,
+			amount,
+			label.to_lower()
+		])
+		if died:
+			GameEvents.message_logged.emit("[color=red]%s dies![/color]" % member.member_name)
+
+func _get_save_throw_dexterity_bonus(member: ClassData) -> int:
+	return max(0, int(floor(float(member.get_dexterity() - 10) / SAVE_THROW_DEXTERITY_DIVISOR)))
+
+func _log_save_throw_result(save_result: Dictionary, label: String) -> void:
+	var member := save_result.get("member", null) as ClassData
+	if member == null:
+		return
+
+	var color := "green" if bool(save_result.get("success", false)) else "red"
+	var outcome := "succeeds" if bool(save_result.get("success", false)) else "fails"
+	var skill_id := String(save_result.get("skill_id", ""))
+	var skill_bonus := int(save_result.get("skill_bonus", 0))
+	var skill_text := ""
+	if skill_id != "" and skill_bonus != 0:
+		skill_text = " + %s %d" % [skill_id.capitalize(), skill_bonus]
+
+	GameEvents.message_logged.emit("[color=%s]%s %s save %s: %d + Dex %d%s = %d vs DC %d[/color]" % [
+		color,
+		member.member_name,
+		label,
+		outcome,
+		int(save_result.get("natural_roll", 0)),
+		int(save_result.get("dexterity_bonus", 0)),
+		skill_text,
+		int(save_result.get("total", 0)),
+		int(save_result.get("dc", 0))
+	])
 
 ## Picks one random living party member and applies the damage to them
 func damage_random_member(amount: int) -> String:

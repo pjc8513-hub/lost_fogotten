@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ko5ib")
-skill_id = "Virtuoso"
+skill_id = "virtuoso"
 display_name = "Virtuoso"
 description = "+1 complexity bonus to guitar sequences"
 skill_type = 1
