@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://c124rry5kddny"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_xsips"]
+
+[resource]
+script = ExtResource("1_xsips")
+skill_id = "reflex"
+display_name = "reflex"
+description = "Avoid trap damage"
+skill_type = 1
+available_classes = Array[int]([5, 6])
+max_rank = 2
+min_level = 10
+movement_bonus = 1
+base_learn_chance = 30
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

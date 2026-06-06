@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://b87irihvxq3rx"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_clmel"]
+
+[resource]
+script = ExtResource("1_clmel")
+skill_id = "lockpicking"
+display_name = "Lock Picking"
+description = "Pick locks."
+skill_type = 1
+available_classes = Array[int]([5, 6])
+max_rank = 3
+min_level = 10
+movement_bonus = 1
+base_learn_chance = 30
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

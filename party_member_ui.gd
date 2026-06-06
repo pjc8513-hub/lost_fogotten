@@ -27,14 +27,14 @@ func _enter_tree():
 	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _enter_tree")
 	
 func _ready():
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready start member_index=", member_index, " pending_index=", _pending_member_index)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready start member_index=", member_index, " pending_index=", _pending_member_index)
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
 	if _pending_member_data:
 		_apply_setup(_pending_member_data, _pending_member_index)		
 	call_deferred("_update_border")
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready end texture=", portrait.texture, " visible=", visible)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready end texture=", portrait.texture, " visible=", visible)
 	#GameEvents.level_increase.connect(_on_level_increase)
 
 func _create_styles():
@@ -54,7 +54,7 @@ func _create_styles():
 
 # This function takes a .tres file and fills the UI
 func setup(data: ClassData, index: int): # We leave 'data' untyped here too just to be safe
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " setup called index=", index, " node_ready=", is_node_ready(), " data=", data)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " setup called index=", index, " node_ready=", is_node_ready(), " data=", data)
 	_pending_member_data = data
 	_pending_member_index = index
 	if is_node_ready():
@@ -129,19 +129,12 @@ func _on_selection_changed(_character: ClassData):
 	_update_border()
 
 func _update_border():
-	print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _update_border selected_index=", PartyState.selected_index, " member_index=", member_index)
+	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _update_border selected_index=", PartyState.selected_index, " member_index=", member_index)
 	if PartyState.selected_index == member_index:
 		add_theme_stylebox_override("panel", selected_style)
 	else:
 		add_theme_stylebox_override("panel", normal_style)
 
-func _notification(what):
-	if what == NOTIFICATION_DRAW:
-		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " DRAW texture=", portrait.texture, " global_pos=", global_position, " visible=", visible)
-	elif what == NOTIFICATION_FOCUS_ENTER:
-		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " focus enter")
-	elif what == NOTIFICATION_FOCUS_EXIT:
-		print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " focus exit")
 func _on_combat_status_changed(updated_data: ClassData, new_status: int):
 	if updated_data == my_member_data:
 		update_status_icon(new_status)

@@ -103,7 +103,7 @@ func _ready():
 		PartyState.selected_index = 0
 		#print("[FRAME ", Engine.get_process_frames(), "] Main map build complete, selected index: ", PartyState.selected_index)
 		#print("[FRAME ", Engine.get_process_frames(), "] Main selected member: ", PartyState.get_selected())
-	print("[FRAME ", Engine.get_process_frames(), "] Main _ready end")
+	#print("[FRAME ", Engine.get_process_frames(), "] Main _ready end")
 	$Control/MarginContainer/VBoxContainer.refresh_party_ui()
 
 func apply_world_environment(theme: MapTheme) -> void:
@@ -112,8 +112,7 @@ func apply_world_environment(theme: MapTheme) -> void:
 	if theme == null:
 		push_warning("Cannot apply world environment because the map theme is missing.")
 		return
-	print("[WorldEnv] Theme: ", theme.resource_path)
-	print("[WorldEnv] Theme environment: ", _describe_environment(theme.environment))
+
 	
 	# --- NEW: Find your player's OmniLight3D and apply the theme settings ---
 	# Adjust this path to wherever your torch light node lives inside the sub_viewport
@@ -139,7 +138,6 @@ func apply_world_environment(theme: MapTheme) -> void:
 func _apply_environment_to_viewports(environment: Environment) -> void:
 	if is_instance_valid(world_environment):
 		world_environment.environment = environment
-		print("[WorldEnv] Assigned WorldEnvironment node: ", _describe_environment(world_environment.environment))
 	else:
 		push_warning("[WorldEnv] WorldEnvironment node is not valid.")
 
@@ -166,14 +164,12 @@ func _set_viewport_environment(viewport: Viewport, environment: Environment) -> 
 	var world := viewport.get_world_3d()
 	if world != null:
 		world.environment = environment
-		print("[WorldEnv] Assigned viewport world '", viewport.name, "': ", _describe_environment(world.environment))
 		return
 
 	push_warning("[WorldEnv] Viewport has no World3D yet: " + str(viewport.name))
 	(func():
 		if is_instance_valid(viewport) and viewport.get_world_3d() != null:
 			viewport.get_world_3d().environment = environment
-			print("[WorldEnv] Deferred viewport world assignment '", viewport.name, "': ", _describe_environment(viewport.get_world_3d().environment))
 		else:
 			push_warning("[WorldEnv] Deferred assignment failed because viewport still has no World3D.")
 	).call_deferred()
@@ -188,11 +184,8 @@ func _clear_camera_environment_override() -> void:
 		return
 
 	camera.environment = null
-	print("[WorldEnv] Cleared camera environment override so WorldEnvironment takes precedence.")
 
 func _debug_world_environment_state(label: String) -> void:
-	print("[WorldEnv] --- ", label, " ---")
-	print("[WorldEnv] WorldEnvironment node valid: ", is_instance_valid(world_environment))
 	if is_instance_valid(world_environment):
 		print("[WorldEnv] WorldEnvironment node env: ", _describe_environment(world_environment.environment))
 
@@ -200,7 +193,7 @@ func _debug_world_environment_state(label: String) -> void:
 	_debug_viewport_environment(get_viewport(), "root_viewport")
 
 	var camera := sub_viewport.get_camera_3d() if is_instance_valid(sub_viewport) else null
-	print("[WorldEnv] SubViewport camera: ", camera.get_path() if camera != null else "<none>")
+	
 	if camera != null:
 		print("[WorldEnv] Camera current: ", camera.current)
 		print("[WorldEnv] Camera env override: ", _describe_environment(camera.environment))
@@ -211,8 +204,6 @@ func _debug_viewport_environment(viewport: Viewport, label: String) -> void:
 		return
 
 	var world := viewport.get_world_3d()
-	print("[WorldEnv] ", label, " path: ", viewport.get_path())
-	print("[WorldEnv] ", label, " world exists: ", world != null)
 	if world != null:
 		print("[WorldEnv] ", label, " world env: ", _describe_environment(world.environment))
 
@@ -336,12 +327,6 @@ func _finish_initial_scene_setup() -> void:
 		#print("[FRAME ", Engine.get_process_frames(), "] Main re-emitting selected_character_changed for ", PartyState.get_selected().member_name)
 		GameEvents.selected_character_changed.emit(PartyState.get_selected())
 	#print("[FRAME ", Engine.get_process_frames(), "] Main _finish_initial_scene_setup end")
-
-func _notification(what):
-	if what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
-		print("[FRAME ", Engine.get_process_frames(), "] Main window focus in")
-	elif what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		print("[FRAME ", Engine.get_process_frames(), "] Main window focus out")
 
 func _on_enemy_selected(enemy):
 	World.set_selected_enemy(enemy)
