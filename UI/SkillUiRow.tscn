@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://csklo3ygurg4s"]
+
+[ext_resource type="Script" uid="uid://4kjpc85r52eg" path="res://UI/skill_ui_row.gd" id="1_tke2l"]
+[ext_resource type="Texture2D" uid="uid://b7a8fhs1k4mb2" path="res://assets/icons/skill_meter_unfilled.png" id="2_tlvv8"]
+
+[node name="SkillUiRow" type="VBoxContainer" unique_id=1463913030]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1068.0
+offset_bottom = -598.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tke2l")
+
+[node name="Label" type="Label" parent="." unique_id=80026612]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=788080612]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=531528595]
+layout_mode = 2
+texture = ExtResource("2_tlvv8")
+stretch_mode = 2

@@ -219,11 +219,67 @@ const CLASS_STAT_MAP = {
 @export var bonus_max_hp: int = 0
 @export var bonus_max_mp: int = 0
 
+# Inside ClassData.gd
+
+# Change your progression group:
 @export_group("Progression")
+@export var SkillLevel: int = 1
 @export var xp: int = 0
 @export var xp_to_next_level = BASE_XP_TO_NEXT_LEVEL
 @export var available_points = 0
-@export var learned_skills: Array[String] = []
+@export var available_skill_points = 0
+
+# Stored as {"skill_id": level_int} (e.g. {"arms_master": 0, "quick_step": 1, "sword_mastery": 3})
+@export var learned_skills: Dictionary = {} 
+
+# -- Might & Magic style Learning Methods --
+
+func teach_skill_by_npc(skill_id: String) -> bool:
+	if not learned_skills.has(skill_id):
+		learned_skills[skill_id] = 1 # Unlock skill at level 1
+		recalculate_derived_stats(false)
+		return true
+	return false
+
+func upgrade_skill(skill_id: String) -> bool:
+	if available_skill_points <= 0 or not learned_skills.has(skill_id):
+		return false
+		
+	var skill_res = SkillRegistry.get_skill(skill_id)
+	if skill_res and learned_skills[skill_id] < skill_res.max_rank:
+		available_skill_points -= 1
+		learned_skills[skill_id] += 1
+		recalculate_derived_stats(false)
+		return true
+	return false
+
+# Override the legacy has_skill check
+func has_skill(skill_id: String) -> bool:
+	var normalized := skill_id.to_lower()
+	return (
+		learned_skills.has(skill_id) and learned_skills[skill_id] > 0
+	) or (
+		learned_skills.has(normalized) and learned_skills[normalized] > 0
+	)
+
+func get_skill_rank(skill_id: String) -> int:
+	return learned_skills.get(skill_id, 0)
+
+# Accumulate the scalable bonuses inside your existing mathematical loops:
+func _get_skill_stat_bonus(stat: String) -> float:
+	var total := 0.0
+	for skill_id in learned_skills.keys():
+		var rank = learned_skills[skill_id]
+		if rank <= 0: continue
+		
+		var skill := SkillRegistry.get_skill(skill_id)
+		if skill != null:
+			# If your skill properties match the stat name + "_increment"
+			var field_name = stat + "_increment"
+			var bonus_value = skill.get(field_name)
+			if bonus_value != null:
+				total += float(bonus_value) * rank
+	return total
 
 @export_group("Presentation")
 @export var sprite_texture: Texture2D
@@ -313,7 +369,8 @@ static func create_custom_member(class_id: Class_Names, member_name_value: Strin
 	member.xp = 0
 	member.xp_to_next_level = BASE_XP_TO_NEXT_LEVEL
 	member.available_points = 0
-	member.learned_skills = []
+	member.available_skill_points = 0
+	member.learned_skills = {}
 	member.status_effects = []
 	member.cooldown = 0
 
@@ -401,6 +458,7 @@ func gain_level(stat_points: int = -1) -> void:
 		stat_points = roll_level_up_points()
 	level += 1
 	available_points += stat_points
+	available_skill_points += 1
 	xp_to_next_level = int(round(xp_to_next_level * 1.35))
 	recalculate_derived_stats(false)
 	
@@ -416,9 +474,6 @@ func roll_level_up_points() -> int:
 	if has_skill("Experienced"):
 		points += 1
 	return points
-
-func has_skill(skill_name: String) -> bool:
-	return learned_skills.has(skill_name) or learned_skills.has(skill_name.to_lower())
 
 func get_might() -> int:
 	return base_might + bonus_might + _get_equipped_bonus("might_bonus") + _get_combat_bonus("might")
@@ -493,6 +548,9 @@ func get_initiative() -> int:
 
 func get_available_points() -> int:
 	return available_points
+
+func get_available_skill_points() -> int:
+	return available_skill_points
 
 func get_equipped_item(slot: ItemData.Equip_Slot) -> ItemInstance:
 	for inst in inventory:
@@ -696,6 +754,7 @@ func try_learn_skills() -> Array[String]:
 	var newly_learned: Array[String] = []
 	
 	for skill in _get_all_skills_for_class():
+		# Dictionaries use .has() to check if a key exists
 		if learned_skills.has(skill.skill_id):
 			continue
 		if level < skill.min_level:
@@ -703,9 +762,14 @@ func try_learn_skills() -> Array[String]:
 		
 		var chance := _calculate_learn_chance(skill)
 		if randi_range(1, 100) <= chance:
-			learned_skills.append(skill.skill_id)
+			# FIX: Instead of appending to an array, assign the initial rank level (1) to the key
+			learned_skills[skill.skill_id] = 1 
+			
+			# This remains an array tracking text outputs, so append stays here
 			newly_learned.append(skill.skill_id)
-			recalculate_derived_stats(false)  # stat skills take effect immediately
+			
+			# Stat skills take effect immediately
+			recalculate_derived_stats(false)  
 	
 	return newly_learned
 
@@ -718,14 +782,6 @@ func _calculate_learn_chance(skill: SkillData) -> int:
 func _get_all_skills_for_class() -> Array[SkillData]:
 	# Load from a registry — see below
 	return SkillRegistry.get_skills_for_class(get_resolved_class_name())
-
-func _get_skill_stat_bonus(stat: String) -> float:
-	var total := 0.0
-	for skill_id in learned_skills:
-		var skill := SkillRegistry.get_skill(skill_id)
-		if skill != null:
-			total += float(skill.get(stat))
-	return total
 
 func get_learned_skill_resources() -> Array[SkillData]:
 	var skills: Array[SkillData] = []

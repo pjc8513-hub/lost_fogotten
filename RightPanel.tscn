@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bkljd6vi7oi1c" path="res://assets/icons/quests.png" id="5_hhyp4"]
 [ext_resource type="Script" uid="uid://5cs83qgtrkjq" path="res://popup_menu_inventory.gd" id="6_5kfkf"]
 [ext_resource type="Script" uid="uid://cbo7fw5t114tf" path="res://StatsView.gd" id="7_ce36d"]
+[ext_resource type="Script" uid="uid://dcm6yliidblew" path="res://SkillsView.gd" id="8_jjd6a"]
 [ext_resource type="Script" uid="uid://djlcnopqvet7m" path="res://questsview.gd" id="9_poj6t"]
+[ext_resource type="PackedScene" uid="uid://csklo3ygurg4s" path="res://UI/SkillUiRow.tscn" id="9_xo3aa"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_idfb0"]
 
@@ -78,12 +80,38 @@ script = ExtResource("6_5kfkf")
 [node name="TradeMenu" type="PopupMenu" parent="TabContainer/InventoryView/PopupMenuMain" unique_id=777877962]
 oversampling_override = 1.0
 
-[node name="SkillView" type="VBoxContainer" parent="TabContainer" unique_id=1804126734]
+[node name="SkillsView" type="Control" parent="TabContainer" unique_id=1647550571]
 visible = false
 layout_mode = 2
+script = ExtResource("8_jjd6a")
+skill_row_prefab = ExtResource("9_xo3aa")
 metadata/_tab_index = 1
 
-[node name="ItemList" type="ItemList" parent="TabContainer/SkillView" unique_id=1070579547]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/SkillsView" unique_id=416228458]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Header" type="HBoxContainer" parent="TabContainer/SkillsView/VBoxContainer" unique_id=1283980423]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/SkillsView/VBoxContainer/Header" unique_id=1319443309]
+layout_mode = 2
+text = "Skills List"
+
+[node name="AvailablePointsLabel" type="Label" parent="TabContainer/SkillsView/VBoxContainer/Header" unique_id=1053728837]
+layout_mode = 2
+text = "Available Skill Points: X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/SkillsView/VBoxContainer" unique_id=1227086127]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/SkillsView/VBoxContainer/ScrollContainer" unique_id=1704827934]
 layout_mode = 2
 
 [node name="StatsView" type="VBoxContainer" parent="TabContainer" unique_id=27764257]

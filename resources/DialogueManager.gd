@@ -432,7 +432,7 @@ func execute_debug_command(text: String) -> void:
 				GameEvents.message_logged.emit("[color=yellow]%s[/color] already knows [color=cyan]%s[/color]" % [target_member.member_name, skill_data.display_name])
 				return
 				
-			target_member.learned_skills.append(skill_data.skill_id)
+			target_member.learned_skills[skill_data.skill_id] = 1
 			target_member.recalculate_derived_stats(false)
 			GameEvents.party_member_stats_changed.emit(target_member)
 			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] [color=yellow]%s[/color] learned skill: [color=cyan]%s[/color]" % [target_member.member_name, skill_data.display_name])

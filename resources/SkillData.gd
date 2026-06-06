@@ -22,11 +22,13 @@ enum Element {
 
 @export var skill_id: String = ""           # Unique key, matches learned_skills entries
 @export var display_name: String = ""
-@export var description: String = ""
+@export_multiline var description: String = ""
 @export var icon: Texture2D
 @export var skill_type: SkillType = SkillType.PASSIVE_STAT
 
 @export var available_classes: Array[ClassData.Class_Names] = []
+@export var max_rank: int = 4
+
 @export var min_level: int = 1
 
 # Stat modifier fields (for PASSIVE_STAT skills)
@@ -41,6 +43,13 @@ enum Element {
 @export var complexity_bonus: int = 0
 @export var extra_damage_roll: int = 0
 # ...extend as needed
+
+# Base values per level (Can multiply these by the current level rank)
+@export var hp_per_level_increment: float = 0.0
+@export var mp_per_level_increment: float = 0.0
+@export var accuracy_increment: int = 0
+@export var movement_increment: int = 0
+
 
 # Learning chance
 @export var base_learn_chance: int = 5        # % at min_level

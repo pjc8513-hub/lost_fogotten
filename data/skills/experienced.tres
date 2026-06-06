@@ -8,6 +8,7 @@ skill_id = "experienced"
 display_name = "Experienced"
 description = "Gain an additional stat point per level"
 available_classes = Array[int]([2, 3, 4, 7, 8])
+max_rank = 1
 min_level = 3
 base_learn_chance = 45
 metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

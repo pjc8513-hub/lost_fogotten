@@ -9,6 +9,7 @@ display_name = "Quick Step"
 description = "Gain a movement turn before attacking"
 skill_type = 2
 available_classes = Array[int]([5, 6, 8])
+max_rank = 1
 movement_bonus = 1
 base_learn_chance = 30
 metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
