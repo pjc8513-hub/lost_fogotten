@@ -83,7 +83,8 @@ func attempt_disarm(player_skill_bonus: int) -> bool:
 func attempt_unlock(player_skill_bonus: int = 0) -> bool:
 	if is_opened:
 		return false
-		
+
+	print ("unlock attempt player skill: ", player_skill_bonus)
 	var roll = randi_range(1, 20) + player_skill_bonus
 	var success = roll >= treasure_data.lock_dc
 	

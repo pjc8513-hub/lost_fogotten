@@ -118,7 +118,7 @@ const CLASS_STAT_MAP = {
 		"bonus_damage_base": 0, "damage_might_scale": 0.25, "damage_dex_scale": 0.45,
 		"magic_amp": 0, "magic_amp_wis_scale": 0,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
-		"skill_bonuses": {"lockpicking": 3, "thievery": 3, "disarm_traps": 3, "sleight_of_hand": 2}
+		"skill_bonuses": {"lockpicking": 2, "thievery": 1, "disarm_traps": 1, "sleight_of_hand": 1}
 	},
 	Class_Names.RANGER: {
 		"base_might": 9, "base_end": 9, "base_wis": 8, "base_dex": 12,

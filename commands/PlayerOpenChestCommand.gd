@@ -6,7 +6,7 @@ class_name PlayerOpenChestCommand
 const MELEE_RANGE: int = 1  # 8-directional: max distance for adjacent tiles
 
 func execute() -> void:
-	var acting_member: ClassData = actor # ClassData
+	var acting_member: ClassData = PartyState.get_selected() # ClassData
 	var target_chest: TreasureChest = World.selected_chest
 	
 	# Guard: chest deselected or already opened between click and execution
@@ -31,9 +31,15 @@ func execute() -> void:
 		return
 	
 	# Skill check - use lockpick/thievery from ClassData
-	var skill_bonus = acting_member.get_skill_bonus("lockpicking")
+	var skill_rank = 0
+	var skill_bonus = 0
+	if (acting_member.has_skill("lockpicking")):
+		skill_rank = acting_member.get_skill_rank("lockpicking")
+		skill_bonus = acting_member.get_skill_bonus("lockpicking") + skill_rank
 	var success = target_chest.attempt_unlock(skill_bonus)
-
+	print(acting_member.member_name, " attempts to open")
+	if (acting_member.has_skill("lockpicking")):
+		print ("lockpicking rank: ", skill_rank)
 	if success:
 		GameEvents.open_chest_animation_started.emit(target_chest)
 		if target_chest.has_signal("open_animation_completed"):
