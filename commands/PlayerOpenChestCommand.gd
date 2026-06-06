@@ -31,15 +31,10 @@ func execute() -> void:
 		return
 	
 	# Skill check - use lockpick/thievery from ClassData
-	var skill_rank = 0
-	var skill_bonus = 0
-	if (acting_member.has_skill("lockpicking")):
-		skill_rank = acting_member.get_skill_rank("lockpicking")
-		skill_bonus = acting_member.get_skill_bonus("lockpicking") + skill_rank
+	var skill_bonus = acting_member.get_total_skill_bonus("lockpicking")
 	var success = target_chest.attempt_unlock(skill_bonus)
 	print(acting_member.member_name, " attempts to open")
-	if (acting_member.has_skill("lockpicking")):
-		print ("lockpicking rank: ", skill_rank)
+
 	if success:
 		GameEvents.open_chest_animation_started.emit(target_chest)
 		if target_chest.has_signal("open_animation_completed"):

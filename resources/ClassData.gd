@@ -118,7 +118,7 @@ const CLASS_STAT_MAP = {
 		"bonus_damage_base": 0, "damage_might_scale": 0.25, "damage_dex_scale": 0.45,
 		"magic_amp": 0, "magic_amp_wis_scale": 0,
 		"movement": 5, "allowed_armor_types": [ArmorData.Armor_Type.LIGHT],
-		"skill_bonuses": {"lockpicking": 2, "thievery": 1, "disarm_traps": 1, "sleight_of_hand": 1}
+		"skill_bonuses": {"lockpicking": 2, "thievery": 1, "reflex": 1}
 	},
 	Class_Names.RANGER: {
 		"base_might": 9, "base_end": 9, "base_wis": 8, "base_dex": 12,
@@ -263,6 +263,7 @@ func has_skill(skill_id: String) -> bool:
 	)
 
 func get_skill_rank(skill_id: String) -> int:
+	print("get_skill_rank skill rank: ",learned_skills.get(skill_id, 0))
 	return learned_skills.get(skill_id, 0)
 
 # Accumulate the scalable bonuses inside your existing mathematical loops:
@@ -588,12 +589,21 @@ func get_dice_sides(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> i
 		return weapon.dice_sides
 	return dice_sides
 	
+func get_total_skill_bonus(skill_id:String) ->int:
+	if not has_skill(skill_id):
+		return 0
+	
+	var total_bonus :=0
+	total_bonus += get_skill_bonus(skill_id)
+	total_bonus += get_skill_rank(skill_id)
+	return total_bonus
+	
 func get_skill_bonus(SkillName: String):
 	var skill_name := SkillName.to_lower()
 	var class_skill_bonuses: Dictionary = _get_class_dictionary("skill_bonuses")
 	var class_bonus := int(class_skill_bonuses.get(skill_name, 0))
 	match skill_name:
-		"lockpicking", "thievery", "sleight_of_hand", "disarm_traps":
+		"lockpicking", "thievery", "reflex":
 			return class_bonus + _stat_modifier(get_dexterity()) + _get_equipped_bonus("lockpicking_bonus")
 		"perception", "lore", "medicine":
 			return class_bonus + _stat_modifier(get_wisdom()) + _get_equipped_bonus("perception_bonus")
