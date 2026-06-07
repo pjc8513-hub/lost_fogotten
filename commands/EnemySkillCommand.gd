@@ -19,6 +19,7 @@ func execute() -> void:
 
 	_log_cast(targets)
 	await _play_projectile(targets[0])
+	_trigger_screen_shake()
 
 	for target in targets:
 		if not _is_target_alive(target):
@@ -175,6 +176,11 @@ func _play_projectile(target) -> void:
 	var wait_time: float = max(float(skill.projectile_travel_time), 0.0) + max(float(skill.impact_delay), 0.0)
 	if wait_time > 0.0:
 		await actor.get_tree().create_timer(wait_time).timeout
+
+func _trigger_screen_shake() -> void:
+	if not bool(skill.shake_screen):
+		return
+	GameEvents.camera_shake_requested.emit(float(skill.shake_intensity), float(skill.shake_decay))
 
 func _log_cast(targets: Array) -> void:
 	if not skill.cast_message.strip_edges().is_empty():

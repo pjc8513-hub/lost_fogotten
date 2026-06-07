@@ -48,6 +48,9 @@ enum TargetMode {
 @export_file("*.tscn") var projectile_scene_path: String = ""
 @export var projectile_travel_time: float = 0.5
 @export var impact_delay: float = 0.0
+@export var shake_screen: bool = false
+@export var shake_intensity: float = 0.08
+@export var shake_decay: float = 5.0
 
 func has_damage() -> bool:
 	return dice_rolls > 0 and dice_sides > 0

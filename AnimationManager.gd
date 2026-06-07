@@ -1,6 +1,11 @@
 # AnimationManager.gd (autoload in project.godot)
 extends Node
 
+var shake_intensity: float = 0.0
+var shake_decay: float = 5.0
+var _shake_camera: Camera3D = null
+var _shake_original_position: Vector3 = Vector3.ZERO
+
 func _ready():
 	GameEvents.attack_animation_started.connect(_on_attack_started)
 	GameEvents.damage_animation_started.connect(_on_damage_started)
@@ -9,6 +14,22 @@ func _ready():
 	GameEvents.open_chest_animation_started.connect(_on_open_chest_started)
 	GameEvents.pull_lever_animation_started.connect(_on_lever_pull_started)
 	GameEvents.spell_projectile_cast.connect(_on_spell_projectile_cast)
+	GameEvents.camera_shake_requested.connect(_on_camera_shake_requested)
+
+func _process(delta: float) -> void:
+	if shake_intensity <= 0.0:
+		if _shake_camera != null and is_instance_valid(_shake_camera):
+			_shake_camera.position = _shake_original_position
+		return
+
+	var camera: Camera3D = _get_shake_camera()
+	if camera == null:
+		shake_intensity = 0.0
+		return
+
+	camera.position.x = _shake_original_position.x + randf_range(-shake_intensity, shake_intensity)
+	camera.position.y = _shake_original_position.y + randf_range(-shake_intensity, shake_intensity)
+	shake_intensity = move_toward(shake_intensity, 0.0, shake_decay * delta)
 
 func _on_attack_started(attacker, target, damage):
 	#print("[AnimationManager] attack started attacker=", attacker, " target=", target, " damage=", damage)
@@ -61,3 +82,26 @@ func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_pa
 				get_tree().root.add_child(fireball)
 			if fireball.has_method("launch"):
 				fireball.launch(caster_pos, target_pos, 0.5)
+
+func _on_camera_shake_requested(intensity: float, decay: float) -> void:
+	var camera: Camera3D = _get_shake_camera()
+	if camera == null:
+		return
+	shake_intensity = max(shake_intensity, max(0.0, intensity))
+	shake_decay = max(0.01, decay)
+
+func _get_shake_camera() -> Camera3D:
+	if _shake_camera != null and is_instance_valid(_shake_camera):
+		return _shake_camera
+
+	var player: Node = World.get_player()
+	if player != null:
+		_shake_camera = player.get_node_or_null("Camera3D") as Camera3D
+
+	if _shake_camera == null:
+		_shake_camera = get_viewport().get_camera_3d()
+
+	if _shake_camera != null:
+		_shake_original_position = _shake_camera.position
+
+	return _shake_camera
