@@ -23,7 +23,16 @@ var _pending_commands: int = 0
 var movement_remaining: int = 0
 var damage_flash_tween: Tween = null
 var _skill_cooldowns: Dictionary = {}
+var _is_selected_enemy: bool = false
+var _selection_anim_time: float = 0.0
+var _selection_anim_blend: float = 0.0
+var _selection_rest_offset: Vector2 = Vector2.ZERO
+var _selection_rest_rotation_z: float = 0.0
 const EnemySkillCommandScript = preload("res://commands/EnemySkillCommand.gd")
+const SELECTION_ANIM_SPEED: float = 4.5
+const SELECTION_ANIM_OFFSET_PIXELS: float = 5.0
+const SELECTION_ANIM_TILT_DEGREES: float = 3.5
+const SELECTION_ANIM_BLEND_SPEED: float = 6.0
 
 
 
@@ -48,6 +57,12 @@ func _ready():
 	
 	if enemy_data and sprite:
 		_apply_enemy_data()
+		
+	_capture_selection_rest_pose()
+	World.selected_enemy_changed.connect(_on_selected_enemy_changed)
+	set_process(false)
+	if World.selected_enemy == self:
+		_on_selected_enemy_changed(self)
 		
 	World.register_enemy(self)
 
@@ -77,6 +92,41 @@ func _apply_enemy_data() -> void:
 	if enemy_data and enemy_data.custom_position:
 		sprite.position = enemy_data.custom_position
 		print(enemy_data.enemy_name, " final custom position applied: ", sprite.position)
+
+	_capture_selection_rest_pose()
+
+func _process(delta: float) -> void:
+	if sprite == null:
+		set_process(false)
+		return
+
+	var target_blend := 1.0 if _is_selected_enemy else 0.0
+	_selection_anim_blend = move_toward(_selection_anim_blend, target_blend, delta * SELECTION_ANIM_BLEND_SPEED)
+	_selection_anim_time += delta * SELECTION_ANIM_SPEED
+
+	var sway := sin(_selection_anim_time)
+	var offset_x := sway * SELECTION_ANIM_OFFSET_PIXELS * _selection_anim_blend
+	var tilt := deg_to_rad(SELECTION_ANIM_TILT_DEGREES) * sway * _selection_anim_blend
+	sprite.offset = _selection_rest_offset + Vector2(offset_x, 0.0)
+	sprite.rotation.z = _selection_rest_rotation_z + tilt
+
+	if not _is_selected_enemy and is_zero_approx(_selection_anim_blend):
+		sprite.offset = _selection_rest_offset
+		sprite.rotation.z = _selection_rest_rotation_z
+		set_process(false)
+
+func _capture_selection_rest_pose() -> void:
+	if sprite == null:
+		return
+	_selection_rest_offset = sprite.offset
+	_selection_rest_rotation_z = sprite.rotation.z
+
+func _on_selected_enemy_changed(enemy) -> void:
+	var was_selected := _is_selected_enemy
+	_is_selected_enemy = enemy == self
+	if _is_selected_enemy and not was_selected:
+		_capture_selection_rest_pose()
+	set_process(true)
 
 func _queue_command(cmd) -> void:
 	_pending_commands += 1
