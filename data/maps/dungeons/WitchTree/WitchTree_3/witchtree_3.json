@@ -2467,13 +2467,13 @@
 		{
 			"atlas": [
 				1,
-				0
+				3
 			],
 			"pos": [
 				23,
 				31
 			],
-			"source_id": 2
+			"source_id": 0
 		},
 		{
 			"atlas": [
@@ -8390,17 +8390,6 @@
 			"pos": [
 				21,
 				1
-			],
-			"source_id": 2
-		},
-		{
-			"atlas": [
-				1,
-				4
-			],
-			"pos": [
-				15,
-				16
 			],
 			"source_id": 2
 		},
@@ -10053,6 +10042,17 @@
 				20
 			],
 			"source_id": 2
+		},
+		{
+			"atlas": [
+				1,
+				4
+			],
+			"pos": [
+				15,
+				16
+			],
+			"source_id": 2
 		}
 	],
 	"entities": [
@@ -10220,6 +10220,17 @@
 			],
 			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
 			"type": "briar_trap"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "res://data/enemies/horned_toad.tres",
+			"fencing_resource": "",
+			"pos": [
+				23,
+				31
+			],
+			"trigger_resource": "",
+			"type": "enemy"
 		},
 		{
 			"aggro_group": 0,
@@ -10795,17 +10806,6 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "",
-			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
-			"pos": [
-				15,
-				16
-			],
-			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
-			"type": "briar_trap"
-		},
-		{
-			"aggro_group": 0,
 			"data_resource": "res://data/enemies/red_jelly.tres",
 			"fencing_resource": "",
 			"pos": [
@@ -10891,6 +10891,17 @@
 			],
 			"trigger_resource": "",
 			"type": "player"
+		},
+		{
+			"aggro_group": 0,
+			"data_resource": "",
+			"fencing_resource": "res://data/maps/dungeons/WitchTree/briar_fencing.tres",
+			"pos": [
+				15,
+				16
+			],
+			"trigger_resource": "res://data/maps/dungeons/WitchTree/briars_witch_tree.tres",
+			"type": "briar_trap"
 		}
 	],
 	"lights": [
