@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemInstance" format=3 uid="uid://c7vuiog8e3olh"]
 
-[ext_resource type="Resource" uid="uid://yh0mt3uoh4i0" path="res://data/weapons/SimpleBow.tres" id="1_5ke3w"]
+[ext_resource type="Resource" uid="uid://yh0mt3uoh4i0" path="res://data/items/weapons/SimpleBow.tres" id="1_5ke3w"]
 [ext_resource type="Script" uid="uid://chlmveswktok8" path="res://resources/ItemInstance.gd" id="2_k3ba2"]
 
 [resource]
