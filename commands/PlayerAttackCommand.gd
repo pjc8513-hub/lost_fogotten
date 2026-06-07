@@ -60,6 +60,10 @@ func _get_attack_slot(dist: float) -> ItemData.Equip_Slot:
 func _do_melee(attacker: ClassData, target: Enemy) -> void:
 	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
 
+	if outcome == "crit_miss":
+		CombatLogic.handle_party_critical_miss(attacker)
+		return
+
 	if outcome == "miss":
 		var msg := "[color=white]%s[/color] swings at [color=red]%s[/color] — [color=gray]miss![/color]" % [
 			attacker.member_name, target.enemy_data.enemy_name
@@ -127,6 +131,10 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 	if p != null:
 		GameEvents.spell_projectile_cast.emit(p.global_position, target.global_position, "res://ArrowScene.tscn")
 		await p.get_tree().create_timer(0.5).timeout
+
+	if outcome == "crit_miss":
+		CombatLogic.handle_party_critical_miss(attacker)
+		return
 
 	if outcome == "miss":
 		var msg := "[color=white]%s[/color] fires at [color=red]%s[/color] — [color=gray]miss![/color]" % [

@@ -7,9 +7,11 @@ class_name EnemyData
 enum AIBehavior { HUNTER, RANDOM, GUARD }
 enum Ailment { NONE, POISON, STUN, BURN, PARALYSIS }
 #enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }
+enum Enemy_Type { NONE, UNDEAD, BEAST, HUMANOID, DEMON, DRAGON }
 
 @export var enemy_name: String = ""
 @export_file("*.tscn") var scene_path: String
+@export var enemy_type: Enemy_Type
 @export var hp: int = 100
 @export var armor_class: int = 10
 @export var dice_sides: int = 4

@@ -82,7 +82,7 @@ func _apply_damage(target) -> void:
 	if skill.uses_accuracy_roll:
 		var target_ac: int = _get_target_armor_class(target)
 		var outcome: String = CombatLogic.accuracy_roll(actor.get_accuracy(), target_ac)
-		if outcome == "miss":
+		if CombatLogic.is_miss_outcome(outcome):
 			GameEvents.message_logged.emit("[color=gray]%s uses %s on %s - miss![/color]" % [
 				actor.enemy_data.enemy_name,
 				skill.get_log_name(),

@@ -88,7 +88,7 @@ func _perform_single_ranged_attack(target) -> void:
 	var target_ac = target.get_armor_class() if target.has_method("get_armor_class") else target.armor_class
 	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
 	
-	if outcome == "miss":
+	if CombatLogic.is_miss_outcome(outcome):
 		var msg = "[color=gray]%s[/color] fires at %s — [color=gray]miss![/color]" % [
 			actor.enemy_data.enemy_name, target.member_name
 		]

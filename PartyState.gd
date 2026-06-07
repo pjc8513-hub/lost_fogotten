@@ -224,7 +224,7 @@ func damage_entire_party_with_save_throw(amount: int, dc: int, label: String = "
 			continue
 
 		var save_result := make_save_throw(member, dc, skill_id)
-		_log_save_throw_result(save_result, label)
+		log_save_throw_result(save_result, label)
 		if bool(save_result.get("success", false)):
 			continue
 
@@ -239,6 +239,9 @@ func damage_entire_party_with_save_throw(amount: int, dc: int, label: String = "
 
 func _get_save_throw_dexterity_bonus(member: ClassData) -> int:
 	return max(0, int(floor(float(member.get_dexterity() - 10) / SAVE_THROW_DEXTERITY_DIVISOR)))
+
+func log_save_throw_result(save_result: Dictionary, label: String) -> void:
+	_log_save_throw_result(save_result, label)
 
 func _log_save_throw_result(save_result: Dictionary, label: String) -> void:
 	var member := save_result.get("member", null) as ClassData

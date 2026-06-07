@@ -54,7 +54,7 @@ func _perform_single_attack(target) -> void:
 	var outcome = CombatLogic.accuracy_roll(accuracy, target_ac)
 	#print("[AttackCommand] outcome=", outcome, " accuracy=", accuracy, " armor=", target.armor_class)
 	
-	if outcome == "miss":
+	if CombatLogic.is_miss_outcome(outcome):
 		var msg = "[color=gray]%s[/color] attacks %s — [color=gray]miss![/color]" % [
 			actor.enemy_data.enemy_name, target.member_name
 		]
