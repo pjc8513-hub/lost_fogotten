@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://cynx2udeg7quh"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_fspga"]
+
+[resource]
+script = ExtResource("1_fspga")
+map_data_path = "res://data/maps/dungeons/BonePit/floor_2/BonePit2.json"
+DungeonID = "BonePit2"
+DungeonName = "Bone Pit"
+ThemePath = "res://data/maps/themes/castle_theme.tres"
+spawn_id = "BonePit2"
+Description = "Abandoned fortress now used mostly by goblins and rats"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"

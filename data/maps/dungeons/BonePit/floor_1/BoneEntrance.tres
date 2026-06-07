@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlayerSpawnData" format=3 uid="uid://bbxgmshpm6p0u"]
+
+[ext_resource type="Script" uid="uid://vtughe3haunl" path="res://resources/PlayerSpawnData.gd" id="1_nwcof"]
+
+[resource]
+script = ExtResource("1_nwcof")
+SpawnID = "BoneEntrance"
+rotation = 270
+metadata/_custom_type_script = "uid://vtughe3haunl"

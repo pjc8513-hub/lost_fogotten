@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DungeonData" format=3 uid="uid://bcghhglobxyhe"]
+
+[ext_resource type="Script" uid="uid://dh6a7cxep8vlh" path="res://resources/DungeonData.gd" id="1_0lwsv"]
+
+[resource]
+script = ExtResource("1_0lwsv")
+scene_path = "res://assets/models/bone_wall_exit.tscn"
+map_data_path = "res://data/maps/dungeons/BonePit/floor_1/BonePit1.json"
+DungeonID = "Bone_Pit2"
+DungeonName = "Bone Pit Floor 1"
+ThemePath = "res://data/maps/themes/castle_theme.tres"
+spawn_id = "EastBonePit"
+Description = "Bone Pit floor 1"
+metadata/_custom_type_script = "uid://dh6a7cxep8vlh"
