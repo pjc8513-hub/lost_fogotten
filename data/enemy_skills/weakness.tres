@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://bwdf38q8dxp6d"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_curse"]
+
+[resource]
+script = ExtResource("1_curse")
+skill_id = "weakness"
+display_name = "Weakness"
+description = "Lowers a party member's strength"
+priority = 7
+use_chance = 60
+cooldown_turns = 2
+range_tiles = 5
+stat_modifiers = {
+"might": -10
+}
+stat_modifier_duration_rounds = 3
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

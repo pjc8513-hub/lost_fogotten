@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://df5v25og1nyt"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_p20ms"]
+[ext_resource type="Resource" uid="uid://bwdf38q8dxp6d" path="res://data/enemy_skills/weakness.tres" id="2_p20ms"]
+[ext_resource type="Texture2D" uid="uid://orvyego03rgn" path="res://assets/sprites/enemies/Fragile Bones.png" id="3_p20ms"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_p20ms")
+enemy_name = "Fragile Bones"
+scene_path = "uid://dwsyktwgbe4ae"
+hp = 35
+armor_class = 5
+dice_sides = 9
+bonus_damage = 2
+skills = Array[Resource]([ExtResource("2_p20ms")])
+critical_chance = 2
+xp = 70
+gold = 30
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("3_p20ms")
+loot_table = Array[int]([6])
+resist_physical = 1
+resist_earth = 1
+resist_dark = 1
+custom_pixel_size = 3

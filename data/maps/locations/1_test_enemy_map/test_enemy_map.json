@@ -420,8 +420,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				2
+				3,
+				1
 			],
 			"pos": [
 				7,
@@ -3423,8 +3423,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				2
+				3,
+				1
 			],
 			"pos": [
 				8,
@@ -4215,8 +4215,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				2
+				3,
+				1
 			],
 			"pos": [
 				3,
@@ -8857,8 +8857,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				3
+				3,
+				1
 			],
 			"pos": [
 				24,
@@ -13037,8 +13037,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				3
+				3,
+				1
 			],
 			"pos": [
 				33,
@@ -14654,8 +14654,8 @@
 		},
 		{
 			"atlas": [
-				1,
-				3
+				3,
+				1
 			],
 			"pos": [
 				3,
@@ -15074,7 +15074,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				7,
@@ -15118,7 +15118,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				8,
@@ -15129,7 +15129,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				3,
@@ -15272,7 +15272,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/horned_toad.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				24,
@@ -15283,7 +15283,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/horned_toad.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				33,
@@ -15294,7 +15294,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/horned_toad.tres",
+			"data_resource": "res://data/enemies/fragile_bones.tres",
 			"fencing_resource": "",
 			"pos": [
 				3,
