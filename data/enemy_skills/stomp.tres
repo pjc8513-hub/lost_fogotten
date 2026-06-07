@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://damops4wrd342"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_fireball"]
+
+[resource]
+script = ExtResource("1_fireball")
+skill_id = "stomp"
+display_name = "Stomp"
+description = "A reusable AOE  attack for enemies."
+target_mode = 2
+priority = 10
+use_chance = 75
+cooldown_turns = 2
+requires_line_of_sight = false
+dice_rolls = 2
+dice_sides = 6
+bonus_damage = 2
+status_effect = "stun"
+status_chance = 20
+status_duration_rounds = 1
+status_persists_after_combat = false
+cast_message = "[color=red]{enemy}[/color] uses [color=orange]{skill}[/color]!"
+projectile_travel_time = 0.0

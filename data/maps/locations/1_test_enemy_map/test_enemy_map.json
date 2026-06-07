@@ -2984,7 +2984,7 @@
 		{
 			"atlas": [
 				1,
-				2
+				3
 			],
 			"pos": [
 				12,
@@ -8858,7 +8858,7 @@
 		{
 			"atlas": [
 				1,
-				2
+				3
 			],
 			"pos": [
 				24,
@@ -13038,7 +13038,7 @@
 		{
 			"atlas": [
 				1,
-				2
+				3
 			],
 			"pos": [
 				33,
@@ -14655,7 +14655,7 @@
 		{
 			"atlas": [
 				1,
-				2
+				3
 			],
 			"pos": [
 				3,
@@ -15096,7 +15096,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/horned_toad.tres",
 			"fencing_resource": "",
 			"pos": [
 				12,
@@ -15272,7 +15272,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/horned_toad.tres",
 			"fencing_resource": "",
 			"pos": [
 				24,
@@ -15283,7 +15283,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/horned_toad.tres",
 			"fencing_resource": "",
 			"pos": [
 				33,
@@ -15294,7 +15294,7 @@
 		},
 		{
 			"aggro_group": 0,
-			"data_resource": "res://data/enemies/witch.tres",
+			"data_resource": "res://data/enemies/horned_toad.tres",
 			"fencing_resource": "",
 			"pos": [
 				3,

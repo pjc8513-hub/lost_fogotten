@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://br2f5moxlxvlx"]
+
+[ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_rfntn"]
+[ext_resource type="Texture2D" uid="uid://cceqmdggb61ot" path="res://assets/sprites/enemies/horned_toad.png" id="2_rfntn"]
+[ext_resource type="Resource" uid="uid://damops4wrd342" path="res://data/enemy_skills/stomp.tres" id="2_uaxkc"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_rfntn")
+enemy_name = "horned_toad"
+scene_path = "uid://d17sos8neuxic"
+armor_class = 9
+dice_sides = 6
+skills = Array[Resource]([ExtResource("2_uaxkc")])
+critical_chance = 2
+ailment = "stun"
+attack_speed = 1
+tier = 2
+xp = 70
+gold = 30
+ai_behavior = "Hunter"
+sprite_texture = ExtResource("2_rfntn")
+loot_table = Array[int]([1, 3])
+resist_fire = 1
+resist_physical = 1
+resist_earth = 1
+custom_scale = Vector3(1.2, 1.2, 1)
+custom_position = Vector3(0, 0, 0.5)
+custom_pixel_size = 2
