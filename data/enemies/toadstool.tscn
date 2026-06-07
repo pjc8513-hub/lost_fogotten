@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="2_bx32f"]
 [ext_resource type="Texture2D" uid="uid://cnks2t86tp8sw" path="res://assets/sprites/enemies/Toadstool.png" id="3_kvx1c"]
 
-[sub_resource type="Resource" id="Resource_3e415"]
+[sub_resource type="Resource" id="Resource_bx32f"]
 resource_local_to_scene = true
 script = ExtResource("2_bx32f")
 enemy_name = "Toadstool"
@@ -61,8 +61,11 @@ _data = {
 &"attack": SubResource("Animation_xvbb4")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kvx1c"]
+size = Vector3(1.5, 1.2, 1.2)
+
 [node name="Enemy" unique_id=1461009798 instance=ExtResource("1_bx32f")]
-enemy_data = SubResource("Resource_3e415")
+enemy_data = SubResource("Resource_bx32f")
 
 [node name="Sprite3D" parent="." index="0" unique_id=727538149]
 texture = ExtResource("3_kvx1c")
@@ -74,3 +77,4 @@ libraries/ = SubResource("AnimationLibrary_bfmds")
 
 [node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1117340174) index="0" unique_id=849891854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002313614, -0.17694092, 0.013864517)
+shape = SubResource("BoxShape3D_kvx1c")

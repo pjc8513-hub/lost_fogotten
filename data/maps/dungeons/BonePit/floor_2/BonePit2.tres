@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_fspga")
+scene_path = "res://data/maps/dungeons/BonePit/floor_2/BonePit2.tscn"
 map_data_path = "res://data/maps/dungeons/BonePit/floor_2/BonePit2.json"
 DungeonID = "BonePit2"
 DungeonName = "Bone Pit"

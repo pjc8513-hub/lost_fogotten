@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_r6u5p")
 SpawnID = "BonePit2"
-rotation = 270
+rotation = 90
 metadata/_custom_type_script = "uid://vtughe3haunl"
