@@ -6,7 +6,8 @@ enum Weapon_Type{
 	BOW,
 	POLEARM,
 	AXE,
-	CUDGEL
+	CUDGEL,
+	Staff
 }
 
 #enum Loot_Table { EQUIP_1, EQUIP_2, EQUIP_3 }

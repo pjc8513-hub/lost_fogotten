@@ -6,7 +6,6 @@
 script = ExtResource("1_cbbmp")
 dice_sides = 6
 dice_rolls = 1
-loot_table = 1
 name = "Short Sword"
 sell_value = 15
 equip_slot = 1

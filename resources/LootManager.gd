@@ -12,12 +12,12 @@ enum Loot_Table {
 # For now: just arrays of item_id strings or Resource paths
 const LOOT_POOLS = {
 	Loot_Table.EQUIP_1: {
-		"items": ["RustyDagger", "ShortSword", "SimpleBow", "ClothRobe", "LeatherCap"],
+		"items": ["RustyDagger", "Club", "Staff", "ShortSword", "Spear", "HandAxe", "SimpleBow", "ClothRobe", "LeatherArmor", "RingMail", "RustyPlate", "LeatherCap"],
 		"rolls": 1, # how many times to roll this table when selected
 		"chance": 1.0 # 100% chance to get something if this table is rolled
 	},
 	Loot_Table.EQUIP_2: {
-		"items": ["IronSword", "ChainMail", "SteelHelm"],
+		"items": ["IronSword", "Lance", "Flail", "BattleAxe", "BreastPlate", "ChainMail", "SteelHelm"],
 		"rolls": 1,
 		"chance": 0.75
 	},
