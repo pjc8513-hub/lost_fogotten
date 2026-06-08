@@ -71,14 +71,23 @@ func _do_melee(attacker: ClassData, target: Enemy) -> void:
 		GameEvents.message_logged.emit(msg)
 		return
 
+	outcome = _apply_attack_critical_chance(attacker, ItemData.Equip_Slot.WEAPON, outcome)
+
 	var raw := CombatLogic.roll_dice(
 		attacker.get_dice_rolls(ItemData.Equip_Slot.WEAPON),
 		attacker.get_dice_sides(ItemData.Equip_Slot.WEAPON),
-		attacker.get_bonus_damage()
+		attacker.get_attack_bonus_damage(ItemData.Equip_Slot.WEAPON)
 	)
+	if _should_roll_polearm_mastery_damage(attacker, ItemData.Equip_Slot.WEAPON):
+		var second_raw := CombatLogic.roll_dice(
+			attacker.get_dice_rolls(ItemData.Equip_Slot.WEAPON),
+			attacker.get_dice_sides(ItemData.Equip_Slot.WEAPON),
+			attacker.get_attack_bonus_damage(ItemData.Equip_Slot.WEAPON)
+		)
+		raw = max(raw, second_raw)
 	if outcome == "crit":
 		raw *= 2
-	raw += CombatLogic.might_bonus(attacker.get_might())
+	raw += CombatLogic.might_bonus(attacker.get_attack_might(ItemData.Equip_Slot.WEAPON))
 
 	# Physical resist on enemy side
 	var resist := target.enemy_data.get_resistance("physical")
@@ -143,14 +152,16 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		GameEvents.message_logged.emit(msg)
 		return
 
+	outcome = _apply_attack_critical_chance(attacker, ItemData.Equip_Slot.RANGE, outcome)
+
 	var raw := CombatLogic.roll_dice(
 		attacker.get_dice_rolls(ItemData.Equip_Slot.RANGE),
 		attacker.get_dice_sides(ItemData.Equip_Slot.RANGE),
-		attacker.get_bonus_damage()
+		attacker.get_attack_bonus_damage(ItemData.Equip_Slot.RANGE)
 	)
 	if outcome == "crit":
 		raw *= 2
-	raw += CombatLogic.might_bonus(attacker.get_might())
+	raw += CombatLogic.might_bonus(attacker.get_attack_might(ItemData.Equip_Slot.RANGE))
 
 	var resist := target.enemy_data.get_resistance("physical")
 	var final_damage := CombatLogic.apply_resistance(raw, resist)
@@ -170,3 +181,14 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		# Distribute xp
 		LootDistributor.distribute_xp(target.enemy_data.xp)
 		World.remove_enemy(target)
+
+func _apply_attack_critical_chance(attacker: ClassData, slot: ItemData.Equip_Slot, outcome: String) -> String:
+	if outcome == "crit" or CombatLogic.is_miss_outcome(outcome):
+		return outcome
+	if randi_range(1, 100) <= attacker.get_attack_critical_chance(slot):
+		return "crit"
+	return outcome
+
+func _should_roll_polearm_mastery_damage(attacker: ClassData, slot: ItemData.Equip_Slot) -> bool:
+	var weapon := attacker.get_equipped_weapon(slot)
+	return weapon != null and weapon.weapon_type == WeaponData.Weapon_Type.POLEARM and attacker.has_skill("polearm_mastery")

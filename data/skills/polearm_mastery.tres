@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://sw0ynvpdjm2o"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_polearm_mastery"]
+
+[resource]
+script = ExtResource("1_polearm_mastery")
+skill_id = "polearm_mastery"
+display_name = "Polearm Mastery"
+description = "When attacking with a polearm and not missing, roll damage twice and keep the better result."
+skill_type = 1
+available_classes = Array[int]([1, 8])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

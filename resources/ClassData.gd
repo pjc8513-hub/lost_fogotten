@@ -22,6 +22,10 @@ const DEFAULT_STARTING_DEXTERITY := 10
 const DEFAULT_STARTING_ENDURANCE := 10
 const DEFAULT_STARTING_WISDOM := 10
 const BASE_XP_TO_NEXT_LEVEL := 100
+const BOW_MASTERY_CRITICAL_CHANCE_BONUS := 10
+const BLADE_MASTERY_ATTACK_SPEED_BONUS := 2
+const AXE_MASTERY_MIGHT_BONUS := 20
+const STAFF_MASTERY_MAGIC_AMP_BONUS := 10
 const PRIMARY_STAT_FIELDS := {
 	"Might": "base_might",
 	"Endurance": "base_endurance",
@@ -542,7 +546,24 @@ func get_accuracy() -> int:
 	return _calculate_accuracy()
 
 func get_attack_accuracy(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
-	return get_accuracy() + get_weapon_accuracy_penalty(slot)
+	return _calculate_accuracy_with_might(get_attack_might(slot)) + get_weapon_accuracy_penalty(slot)
+
+func get_attack_might(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var might_value := get_might()
+	var weapon := get_equipped_weapon(slot)
+	if weapon != null and weapon.weapon_type == WeaponData.Weapon_Type.AXE and has_skill("axe_mastery"):
+		might_value += AXE_MASTERY_MIGHT_BONUS
+	return might_value
+
+func get_attack_critical_chance(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var crit_chance := get_critical_chance()
+	var weapon := get_equipped_weapon(slot)
+	if weapon != null and weapon.weapon_type == WeaponData.Weapon_Type.BOW and has_skill("bow_mastery"):
+		crit_chance += BOW_MASTERY_CRITICAL_CHANCE_BONUS
+	return max(0, crit_chance)
+
+func get_attack_bonus_damage(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	return _calculate_bonus_damage_with_might(get_attack_might(slot))
 
 func get_weapon_accuracy_penalty(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
 	var weapon := get_equipped_weapon(slot)
@@ -647,6 +668,8 @@ func get_total_attack_speed(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAP
 	var weapon = get_equipped_weapon(slot)
 	if weapon != null:
 		total_speed += weapon.attack_speed
+		if weapon.weapon_type == WeaponData.Weapon_Type.BLADE and has_skill("blade_mastery"):
+			total_speed += BLADE_MASTERY_ATTACK_SPEED_BONUS
 	return int(total_speed)
 
 func _migrate_legacy_fields(class_stats: Dictionary) -> void:
@@ -699,7 +722,10 @@ func _calculate_armor_class() -> int:
 	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus") + _get_combat_bonus("armor_class")
 
 func _calculate_accuracy() -> int:
-	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(get_might(), _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy")
+	return _calculate_accuracy_with_might(get_might())
+
+func _calculate_accuracy_with_might(might_value: int) -> int:
+	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(might_value, _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy")
 
 func _calculate_critical_chance() -> int:
 	return max(0, base_critical_chance_bonus + _get_class_int("crit_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_dex_scale", 0.5)) + _scaled_modifier(get_wisdom(), _get_class_float("crit_wis_scale", 0.0)) + _get_equipped_bonus("critical_chance_bonus"))
@@ -711,10 +737,17 @@ func _calculate_initiative() -> int:
 	return base_initiative_bonus + _get_class_int("initiative_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("initiative_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("initiative_wis_scale", 0.0)) + _get_equipped_bonus("initiative_bonus") + _get_combat_bonus("initiative")
 
 func _calculate_bonus_damage() -> int:
-	return base_bonus_damage_bonus + _get_class_int("bonus_damage_base", 0) + _scaled_modifier(get_might(), _get_class_float("damage_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("damage_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("damage_wis_scale", 0.0)) + _get_equipped_bonus("bonus_damage_bonus") + _get_combat_bonus("bonus_damage")
+	return _calculate_bonus_damage_with_might(get_might())
+
+func _calculate_bonus_damage_with_might(might_value: int) -> int:
+	return base_bonus_damage_bonus + _get_class_int("bonus_damage_base", 0) + _scaled_modifier(might_value, _get_class_float("damage_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("damage_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("damage_wis_scale", 0.0)) + _get_equipped_bonus("bonus_damage_bonus") + _get_combat_bonus("bonus_damage")
 
 func _calculate_magic_amp() -> int:
-	return _get_class_int("magic_amp", 0) + _scaled_modifier(get_wisdom(), _get_class_float("magic_amp_wis_scale", 0.0)) + _get_equipped_bonus("magic_amp_bonus") + _get_combat_bonus("magic_amp")
+	var total := _get_class_int("magic_amp", 0) + _scaled_modifier(get_wisdom(), _get_class_float("magic_amp_wis_scale", 0.0)) + _get_equipped_bonus("magic_amp_bonus") + _get_combat_bonus("magic_amp")
+	var weapon := get_equipped_weapon(ItemData.Equip_Slot.WEAPON)
+	if weapon != null and weapon.weapon_type == WeaponData.Weapon_Type.Staff and has_skill("staff_mastery"):
+		total += STAFF_MASTERY_MAGIC_AMP_BONUS
+	return total
 
 func _calculate_critical_amp() -> int:
 	return _get_class_int("crit_amp", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_amp_dex_scale", 0.0)) + _get_equipped_bonus("critical_amp_bonus")

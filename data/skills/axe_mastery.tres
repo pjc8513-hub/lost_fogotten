@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bh1yokovyorr6"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_axe_mastery"]
+
+[resource]
+script = ExtResource("1_axe_mastery")
+skill_id = "axe_mastery"
+display_name = "Axe Mastery"
+description = "+20 Might when attacking with an axe."
+skill_type = 1
+available_classes = Array[int]([1])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

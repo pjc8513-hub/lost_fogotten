@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bsrj43xk3llr6"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_blade_mastery"]
+
+[resource]
+script = ExtResource("1_blade_mastery")
+skill_id = "blade_mastery"
+display_name = "Blade Mastery"
+description = "+2 attack speed when attacking with a blade."
+skill_type = 1
+available_classes = Array[int]([0, 1, 6, 5])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

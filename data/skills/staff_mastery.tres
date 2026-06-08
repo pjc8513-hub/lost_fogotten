@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://drjy2xsj7rjix"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_staff_mastery"]
+
+[resource]
+script = ExtResource("1_staff_mastery")
+skill_id = "staff_mastery"
+display_name = "Staff Mastery"
+description = "+10 magic amp while using a staff."
+skill_type = 1
+available_classes = Array[int]([3, 7, 4, 2])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
