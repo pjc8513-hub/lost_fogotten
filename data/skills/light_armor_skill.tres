@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://h8llagdfagal"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_light_armor_skill"]
+
+[resource]
+script = ExtResource("1_light_armor_skill")
+skill_id = "light_armor_skill"
+display_name = "Light Armor Skill"
+description = "+20 MP per rank while wearing light armor."
+skill_type = 1
+available_classes = Array[int]([2, 3, 4, 8, 7, 6])
+max_rank = 3
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

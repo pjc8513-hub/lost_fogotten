@@ -26,6 +26,8 @@ const BOW_MASTERY_CRITICAL_CHANCE_BONUS := 10
 const BLADE_MASTERY_ATTACK_SPEED_BONUS := 2
 const AXE_MASTERY_MIGHT_BONUS := 20
 const STAFF_MASTERY_MAGIC_AMP_BONUS := 10
+const HEAVY_ARMOR_ATTACK_SPEED_PENALTY := -2
+const LIGHT_ARMOR_MP_PER_RANK := 20
 const PRIMARY_STAT_FIELDS := {
 	"Might": "base_might",
 	"Endurance": "base_endurance",
@@ -269,6 +271,10 @@ func has_skill(skill_id: String) -> bool:
 func get_skill_rank(skill_id: String) -> int:
 	print("get_skill_rank skill rank: ",learned_skills.get(skill_id, 0))
 	return learned_skills.get(skill_id, 0)
+
+func get_skill_rank_value(skill_id: String) -> int:
+	var normalized := skill_id.to_lower()
+	return int(max(learned_skills.get(skill_id, 0), learned_skills.get(normalized, 0)))
 
 # Accumulate the scalable bonuses inside your existing mathematical loops:
 func _get_skill_stat_bonus(stat: String) -> float:
@@ -607,6 +613,16 @@ func get_equipped_weapon(slot: ItemData.Equip_Slot) -> WeaponData:
 		return weapon.item_data
 	return null
 
+func get_equipped_armor() -> ArmorData:
+	var armor = get_equipped_item(ItemData.Equip_Slot.ARMOR)
+	if armor != null and armor.item_data is ArmorData:
+		return armor.item_data
+	return null
+
+func is_wearing_armor_type(armor_type: ArmorData.Armor_Type) -> bool:
+	var armor := get_equipped_armor()
+	return armor != null and armor.armor_type == armor_type
+
 func has_ranged_weapon() -> bool:
 	return get_equipped_weapon(ItemData.Equip_Slot.RANGE) != null
 
@@ -670,6 +686,8 @@ func get_total_attack_speed(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAP
 		total_speed += weapon.attack_speed
 		if weapon.weapon_type == WeaponData.Weapon_Type.BLADE and has_skill("blade_mastery"):
 			total_speed += BLADE_MASTERY_ATTACK_SPEED_BONUS
+	if is_wearing_armor_type(ArmorData.Armor_Type.HEAVY):
+		total_speed += min(0, HEAVY_ARMOR_ATTACK_SPEED_PENALTY + get_skill_rank_value("heavy_armor_skill"))
 	return int(total_speed)
 
 func _migrate_legacy_fields(class_stats: Dictionary) -> void:
@@ -714,7 +732,10 @@ func _calculate_max_mp() -> int:
 	var mp_base := _get_class_float("mp_base", 0.0)
 	var mp_from_level = max(0.0, float(level - 1) * _get_class_float("mp_per_level", 0.0))
 	var mp_from_wisdom := float(get_wisdom()) * _get_class_float("mp_wis_scale", 1.0)
-	return max(0, int(round(mp_base + mp_from_level + mp_from_wisdom + bonus_max_mp + _get_equipped_bonus("max_mp_bonus"))))
+	var light_armor_mp := 0
+	if is_wearing_armor_type(ArmorData.Armor_Type.LIGHT):
+		light_armor_mp = get_skill_rank_value("light_armor_skill") * LIGHT_ARMOR_MP_PER_RANK
+	return max(0, int(round(mp_base + mp_from_level + mp_from_wisdom + bonus_max_mp + _get_equipped_bonus("max_mp_bonus") + light_armor_mp)))
 
 func _calculate_armor_class() -> int:
 	var dex_bonus := _scaled_modifier(get_dexterity(), _get_class_float("ac_dex_scale", 1.0))

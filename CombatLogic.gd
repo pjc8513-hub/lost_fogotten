@@ -33,6 +33,12 @@ static func handle_party_critical_miss(attacker: ClassData, save_dc: int = CRITI
 
 	GameEvents.message_logged.emit("[color=orange]%s critically misses![/color]" % attacker.member_name)
 	var save_result := PartyState.make_save_throw(attacker, save_dc)
+	return handle_party_critical_miss_save_result(attacker, save_result)
+
+static func handle_party_critical_miss_save_result(attacker: ClassData, save_result: Dictionary) -> bool:
+	if attacker == null or attacker.current_hp <= 0:
+		return false
+
 	PartyState.log_save_throw_result(save_result, "Critical miss")
 
 	if bool(save_result.get("success", false)):

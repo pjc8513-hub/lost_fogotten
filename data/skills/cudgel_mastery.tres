@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bmdkxieiytql2"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_cudgel_mastery"]
+
+[resource]
+script = ExtResource("1_cudgel_mastery")
+skill_id = "cudgel_mastery"
+display_name = "Cudgel Mastery"
+description = "Cudgel attacks have a 5% chance to stun on hit."
+skill_type = 1
+available_classes = Array[int]([1, 2, 7])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
