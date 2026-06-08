@@ -78,3 +78,9 @@ libraries/ = SubResource("AnimationLibrary_bfmds")
 [node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1117340174) index="0" unique_id=849891854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002313614, -0.17694092, 0.013864517)
 shape = SubResource("BoxShape3D_kvx1c")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2" unique_id=1526843342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16806877, 0, 0.3826176)
+light_energy = 0.5
+omni_range = 1.0
+omni_attenuation = 0.8

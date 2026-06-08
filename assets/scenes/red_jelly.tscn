@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cwha3k2lj02y0"]
 
 [ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_beb2h"]
-[ext_resource type="Texture2D" uid="uid://jqnvpx75xydi" path="res://assets/sprites/enemies/red jelly.png" id="2_2c8fl"]
+[ext_resource type="Texture2D" uid="uid://36hclunq66vl" path="res://assets/sprites/enemies/red_jelly.png" id="2_2c8fl"]
 
 [sub_resource type="Animation" id="Animation_b70bb"]
 length = 0.001
@@ -20,7 +20,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_517up"]
 resource_name = "attack"
-length = 1.2666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -28,10 +27,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.033333335, 0.23333333, 0.5, 0.8333333),
+"times": PackedFloat32Array(0.033333335, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0, 1, 2, 0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8caj0"]

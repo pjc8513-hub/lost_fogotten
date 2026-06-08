@@ -58,7 +58,7 @@ func _get_attack_slot(dist: float) -> ItemData.Equip_Slot:
 	return ItemData.Equip_Slot.RANGE
 
 func _do_melee(attacker: ClassData, target: Enemy) -> void:
-	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
+	var outcome := CombatLogic.accuracy_roll(attacker.get_attack_accuracy(ItemData.Equip_Slot.WEAPON), target.enemy_data.armor_class)
 
 	if outcome == "crit_miss":
 		CombatLogic.handle_party_critical_miss(attacker)
@@ -125,7 +125,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float) -> void
 		return
 
 	# Ranged attack — same pipeline, no resist override needed (will use weapon element later)
-	var outcome := CombatLogic.accuracy_roll(attacker.get_accuracy(), target.enemy_data.armor_class)
+	var outcome := CombatLogic.accuracy_roll(attacker.get_attack_accuracy(ItemData.Equip_Slot.RANGE), target.enemy_data.armor_class)
 
 	var p = player_node
 	if p != null:

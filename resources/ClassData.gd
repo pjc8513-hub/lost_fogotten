@@ -541,6 +541,24 @@ func get_resistance(element: String) -> int:
 func get_accuracy() -> int:
 	return _calculate_accuracy()
 
+func get_attack_accuracy(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	return get_accuracy() + get_weapon_accuracy_penalty(slot)
+
+func get_weapon_accuracy_penalty(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var weapon := get_equipped_weapon(slot)
+	if weapon == null:
+		return 0
+
+	match weapon.weapon_type:
+		WeaponData.Weapon_Type.BLADE:
+			return 0 if has_skill("blade_skill") else -1
+		WeaponData.Weapon_Type.BOW:
+			return 0 if has_skill("bow_skill") else -2
+		WeaponData.Weapon_Type.POLEARM, WeaponData.Weapon_Type.AXE:
+			return 0 if has_skill("poleaxe_skill") else -1
+		_:
+			return 0
+
 func get_critical_chance() -> int:
 	return _calculate_critical_chance()
 

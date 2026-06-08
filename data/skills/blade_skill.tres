@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://l5m8beqdv71y"]
+
+[ext_resource type="Script" uid="uid://ca0ebjgg8br6u" path="res://resources/SkillData.gd" id="1_blade"]
+
+[resource]
+script = ExtResource("1_blade")
+skill_id = "blade_skill"
+display_name = "Blade Skill"
+description = "Removes the -1 accuracy penalty when attacking with blade weapons."
+skill_type = 1
+available_classes = Array[int]([0, 1, 5, 6])
+max_rank = 1
+metadata/_custom_type_script = "uid://ca0ebjgg8br6u"
