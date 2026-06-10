@@ -9,6 +9,7 @@ var stats := {
 	"endurance": 0,
 	"wisdom": 0,
 	"dexterity": 0,
+	"willpower": 0,
 }
 
 # Node references - CharacterCard
@@ -19,12 +20,14 @@ var stats := {
 @onready var end_button: Button = $HBoxContainer/CharacterCard/EndContainer/EndButton
 @onready var wis_button: Button = $HBoxContainer/CharacterCard/WisContainer/WisButton
 @onready var dex_button: Button = $HBoxContainer/CharacterCard/DexContainer/DexButton
+@onready var willpower_button: Button = $HBoxContainer/CharacterCard/WillpowerContainer/WillpowerButton
 @onready var save_button: Button = $HBoxContainer/CharacterCard/save_button
 
 @onready var might_label: Label = $HBoxContainer/CharacterCard/MightContainer/might_label
 @onready var end_label: Label = $HBoxContainer/CharacterCard/EndContainer/end_label
 @onready var wis_label: Label = $HBoxContainer/CharacterCard/WisContainer/wis_label
 @onready var dex_label: Label = $HBoxContainer/CharacterCard/DexContainer/dex_label
+@onready var willpower_label: Label = $HBoxContainer/CharacterCard/WillpowerContainer/willpower_label
 
 
 #CharacterStats
@@ -52,6 +55,7 @@ func _ready() -> void:
 	end_button.pressed.connect(func(): _on_add_stat("endurance"))
 	wis_button.pressed.connect(func(): _on_add_stat("wisdom"))
 	dex_button.pressed.connect(func(): _on_add_stat("dexterity"))
+	willpower_button.pressed.connect(func(): _on_add_stat("willpower"))
 	name_input.text_changed.connect(func(_new_text): _update_ui())
 	_reset_stats()
 	save_button.pressed.connect(_on_save_button_pressed)
@@ -74,9 +78,10 @@ func _setup_class_options():
 func _reset_stats():
 	var base: Dictionary = ClassData.CLASS_STAT_MAP.get(current_class, {})
 	stats.might = int(base.get("base_might", 10))
-	stats.endurance = int(base.get("base_end", 10))
-	stats.wisdom = int(base.get("base_wis", 10))
-	stats.dexterity = int(base.get("base_dex", 10))
+	stats.endurance = int(base.get("base_endurance", base.get("base_end", 10)))
+	stats.wisdom = int(base.get("base_wisdom", base.get("base_wis", 10)))
+	stats.dexterity = int(base.get("base_dexterity", base.get("base_dex", 10)))
+	stats.willpower = int(base.get("base_willpower", base.get("base_will", 10)))
 	bonus_points = BONUS_POINT_POOL
 	_update_ui()
 
@@ -86,6 +91,7 @@ func _update_ui():
 	end_label.text = str(stats.endurance)
 	wis_label.text = str(stats.wisdom)
 	dex_label.text = str(stats.dexterity)
+	willpower_label.text = str(stats.willpower)
 	save_button.disabled = name_input.text.strip_edges().is_empty()
 	_update_character_stats()
 

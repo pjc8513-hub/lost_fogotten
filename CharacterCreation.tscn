@@ -107,6 +107,19 @@ flat = true
 layout_mode = 2
 text = "0"
 
+[node name="WillpowerContainer" type="HBoxContainer" parent="HBoxContainer/CharacterCard"]
+layout_mode = 2
+
+[node name="WillpowerButton" type="Button" parent="HBoxContainer/CharacterCard/WillpowerContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Willpower:"
+flat = true
+
+[node name="willpower_label" type="Label" parent="HBoxContainer/CharacterCard/WillpowerContainer"]
+layout_mode = 2
+text = "0"
+
 [node name="save_button" type="Button" parent="HBoxContainer/CharacterCard" unique_id=1088068697]
 layout_mode = 2
 text = "Save"

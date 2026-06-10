@@ -76,7 +76,14 @@ func _apply_skill_to_target(target) -> void:
 		_apply_stat_modifiers(target)
 
 	if skill.has_status():
-		CombatLogic.proc_status(skill.status_effect.strip_edges().to_lower(), skill.status_chance, target, skill.status_duration_rounds, skill.status_persists_after_combat)
+		CombatLogic.proc_status(
+			skill.status_effect.strip_edges().to_lower(),
+			skill.status_chance,
+			target,
+			skill.status_duration_rounds,
+			skill.status_persists_after_combat,
+			skill.status_save_dc
+		)
 
 func _apply_damage(target) -> void:
 	if skill.uses_accuracy_roll:

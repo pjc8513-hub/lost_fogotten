@@ -38,6 +38,7 @@ enum TargetMode {
 @export_range(0, 100, 1) var status_chance: int = 0
 @export var status_duration_rounds: int = -1
 @export var status_persists_after_combat: bool = true
+@export var status_save_dc: int = 0
 
 @export_group("Stat Modifiers")
 @export var stat_modifiers: Dictionary = {}

@@ -59,7 +59,7 @@ static func might_bonus(might: int) -> int:
 static func apply_resistance(damage: int, resist_percent: int) -> int:
 	return max(0, int(damage * (1.0 - resist_percent / 100.0)))
 
-static func proc_status(ailment: String, chance_percent: int, target, duration_rounds: int = -1, persists_after_combat: bool = true) -> void:
+static func proc_status(ailment: String, chance_percent: int, target, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
 	if ailment == "none" or ailment == "":
 		return
 	if randi_range(1, 100) <= chance_percent:
@@ -75,9 +75,9 @@ static func proc_status(ailment: String, chance_percent: int, target, duration_r
 		if effect_list != null:
 			var was_new: bool = not ailment in effect_list
 			if target != null and target.has_method("apply_status_effect"):
-				target.apply_status_effect(ailment, duration_rounds, persists_after_combat)
+				target.apply_status_effect(ailment, duration_rounds, persists_after_combat, save_dc)
 			elif target is Node3D and target.has_method("get_accuracy") and target.enemy_data.has_method("apply_status_effect"):
-				target.enemy_data.apply_status_effect(ailment, duration_rounds, persists_after_combat)
+				target.enemy_data.apply_status_effect(ailment, duration_rounds, persists_after_combat, save_dc)
 			else:
 				if was_new:
 					effect_list.append(ailment)

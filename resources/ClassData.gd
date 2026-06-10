@@ -21,6 +21,7 @@ const DEFAULT_STARTING_MIGHT := 10
 const DEFAULT_STARTING_DEXTERITY := 10
 const DEFAULT_STARTING_ENDURANCE := 10
 const DEFAULT_STARTING_WISDOM := 10
+const DEFAULT_STARTING_WILLPOWER := 2
 const BASE_XP_TO_NEXT_LEVEL := 100
 const BOW_MASTERY_CRITICAL_CHANCE_BONUS := 10
 const BLADE_MASTERY_ATTACK_SPEED_BONUS := 2
@@ -33,6 +34,7 @@ const PRIMARY_STAT_FIELDS := {
 	"Endurance": "base_endurance",
 	"Wisdom": "base_wisdom",
 	"Dexterity": "base_dexterity",
+	"Willpower": "base_willpower"
 }
 const CLASS_TEMPLATE_PATHS := {
 	Class_Names.KNIGHT: "res://data/classes/knight.tres",
@@ -43,7 +45,7 @@ const CLASS_TEMPLATE_PATHS := {
 }
 const CLASS_STAT_MAP = {
 	Class_Names.KNIGHT: {
-		"base_might": 12, "base_end": 12, "base_wis": 6, "base_dex": 8,
+		"base_might": 12, "base_endurance": 12, "base_wisdom": 6, "base_dexterity": 8, "base_willpower": 5,
 		"hp_base": 15, "hp_per_level": 8, "hp_might_scale": 1.3, "hp_end_scale": 1.8,
 		"mp_base": 3, "mp_per_level": 1, "mp_wis_scale": 0.8,
 		"ac_bonus": -2, "ac_dex_scale": 0.5,
@@ -57,7 +59,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"leadership": 1}
 	},
 	Class_Names.BARBARIAN: {
-		"base_might": 14, "base_end": 12, "base_wis": 4, "base_dex": 8,
+		"base_might": 14, "base_endurance": 12, "base_wisdom": 4, "base_dexterity": 8, "base_willpower": 4,
 		"hp_base": 18, "hp_per_level": 10, "hp_might_scale": 1.7, "hp_end_scale": 1.9,
 		"mp_base": 0, "mp_per_level": 0, "mp_wis_scale": 0.0,
 		"ac_bonus": 0, "ac_dex_scale": 0.35,
@@ -71,7 +73,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"athletics": 2}
 	},
 	Class_Names.CLERIC: {
-		"base_might": 9, "base_end": 10, "base_wis": 12, "base_dex": 8,
+		"base_might": 9, "base_endurance": 10, "base_wisdom": 12, "base_dexterity": 8, "base_willpower": 8,
 		"hp_base": 12, "hp_per_level": 6, "hp_might_scale": 0.8, "hp_end_scale": 1.4,
 		"mp_base": 10, "mp_per_level": 5, "mp_wis_scale": 1.6,
 		"ac_bonus": -1, "ac_dex_scale": 0.5,
@@ -85,7 +87,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"medicine": 2, "lore": 1}
 	},
 	Class_Names.BARD: {
-		"base_might": 7, "base_end": 8, "base_wis": 11, "base_dex": 10,
+		"base_might": 7, "base_endurance": 8, "base_wisdom": 11, "base_dexterity": 10, "base_willpower": 9,
 		"hp_base": 10, "hp_per_level": 5, "hp_might_scale": 0.6, "hp_end_scale": 1.0,
 		"mp_base": 9, "mp_per_level": 4, "mp_wis_scale": 1.5,
 		"ac_bonus": 0, "ac_dex_scale": 0.75,
@@ -99,7 +101,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"lore": 2, "perception": 1, "leadership": 1}
 	},
 	Class_Names.SORCERER: {
-		"base_might": 5, "base_end": 6, "base_wis": 14, "base_dex": 9,
+		"base_might": 5, "base_endurance": 6, "base_wisdom": 14, "base_dexterity": 9, "base_willpower": 7,
 		"hp_base": 8, "hp_per_level": 4, "hp_might_scale": 0.35, "hp_end_scale": 0.95,
 		"mp_base": 16, "mp_per_level": 7, "mp_wis_scale": 2.2,
 		"ac_bonus": 1, "ac_dex_scale": 0.6,
@@ -113,7 +115,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"lore": 2, "perception": 1}
 	},
 	Class_Names.ROGUE: {
-		"base_might": 8, "base_end": 8, "base_wis": 6, "base_dex": 13,
+		"base_might": 8, "base_endurance": 8, "base_wisdom": 6, "base_dexterity": 13, "base_willpower": 5,
 		"hp_base": 10, "hp_per_level": 5, "hp_might_scale": 0.6, "hp_end_scale": 1.0,
 		"mp_base": 0, "mp_per_level": 0, "mp_wis_scale": 0.0,
 		"ac_bonus": 1, "ac_dex_scale": 1.6,
@@ -127,7 +129,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"lockpicking": 2, "thievery": 1, "reflex": 1}
 	},
 	Class_Names.RANGER: {
-		"base_might": 9, "base_end": 9, "base_wis": 8, "base_dex": 12,
+		"base_might": 9, "base_endurance": 9, "base_wisdom": 8, "base_dexterity": 12, "base_willpower": 6,
 		"hp_base": 11, "hp_per_level": 6, "hp_might_scale": 0.75, "hp_end_scale": 1.2,
 		"mp_base": 4, "mp_per_level": 2, "mp_wis_scale": 0.7,
 		"ac_bonus": 0, "ac_dex_scale": 1.1,
@@ -141,7 +143,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"perception": 2, "survival": 2}
 	},
 	Class_Names.DRUID: {
-		"base_might": 7, "base_end": 8, "base_wis": 14, "base_dex": 8,
+		"base_might": 7, "base_endurance": 8, "base_wisdom": 14, "base_dexterity": 8, "base_willpower": 10,
 		"hp_base": 11, "hp_per_level": 5, "hp_might_scale": 0.5, "hp_end_scale": 1.1,
 		"mp_base": 18, "mp_per_level": 7, "mp_wis_scale": 2.4,
 		"ac_bonus": 0, "ac_dex_scale": 0.55,
@@ -155,7 +157,7 @@ const CLASS_STAT_MAP = {
 		"skill_bonuses": {"medicine": 1, "lore": 2, "survival": 1}
 	},
 	Class_Names.MONK: {
-		"base_might": 9, "base_end": 10, "base_wis": 11, "base_dex": 12,
+		"base_might": 9, "base_endurance": 10, "base_wisdom": 11, "base_dexterity": 12, "base_willpower": 10,
 		"hp_base": 12, "hp_per_level": 6, "hp_might_scale": 0.7, "hp_end_scale": 1.3,
 		"mp_base": 5, "mp_per_level": 3, "mp_wis_scale": 1.0,
 		"ac_bonus": 0, "ac_dex_scale": 1.3, "ac_wis_scale": 0.6,
@@ -204,6 +206,7 @@ const CLASS_STAT_MAP = {
 @export var base_endurance: int = 0
 @export var base_wisdom: int = 0
 @export var base_dexterity: int = 0
+@export var base_willpower: int = 0
 
 @export_group("Legacy Stats")
 @export var might: int = 0
@@ -222,6 +225,7 @@ const CLASS_STAT_MAP = {
 @export var bonus_endurance: int = 0
 @export var bonus_wisdom: int = 0
 @export var bonus_dexterity: int = 0
+@export var bonus_willpower: int = 0
 @export var bonus_max_hp: int = 0
 @export var bonus_max_mp: int = 0
 
@@ -319,6 +323,7 @@ func get_primary_stats() -> Dictionary:
 		"Endurance": get_endurance(),
 		"Wisdom": get_wisdom(),
 		"Dexterity": get_dexterity(),
+		"Willpower": get_willpower(),
 	}
 
 func get_derived_stats() -> Dictionary:
@@ -389,6 +394,7 @@ static func create_custom_member(class_id: Class_Names, member_name_value: Strin
 	member.base_endurance = int(base_stats.get("endurance", base_stats.get("Endurance", member.base_endurance)))
 	member.base_wisdom = int(base_stats.get("wisdom", base_stats.get("Wisdom", member.base_wisdom)))
 	member.base_dexterity = int(base_stats.get("dexterity", base_stats.get("Dexterity", member.base_dexterity)))
+	member.base_willpower = int(base_stats.get("willpower", base_stats.get("Willpower", member.base_willpower)))
 
 	member.initialize_from_class_map(true)
 	member.suppress_stat_signal = false
@@ -497,6 +503,10 @@ func get_wisdom() -> int:
 
 func get_dexterity() -> int:
 	return base_dexterity + bonus_dexterity + _get_equipped_bonus("dexterity_bonus") + _get_combat_bonus("dexterity")
+
+# In ClassData
+func get_willpower() -> int:
+	return base_willpower + bonus_willpower + _get_equipped_bonus("willpower_bonus") + _get_combat_bonus("willpower")
 
 func get_max_hp() -> int:
 	return _calculate_max_hp()
@@ -697,11 +707,13 @@ func _migrate_legacy_fields(class_stats: Dictionary) -> void:
 	if base_might <= 0:
 		base_might = might if might > 0 else class_stats.get("base_might", DEFAULT_STARTING_MIGHT)
 	if base_dexterity <= 0:
-		base_dexterity = dexterity if dexterity > 0 else class_stats.get("base_dex", DEFAULT_STARTING_DEXTERITY)
+		base_dexterity = dexterity if dexterity > 0 else class_stats.get("base_dexterity", class_stats.get("base_dex", DEFAULT_STARTING_DEXTERITY))
 	if base_endurance <= 0:
-		base_endurance = endurance if endurance > 0 else class_stats.get("base_end", class_stats.get("base_endurance", DEFAULT_STARTING_ENDURANCE))
+		base_endurance = endurance if endurance > 0 else class_stats.get("base_endurance", class_stats.get("base_end", DEFAULT_STARTING_ENDURANCE))
 	if base_wisdom <= 0:
-		base_wisdom = wisdom if wisdom > 0 else class_stats.get("base_wis", class_stats.get("base_wisdom", DEFAULT_STARTING_WISDOM))
+		base_wisdom = wisdom if wisdom > 0 else class_stats.get("base_wisdom", class_stats.get("base_wis", DEFAULT_STARTING_WISDOM))
+	if base_willpower <= 0:
+		base_willpower = class_stats.get("base_willpower", class_stats.get("base_will", DEFAULT_STARTING_WILLPOWER))
 	if xp_to_next_level <= 0:
 		xp_to_next_level = BASE_XP_TO_NEXT_LEVEL
 	movement = _get_class_int("movement", movement)
@@ -1029,7 +1041,7 @@ func _get_combat_buff_entry(stat_name: String) -> Dictionary:
 		"remaining_rounds": -1
 	}
 
-func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true) -> void:
+func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
 	var normalized := status_name.to_lower().strip_edges()
 	if normalized.is_empty() or normalized == "none":
 		return
@@ -1037,7 +1049,8 @@ func apply_status_effect(status_name: String, duration_rounds: int = -1, persist
 		status_effects.append(normalized)
 	status_metadata[normalized] = {
 		"remaining_rounds": duration_rounds,
-		"persists_after_combat": persists_after_combat
+		"persists_after_combat": persists_after_combat,
+		"save_dc": save_dc
 	}
 
 func clear_status_effect(status_name: String) -> void:
@@ -1054,6 +1067,8 @@ func clear_temporary_combat_statuses() -> void:
 func tick_status_durations() -> void:
 	for status_name in status_effects.duplicate():
 		var metadata: Dictionary = status_metadata.get(status_name, {})
+		if _try_clear_status_with_willpower_roll(status_name, metadata):
+			continue
 		var remaining := int(metadata.get("remaining_rounds", -1))
 		if remaining < 0:
 			continue
@@ -1075,6 +1090,8 @@ func _normalize_combat_buff_key(stat_name: String) -> String:
 			return "wisdom"
 		"dexterity":
 			return "dexterity"
+		"willpower":
+			return "willpower"
 		"accuracy":
 			return "accuracy"
 		"ac_bonus", "armor_class":
@@ -1091,6 +1108,28 @@ func _normalize_combat_buff_key(stat_name: String) -> String:
 			return "bonus_damage"
 		_:
 			return ""
+
+func _try_clear_status_with_willpower_roll(status_name: String, metadata: Dictionary) -> bool:
+	var save_dc := int(metadata.get("save_dc", 0))
+	if save_dc <= 0:
+		return false
+
+	var status_type := StatusEffects.from_string(status_name)
+	var clear_conditions: Array = StatusEffects.CLEAR_CONDITIONS.get(status_type, [])
+	if not clear_conditions.has("willpower_roll"):
+		return false
+
+	var save_result := PartyState.make_save_throw(self, save_dc, PartyState.WILLPOWER_SAVE_THROW_SKILL, "willpower")
+	PartyState.log_save_throw_result(save_result, StatusEffects.get_display_name(status_type))
+	if not bool(save_result.get("success", false)):
+		return false
+
+	clear_status_effect(status_name)
+	GameEvents.message_logged.emit("[color=green]%s shakes off %s.[/color]" % [
+		member_name,
+		StatusEffects.get_display_name(status_type).to_lower()
+	])
+	return true
 
 func get_combat_movement() -> int:
 	# Includes Quick Step bonus if not yet used this turn

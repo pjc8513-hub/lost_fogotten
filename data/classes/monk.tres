@@ -7,17 +7,17 @@
 [resource]
 script = ExtResource("2_2ycw2")
 class_names = 8
-name = "Monk"
 member_name = "Sykes"
 max_hp = 12
 max_mp = 10
 current_hp = 12
 current_mp = 10
 armor_class = 10
-might = 10
 accuracy = 1
 critical_chance = 2
 attack_speed = 1
-sprite_texture = ExtResource("3_tnird")
 initiative = 1
+base_willpower = 10
+might = 10
+sprite_texture = ExtResource("3_tnird")
 metadata/_custom_type_script = "uid://dt5hef65gemqo"

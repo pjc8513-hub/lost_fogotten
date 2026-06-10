@@ -66,6 +66,8 @@ var god_mode_active: bool = false
 const SAVE_THROW_DIE_SIDES := 20
 const SAVE_THROW_DEXTERITY_DIVISOR := 4.0
 const DEFAULT_SAVE_THROW_SKILL := "reflex"
+const DEFAULT_SAVE_THROW_STAT := "dexterity"
+const WILLPOWER_SAVE_THROW_SKILL := ""
 
 func _ready():
 	roster.clear()
@@ -195,20 +197,23 @@ func _set_selected_index(value: int) -> void:
 	# Environmental damage
 	# Inside PartyState.gd
 
-func make_save_throw(member: ClassData, dc: int, skill_id: String = DEFAULT_SAVE_THROW_SKILL) -> Dictionary:
+func make_save_throw(member: ClassData, dc: int, skill_id: String = DEFAULT_SAVE_THROW_SKILL, stat_name: String = DEFAULT_SAVE_THROW_STAT) -> Dictionary:
 	if member == null:
 		return {}
 
+	var normalized_stat := stat_name.to_lower().strip_edges()
 	var natural_roll := randi_range(1, SAVE_THROW_DIE_SIDES)
-	var dexterity_bonus := _get_save_throw_dexterity_bonus(member)
+	var stat_bonus := _get_save_throw_stat_bonus(member, normalized_stat)
 	var skill_bonus := member.get_total_skill_bonus(skill_id) if skill_id != "" else 0
-	var total := natural_roll + dexterity_bonus + skill_bonus
+	var total := natural_roll + stat_bonus + skill_bonus
 
 	return {
 		"member": member,
 		"dc": dc,
 		"natural_roll": natural_roll,
-		"dexterity_bonus": dexterity_bonus,
+		"dexterity_bonus": stat_bonus if normalized_stat == "dexterity" else 0,
+		"stat_name": normalized_stat,
+		"stat_bonus": stat_bonus,
 		"skill_id": skill_id,
 		"skill_bonus": skill_bonus,
 		"total": total,
@@ -240,6 +245,16 @@ func damage_entire_party_with_save_throw(amount: int, dc: int, label: String = "
 func _get_save_throw_dexterity_bonus(member: ClassData) -> int:
 	return max(0, int(floor(float(member.get_dexterity() - 10) / SAVE_THROW_DEXTERITY_DIVISOR)))
 
+func _get_save_throw_willpower_bonus(member: ClassData) -> int:
+	return max(0, int(floor(float(member.get_willpower() - 10) / SAVE_THROW_DEXTERITY_DIVISOR)))
+
+func _get_save_throw_stat_bonus(member: ClassData, stat_name: String) -> int:
+	match stat_name:
+		"willpower":
+			return _get_save_throw_willpower_bonus(member)
+		_:
+			return _get_save_throw_dexterity_bonus(member)
+
 func log_save_throw_result(save_result: Dictionary, label: String) -> void:
 	_log_save_throw_result(save_result, label)
 
@@ -252,17 +267,20 @@ func _log_save_throw_result(save_result: Dictionary, label: String) -> void:
 	var outcome := "succeeds" if bool(save_result.get("success", false)) else "fails"
 	var skill_id := String(save_result.get("skill_id", ""))
 	var skill_bonus := int(save_result.get("skill_bonus", 0))
+	var stat_name := String(save_result.get("stat_name", DEFAULT_SAVE_THROW_STAT))
+	var stat_label := "Willpower" if stat_name == "willpower" else "Dex"
 	var skill_text := ""
 	if skill_id != "" and skill_bonus != 0:
 		skill_text = " + %s %d" % [skill_id.capitalize(), skill_bonus]
 
-	GameEvents.message_logged.emit("[color=%s]%s %s save %s: %d + Dex %d%s = %d vs DC %d[/color]" % [
+	GameEvents.message_logged.emit("[color=%s]%s %s save %s: %d + %s %d%s = %d vs DC %d[/color]" % [
 		color,
 		member.member_name,
 		label,
 		outcome,
 		int(save_result.get("natural_roll", 0)),
-		int(save_result.get("dexterity_bonus", 0)),
+		stat_label,
+		int(save_result.get("stat_bonus", save_result.get("dexterity_bonus", 0))),
 		skill_text,
 		int(save_result.get("total", 0)),
 		int(save_result.get("dc", 0))

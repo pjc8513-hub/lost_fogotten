@@ -142,7 +142,7 @@ func _get_combat_buff_entry(stat_name: String) -> Dictionary:
 		"remaining_rounds": -1
 	}
 
-func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true) -> void:
+func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
 	var normalized := status_name.to_lower().strip_edges()
 	if normalized.is_empty() or normalized == "none":
 		return
@@ -150,7 +150,8 @@ func apply_status_effect(status_name: String, duration_rounds: int = -1, persist
 		status_effects.append(normalized)
 	status_metadata[normalized] = {
 		"remaining_rounds": duration_rounds,
-		"persists_after_combat": persists_after_combat
+		"persists_after_combat": persists_after_combat,
+		"save_dc": save_dc
 	}
 
 func clear_status_effect(status_name: String) -> void:
