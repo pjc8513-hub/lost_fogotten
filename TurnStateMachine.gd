@@ -61,18 +61,19 @@ func _on_world_update():
 
 func _apply_poison_effects():
 	for member in PartyState.active_party:
-		if "poison" in member.status_effects and member.current_hp > 0:
-			member.take_damage(10)
-			GameEvents.message_logged.emit("[color=purple]" + member.member_name + " takes 10 poison damage![/color]")
+		if member.has_status_effect("poison") and member.current_hp > 0:
+			member.take_damage(StatusEffects.POISON_TICK_DAMAGE)
+			GameEvents.message_logged.emit("[color=purple]%s takes %d poison damage![/color]" % [member.member_name, StatusEffects.POISON_TICK_DAMAGE])
 			if member.current_hp <= 0:
 				GameEvents.message_logged.emit("[color=red]" + member.member_name + " dies from poison![/color]")
 				
 	var enemies = World.get_enemies()
 	for enemy in enemies:
-		if "poison" in enemy.enemy_data.status_effects and enemy.enemy_data.hp > 0:
-			enemy.enemy_data.hp -= 10
-			GameEvents.enemy_took_damage.emit(enemy, 10)
-			GameEvents.message_logged.emit("[color=purple]" + enemy.enemy_data.enemy_name + " takes 10 poison damage![/color]")
+		if enemy.enemy_data.has_status_effect("poison") and enemy.enemy_data.hp > 0:
+			var poison_damage := CombatLogic.apply_damage_status_bonuses(enemy, StatusEffects.POISON_TICK_DAMAGE)
+			enemy.enemy_data.hp -= poison_damage
+			GameEvents.enemy_took_damage.emit(enemy, poison_damage)
+			GameEvents.message_logged.emit("[color=purple]%s takes %d poison damage![/color]" % [enemy.enemy_data.enemy_name, poison_damage])
 			if enemy.enemy_data.hp <= 0:
 				GameEvents.message_logged.emit("[color=red]" + enemy.enemy_data.enemy_name + " dies from poison![/color]")
 				World.remove_enemy(enemy)
@@ -114,21 +115,13 @@ func _on_transition():
 func _clear_end_of_combat_effects() -> void:
 	for member in PartyState.active_party:
 		member.clear_combat_buffs()
-		if "stun" in member.status_effects:
-			if member.has_method("clear_status_effect"):
-				member.clear_status_effect("stun")
-			else:
-				member.status_effects.erase("stun")
-			GameEvents.message_logged.emit("[color=gray]" + member.member_name + " recovers from stun.[/color]")
+		member.clear_statuses_by_condition("end_of_combat")
 		if member.has_method("clear_temporary_combat_statuses"):
 			member.clear_temporary_combat_statuses()
 
 	for enemy in World.get_enemies():
-		if "stun" in enemy.enemy_data.status_effects:
-			if enemy.enemy_data.has_method("clear_status_effect"):
-				enemy.enemy_data.clear_status_effect("stun")
-			else:
-				enemy.enemy_data.status_effects.erase("stun")
+		if enemy.enemy_data.has_method("clear_statuses_by_condition"):
+			enemy.enemy_data.clear_statuses_by_condition("end_of_combat")
 		if enemy.enemy_data.has_method("clear_combat_buffs"):
 			enemy.enemy_data.clear_combat_buffs()
 		if enemy.enemy_data.has_method("clear_temporary_combat_statuses"):
@@ -150,13 +143,9 @@ func _run_enemy_turns(enemies: Array):
 		_run_enemy_turns(enemies)
 		return
 
-	if "stun" in enemy.enemy_data.status_effects:
-		print("[TurnStateMachine] stunned enemy skips turn:", enemy.enemy_data.enemy_name)
-		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " is stunned and skips their turn![/color]")
-		if enemy.enemy_data.has_method("clear_status_effect"):
-			enemy.enemy_data.clear_status_effect("stun")
-		else:
-			enemy.enemy_data.status_effects.erase("stun")
+	if enemy.enemy_data.skips_turn_from_status():
+		print("[TurnStateMachine] status-blocked enemy skips turn:", enemy.enemy_data.enemy_name)
+		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " cannot act and skips their turn![/color]")
 		await get_tree().create_timer(0.5).timeout
 		_run_enemy_turns(enemies)
 		return

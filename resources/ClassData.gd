@@ -493,7 +493,10 @@ func roll_level_up_points() -> int:
 	return points
 
 func get_might() -> int:
-	return base_might + bonus_might + _get_equipped_bonus("might_bonus") + _get_combat_bonus("might")
+	var might_value := base_might + bonus_might + _get_equipped_bonus("might_bonus") + _get_combat_bonus("might")
+	if _get_status_stat_modifier("might") <= -999:
+		return 0
+	return might_value + _get_status_stat_modifier("might")
 
 func get_endurance() -> int:
 	return base_endurance + bonus_endurance + _get_equipped_bonus("endurance_bonus") + _get_combat_bonus("endurance")
@@ -545,11 +548,20 @@ func take_damage(amount: int):
 		current_hp = max(1, current_hp - amount)
 		return false
 	
+	var final_amount := amount
+	if has_status_effect("burn"):
+		var burn_damage := CombatLogic.roll_dice(StatusEffects.BURN_BONUS_ROLLS, StatusEffects.BURN_BONUS_DIE_SIZE)
+		final_amount += burn_damage
+		GameEvents.message_logged.emit("[color=orange]%s's burns flare for %d extra damage![/color]" % [member_name, burn_damage])
+
 	# Subtraction triggers the 'set(value)' logic above
-	current_hp -= amount
+	current_hp -= final_amount
 	
 	# Optional: Return true if they died, useful for combat logic later
-	return current_hp <= 0
+	var died := current_hp <= 0
+	if died:
+		clear_statuses_by_condition("death")
+	return died
 	
 func get_resistance(element: String) -> int:
 	match element:
@@ -752,13 +764,13 @@ func _calculate_max_mp() -> int:
 func _calculate_armor_class() -> int:
 	var dex_bonus := _scaled_modifier(get_dexterity(), _get_class_float("ac_dex_scale", 1.0))
 	var wis_bonus := _scaled_modifier(get_wisdom(), _get_class_float("ac_wis_scale", 0.0))
-	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus") + _get_combat_bonus("armor_class")
+	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus") + _get_combat_bonus("armor_class") + _get_status_stat_modifier("armor_class")
 
 func _calculate_accuracy() -> int:
 	return _calculate_accuracy_with_might(get_might())
 
 func _calculate_accuracy_with_might(might_value: int) -> int:
-	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(might_value, _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy")
+	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(might_value, _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy") + _get_status_stat_modifier("accuracy")
 
 func _calculate_critical_chance() -> int:
 	return max(0, base_critical_chance_bonus + _get_class_int("crit_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_dex_scale", 0.5)) + _scaled_modifier(get_wisdom(), _get_class_float("crit_wis_scale", 0.0)) + _get_equipped_bonus("critical_chance_bonus"))
@@ -1042,8 +1054,10 @@ func _get_combat_buff_entry(stat_name: String) -> Dictionary:
 	}
 
 func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
-	var normalized := status_name.to_lower().strip_edges()
-	if normalized.is_empty() or normalized == "none":
+	var normalized := StatusEffects.normalize_id(status_name)
+	if normalized.is_empty():
+		return
+	if has_status_immunity(normalized):
 		return
 	if not status_effects.has(normalized):
 		status_effects.append(normalized)
@@ -1052,17 +1066,65 @@ func apply_status_effect(status_name: String, duration_rounds: int = -1, persist
 		"persists_after_combat": persists_after_combat,
 		"save_dc": save_dc
 	}
+	recalculate_derived_stats(false)
 
 func clear_status_effect(status_name: String) -> void:
-	var normalized := status_name.to_lower().strip_edges()
+	var normalized := StatusEffects.normalize_id(status_name)
+	if normalized.is_empty():
+		return
 	status_effects.erase(normalized)
 	status_metadata.erase(normalized)
+	recalculate_derived_stats(false)
+
+func clear_statuses_by_condition(condition: String) -> void:
+	for status_name in status_effects.duplicate():
+		if StatusEffects.has_clear_condition(status_name, condition):
+			clear_status_effect(status_name)
 
 func clear_temporary_combat_statuses() -> void:
 	for status_name in status_effects.duplicate():
 		var metadata: Dictionary = status_metadata.get(status_name, {})
 		if not bool(metadata.get("persists_after_combat", true)):
 			clear_status_effect(status_name)
+
+func has_status_effect(status_name: String) -> bool:
+	var normalized := StatusEffects.normalize_id(status_name)
+	return not normalized.is_empty() and status_effects.has(normalized)
+
+func has_any_status_matching(predicate: Callable) -> bool:
+	for status_name in status_effects:
+		if predicate.call(status_name):
+			return true
+	return false
+
+func skips_turn_from_status() -> bool:
+	return has_any_status_matching(func(status_name): return StatusEffects.skips_turn(status_name))
+
+func blocks_spell_casting() -> bool:
+	return has_any_status_matching(func(status_name): return StatusEffects.blocks_spells(status_name))
+
+func blocks_hp_healing() -> bool:
+	return has_any_status_matching(func(status_name): return StatusEffects.blocks_healing(status_name))
+
+func has_status_immunity(status_name: String) -> bool:
+	var normalized := StatusEffects.normalize_id(status_name)
+	if normalized.is_empty():
+		return false
+
+	for inst in inventory:
+		if not inst.is_equipped or inst.item_data == null:
+			continue
+		for immunity in inst.item_data.status_immunities:
+			if StatusEffects.normalize_id(immunity) == normalized:
+				return true
+
+	for skill in get_learned_skill_resources():
+		if skill == null:
+			continue
+		for immunity in skill.status_immunities:
+			if StatusEffects.normalize_id(immunity) == normalized:
+				return true
+	return false
 
 func tick_status_durations() -> void:
 	for status_name in status_effects.duplicate():
@@ -1078,6 +1140,12 @@ func tick_status_durations() -> void:
 		else:
 			metadata["remaining_rounds"] = remaining
 			status_metadata[status_name] = metadata
+
+func _get_status_stat_modifier(modifier_name: String) -> int:
+	var total := 0
+	for status_name in status_effects:
+		total += StatusEffects.stat_modifier(status_name, modifier_name)
+	return total
 
 func _normalize_combat_buff_key(stat_name: String) -> String:
 	var key := stat_name.to_lower().strip_edges()
@@ -1114,11 +1182,10 @@ func _try_clear_status_with_willpower_roll(status_name: String, metadata: Dictio
 	if save_dc <= 0:
 		return false
 
-	var status_type := StatusEffects.from_string(status_name)
-	var clear_conditions: Array = StatusEffects.CLEAR_CONDITIONS.get(status_type, [])
-	if not clear_conditions.has("willpower_roll"):
+	if not StatusEffects.has_clear_condition(status_name, "willpower_roll"):
 		return false
 
+	var status_type := StatusEffects.from_string(status_name)
 	var save_result := PartyState.make_save_throw(self, save_dc, PartyState.WILLPOWER_SAVE_THROW_SKILL, "willpower")
 	PartyState.log_save_throw_result(save_result, StatusEffects.get_display_name(status_type))
 	if not bool(save_result.get("success", false)):

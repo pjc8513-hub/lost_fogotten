@@ -80,7 +80,11 @@ func _perform_single_attack(target) -> void:
 	CombatLogic.proc_status(
 		actor.enemy_data.ailment,
 		5,
-		target
+		target,
+		-1,
+		true,
+		StatusEffects.DEFAULT_SAVE_DC,
+		actor.enemy_data.tier
 	)
 	
 	# 6. Emit and apply

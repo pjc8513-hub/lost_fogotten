@@ -29,10 +29,9 @@ func advance_party_member() -> bool:
 	while acting_member_index < size:
 		var member = PartyState.active_party[acting_member_index]
 		if not _is_dead(member):
-			if "stun" in member.status_effects:
+			if member.skips_turn_from_status():
 				GameEvents.combat_status_changed.emit(member, CombatStatus.STUN)
-				GameEvents.message_logged.emit("[color=yellow]" + member.member_name + " is stunned and skips their turn![/color]")
-				member.status_effects.erase("stun")
+				GameEvents.message_logged.emit("[color=yellow]" + member.member_name + " cannot act and skips their turn![/color]")
 				GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
 				acting_member_index += 1
 				continue
@@ -236,7 +235,7 @@ func _refresh_party_combat_statuses() -> void:
 		var member = PartyState.active_party[index]
 		if _is_dead(member):
 			GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
-		elif "stun" in member.status_effects:
+		elif member.skips_turn_from_status():
 			GameEvents.combat_status_changed.emit(member, CombatStatus.STUN)
 		elif index < acting_member_index:
 			GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)

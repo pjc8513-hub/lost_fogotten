@@ -42,6 +42,7 @@ enum Element {
 @export var precision: float = 0.0
 @export var complexity_bonus: int = 0
 @export var extra_damage_roll: int = 0
+@export var status_immunities: Array[String] = []
 # ...extend as needed
 
 # Base values per level (Can multiply these by the current level rank)

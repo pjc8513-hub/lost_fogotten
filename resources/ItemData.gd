@@ -28,6 +28,7 @@ enum Equip_Slot {
 @export var sell_value: int = 0
 @export var equip_slot: Equip_Slot
 @export var description: String = ""
+@export var status_immunities: Array[String] = []
 
 var value: int:
 	get:

@@ -88,6 +88,9 @@ func _apply_healing(caster: ClassData, result: SpellResult, outcome: Dictionary)
 		for member in PartyState.active_party:
 			if member == null or member.current_hp <= 0:
 				continue
+			if member.blocks_hp_healing():
+				GameEvents.message_logged.emit("[color=purple]%s cannot be healed while diseased.[/color]" % member.member_name)
+				continue
 			var heal_amount := CombatLogic.roll_dice(int(roll_data["rolls"]), int(roll_data["die"]), heal_bonus)
 			member.current_hp = min(member.get_max_hp(), member.current_hp + heal_amount)
 			GameEvents.message_logged.emit("[color=green]%s[/color] recovers [color=lime]%d[/color] HP." % [
@@ -183,11 +186,12 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 		])
 
 	if total_damage > 0:
-		target_enemy.enemy_data.hp -= total_damage
-		GameEvents.enemy_took_damage.emit(target_enemy, total_damage)
+		var final_total_damage := CombatLogic.apply_damage_status_bonuses(target_enemy, total_damage)
+		target_enemy.enemy_data.hp -= final_total_damage
+		GameEvents.enemy_took_damage.emit(target_enemy, final_total_damage)
 		GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] total spell damage." % [
 			target_enemy.enemy_data.enemy_name,
-			total_damage
+			final_total_damage
 		])
 
 	if splash_damage > 0:
@@ -196,11 +200,12 @@ func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, 
 				continue
 			if not World.are_adjacent(enemy, target_enemy):
 				continue
-			enemy.enemy_data.hp -= splash_damage
-			GameEvents.enemy_took_damage.emit(enemy, splash_damage)
+			var final_splash_damage := CombatLogic.apply_damage_status_bonuses(enemy, splash_damage)
+			enemy.enemy_data.hp -= final_splash_damage
+			GameEvents.enemy_took_damage.emit(enemy, final_splash_damage)
 			GameEvents.message_logged.emit("[color=orange]%s[/color] is splashed for [color=red]%d[/color] damage." % [
 				enemy.enemy_data.enemy_name,
-				splash_damage
+				final_splash_damage
 			])
 			_cleanup_enemy_if_dead(enemy)
 

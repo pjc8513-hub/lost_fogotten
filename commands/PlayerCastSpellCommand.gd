@@ -9,6 +9,13 @@ func execute() -> void:
 	if caster == null:
 		emit_signal("finished")
 		return
+	if caster.blocks_spell_casting():
+		GameEvents.message_logged.emit("[color=purple]%s is too confused to cast.[/color]" % caster.member_name)
+		emit_signal("finished")
+		return
+	if not CombatLogic.can_complete_cursed_action(caster, "spell"):
+		emit_signal("finished")
+		return
 
 	if cast_request == null or not cast_request.is_valid:
 		GameEvents.message_logged.emit("[color=red]The spell fizzles before it can be cast.[/color]")

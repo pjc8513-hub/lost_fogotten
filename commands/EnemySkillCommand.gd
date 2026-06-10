@@ -82,7 +82,8 @@ func _apply_skill_to_target(target) -> void:
 			target,
 			skill.status_duration_rounds,
 			skill.status_persists_after_combat,
-			skill.status_save_dc
+			skill.status_save_dc,
+			actor.enemy_data.tier
 		)
 
 func _apply_damage(target) -> void:
@@ -111,6 +112,8 @@ func _roll_skill_damage() -> int:
 func _deal_damage(target, raw_damage: int, was_crit: bool) -> void:
 	var resist: int = _get_target_resistance(target, skill.element)
 	var final_damage: int = CombatLogic.apply_resistance(raw_damage, resist)
+	if target is Enemy:
+		final_damage = CombatLogic.apply_damage_status_bonuses(target, final_damage)
 	var crit_tag: String = " [color=yellow]CRITICAL![/color]" if was_crit else ""
 
 	GameEvents.message_logged.emit("[color=red]%s[/color]'s %s hits [color=white]%s[/color] for [color=orange]%d[/color] damage!%s" % [

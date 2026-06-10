@@ -10,6 +10,9 @@ const MELEE_RANGE: int = 1  # 8-directional: max distance for adjacent tiles
 func execute() -> void:
 	var attacker: ClassData = actor  # ClassData
 	var target_enemy: Enemy = CombatState.targeted_enemy
+	if not CombatLogic.can_complete_cursed_action(attacker, "attack"):
+		emit_signal("finished")
+		return
 
 	# Guard: target died between click and execution (another enemy killed them, etc.)
 	if target_enemy == null or target_enemy.enemy_data.hp <= 0:
@@ -125,7 +128,7 @@ func _do_melee(attacker: ClassData, target: Enemy, sequence_context: Dictionary,
 
 	# Physical resist on enemy side
 	var resist := target.enemy_data.get_resistance("physical")
-	var final_damage := CombatLogic.apply_resistance(raw, resist)
+	var final_damage := CombatLogic.apply_damage_status_bonuses(target, CombatLogic.apply_resistance(raw, resist))
 	log_entry["math_breakdown"]["damage"] = {
 		"pre_crit_raw": pre_crit_raw,
 		"crit_multiplier": 2 if outcome == "crit" else 1,
@@ -231,7 +234,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float, sequenc
 	raw += might_damage_bonus
 
 	var resist := target.enemy_data.get_resistance("physical")
-	var final_damage := CombatLogic.apply_resistance(raw, resist)
+	var final_damage := CombatLogic.apply_damage_status_bonuses(target, CombatLogic.apply_resistance(raw, resist))
 	log_entry["math_breakdown"]["damage"] = {
 		"pre_crit_raw": pre_crit_raw,
 		"crit_multiplier": 2 if outcome == "crit" else 1,

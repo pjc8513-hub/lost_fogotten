@@ -82,10 +82,10 @@ func get_resistance(element: String) -> int:
 	return 0
 	
 func get_accuracy() -> int:
-	return accuracy + _get_combat_bonus("accuracy")
+	return accuracy + _get_combat_bonus("accuracy") + _get_status_stat_modifier("accuracy")
 
 func get_armor_class() -> int:
-	return armor_class + _get_combat_bonus("armor_class")
+	return armor_class + _get_combat_bonus("armor_class") + _get_status_stat_modifier("armor_class")
 
 func get_bonus_damage() -> int:
 	return bonus_damage + _get_combat_bonus("bonus_damage")
@@ -143,8 +143,8 @@ func _get_combat_buff_entry(stat_name: String) -> Dictionary:
 	}
 
 func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
-	var normalized := status_name.to_lower().strip_edges()
-	if normalized.is_empty() or normalized == "none":
+	var normalized := StatusEffects.normalize_id(status_name)
+	if normalized.is_empty():
 		return
 	if not status_effects.has(normalized):
 		status_effects.append(normalized)
@@ -155,9 +155,26 @@ func apply_status_effect(status_name: String, duration_rounds: int = -1, persist
 	}
 
 func clear_status_effect(status_name: String) -> void:
-	var normalized := status_name.to_lower().strip_edges()
+	var normalized := StatusEffects.normalize_id(status_name)
+	if normalized.is_empty():
+		return
 	status_effects.erase(normalized)
 	status_metadata.erase(normalized)
+
+func clear_statuses_by_condition(condition: String) -> void:
+	for status_name in status_effects.duplicate():
+		if StatusEffects.has_clear_condition(status_name, condition):
+			clear_status_effect(status_name)
+
+func has_status_effect(status_name: String) -> bool:
+	var normalized := StatusEffects.normalize_id(status_name)
+	return not normalized.is_empty() and status_effects.has(normalized)
+
+func skips_turn_from_status() -> bool:
+	for status_name in status_effects:
+		if StatusEffects.skips_turn(status_name):
+			return true
+	return false
 
 func clear_temporary_combat_statuses() -> void:
 	for status_name in status_effects.duplicate():
@@ -177,6 +194,12 @@ func tick_status_durations() -> void:
 		else:
 			metadata["remaining_rounds"] = remaining
 			status_metadata[status_name] = metadata
+
+func _get_status_stat_modifier(modifier_name: String) -> int:
+	var total := 0
+	for status_name in status_effects:
+		total += StatusEffects.stat_modifier(status_name, modifier_name)
+	return total
 
 func _normalize_combat_buff_key(stat_name: String) -> String:
 	var key := stat_name.to_lower().strip_edges()

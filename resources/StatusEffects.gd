@@ -30,8 +30,14 @@ const CLEAR_CONDITIONS: Dictionary = {
 	Type.BLIND:      ["spell", "item", "temple", "death"],
 	Type.DISEASE:    ["spell", "item", "temple", "rest", "death"],
 	Type.POISON:     ["spell", "item", "temple", "death"],
-	Type.BURN:       [],   # passive rider — no active clearing mechanic
+	Type.BURN:       ["rest", "spell", "item", "temple", "death"],
 }
+
+const DEFAULT_SAVE_DC := 10
+const DC_PER_SOURCE_LEVEL := 1
+const POISON_TICK_DAMAGE := 10
+const BURN_BONUS_ROLLS := 2
+const BURN_BONUS_DIE_SIZE := 8
 
 # Stat modifiers each status applies (used by ClassData calculations)
 const STAT_MODIFIERS: Dictionary = {
@@ -60,4 +66,44 @@ static func get_display_name(type: Type) -> String:
 
 static func from_string(s: String) -> Type:
 	var upper := s.strip_edges().to_upper().replace(" ", "_")
+	match upper:
+		"PARALYSIS":
+			upper = "PARALYZE"
+		"STONESKIN":
+			upper = "STONE_SKIN"
 	return Type.get(upper, Type.NONE) as Type
+
+static func to_id(type: Type) -> String:
+	if type == Type.NONE:
+		return ""
+	return Type.keys()[type].to_lower()
+
+static func normalize_id(status_name: String) -> String:
+	return to_id(from_string(status_name))
+
+static func is_valid(status_name: String) -> bool:
+	return from_string(status_name) != Type.NONE
+
+static func has_clear_condition(status_name: String, condition: String) -> bool:
+	var status_type := from_string(status_name)
+	if status_type == Type.NONE:
+		return false
+	var conditions: Array = CLEAR_CONDITIONS.get(status_type, [])
+	return conditions.has(condition)
+
+static func skips_turn(status_name: String) -> bool:
+	return SKIPS_TURN.has(from_string(status_name))
+
+static func blocks_spells(status_name: String) -> bool:
+	return BLOCKS_SPELLS.has(from_string(status_name))
+
+static func blocks_healing(status_name: String) -> bool:
+	return BLOCKS_HEALING.has(from_string(status_name))
+
+static func stat_modifier(status_name: String, modifier_name: String) -> int:
+	var modifiers: Dictionary = STAT_MODIFIERS.get(from_string(status_name), {})
+	return int(modifiers.get(modifier_name, 0))
+
+static func calculate_save_dc(base_dc: int, source_level: int = 0) -> int:
+	var dc := base_dc if base_dc > 0 else DEFAULT_SAVE_DC
+	return dc + max(0, source_level) * DC_PER_SOURCE_LEVEL
