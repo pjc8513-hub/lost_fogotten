@@ -104,6 +104,7 @@ func create_item_instance(item_id: String) -> ItemInstance:
 	else:
 		item_instance.item_data = item_data
 
+	GearAttributeRoller.roll_for_item(item_instance)
 	return item_instance
 
 # Debug helper

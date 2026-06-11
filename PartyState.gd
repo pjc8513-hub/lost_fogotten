@@ -204,8 +204,9 @@ func make_save_throw(member: ClassData, dc: int, skill_id: String = DEFAULT_SAVE
 	var normalized_stat := stat_name.to_lower().strip_edges()
 	var natural_roll := randi_range(1, SAVE_THROW_DIE_SIDES)
 	var stat_bonus := _get_save_throw_stat_bonus(member, normalized_stat)
+	var gear_save_bonus := _get_gear_save_throw_bonus(member, normalized_stat)
 	var skill_bonus := member.get_total_skill_bonus(skill_id) if skill_id != "" else 0
-	var total := natural_roll + stat_bonus + skill_bonus
+	var total := natural_roll + stat_bonus + gear_save_bonus + skill_bonus
 
 	return {
 		"member": member,
@@ -214,11 +215,20 @@ func make_save_throw(member: ClassData, dc: int, skill_id: String = DEFAULT_SAVE
 		"dexterity_bonus": stat_bonus if normalized_stat == "dexterity" else 0,
 		"stat_name": normalized_stat,
 		"stat_bonus": stat_bonus,
+		"gear_save_bonus": gear_save_bonus,
 		"skill_id": skill_id,
 		"skill_bonus": skill_bonus,
 		"total": total,
 		"success": total >= dc,
 	}
+
+func _get_gear_save_throw_bonus(member: ClassData, stat_name: String) -> int:
+	var bonus_name := "willpower_save_bonus" if stat_name == "willpower" else "dexterity_save_bonus"
+	var total := 0
+	for inst in member.inventory:
+		if inst.is_equipped:
+			total += inst.get_bonus(bonus_name)
+	return total
 
 func damage_entire_party_with_save_throw(amount: int, dc: int, label: String = "Trap", skill_id: String = DEFAULT_SAVE_THROW_SKILL) -> void:
 	if god_mode_active:
@@ -272,8 +282,12 @@ func _log_save_throw_result(save_result: Dictionary, label: String) -> void:
 	var skill_text := ""
 	if skill_id != "" and skill_bonus != 0:
 		skill_text = " + %s %d" % [skill_id.capitalize(), skill_bonus]
+	var gear_save_bonus := int(save_result.get("gear_save_bonus", 0))
+	var gear_text := ""
+	if gear_save_bonus != 0:
+		gear_text = " + Gear %d" % gear_save_bonus
 
-	GameEvents.message_logged.emit("[color=%s]%s %s save %s: %d + %s %d%s = %d vs DC %d[/color]" % [
+	GameEvents.message_logged.emit("[color=%s]%s %s save %s: %d + %s %d%s%s = %d vs DC %d[/color]" % [
 		color,
 		member.member_name,
 		label,
@@ -281,6 +295,7 @@ func _log_save_throw_result(save_result: Dictionary, label: String) -> void:
 		int(save_result.get("natural_roll", 0)),
 		stat_label,
 		int(save_result.get("stat_bonus", save_result.get("dexterity_bonus", 0))),
+		gear_text,
 		skill_text,
 		int(save_result.get("total", 0)),
 		int(save_result.get("dc", 0))

@@ -69,6 +69,8 @@ static func from_string(s: String) -> Type:
 	match upper:
 		"PARALYSIS":
 			upper = "PARALYZE"
+		"FREEZE":
+			upper = "FROZEN"
 		"STONESKIN":
 			upper = "STONE_SKIN"
 	return Type.get(upper, Type.NONE) as Type

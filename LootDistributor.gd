@@ -47,7 +47,7 @@ func distribute_chest_loot(chest: TreasureChest, gold: int, loot_ids: Array):
 
 		GameEvents.message_logged.emit(
 			"[color=yellow]%s[/color] [color=cyan]Found: %s[/color]"
-			% [selected_member.member_name, item_instance.item_data.name]
+			% [selected_member.member_name, item_instance.get_display_name()]
 		)
 
 func distribute_enemy_loot(enemy: Enemy):
@@ -106,7 +106,7 @@ func distribute_enemy_loot(enemy: Enemy):
 
 		GameEvents.message_logged.emit(
 			"[color=yellow]%s[/color] [color=cyan]Found: %s[/color]"
-			% [random_member.member_name, item_instance.item_data.name]
+			% [random_member.member_name, item_instance.get_display_name()]
 		)
 
 func _is_quest_item_blocked(item_id: String) -> bool:

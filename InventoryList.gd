@@ -20,7 +20,7 @@ func set_inventory(items: Array[ItemInstance]):
 			
 		var item = inst.item_data
 		var equip_slot_string = _equip_slot_to_string(item.equip_slot)
-		var inventory_name = "%s: %s" % [equip_slot_string, item.name]
+		var inventory_name = "%s: %s" % [equip_slot_string, inst.get_display_name()]
 		var idx = item_list.add_item(inventory_name, item.icon)
 
 		if inst.is_equipped:

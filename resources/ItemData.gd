@@ -44,6 +44,7 @@ static func get_item(item_id: String) -> ItemData:
 @export var might_bonus: int = 0
 @export var endurance_bonus: int = 0
 @export var wisdom_bonus: int = 0
+@export var willpower_bonus: int = 0
 @export var dexterity_bonus: int = 0
 @export var accuracy_bonus: int = 0
 @export var armor_class_bonus: int = 0

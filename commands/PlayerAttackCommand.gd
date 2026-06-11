@@ -73,7 +73,11 @@ func _get_attack_slot(dist: float) -> ItemData.Equip_Slot:
 func _do_melee(attacker: ClassData, target: Enemy, sequence_context: Dictionary, attack_index: int) -> void:
 	var slot := ItemData.Equip_Slot.WEAPON
 	var log_entry := _create_attack_log(attacker, target, slot, "melee", sequence_context, attack_index)
-	var accuracy_detail := _roll_accuracy_detail(attacker.get_attack_accuracy(slot), target.enemy_data.armor_class)
+	var accuracy_detail := _roll_accuracy_detail(
+		attacker.get_attack_accuracy(slot),
+		target.enemy_data.armor_class,
+		attacker.get_attack_critical_min_roll(slot)
+	)
 	var outcome: String = accuracy_detail["outcome"]
 	log_entry["math_breakdown"]["rolls"]["accuracy"] = accuracy_detail
 
@@ -125,6 +129,8 @@ func _do_melee(attacker: ClassData, target: Enemy, sequence_context: Dictionary,
 		raw *= 2
 	var might_damage_bonus := CombatLogic.might_bonus(attacker.get_attack_might(slot))
 	raw += might_damage_bonus
+	var type_multiplier := _get_enemy_type_damage_multiplier(attacker, target, slot)
+	raw *= type_multiplier
 
 	# Physical resist on enemy side
 	var resist := target.enemy_data.get_resistance("physical")
@@ -132,6 +138,7 @@ func _do_melee(attacker: ClassData, target: Enemy, sequence_context: Dictionary,
 	log_entry["math_breakdown"]["damage"] = {
 		"pre_crit_raw": pre_crit_raw,
 		"crit_multiplier": 2 if outcome == "crit" else 1,
+		"enemy_type_multiplier": type_multiplier,
 		"might_damage_bonus": might_damage_bonus,
 		"raw_after_crit_and_might": raw,
 		"target_physical_resistance_percent": resist,
@@ -151,6 +158,7 @@ func _do_melee(attacker: ClassData, target: Enemy, sequence_context: Dictionary,
 	GameEvents.enemy_took_damage.emit(target, final_damage)
 	log_entry["outcome"] = outcome
 	log_entry["target_hp_after"] = target.enemy_data.hp
+	log_entry["math_breakdown"]["rolls"]["gear_status"] = _try_apply_weapon_tag_status(attacker, target, slot)
 	log_entry["math_breakdown"]["rolls"]["cudgel_mastery_stun"] = _try_apply_cudgel_mastery_stun(attacker, target)
 	CombatLogger.log_attack(log_entry)
 	if target.enemy_data.hp <= 0:
@@ -189,7 +197,11 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float, sequenc
 	# Ranged attack — same pipeline, no resist override needed (will use weapon element later)
 	var slot := ItemData.Equip_Slot.RANGE
 	var log_entry := _create_attack_log(attacker, target, slot, "ranged", sequence_context, attack_index)
-	var accuracy_detail := _roll_accuracy_detail(attacker.get_attack_accuracy(slot), target.enemy_data.armor_class)
+	var accuracy_detail := _roll_accuracy_detail(
+		attacker.get_attack_accuracy(slot),
+		target.enemy_data.armor_class,
+		attacker.get_attack_critical_min_roll(slot)
+	)
 	var outcome: String = accuracy_detail["outcome"]
 	log_entry["math_breakdown"]["rolls"]["accuracy"] = accuracy_detail
 
@@ -232,12 +244,15 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float, sequenc
 		raw *= 2
 	var might_damage_bonus := CombatLogic.might_bonus(attacker.get_attack_might(slot))
 	raw += might_damage_bonus
+	var type_multiplier := _get_enemy_type_damage_multiplier(attacker, target, slot)
+	raw *= type_multiplier
 
 	var resist := target.enemy_data.get_resistance("physical")
 	var final_damage := CombatLogic.apply_damage_status_bonuses(target, CombatLogic.apply_resistance(raw, resist))
 	log_entry["math_breakdown"]["damage"] = {
 		"pre_crit_raw": pre_crit_raw,
 		"crit_multiplier": 2 if outcome == "crit" else 1,
+		"enemy_type_multiplier": type_multiplier,
 		"might_damage_bonus": might_damage_bonus,
 		"raw_after_crit_and_might": raw,
 		"target_physical_resistance_percent": resist,
@@ -257,6 +272,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float, sequenc
 	GameEvents.enemy_took_damage.emit(target, final_damage)
 	log_entry["outcome"] = outcome
 	log_entry["target_hp_after"] = target.enemy_data.hp
+	log_entry["math_breakdown"]["rolls"]["gear_status"] = _try_apply_weapon_tag_status(attacker, target, slot)
 	CombatLogger.log_attack(log_entry)
 	if target.enemy_data.hp <= 0:
 		var death_msg := "[color=red]%s[/color] dies!" % target.enemy_data.enemy_name
@@ -379,14 +395,14 @@ func _get_attack_skill_contributions(attacker: ClassData, slot: ItemData.Equip_S
 		}
 	}
 
-func _roll_accuracy_detail(attacker_accuracy: int, target_ac: int) -> Dictionary:
+func _roll_accuracy_detail(attacker_accuracy: int, target_ac: int, critical_min_roll: int = 20) -> Dictionary:
 	var d20_roll := randi_range(1, 20)
 	var target_roll := 15 - target_ac
 	var total := d20_roll + attacker_accuracy
 	var outcome := "miss"
 	if d20_roll == 1:
 		outcome = "crit_miss"
-	elif d20_roll == 20:
+	elif d20_roll >= critical_min_roll:
 		outcome = "crit"
 	elif total >= target_roll:
 		outcome = "hit"
@@ -396,6 +412,7 @@ func _roll_accuracy_detail(attacker_accuracy: int, target_ac: int) -> Dictionary
 		"attacker_accuracy": attacker_accuracy,
 		"target_ac": target_ac,
 		"target_roll": target_roll,
+		"critical_min_roll": critical_min_roll,
 		"total": total,
 		"outcome": outcome,
 		"formula": "d20 + attacker_accuracy >= 15 - target_ac"
@@ -441,6 +458,7 @@ func _sanitize_save_result(save_result: Dictionary) -> Dictionary:
 		"dc": int(save_result.get("dc", 0)),
 		"natural_roll": int(save_result.get("natural_roll", 0)),
 		"dexterity_bonus": int(save_result.get("dexterity_bonus", 0)),
+		"gear_save_bonus": int(save_result.get("gear_save_bonus", 0)),
 		"skill_id": String(save_result.get("skill_id", "")),
 		"skill_bonus": int(save_result.get("skill_bonus", 0)),
 		"total": int(save_result.get("total", 0)),
@@ -479,4 +497,56 @@ func _try_apply_cudgel_mastery_stun(attacker: ClassData, target: Enemy) -> Dicti
 	detail["applied"] = true
 	detail["reason"] = "roll_succeeded"
 	GameEvents.message_logged.emit("[color=yellow]%s is stunned![/color]" % target.enemy_data.enemy_name)
+	return detail
+
+func _get_enemy_type_damage_multiplier(attacker: ClassData, target: Enemy, slot: ItemData.Equip_Slot) -> int:
+	var weapon := attacker.get_equipped_item(slot)
+	if weapon == null:
+		return 1
+	match target.enemy_data.enemy_type:
+		EnemyData.Enemy_Type.DRAGON:
+			return 2 if weapon.has_tag("Slaying") else 1
+		EnemyData.Enemy_Type.UNDEAD:
+			return 2 if weapon.has_tag("Holy") else 1
+		EnemyData.Enemy_Type.BEAST:
+			return 2 if weapon.has_tag("Hunting") else 1
+		_:
+			return 1
+
+func _try_apply_weapon_tag_status(attacker: ClassData, target: Enemy, slot: ItemData.Equip_Slot) -> Dictionary:
+	var detail := {"tag": "", "chance_percent": 0, "roll": 0, "applied": false}
+	if target.enemy_data.hp <= 0:
+		return detail
+	var weapon := attacker.get_equipped_item(slot)
+	if weapon == null:
+		return detail
+
+	var status_name := ""
+	if weapon.has_tag("Viper"):
+		detail["tag"] = "Viper"
+		detail["chance_percent"] = 5
+		status_name = "poison"
+	elif weapon.has_tag("Frost"):
+		detail["tag"] = "Frost"
+		detail["chance_percent"] = 5
+		status_name = "frozen"
+	elif weapon.has_tag("Crushing"):
+		detail["tag"] = "Crushing"
+		detail["chance_percent"] = 10
+		status_name = "stun"
+	else:
+		return detail
+
+	var roll := randi_range(1, 100)
+	detail["roll"] = roll
+	if roll > int(detail["chance_percent"]):
+		return detail
+
+	target.enemy_data.apply_status_effect(status_name, 1, false)
+	detail["applied"] = true
+	GameEvents.message_logged.emit("[color=yellow]%s inflicts %s on %s![/color]" % [
+		attacker.member_name,
+		StatusEffects.get_display_name(StatusEffects.from_string(status_name)).to_lower(),
+		target.enemy_data.enemy_name
+	])
 	return detail

@@ -564,11 +564,15 @@ func take_damage(amount: int):
 	return died
 	
 func get_resistance(element: String) -> int:
+	var equipment_resistance := 0
+	for inst in inventory:
+		if inst.is_equipped:
+			equipment_resistance += inst.get_resistance(element)
 	match element:
-		"fire": return resist_fire
-		"cold": return resist_cold
-		"dark": return resist_dark
-		_: return 0
+		"fire": return resist_fire + equipment_resistance
+		"cold", "water": return resist_cold + equipment_resistance
+		"dark": return resist_dark + equipment_resistance
+		_: return equipment_resistance
 
 func get_accuracy() -> int:
 	return _calculate_accuracy()
@@ -592,6 +596,10 @@ func get_attack_critical_chance(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.
 
 func get_attack_bonus_damage(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
 	return _calculate_bonus_damage_with_might(get_attack_might(slot))
+
+func get_attack_critical_min_roll(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
+	var instance := get_equipped_item(slot)
+	return 18 if instance != null and instance.has_tag("Vorpal") else 20
 
 func get_weapon_accuracy_penalty(slot: ItemData.Equip_Slot = ItemData.Equip_Slot.WEAPON) -> int:
 	var weapon := get_equipped_weapon(slot)
@@ -806,6 +814,7 @@ func _get_equipped_bonus(stat_name: String) -> int:
 		if not inst.is_equipped or inst.item_data == null:
 			continue
 		total += int(inst.item_data.get(stat_name))
+		total += inst.get_bonus(stat_name)
 	return total
 
 func _get_armor_item_bonus() -> int:
@@ -1114,6 +1123,9 @@ func has_status_immunity(status_name: String) -> bool:
 	for inst in inventory:
 		if not inst.is_equipped or inst.item_data == null:
 			continue
+		for immunity in inst.status_immunities:
+			if StatusEffects.normalize_id(immunity) == normalized:
+				return true
 		for immunity in inst.item_data.status_immunities:
 			if StatusEffects.normalize_id(immunity) == normalized:
 				return true
