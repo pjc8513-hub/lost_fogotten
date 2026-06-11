@@ -79,7 +79,6 @@ func _perform_single_attack(target) -> void:
 	# 5. Status proc
 	CombatLogic.proc_status(
 		actor.enemy_data.ailment,
-		5,
 		target,
 		-1,
 		true,

@@ -227,7 +227,7 @@ func _apply_chord_statuses(target_enemy: Enemy, result: SpellResult) -> void:
 		if randi_range(1, 100) > result.chord_success_chance:
 			GameEvents.message_logged.emit("[color=gray]%s fails to take hold.[/color]" % chord_data.display_name)
 			continue
-		CombatLogic.proc_status(chord_data.status_effect.to_lower(), 100, target_enemy)
+		CombatLogic.proc_status(chord_data.status_effect.to_lower(), target_enemy)
 
 func _get_resist_roll_reduction(target_enemy: Enemy, element: int) -> int:
 	match element:

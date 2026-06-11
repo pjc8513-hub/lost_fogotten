@@ -35,7 +35,6 @@ enum TargetMode {
 
 @export_group("Status")
 @export var status_effect: String = "none"
-@export_range(0, 100, 1) var status_chance: int = 0
 @export var status_duration_rounds: int = -1
 @export var status_persists_after_combat: bool = true
 @export var status_save_dc: int = 0
@@ -60,7 +59,7 @@ func has_healing() -> bool:
 	return heal_rolls > 0 and heal_die_sides > 0
 
 func has_status() -> bool:
-	return status_chance > 0 and status_effect.strip_edges().to_lower() != "none" and status_effect.strip_edges() != ""
+	return status_effect.strip_edges().to_lower() != "none" and status_effect.strip_edges() != ""
 
 func has_stat_modifiers() -> bool:
 	return not stat_modifiers.is_empty()

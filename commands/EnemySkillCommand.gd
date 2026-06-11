@@ -78,7 +78,6 @@ func _apply_skill_to_target(target) -> void:
 	if skill.has_status():
 		CombatLogic.proc_status(
 			skill.status_effect.strip_edges().to_lower(),
-			skill.status_chance,
 			target,
 			skill.status_duration_rounds,
 			skill.status_persists_after_combat,

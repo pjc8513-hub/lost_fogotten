@@ -107,7 +107,7 @@ func _perform_single_ranged_attack(target) -> void:
 	var resist : int = target.get_resistance(element) if target.has_method("get_resistance") else 0
 	var final_damage := CombatLogic.apply_resistance(raw, resist)
 	
-	CombatLogic.proc_status(actor.enemy_data.ailment, 5, target, -1, true, StatusEffects.DEFAULT_SAVE_DC, actor.enemy_data.tier)
+	CombatLogic.proc_status(actor.enemy_data.ailment, target, -1, true, StatusEffects.DEFAULT_SAVE_DC, actor.enemy_data.tier)
 	
 	var crit_tag := " [color=yellow]CRITICAL![/color]" if outcome == "crit" else ""
 	var msg := "[color=red]%s[/color] fires at [color=white]%s[/color] for [color=orange]%d[/color] damage!%s" % [

@@ -80,11 +80,11 @@ static func apply_damage_status_bonuses(target, damage: int) -> int:
 		return damage + roll_dice(StatusEffects.BURN_BONUS_ROLLS, StatusEffects.BURN_BONUS_DIE_SIZE)
 	return damage
 
-static func proc_status(ailment: String, chance_percent: int, target, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0, source_level: int = 0) -> void:
+static func proc_status(ailment: String, target, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0, source_level: int = 0) -> void:
 	var normalized := StatusEffects.normalize_id(ailment)
 	if normalized.is_empty():
 		return
-	if randi_range(1, 100) <= chance_percent:
+	if true:
 		var effect_list = null
 		var target_name = ""
 		var effective_save_dc := StatusEffects.calculate_save_dc(save_dc, source_level)
