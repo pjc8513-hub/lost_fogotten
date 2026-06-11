@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://diwpkcq4qo0jm"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_h17vt"]
+
+[resource]
+script = ExtResource("1_h17vt")
+skill_id = "DarkCloud"
+display_name = "Dark Cloud"
+description = "Attempts to blind party"
+target_mode = 2
+priority = 7
+use_chance = 55
+cooldown_turns = 3
+range_tiles = 5
+dice_rolls = 1
+dice_sides = 5
+bonus_damage = 5
+element = "dark"
+uses_accuracy_roll = false
+status_effect = "BLIND"
+status_save_dc = 15
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

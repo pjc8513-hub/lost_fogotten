@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://bfvrqaclexw2p"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_m4xay"]
+
+[resource]
+script = ExtResource("1_m4xay")
+skill_id = "PoisonTouch"
+display_name = "Poison Touch"
+description = "Attempts to poison target"
+priority = 7
+use_chance = 55
+cooldown_turns = 2
+range_tiles = 5
+status_effect = "POISON"
+status_save_dc = 13
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

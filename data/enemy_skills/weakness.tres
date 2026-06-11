@@ -11,8 +11,6 @@ priority = 7
 use_chance = 60
 cooldown_turns = 2
 range_tiles = 5
-stat_modifiers = {
-"might": -10
-}
-stat_modifier_duration_rounds = 3
+status_effect = "WEAKNESS"
+status_save_dc = 10
 cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

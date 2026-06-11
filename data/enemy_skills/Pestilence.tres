@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://bvjfeybwf4gl"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_olo3f"]
+
+[resource]
+script = ExtResource("1_olo3f")
+skill_id = "Pestilence"
+display_name = "Pestilence"
+description = "Attempts to spread disease to party"
+target_mode = 2
+priority = 7
+use_chance = 50
+cooldown_turns = 3
+range_tiles = 5
+dice_rolls = 1
+dice_sides = 15
+bonus_damage = 5
+element = "earth"
+can_crit = false
+status_effect = "DISEASE"
+status_save_dc = 15
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

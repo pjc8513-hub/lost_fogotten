@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://cyvjf3dyn8bs"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_dg5hq"]
+
+[resource]
+script = ExtResource("1_dg5hq")
+skill_id = "IceChunk"
+display_name = "Ice Chunk"
+description = "Attempts to freeze target"
+priority = 7
+use_chance = 60
+cooldown_turns = 2
+range_tiles = 5
+dice_rolls = 3
+dice_sides = 6
+bonus_damage = 5
+element = "water"
+status_effect = "FROZEN"
+status_save_dc = 15
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://bhi3atgi4s8oc"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_ua5l6"]
+
+[resource]
+script = ExtResource("1_ua5l6")
+skill_id = "CursedChorus"
+display_name = "Cursed Chorus"
+description = "Attempts to curse party"
+target_mode = 2
+priority = 7
+use_chance = 60
+cooldown_turns = 3
+range_tiles = 5
+dice_rolls = 3
+dice_sides = 6
+bonus_damage = 5
+element = "dark"
+uses_accuracy_roll = false
+can_crit = false
+status_effect = "CURSE"
+status_save_dc = 16
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://ct7nutu4onfh7"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_fireball"]
+
+[resource]
+script = ExtResource("1_fireball")
+skill_id = "ember"
+display_name = "Ember"
+description = "A reusable ranged fire attack for enemies with burn."
+priority = 10
+use_chance = 70
+cooldown_turns = 2
+range_tiles = 4
+dice_rolls = 1
+dice_sides = 14
+bonus_damage = 1
+element = "fire"
+status_effect = "BURN"
+status_save_dc = 15
+cast_message = "[color=red]{enemy}[/color] conjures [color=orange]{skill}[/color]!"
+projectile_scene_path = "res://FireballScene.tscn"

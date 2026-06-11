@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://ik3vlk0p6afw"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_inr8q"]
+
+[resource]
+script = ExtResource("1_inr8q")
+skill_id = "CursedStrike"
+display_name = "Cursed Strike"
+description = "Attempts to curse target"
+priority = 7
+use_chance = 50
+cooldown_turns = 3
+range_tiles = 5
+dice_rolls = 2
+dice_sides = 6
+bonus_damage = 5
+element = "dark"
+status_effect = "CURSE"
+status_save_dc = 14
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

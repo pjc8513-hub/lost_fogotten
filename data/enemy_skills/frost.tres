@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://ddyf8wsikyylg"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_lwyam"]
+
+[resource]
+script = ExtResource("1_lwyam")
+skill_id = "frost"
+display_name = "Frost"
+description = "Attempts to freeze group"
+target_mode = 2
+priority = 7
+use_chance = 55
+cooldown_turns = 2
+range_tiles = 5
+dice_rolls = 2
+dice_sides = 6
+bonus_damage = 3
+element = "water"
+uses_accuracy_roll = false
+status_effect = "FROZEN"
+status_save_dc = 10
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

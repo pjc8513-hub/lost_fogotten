@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://duak87ctmvtsh"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_g2ioh"]
+
+[resource]
+script = ExtResource("1_g2ioh")
+skill_id = "StoneGaze"
+display_name = "Stone Gaze"
+description = "Attempts to stone group"
+target_mode = 2
+priority = 7
+use_chance = 55
+cooldown_turns = 2
+consumes_movement = 3
+range_tiles = 5
+status_effect = "STONE_SKIN"
+status_save_dc = 15
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

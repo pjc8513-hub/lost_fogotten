@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://d0pukqeglconb"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_5q16c"]
+
+[resource]
+script = ExtResource("1_5q16c")
+skill_id = "headbutt"
+display_name = "Headbutt"
+description = "A single target stun."
+priority = 9
+use_chance = 65
+cooldown_turns = 2
+dice_rolls = 2
+dice_sides = 8
+bonus_damage = 5
+uses_accuracy_roll = false
+status_effect = "STUN"
+status_duration_rounds = 1
+status_persists_after_combat = false
+status_save_dc = 14
+cast_message = "[color=red]{enemy}[/color] slams the ground with [color=orange]{skill}[/color]!"
+shake_screen = true
+shake_intensity = 0.12
+shake_decay = 6.5

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://bv8ccc8b2lrnn"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_0adf1"]
+
+[resource]
+script = ExtResource("1_0adf1")
+skill_id = "VenemousBite"
+display_name = "Venemous Bite"
+description = "Attempts to poison target"
+priority = 7
+use_chance = 60
+cooldown_turns = 2
+range_tiles = 5
+dice_rolls = 1
+dice_sides = 16
+element = "poison"
+status_effect = "POISON"
+status_save_dc = 15
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

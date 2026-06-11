@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://dryroxb4f2sod"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_thfxr"]
+
+[resource]
+script = ExtResource("1_thfxr")
+skill_id = "MindShock"
+display_name = "Mind Shock"
+description = "Attempts to confuse party"
+target_mode = 2
+priority = 7
+use_chance = 50
+cooldown_turns = 3
+range_tiles = 5
+dice_rolls = 2
+dice_sides = 6
+bonus_damage = 7
+status_effect = "CONFUSION"
+status_save_dc = 12
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

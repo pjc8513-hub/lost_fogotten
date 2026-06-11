@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://debbi8m8f641f"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_old2x"]
+
+[resource]
+script = ExtResource("1_old2x")
+skill_id = "StickyNet"
+display_name = "Sticky Net"
+description = "Attempts to paralyze party"
+target_mode = 2
+priority = 7
+use_chance = 55
+cooldown_turns = 3
+range_tiles = 4
+uses_accuracy_roll = false
+can_crit = false
+status_effect = "PARALYZE"
+status_save_dc = 10
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."

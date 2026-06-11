@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemySkillData" format=3 uid="uid://5rii1d8dsx1y"]
+
+[ext_resource type="Script" uid="uid://7rwnlddxhtek" path="res://resources/EnemySkillData.gd" id="1_yeuh5"]
+
+[resource]
+script = ExtResource("1_yeuh5")
+skill_id = "PoisonCloud"
+display_name = "Poison Cloud"
+description = "Attempts to poison party"
+target_mode = 2
+priority = 7
+use_chance = 55
+cooldown_turns = 2
+range_tiles = 5
+status_effect = "POISON"
+status_save_dc = 13
+cast_message = "[color=purple]{enemy}[/color] chants a [color=yellow]{skill}[/color]."
