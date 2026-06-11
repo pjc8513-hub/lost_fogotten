@@ -8,6 +8,7 @@ resource_local_to_scene = true
 script = ExtResource("1_x7fxk")
 enemy_name = "Young Tentacle"
 scene_path = "uid://c51d27pgb86ig"
+enemy_type = 4
 hp = 5
 armor_class = 8
 dice_sides = 6

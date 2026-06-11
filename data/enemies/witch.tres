@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://buna7h064pfvn" path="res://resources/EnemyData.gd" id="1_c2qil"]
 [ext_resource type="Texture2D" uid="uid://bmjdvfg8u6yxo" path="res://assets/sprites/enemies/witch.png" id="2_c2qil"]
-[ext_resource type="Resource" path="res://data/enemy_skills/fireball.tres" id="3_fireball"]
+[ext_resource type="Resource" uid="uid://er15qm5spx5d" path="res://data/enemy_skills/fireball.tres" id="3_fireball"]
 [ext_resource type="Resource" path="res://data/enemy_skills/withering_curse.tres" id="4_curse"]
 
 [resource]
@@ -10,6 +10,7 @@ resource_local_to_scene = true
 script = ExtResource("1_c2qil")
 enemy_name = "Witch"
 scene_path = "uid://uy45laq5613c"
+enemy_type = 3
 hp = 5
 armor_class = 5
 dice_sides = 6

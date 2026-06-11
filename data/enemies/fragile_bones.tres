@@ -9,6 +9,7 @@ resource_local_to_scene = true
 script = ExtResource("1_p20ms")
 enemy_name = "Fragile Bones"
 scene_path = "uid://dwsyktwgbe4ae"
+enemy_type = 1
 hp = 35
 armor_class = 5
 dice_sides = 9

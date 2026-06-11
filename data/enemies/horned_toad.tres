@@ -9,6 +9,7 @@ resource_local_to_scene = true
 script = ExtResource("1_rfntn")
 enemy_name = "horned_toad"
 scene_path = "uid://d17sos8neuxic"
+enemy_type = 2
 armor_class = 9
 dice_sides = 6
 skills = Array[Resource]([ExtResource("2_uaxkc")])

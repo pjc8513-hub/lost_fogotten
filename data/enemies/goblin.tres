@@ -8,6 +8,7 @@ resource_local_to_scene = true
 script = ExtResource("1")
 enemy_name = "Goblin"
 scene_path = "uid://ca8otefebdg2o"
+enemy_type = 3
 hp = 5
 armor_class = 8
 dice_sides = 6

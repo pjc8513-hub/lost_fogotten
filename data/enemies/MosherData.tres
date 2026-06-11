@@ -7,6 +7,7 @@
 script = ExtResource("1_oxh2c")
 enemy_name = "Mosher"
 scene_path = "uid://cvvmtfer4dm7f"
+enemy_type = 3
 hp = 3
 armor_class = 4
 dice_sides = 3
