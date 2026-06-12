@@ -33,6 +33,7 @@ func set_inventory(items: Array[ItemInstance]):
 		var equip_slot_string = _equip_slot_to_string(item.equip_slot)
 		var inventory_name = "%s: %s" % [equip_slot_string, inst.get_display_name()]
 		var idx = item_list.add_item(inventory_name, item.icon)
+		item_list.set_item_tooltip_enabled(idx, false)
 
 		if inst.is_equipped:
 			item_list.set_item_custom_bg_color(idx, Color(0.5, 0.1, 0.1))
