@@ -5,38 +5,38 @@ const ATTRIBUTE_CHANCE := 0.35
 const SECOND_CATEGORY_CHANCE := 0.10
 
 const WEAPON_TAGS := [
-	{"name": "Vorpal", "weight": 5},
-	{"name": "Viper", "weight": 15},
-	{"name": "Frost", "weight": 15},
-	{"name": "Crushing", "weight": 12},
-	{"name": "Enhanced", "weight": 25},
-	{"name": "Blessed", "weight": 18},
-	{"name": "Slaying", "weight": 3},
-	{"name": "Holy", "weight": 4},
-	{"name": "Hunting", "weight": 8},
+	{"name": "Vorpal", "weight": 5, "definition": "Increases critical hit threshold"},
+	{"name": "Viper", "weight": 15, "definition": "Adds chance to poison target"},
+	{"name": "Frost", "weight": 15, "definition": "Adds chance to freeze target"},
+	{"name": "Crushing", "weight": 12, "definition": "Adds chance to stun target"},
+	{"name": "Enhanced", "weight": 25, "definition": "Adds bonus damage"},
+	{"name": "Blessed", "weight": 18, "definition": "Adds accuracy"},
+	{"name": "Slaying", "weight": 3, "definition": "Bonus damage against dragons"},
+	{"name": "Holy", "weight": 4, "definition": "Bonus damage against undead"},
+	{"name": "Hunting", "weight": 8, "definition": "Bonus damage against beasts"},
 ]
 
 const ARMOR_CLASS_TAGS := [
-	{"name": "Hardened", "weight": 50, "armor_class_bonus": -1},
-	{"name": "Magic", "weight": 25, "armor_class_bonus": -2},
-	{"name": "Golem", "weight": 13, "armor_class_bonus": -3},
-	{"name": "Dwarven", "weight": 8, "armor_class_bonus": -4},
-	{"name": "Divine", "weight": 4, "armor_class_bonus": -5},
+	{"name": "Hardened", "weight": 50, "armor_class_bonus": -1, "definition": "-1 AC"},
+	{"name": "Magic", "weight": 25, "armor_class_bonus": -2, "definition": "-2 AC"},
+	{"name": "Golem", "weight": 13, "armor_class_bonus": -3, "definition": "-3 AC"},
+	{"name": "Dwarven", "weight": 8, "armor_class_bonus": -4, "definition": "-4 AC"},
+	{"name": "Divine", "weight": 4, "armor_class_bonus": -5, "definition": "-5 AC"},
 ]
 
 const ARMOR_UTILITY_TAGS := [
-	{"name": "Nimble", "weight": 50, "dexterity_save_bonus": 1},
-	{"name": "Fortitude", "weight": 50, "willpower_save_bonus": 1},
+	{"name": "Nimble", "weight": 50, "dexterity_save_bonus": 1, "definition": "Bonus to avoiding trap damage"},
+	{"name": "Fortitude", "weight": 50, "willpower_save_bonus": 1, "definition": "Bonus to resisting status effects"},
 ]
 
 const ARMOR_RESIST_TAGS := [
-	{"name": "Fire", "resistance": "fire"},
-	{"name": "Electric", "resistance": "electric"},
-	{"name": "Water", "resistance": "water"},
-	{"name": "Earth", "resistance": "earth"},
-	{"name": "Dark", "resistance": "dark"},
-	{"name": "Light", "resistance": "light"},
-	{"name": "Physical", "resistance": "physical"},
+	{"name": "Fire", "resistance": "fire", "definition": "Fire resist +1"},
+	{"name": "Electric", "resistance": "electric", "definition": "Electric resist +1"},
+	{"name": "Water", "resistance": "water", "definition": "Water resist +1"},
+	{"name": "Earth", "resistance": "earth", "definition": "Earth resist +1"},
+	{"name": "Dark", "resistance": "dark", "definition": "Dark resist +1"},
+	{"name": "Light", "resistance": "light", "definition": "Light resist +1"},
+	{"name": "Physical", "resistance": "physical", "definition": "Physical resist +1"},
 ]
 
 const ACCESSORY_IMMUNITY_TAGS := [
@@ -45,12 +45,12 @@ const ACCESSORY_IMMUNITY_TAGS := [
 ]
 
 const ACCESSORY_STAT_TAGS := [
-	{"name": "Might", "stat": "might_bonus", "min": 1, "max": 5},
-	{"name": "Dexterity", "stat": "dexterity_bonus", "min": 1, "max": 5},
-	{"name": "Endurance", "stat": "endurance_bonus", "min": 1, "max": 5},
-	{"name": "Wisdom", "stat": "wisdom_bonus", "min": 1, "max": 3},
-	{"name": "Willpower", "stat": "willpower_bonus", "min": 1, "max": 3},
-	{"name": "Arcane", "stat": "magic_amp_bonus", "min": 1, "max": 5},
+	{"name": "Might", "stat": "might_bonus", "min": 1, "max": 5, "definition": "Might bonus"},
+	{"name": "Dexterity", "stat": "dexterity_bonus", "min": 1, "max": 5, "definition": "Dexterity bonus"},
+	{"name": "Endurance", "stat": "endurance_bonus", "min": 1, "max": 5, "definition": "Endurance bonus"},
+	{"name": "Wisdom", "stat": "wisdom_bonus", "min": 1, "max": 3, "definition": "Wisdom bonus"},
+	{"name": "Willpower", "stat": "willpower_bonus", "min": 1, "max": 3, "definition": "Willpower bonus"},
+	{"name": "Arcane", "stat": "magic_amp_bonus", "min": 1, "max": 5, "definition": "Bonus to Magic Amp"},
 ]
 
 static func roll_for_item(instance: ItemInstance) -> void:

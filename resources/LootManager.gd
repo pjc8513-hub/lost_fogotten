@@ -17,7 +17,7 @@ const LOOT_POOLS = {
 		"chance": 1.0 # 100% chance to get something if this table is rolled
 	},
 	Loot_Table.EQUIP_2: {
-		"items": ["IronSword", "Lance", "Flail", "BattleAxe", "BreastPlate", "ChainMail", "SteelHelm"],
+		"items": ["IronSword", "GoldRing", "Lance", "Flail", "BattleAxe", "BreastPlate", "ChainMail", "SteelHelm"],
 		"rolls": 1,
 		"chance": 0.75
 	},
