@@ -127,3 +127,15 @@ static func _weighted_pick(entries: Array) -> Dictionary:
 		if roll <= 0:
 			return entry
 	return entries.back()
+
+static func get_definition(tag_name: String) -> String:
+	var base_name := tag_name.strip_edges()
+	var bonus_separator := base_name.find(" +")
+	if bonus_separator >= 0:
+		base_name = base_name.left(bonus_separator)
+
+	for pool in [WEAPON_TAGS, ARMOR_CLASS_TAGS, ARMOR_UTILITY_TAGS, ARMOR_RESIST_TAGS, ACCESSORY_STAT_TAGS]:
+		for entry in pool:
+			if String(entry.get("name", "")) == base_name:
+				return String(entry.get("definition", ""))
+	return ""
