@@ -38,8 +38,11 @@ func remove_item(character, item_instance: ItemInstance) -> bool:
 	if not character.inventory.has(item_instance):
 		return false
 
+	var was_equipped := item_instance.is_equipped
 	character.inventory.erase(item_instance)
 
+	if was_equipped:
+		character.recalculate_derived_stats(false)
 	GameEvents.inventory_changed.emit(character)
 
 	return true
@@ -103,16 +106,22 @@ func get_item_count(character, item_id: String) -> int:
 	return count
 
 
-func equip_item(character, item_instance: ItemInstance):
+func equip_item(character, item_instance: ItemInstance) -> bool:
 
 	if character == null:
-		return
+		return false
 
 	if item_instance == null:
-		return
+		return false
 
 	if item_instance.item_data == null:
-		return
+		return false
+
+	if not character.inventory.has(item_instance):
+		return false
+
+	if not character.can_equip_item(item_instance.item_data):
+		return false
 
 	var slot = item_instance.item_data.equip_slot
 
@@ -130,20 +139,27 @@ func equip_item(character, item_instance: ItemInstance):
 
 	item_instance.is_equipped = true
 
+	character.recalculate_derived_stats(false)
 	GameEvents.inventory_changed.emit(character)
+	return true
 
 
-func unequip_item(character, item_instance: ItemInstance):
+func unequip_item(character, item_instance: ItemInstance) -> bool:
 
 	if character == null:
-		return
+		return false
 
 	if item_instance == null:
-		return
+		return false
+
+	if not character.inventory.has(item_instance):
+		return false
 
 	item_instance.is_equipped = false
 
+	character.recalculate_derived_stats(false)
 	GameEvents.inventory_changed.emit(character)
+	return true
 
 
 func mark_as_junk(character, item_instance: ItemInstance, junk := true):

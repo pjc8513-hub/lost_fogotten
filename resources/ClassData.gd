@@ -772,13 +772,13 @@ func _calculate_max_mp() -> int:
 func _calculate_armor_class() -> int:
 	var dex_bonus := _scaled_modifier(get_dexterity(), _get_class_float("ac_dex_scale", 1.0))
 	var wis_bonus := _scaled_modifier(get_wisdom(), _get_class_float("ac_wis_scale", 0.0))
-	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + _get_armor_item_bonus() + _get_equipped_bonus("armor_class_bonus") + _get_combat_bonus("armor_class") + _get_status_stat_modifier("armor_class")
+	return BASE_ARMOR_CLASS + _get_class_int("ac_bonus", 0) + base_armor_class_bonus + dex_bonus + wis_bonus + get_equipped_armor_base_bonus() + get_equipped_stat_bonus("armor_class_bonus") + _get_combat_bonus("armor_class") + _get_status_stat_modifier("armor_class")
 
 func _calculate_accuracy() -> int:
 	return _calculate_accuracy_with_might(get_might())
 
 func _calculate_accuracy_with_might(might_value: int) -> int:
-	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(might_value, _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + _get_equipped_bonus("accuracy_bonus") + _get_combat_bonus("accuracy") + _get_status_stat_modifier("accuracy")
+	return base_accuracy_bonus + _get_class_int("accuracy_base", 0) + _scaled_modifier(might_value, _get_class_float("accuracy_might_scale", 0.0)) + _scaled_modifier(get_dexterity(), _get_class_float("accuracy_dex_scale", 1.0)) + _scaled_modifier(get_wisdom(), _get_class_float("accuracy_wis_scale", 0.0)) + get_equipped_stat_bonus("accuracy_bonus") + _get_combat_bonus("accuracy") + _get_status_stat_modifier("accuracy")
 
 func _calculate_critical_chance() -> int:
 	return max(0, base_critical_chance_bonus + _get_class_int("crit_base", 0) + _scaled_modifier(get_dexterity(), _get_class_float("crit_dex_scale", 0.5)) + _scaled_modifier(get_wisdom(), _get_class_float("crit_wis_scale", 0.0)) + _get_equipped_bonus("critical_chance_bonus"))
@@ -809,6 +809,9 @@ func _calculate_counter_chance() -> int:
 	return max(0, _get_class_int("counter_chance", 0) + _scaled_modifier(get_dexterity(), _get_class_float("counter_dex_scale", 0.0)) + _scaled_modifier(get_wisdom(), _get_class_float("counter_wis_scale", 0.0)) + _get_equipped_bonus("counter_chance_bonus"))
 
 func _get_equipped_bonus(stat_name: String) -> int:
+	return get_equipped_stat_bonus(stat_name)
+
+func get_equipped_stat_bonus(stat_name: String) -> int:
 	var total := 0
 	for inst in inventory:
 		if not inst.is_equipped or inst.item_data == null:
@@ -818,6 +821,9 @@ func _get_equipped_bonus(stat_name: String) -> int:
 	return total
 
 func _get_armor_item_bonus() -> int:
+	return get_equipped_armor_base_bonus()
+
+func get_equipped_armor_base_bonus() -> int:
 	var total := 0
 	for inst in inventory:
 		if not inst.is_equipped or not inst.item_data is ArmorData:

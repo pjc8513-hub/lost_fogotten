@@ -119,14 +119,15 @@ func _toggle_equip(inst: ItemInstance) -> void:
 		push_warning("%s cannot equip %s." % [owner_char.member_name, inst.item_data.name])
 		return
 
-	inst.is_equipped = not inst.is_equipped
-	
+	var was_equipped := inst.is_equipped
+	if was_equipped:
+		InventoryManager.unequip_item(owner_char, inst)
+	else:
+		InventoryManager.equip_item(owner_char, inst)
+
 	# Notify if a guitar was unequipped
-	if not inst.is_equipped and inst.item_data.equip_slot == ItemData.Equip_Slot.GUITAR:
+	if was_equipped and inst.item_data.equip_slot == ItemData.Equip_Slot.GUITAR:
 		GameEvents.message_logged.emit("[color=gray]%s unequipped %s.[/color]" % [owner_char.member_name, inst.item_data.name])
-	
-	owner_char.recalculate_derived_stats(false)
-	GameEvents.inventory_changed.emit(owner_char)
 
 func _use_item(inst: ItemInstance) -> void:
 	var owner_char := PartyState.get_selected()
@@ -169,7 +170,8 @@ func _transfer_item(inst: ItemInstance, target: ClassData) -> void:
 		return
 
 	# Equipped items travel with a character; unequip before transferring
-	inst.is_equipped = false
+	if inst.is_equipped:
+		InventoryManager.unequip_item(source, inst)
 	inst.is_marked_junk = false  # reset junk flag on transfer (optional, remove if unwanted)
 
 	source.inventory.erase(inst)
