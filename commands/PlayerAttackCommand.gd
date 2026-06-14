@@ -46,7 +46,7 @@ func execute() -> void:
 		if attack_speed_roll <= attack_speed_threshold:
 			attacks = 2
 	var sequence_context := {
-		"attack_slot": ItemData.Equip_Slot.keys()[attack_slot],
+		"attack_slot": ItemData.get_equip_slot_key(attack_slot),
 		"total_attack_speed": total_speed,
 		"extra_attack_threshold": attack_speed_threshold,
 		"extra_attack_roll": attack_speed_roll,

@@ -52,7 +52,7 @@ func _get_type_text(item: ItemData) -> String:
 	if item.item_type == ItemData.ItemType.JUNK:
 		return "Junk"
 	if item.item_type == ItemData.ItemType.EQUIPMENT:
-		return ItemData.Equip_Slot.keys()[item.equip_slot].to_lower().capitalize()
+		return ItemData.get_equip_slot_display_name(item.equip_slot)
 	return ""
 
 func _get_stat_text(inst: ItemInstance) -> String:

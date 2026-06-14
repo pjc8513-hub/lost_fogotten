@@ -91,7 +91,7 @@ func _on_item_gui_input(event):
 		$PopupMenuMain.open_for(inst, get_global_mouse_position())
 
 func _equip_slot_to_string(equip_slot: ItemData.Equip_Slot) -> String:
-		return ItemData.Equip_Slot.keys()[equip_slot].to_lower().capitalize()
+	return ItemData.get_equip_slot_display_name(equip_slot)
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:

@@ -95,7 +95,7 @@ func describe_equipped_gear(member: ClassData) -> Dictionary:
 		if not inst.is_equipped or inst.item_data == null:
 			continue
 		var item := inst.item_data
-		var slot_name = ItemData.Equip_Slot.keys()[item.equip_slot]
+		var slot_name := ItemData.get_equip_slot_key(item.equip_slot)
 		if not gear.has(slot_name):
 			gear[slot_name] = []
 		gear[slot_name].append(describe_item(item))
@@ -109,7 +109,7 @@ func describe_item(item: ItemData) -> Dictionary:
 		"item_id": item.item_id,
 		"name": item.name,
 		"type": item.get_class(),
-		"slot": ItemData.Equip_Slot.keys()[item.equip_slot],
+		"slot": ItemData.get_equip_slot_key(item.equip_slot),
 		"stat_bonuses": _item_stat_bonuses(item)
 	}
 	if item is WeaponData:
