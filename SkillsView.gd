@@ -31,8 +31,17 @@ func update_ui() -> void:
 		list_container.add_child(row_inst)
 		
 		var current_rank = current_character.get_skill_rank(skill.skill_id)
+		var class_max = skill.get_max_rank_for_class(current_character.get_resolved_class_name())
+		var ranks_available := maxi(0, class_max - current_rank)
 		
-		row_inst.setup_row(skill.skill_id, skill.display_name, current_rank, skill.max_rank)
+		row_inst.setup_row(
+			skill.skill_id,
+			skill.display_name,
+			current_rank,
+			class_max,
+			ranks_available,
+			current_character.get_available_skill_points() > 0
+		)
 		
 		# Listen for the player clicking a point upgrade button
 		row_inst.upgrade_requested.connect(_on_upgrade_triggered)

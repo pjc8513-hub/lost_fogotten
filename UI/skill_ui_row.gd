@@ -10,9 +10,20 @@ var current_skill_id: String = ""
 var active_color := Color.GREEN
 var inactive_color := Color.WHITE
 
-func setup_row(skill_id: String, display_name: String, current_rank: int, max_rank: int) -> void:
+func setup_row(
+	skill_id: String,
+	display_name: String,
+	current_rank: int,
+	max_rank: int,
+	ranks_available: int,
+	has_skill_points: bool
+) -> void:
 	current_skill_id = skill_id
-	name_label.text = display_name
+	name_label.text = "%s - Rank %d/%d" % [
+		display_name,
+		current_rank,
+		max_rank
+	]
 	
 	# Clear out any leftover mock nodes
 	for child in blocks_container.get_children():
@@ -31,12 +42,13 @@ func setup_row(skill_id: String, display_name: String, current_rank: int, max_ra
 			
 		blocks_container.add_child(block)
 
-	var upgrade_button := Button.new()
-	upgrade_button.text = "+"
-	upgrade_button.custom_minimum_size = Vector2(28, 28)
-	upgrade_button.pressed.connect(_on_upgrade_button_pressed)
-	upgrade_button.disabled = current_rank >= max_rank
-	blocks_container.add_child(upgrade_button)
+	if current_rank < max_rank:
+		var upgrade_button := Button.new()
+		upgrade_button.text = "+"
+		upgrade_button.custom_minimum_size = Vector2(28, 28)
+		upgrade_button.pressed.connect(_on_upgrade_button_pressed)
+		upgrade_button.disabled = not has_skill_points
+		blocks_container.add_child(upgrade_button)
 
 func _on_upgrade_button_pressed() -> void:
 	upgrade_requested.emit(current_skill_id)

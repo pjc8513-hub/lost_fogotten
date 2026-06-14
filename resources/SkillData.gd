@@ -28,6 +28,7 @@ enum Element {
 
 @export var available_classes: Array[ClassData.Class_Names] = []
 @export var max_rank: int = 4
+@export var class_max_rank_overrides: Dictionary = {}
 
 @export var min_level: int = 1
 
@@ -39,7 +40,6 @@ enum Element {
 @export var initiative_bonus: int = 0
 @export var movement_bonus: int = 0           # permanent movement increase
 @export var element_mastery: Element
-@export var precision: float = 0.0
 @export var complexity_bonus: int = 0
 @export var extra_damage_roll: int = 0
 @export var status_immunities: Array[String] = []
@@ -56,3 +56,24 @@ enum Element {
 @export var base_learn_chance: int = 5        # % at min_level
 @export var chance_per_level: int = 5         # % added per level above min
 @export var wisdom_scale: float = 0.5         # extra % per point of wisdom modifier
+
+func get_max_rank_for_class(class_id: ClassData.Class_Names) -> int:
+	var resolved_max = max(0, max_rank)
+	var class_key := ClassData.get_class_display_name(class_id)
+	var possible_keys: Array = [
+		class_id,
+		str(class_id),
+		class_key,
+		class_key.to_lower(),
+		class_key.to_upper(),
+	]
+
+	for key in possible_keys:
+		if class_max_rank_overrides.has(key):
+			return clampi(int(class_max_rank_overrides[key]), 0, resolved_max)
+
+	for raw_key in class_max_rank_overrides.keys():
+		if String(raw_key).strip_edges().to_lower() == class_key.to_lower():
+			return clampi(int(class_max_rank_overrides[raw_key]), 0, resolved_max)
+
+	return resolved_max

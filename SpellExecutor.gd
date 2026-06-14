@@ -16,6 +16,15 @@ func build_request(spell: SpellData, caster: ClassData) -> SpellCastRequest:
 		request.validation_errors.append("%s cannot cast while defeated." % caster.member_name)
 	elif caster.blocks_spell_casting():
 		request.validation_errors.append("%s is prevented from casting." % caster.member_name)
+	elif caster.get_spell_mastery_rank(spell.spellbook) < spell.spell_level:
+		request.validation_errors.append(
+			"%s needs %s Mastery rank %d to cast %s." % [
+				caster.member_name,
+				_get_spellbook_mastery_name(spell.spellbook),
+				spell.spell_level,
+				spell.get_display_name()
+			]
+		)
 	elif caster.current_mp < spell.mana and not _can_cast_without_mana(spell):
 		request.validation_errors.append("%s does not have enough mana." % caster.member_name)
 	request.is_valid = request.validation_errors.is_empty()
@@ -276,6 +285,11 @@ func _requires_target(spell: SpellData) -> bool:
 func _can_cast_without_mana(spell: SpellData) -> bool:
 	var special_id := spell.special_effect.strip_edges().to_lower()
 	return special_id in ["torchlight", "torch_light"] and PartyState.is_magic_torch_lit
+
+func _get_spellbook_mastery_name(element: int) -> String:
+	if element == SpellData.Element.WATER:
+		return "Ice"
+	return SpellData.element_name(element)
 
 func _is_reachable_enemy(enemy: Enemy) -> bool:
 	if enemy == null or not is_instance_valid(enemy) or enemy.enemy_data.hp <= 0:

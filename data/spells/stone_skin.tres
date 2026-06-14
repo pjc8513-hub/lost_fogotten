@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cl46gja30sfl5"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_kr2ha"]
+
+[resource]
+script = ExtResource("1_kr2ha")
+spell_id = "stoneskin"
+display_name = "Stone Skin"
+spell_level = 2
+description = "-2 AC for party members for one hour"
+spellbook = 1
+element_notes = Array[int]([1, 5, 4])
+mana = 12
+is_aoe = true
+is_buff = true
+sound_effect = "thud"
+shake_screen = true

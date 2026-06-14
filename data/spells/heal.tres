@@ -12,3 +12,5 @@ element_notes = Array[int]([4, 5])
 mana = 6
 damage = "2d8"
 is_heal = true
+party_target_animation = "heal"
+sound_effect = "heal"

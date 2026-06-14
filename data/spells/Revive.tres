@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://d024iogngklwu"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_krg1d"]
+
+[resource]
+script = ExtResource("1_krg1d")
+spell_id = "Revive"
+display_name = "Revive"
+spell_level = 3
+description = "Bring back the dead."
+spellbook = 4
+element_notes = Array[int]([4, 7, 5])
+mana = 15
+is_resurrection = true
+party_target_animation = "heal"
+sound_effect = "heal"
+metadata/_custom_type_script = "uid://dr8ahk58saqtb"

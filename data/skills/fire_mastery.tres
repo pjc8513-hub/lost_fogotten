@@ -8,7 +8,12 @@ skill_id = "FireMastery"
 display_name = "Fire Mastery"
 description = "Add 1 roll to fire spells"
 skill_type = 1
-available_classes = Array[int]([3, 4, 5])
+available_classes = Array[int]([3, 4, 6, 7, 8])
+class_max_rank_overrides = {
+"Bard": 2,
+"Monk": 2,
+"Ranger": 1
+}
 min_level = 12
 element_mastery = 2
 extra_damage_roll = 1

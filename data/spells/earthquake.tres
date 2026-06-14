@@ -6,6 +6,7 @@
 script = ExtResource("1")
 spell_id = "earthquake"
 display_name = "Earthquake"
+spell_level = 3
 description = "The ground heaves beneath every nearby foe."
 spellbook = 1
 element_notes = Array[int]([1, 1, 1])
@@ -14,5 +15,3 @@ damage = "3d8"
 is_aoe = true
 sound_effect = "thud"
 shake_screen = true
-shake_intensity = 0.08
-shake_decay = 5.0

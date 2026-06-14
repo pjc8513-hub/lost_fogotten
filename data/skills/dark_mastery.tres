@@ -8,7 +8,11 @@ skill_id = "DarkMastery"
 display_name = "Dark Mastery"
 description = "Add 1 roll to dark spells"
 skill_type = 1
-available_classes = Array[int]([4])
+available_classes = Array[int]([4, 8, 5])
+class_max_rank_overrides = {
+"Monk": 2,
+"Rogue": 1
+}
 min_level = 19
 element_mastery = 8
 extra_damage_roll = 1

@@ -8,6 +8,6 @@ skill_id = "light_armor_skill"
 display_name = "Light Armor Skill"
 description = "+20 MP per rank while wearing light armor."
 skill_type = 1
-available_classes = Array[int]([2, 3, 4, 8, 7, 6])
+available_classes = Array[int]([2, 3, 4, 8, 7, 6, 0])
 max_rank = 3
 metadata/_custom_type_script = "uid://ca0ebjgg8br6u"

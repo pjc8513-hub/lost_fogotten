@@ -60,10 +60,11 @@ icon = ExtResource("5_hhyp4")
 [node name="TabContainer" type="TabContainer" parent="." unique_id=557946407]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 tabs_visible = false
 
 [node name="InventoryView" type="VBoxContainer" parent="TabContainer" unique_id=568464289]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -115,7 +116,6 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="StatsView" type="VBoxContainer" parent="TabContainer" unique_id=27764257]
-visible = false
 layout_mode = 2
 script = ExtResource("7_ce36d")
 metadata/_tab_index = 2

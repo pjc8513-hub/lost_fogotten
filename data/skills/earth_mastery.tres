@@ -8,7 +8,13 @@ skill_id = "EarthMastery"
 display_name = "Earth Mastery"
 description = "Add 1 roll to earth spells"
 skill_type = 1
-available_classes = Array[int]([4, 7, 6])
+available_classes = Array[int]([4, 7, 6, 8, 3])
+class_max_rank_overrides = {
+"Bard": 1,
+"Monk": 1,
+"Ranger": 1,
+"Sorcerer": 3
+}
 min_level = 14
 element_mastery = 5
 extra_damage_roll = 1

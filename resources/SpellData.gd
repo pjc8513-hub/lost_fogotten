@@ -20,6 +20,7 @@ enum DurationMode {
 @export_group("Identity")
 @export var spell_id: String = ""
 @export var display_name: String = ""
+@export_range(1, 99, 1) var spell_level: int = 1
 @export_multiline var description: String = ""
 
 @export_group("Composition")

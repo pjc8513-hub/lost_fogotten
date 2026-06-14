@@ -6,6 +6,7 @@
 script = ExtResource("1")
 spell_id = "inferno"
 display_name = "Inferno"
+spell_level = 3
 description = "A concentrated eruption of flame."
 element_notes = Array[int]([0, 0, 0])
 mana = 8

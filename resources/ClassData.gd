@@ -252,16 +252,26 @@ func teach_skill_by_npc(skill_id: String) -> bool:
 	return false
 
 func upgrade_skill(skill_id: String) -> bool:
-	if available_skill_points <= 0 or not learned_skills.has(skill_id):
+	if available_skill_points <= 0:
 		return false
-		
-	var skill_res = SkillRegistry.get_skill(skill_id)
-	if skill_res and learned_skills[skill_id] < skill_res.max_rank:
-		available_skill_points -= 1
-		learned_skills[skill_id] += 1
-		recalculate_derived_stats(false)
-		return true
-	return false
+
+	var skill_res := SkillRegistry.get_skill(skill_id)
+	if skill_res == null:
+		return false
+
+	var learned_key := _find_learned_skill_key(skill_id)
+	if learned_key.is_empty():
+		return false
+
+	var class_max := skill_res.get_max_rank_for_class(get_resolved_class_name())
+	var current_rank := int(learned_skills.get(learned_key, 0))
+	if current_rank >= class_max:
+		return false
+
+	available_skill_points -= 1
+	learned_skills[learned_key] = current_rank + 1
+	recalculate_derived_stats(false)
+	return true
 
 # Override the legacy has_skill check
 func has_skill(skill_id: String) -> bool:
@@ -273,12 +283,34 @@ func has_skill(skill_id: String) -> bool:
 	)
 
 func get_skill_rank(skill_id: String) -> int:
-	print("get_skill_rank skill rank: ",learned_skills.get(skill_id, 0))
-	return learned_skills.get(skill_id, 0)
+	return get_skill_rank_value(skill_id)
 
 func get_skill_rank_value(skill_id: String) -> int:
-	var normalized := skill_id.to_lower()
-	return int(max(learned_skills.get(skill_id, 0), learned_skills.get(normalized, 0)))
+	var learned_key := _find_learned_skill_key(skill_id)
+	return 0 if learned_key.is_empty() else int(learned_skills.get(learned_key, 0))
+
+func get_skill_max_rank(skill_id: String) -> int:
+	var skill := SkillRegistry.get_skill(skill_id)
+	if skill == null:
+		return 0
+	return skill.get_max_rank_for_class(get_resolved_class_name())
+
+func get_skill_ranks_available(skill_id: String) -> int:
+	return maxi(0, get_skill_max_rank(skill_id) - get_skill_rank_value(skill_id))
+
+func get_spell_mastery_rank(element: int) -> int:
+	var highest_rank := 0
+	for skill in get_learned_skill_resources():
+		if _get_mastery_target_element(skill) == element:
+			highest_rank = maxi(highest_rank, get_skill_rank_value(skill.skill_id))
+	return highest_rank
+
+func _find_learned_skill_key(skill_id: String) -> String:
+	var normalized := skill_id.strip_edges().to_lower()
+	for learned_key in learned_skills.keys():
+		if String(learned_key).strip_edges().to_lower() == normalized:
+			return String(learned_key)
+	return ""
 
 # Accumulate the scalable bonuses inside your existing mathematical loops:
 func _get_skill_stat_bonus(stat: String) -> float:
@@ -914,12 +946,6 @@ func get_learned_skill_resources() -> Array[SkillData]:
 		if skill != null:
 			skills.append(skill)
 	return skills
-
-func get_spell_precision_bonus() -> int:
-	var total := 0.0
-	for skill in get_learned_skill_resources():
-		total += skill.precision
-	return int(round(total))
 
 func get_spell_complexity_bonus() -> int:
 	var total := 0
