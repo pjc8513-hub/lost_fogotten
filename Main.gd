@@ -13,7 +13,7 @@ var map_open: bool = false
 var automap_grid := {}  # Dictionary of Vector2 -> int
 @onready var sub_viewport_container: SubViewportContainer = $SubViewportContainer
 @onready var sub_viewport: SubViewport = $SubViewportContainer/SubViewport
-@onready var casting_scene: Control = $CastingScene
+@onready var casting_scene = $CastingScene
 @onready var world_environment: WorldEnvironment = $SubViewportContainer/SubViewport/WorldEnvironment
 
 #func _enter_tree():
@@ -232,24 +232,11 @@ func _describe_environment(environment: Environment) -> String:
 func _input(event):
 
 	if event.is_action_pressed("compose"):
-		var owner_char := PartyState.get_selected()
-		if owner_char == null:
-			return
-		
-		# Check if character has a guitar equipped
-		if not owner_char.has_guitar_equipped():
-			GameEvents.message_logged.emit("[color=red]%s has no guitar equipped.[/color]" % owner_char.member_name)
-			return
-		
-		if casting_scene.visible == false:
-			casting_scene.visible = true
-			casting_scene.mouse_filter = Control.MOUSE_FILTER_STOP
-			# Bring CastingScene to front of viewport
-			casting_scene.move_to_front()
-			#print("castingscene vis: ", casting_scene.visible)
+		if casting_scene.visible:
+			casting_scene.close()
 		else:
-			casting_scene.visible = false
-			casting_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			casting_scene.open()
+		get_viewport().set_input_as_handled()
 		
 	#if event is InputEventMouse:
 		#print(event)

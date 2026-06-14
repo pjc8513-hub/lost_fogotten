@@ -11,12 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://bv0w1w5te005v" path="res://RightPanel.tscn" id="9_03owx"]
 [ext_resource type="FontFile" uid="uid://ioa5sn2uf7ep" path="res://assets/Pixel Game.otf" id="9_wkp8b"]
 [ext_resource type="PackedScene" uid="uid://c4c4blrojhq5d" path="res://GoldUI.tscn" id="11_20pc6"]
-[ext_resource type="PackedScene" uid="uid://2t0xkthjrfs7" path="res://casting_scene.tscn" id="12_5vvyt"]
 [ext_resource type="PackedScene" uid="uid://cfl7ouks8wtu8" path="res://EnemyCardScene.tscn" id="13_enemy_card"]
 [ext_resource type="PackedScene" uid="uid://76lc3eevcy1o" path="res://systems/Dialogue/DialogueUI.tscn" id="14_dialogue_ui"]
 [ext_resource type="Shader" uid="uid://cn103gqkartfp" path="res://data/shaders/Main_shader.gdshader" id="15_fpfj3"]
 [ext_resource type="PackedScene" uid="uid://xbcv3a5dvjqa" path="res://automap.tscn" id="15_j4qnp"]
 [ext_resource type="PackedScene" uid="uid://wncs8u3ouvms" path="res://UI/shop_ui.tscn" id="16_fpfj3"]
+[ext_resource type="PackedScene" uid="uid://cabk3qqx8l3ro" path="res://UI/Casting/CastingScene.tscn" id="17_casting"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sc1dx"]
 shader = ExtResource("15_fpfj3")
@@ -41,6 +41,10 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node3D" unique_id=86941200]
 script = ExtResource("1_glv2v")
+
+[node name="CastingScene" parent="." instance=ExtResource("17_casting")]
+visible = false
+z_index = 100
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1568955732]
 anchors_preset = -1
@@ -191,15 +195,6 @@ offset_right = 2.0000002
 offset_bottom = 0.30395508
 scale = Vector2(1.12, 0.8800012)
 focus_behavior_recursive = 1
-
-[node name="CastingScene" parent="." unique_id=1576703094 instance=ExtResource("12_5vvyt")]
-visible = true
-top_level = true
-offset_left = 268.0
-offset_top = 135.0
-offset_right = -257.0
-offset_bottom = -1.0
-mouse_filter = 2
 
 [node name="DialogueUI" parent="." unique_id=707445060 instance=ExtResource("14_dialogue_ui")]
 follow_viewport_enabled = true

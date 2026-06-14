@@ -3,8 +3,7 @@ extends Node
 
 enum Loot_Table {
 	EQUIP_1, EQUIP_2, EQUIP_3,
-	ITEM_1, ITEM_2, ITEM_3,
-	GUITAR_1, GUITAR_2, GUITAR_3
+	ITEM_1, ITEM_2, ITEM_3
 	# Later: WEAPON_1, ARMOR_1, ACCESSORY_1, etc
 }
 
@@ -40,21 +39,6 @@ const LOOT_POOLS = {
 		"items": ["elixir", "phoenix_down", "scroll_teleport"],
 		"rolls": 1,
 		"chance": 0.6
-	},
-	Loot_Table.GUITAR_1: {
-		"items": ["OMALLEY", "PAN"],
-		"rolls": 1,
-		"chance": 0.8
-	},
-	Loot_Table.GUITAR_2: {
-		"items": ["WinterWizard", "DE"],
-		"rolls": 1,
-		"chance": 0.8
-	},
-	Loot_Table.GUITAR_3: {
-		"items": ["THRONE", "Arthur"],
-		"rolls": 1,
-		"chance": 0.8
 	}
 }
 
@@ -96,13 +80,7 @@ func create_item_instance(item_id: String) -> ItemInstance:
 		return null
 
 	var item_instance := ItemInstance.new()
-	if item_data is GuitarData:
-		var guitar_data := (item_data as GuitarData).duplicate(true) as GuitarData
-		guitar_data.roll_strings()
-		guitar_data.roll_guitar_name()
-		item_instance.item_data = guitar_data
-	else:
-		item_instance.item_data = item_data
+	item_instance.item_data = item_data
 
 	GearAttributeRoller.roll_for_item(item_instance)
 	return item_instance

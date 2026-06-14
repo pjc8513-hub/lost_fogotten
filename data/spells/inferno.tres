@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://chsi1f6iacee8"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spell_id = "inferno"
+display_name = "Inferno"
+description = "A concentrated eruption of flame."
+element_notes = Array[int]([0, 0, 0])
+mana = 8
+damage = "3d8"
+projectile_scene_path = "res://FireballScene.tscn"

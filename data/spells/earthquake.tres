@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://c0iwf5f8jmfaf"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spell_id = "earthquake"
+display_name = "Earthquake"
+description = "The ground heaves beneath every nearby foe."
+spellbook = 1
+element_notes = Array[int]([1, 1, 1])
+mana = 10
+damage = "3d8"
+is_aoe = true

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cx4ogolt824ji"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spell_id = "levitate"
+display_name = "Levitate"
+description = "Lifts the party above hazards for a short time."
+spellbook = 4
+element_notes = Array[int]([4, 5, 4])
+mana = 4
+duration = 20
+duration_mode = 1
+special_effect = "levitate"

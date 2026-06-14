@@ -114,6 +114,12 @@ func apply_combat_buff(stat_name: String, value: int, duration_rounds: int = -1)
 func clear_combat_buffs() -> void:
 	combat_buffs.clear()
 
+func clear_combat_buff(stat_name: String) -> void:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty():
+		return
+	combat_buffs.erase(normalized)
+
 func tick_combat_buff_durations() -> void:
 	for stat_name in combat_buffs.keys():
 		var entry := _get_combat_buff_entry(stat_name)

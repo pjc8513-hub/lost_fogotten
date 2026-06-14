@@ -1,318 +1,188 @@
 extends Node
 
-const DEFAULT_BUFF_COOLDOWN := 2
-const DEFAULT_AMPED_RECOVERY := 3
-const DEFAULT_SPLASH_DICE := 1
-const DEFAULT_SPLASH_DIE_SIZE := 6
-const SPELL_DAMAGE_RANGE := 6
+const SPELL_RANGE := 6
 
-func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> Dictionary:
-	var outcome := {
-		"success": false,
-		"spent_mana": 0,
-		"target_used": target_enemy,
-		"messages": [],
-	}
+func build_request(spell: SpellData, caster: ClassData) -> SpellCastRequest:
+	var request := SpellCastRequest.new()
+	request.spell_data = spell
+	request.caster = caster
+	if spell == null:
+		request.validation_errors.append("That melody does not match a known spell.")
+	elif caster == null:
+		request.validation_errors.append("No caster selected.")
+	elif caster.current_hp <= 0:
+		request.validation_errors.append("%s cannot cast while defeated." % caster.member_name)
+	elif caster.blocks_spell_casting():
+		request.validation_errors.append("%s is prevented from casting." % caster.member_name)
+	elif caster.current_mp < spell.mana and not _can_cast_without_mana(spell):
+		request.validation_errors.append("%s does not have enough mana." % caster.member_name)
+	request.is_valid = request.validation_errors.is_empty()
+	return request
 
+func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> SpellResult:
+	var result := SpellResult.new()
 	if request == null or not request.is_valid:
-		return outcome
+		return result
 
+	var spell := request.spell_data
 	var caster := request.caster
-	var result := request.spell_result
-	if caster == null or result == null:
-		return outcome
+	result.spell_data = spell
 
-	# Check if this is a TorchLight spell cast (special handling)
-	if _is_torchlight_spell(result):
-		return _execute_torchlight_spell(caster, result, outcome)
+	if not spell.special_effect.strip_edges().is_empty():
+		var mana_already_spent := _execute_special_effect(spell, caster)
+		if mana_already_spent < 0:
+			return result
+		var remaining_mana_cost: int = maxi(0, spell.mana - mana_already_spent)
+		caster.current_mp -= remaining_mana_cost
+		result.success = true
+		result.mana_spent = spell.mana
+		return result
 
-	caster.current_mp -= result.mana_cost
-	outcome["spent_mana"] = result.mana_cost
-	outcome["success"] = true
+	var targets := _resolve_targets(spell, caster, target_enemy)
+	if _requires_target(spell) and targets.is_empty():
+		GameEvents.message_logged.emit("[color=gray]The spell needs a valid target.[/color]")
+		return result
 
-	var effect_target := target_enemy
-	if effect_target == null and CombatState.has_valid_target():
-		effect_target = CombatState.targeted_enemy
-	outcome["target_used"] = effect_target
-
+	caster.current_mp -= spell.mana
+	result.mana_spent = spell.mana
 	GameEvents.message_logged.emit("[color=cyan]%s[/color] casts [color=gold]%s[/color] for [color=skyblue]%d[/color] mana." % [
 		caster.member_name,
-		request.spell_data.guitar_name,
-		result.mana_cost
+		spell.get_display_name(),
+		spell.mana
 	])
 
-	_apply_healing(caster, result, outcome)
-	_apply_buffs(caster, result, outcome)
-	_apply_mp_recovery(caster, result, outcome)
-	
-	# Emit projectile animation if the spell targets the enemy
-	var anim_path := "res://FireballScene.tscn"
-	var affects_enemy := _has_damage_component(result)
-	
-	for entry in result.chord_entries:
-		var c_data = entry.get("data") as ChordData
-		if c_data != null:
-			if not c_data.status_effect.is_empty():
-				affects_enemy = true
-			if c_data.animation_path != "":
-				anim_path = c_data.animation_path
+	_play_projectile(spell, targets)
+	for target in targets:
+		_apply_spell_to_target(spell, caster, target)
+		result.affected_targets.append(target)
 
-	if affects_enemy and effect_target != null and caster != null:
-		if is_instance_valid(effect_target) and effect_target.enemy_data.hp > 0:
-			var damage_distance := _get_spell_target_distance(effect_target)
-			var player_node = World.get_player()
-			if damage_distance <= SPELL_DAMAGE_RANGE and player_node != null and World.has_line_of_sight(player_node.grid_position, effect_target.grid_position):
-				GameEvents.spell_projectile_cast.emit(
-					player_node.global_position,
-					effect_target.global_position,
-					anim_path
+	result.success = true
+	return result
+
+func roll_spell_damage(spell: SpellData, caster: ClassData) -> int:
+	if spell == null:
+		return 0
+	var dice := spell.get_damage_dice()
+	if dice.x <= 0 or dice.y <= 0:
+		return max(0, spell.amount)
+	var magic_bonus := caster.get_magic_amp() if caster != null else 0
+	return CombatLogic.roll_dice(dice.x, dice.y, magic_bonus)
+
+func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
+	if raw_damage <= 0:
+		return
+	var element := SpellData.element_name(spell.spellbook).to_lower()
+	var resistance := 0
+	if target is Enemy:
+		resistance = target.enemy_data.get_resistance(element)
+	var final_damage := CombatLogic.apply_resistance(raw_damage, resistance)
+	if target is Enemy:
+		final_damage = CombatLogic.apply_damage_status_bonuses(target, final_damage)
+		target.enemy_data.hp -= final_damage
+		GameEvents.enemy_took_damage.emit(target, final_damage)
+		GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] %s damage." % [
+			target.enemy_data.enemy_name, final_damage, element
+		])
+		if target.enemy_data.hp <= 0:
+			GameEvents.message_logged.emit("[color=red]%s dies![/color]" % target.enemy_data.enemy_name)
+			LootDistributor.distribute_enemy_loot(target)
+			LootDistributor.distribute_xp(target.enemy_data.xp)
+			World.remove_enemy(target)
+	elif target is ClassData:
+		target.take_damage(final_damage)
+
+func _resolve_targets(spell: SpellData, caster: ClassData, target_enemy: Enemy) -> Array:
+	if spell.is_heal or spell.is_buff:
+		if spell.is_aoe:
+			return PartyState.active_party.filter(func(member): return member != null and member.current_hp > 0)
+		return [caster]
+
+	var resolved_target := target_enemy
+	if resolved_target == null and CombatState.has_valid_target():
+		resolved_target = CombatState.targeted_enemy
+	if not _is_reachable_enemy(resolved_target):
+		return []
+	if not spell.is_aoe:
+		return [resolved_target]
+
+	var targets: Array = []
+	for enemy in CombatState.get_engaged_enemies():
+		if _is_reachable_enemy(enemy):
+			targets.append(enemy)
+	return targets
+
+func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void:
+	if spell.is_heal:
+		if target is ClassData and not target.blocks_hp_healing():
+			var heal_amount := roll_spell_damage(spell, caster)
+			if heal_amount <= 0:
+				heal_amount = max(0, spell.amount)
+			target.current_hp = min(target.get_max_hp(), target.current_hp + heal_amount)
+			GameEvents.message_logged.emit("[color=green]%s recovers %d HP.[/color]" % [target.member_name, heal_amount])
+		return
+
+	if spell.is_buff:
+		for stat_name in spell.stats.keys():
+			var stat_amount := int(spell.stats[stat_name])
+			if target is ClassData:
+				target.apply_combat_buff(
+					str(stat_name),
+					stat_amount,
+					-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
 				)
-				await get_tree().create_timer(0.6).timeout
-	
-	_apply_damage(caster, result, effect_target, outcome)
-	_apply_chord_statuses(effect_target, result)
+			elif target is Enemy:
+				target.enemy_data.apply_combat_buff(
+					str(stat_name),
+					stat_amount,
+					-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
+				)
+		if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS:
+			SpellEffectTracker.add_step_buff(spell, target)
 
-	return outcome
+	var damage := roll_spell_damage(spell, caster)
+	if damage > 0 and not spell.is_dot:
+		apply_damage_to_target(target, damage, spell)
+	if spell.is_dot:
+		SpellEffectTracker.add_damage_over_time(spell, caster, target)
 
-func _apply_healing(caster: ClassData, result: SpellResult, outcome: Dictionary) -> void:
-	var heal_bonus := 0
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data != null:
-			heal_bonus += chord_data.bonus_heal * int(chord_entry.get("count", 1))
-
-	for roll_data in result.element_rolls.values():
-		if not bool(roll_data.get("healing", false)):
-			continue
-
-		for member in PartyState.active_party:
-			if member == null or member.current_hp <= 0:
-				continue
-			if member.blocks_hp_healing():
-				GameEvents.message_logged.emit("[color=purple]%s cannot be healed while diseased.[/color]" % member.member_name)
-				continue
-			var heal_amount := CombatLogic.roll_dice(int(roll_data["rolls"]), int(roll_data["die"]), heal_bonus)
-			member.current_hp = min(member.get_max_hp(), member.current_hp + heal_amount)
-			GameEvents.message_logged.emit("[color=green]%s[/color] recovers [color=lime]%d[/color] HP." % [
-				member.member_name,
-				heal_amount
-			])
-
-func _apply_buffs(caster: ClassData, result: SpellResult, outcome: Dictionary) -> void:
-	if not CombatState.is_in_combat():
-		return
-
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data == null or chord_data.buff_stat.is_empty():
-			continue
-
-		for member in PartyState.active_party:
-			if member == null or member.current_hp <= 0:
-				continue
-			for stat_name in chord_data.buff_stat.keys():
-				member.apply_combat_buff(str(stat_name), int(chord_data.buff_stat[stat_name]))
-
-		GameEvents.message_logged.emit("[color=yellow]%s[/color] empowers the party with [color=orange]%s[/color]." % [
-			caster.member_name,
-			chord_data.display_name
-		])
-
-func _apply_mp_recovery(caster: ClassData, result: SpellResult, outcome: Dictionary) -> void:
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data == null or not chord_data.mp_recovery:
-			continue
-
-		for member in PartyState.active_party:
-			if member == null or member == caster or member.current_hp <= 0:
-				continue
-			member.current_mp = min(member.get_max_mp(), member.current_mp + DEFAULT_AMPED_RECOVERY)
-			GameEvents.message_logged.emit("[color=skyblue]%s[/color] recovers [color=aqua]%d[/color] MP." % [
-				member.member_name,
-				DEFAULT_AMPED_RECOVERY
-			])
-
-func _apply_damage(caster: ClassData, result: SpellResult, target_enemy: Enemy, outcome: Dictionary) -> void:
-	if target_enemy == null or not is_instance_valid(target_enemy) or target_enemy.enemy_data.hp <= 0:
-		if _has_damage_component(result):
-			GameEvents.message_logged.emit("[color=gray]No target selected, so the spell's damage dissipates harmlessly.[/color]")
-		return
-
-	var damage_distance := _get_spell_target_distance(target_enemy)
-	if damage_distance > SPELL_DAMAGE_RANGE:
-		if _has_damage_component(result):
-			GameEvents.message_logged.emit("[color=gray]%s is %d tiles away, beyond the spell's %d-tile damage range.[/color]" % [
-				target_enemy.enemy_data.enemy_name,
-				damage_distance,
-				SPELL_DAMAGE_RANGE
-			])
-		return
-
-	var player_node = World.get_player()
-	if player_node == null or not World.has_line_of_sight(player_node.grid_position, target_enemy.grid_position):
-		if _has_damage_component(result):
-			GameEvents.message_logged.emit("[color=gray]%s is behind cover, so the spell can't reach it.[/color]" % target_enemy.enemy_data.enemy_name)
-		return
-
-	var total_damage := 0
-	var splash_damage := 0
-
-	for element in result.element_rolls.keys():
-		var roll_data: Dictionary = result.element_rolls[element]
-		if bool(roll_data.get("healing", false)):
-			continue
-
-		var resist_rolls := _get_resist_roll_reduction(target_enemy, element)
-		var effective_rolls = max(0, int(roll_data["rolls"]) - resist_rolls)
-		if effective_rolls <= 0:
-			GameEvents.message_logged.emit("[color=gray]%s shrugs off the %s energy.[/color]" % [
-				target_enemy.enemy_data.enemy_name,
-				String(roll_data["name"]).to_lower()
-			])
-			continue
-
-		var element_bonus := caster.get_magic_amp() + _get_chord_bonus_damage_for_target(result, target_enemy)
-		var damage = CombatLogic.roll_dice(effective_rolls, int(roll_data["die"]), element_bonus)
-		total_damage += damage
-
-		if bool(roll_data.get("splash", false)) and int(roll_data["rolls"]) >= 4:
-			splash_damage += CombatLogic.roll_dice(DEFAULT_SPLASH_DICE, DEFAULT_SPLASH_DIE_SIZE)
-
-		GameEvents.message_logged.emit("[color=white]%s[/color] channels [color=orange]%s[/color] for [color=red]%d[/color] damage." % [
-			caster.member_name,
-			roll_data["name"],
-			damage
-		])
-
-	if total_damage > 0:
-		var final_total_damage := CombatLogic.apply_damage_status_bonuses(target_enemy, total_damage)
-		target_enemy.enemy_data.hp -= final_total_damage
-		GameEvents.enemy_took_damage.emit(target_enemy, final_total_damage)
-		GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] total spell damage." % [
-			target_enemy.enemy_data.enemy_name,
-			final_total_damage
-		])
-
-	if splash_damage > 0:
-		for enemy in CombatState.get_engaged_enemies():
-			if enemy == null or enemy == target_enemy or not is_instance_valid(enemy) or enemy.enemy_data.hp <= 0:
-				continue
-			if not World.are_adjacent(enemy, target_enemy):
-				continue
-			var final_splash_damage := CombatLogic.apply_damage_status_bonuses(enemy, splash_damage)
-			enemy.enemy_data.hp -= final_splash_damage
-			GameEvents.enemy_took_damage.emit(enemy, final_splash_damage)
-			GameEvents.message_logged.emit("[color=orange]%s[/color] is splashed for [color=red]%d[/color] damage." % [
-				enemy.enemy_data.enemy_name,
-				final_splash_damage
-			])
-			_cleanup_enemy_if_dead(enemy)
-
-	_cleanup_enemy_if_dead(target_enemy)
-
-func _apply_chord_statuses(target_enemy: Enemy, result: SpellResult) -> void:
-	if target_enemy == null or not is_instance_valid(target_enemy) or target_enemy.enemy_data.hp <= 0:
-		return
-	if _get_spell_target_distance(target_enemy) > SPELL_DAMAGE_RANGE:
-		return
-	var player_node = World.get_player()
-	if player_node == null or not World.has_line_of_sight(player_node.grid_position, target_enemy.grid_position):
-		return
-
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data == null or chord_data.status_effect.is_empty():
-			continue
-		if randi_range(1, 100) > result.chord_success_chance:
-			GameEvents.message_logged.emit("[color=gray]%s fails to take hold.[/color]" % chord_data.display_name)
-			continue
-		CombatLogic.proc_status(chord_data.status_effect.to_lower(), target_enemy)
-
-func _get_resist_roll_reduction(target_enemy: Enemy, element: int) -> int:
-	match element:
-		GuitarData.Element.FIRE:
-			return target_enemy.enemy_data.get_resistance("fire")
-		GuitarData.Element.ICE:
-			return target_enemy.enemy_data.get_resistance("cold")
-		GuitarData.Element.ELECTRIC:
-			return target_enemy.enemy_data.get_resistance("electric")
-		GuitarData.Element.EARTH:
+func _execute_special_effect(spell: SpellData, caster: ClassData) -> int:
+	match spell.special_effect.strip_edges().to_lower():
+		"torchlight", "torch_light":
+			var mana_before := caster.current_mp
+			var was_lit := PartyState.is_magic_torch_lit
+			var success := PartyState.toggle_magic_torch(caster)
+			if success:
+				var action := "extinguishes" if was_lit else "summons"
+				GameEvents.message_logged.emit("[color=cyan]%s[/color] %s a [color=green]magic torch[/color]." % [caster.member_name, action])
+				return mana_before - caster.current_mp
+			return -1
+		"levitate":
+			World.set_world_effect("levitate", spell.duration)
+			GameEvents.message_logged.emit("[color=cyan]The party begins to levitate.[/color]")
 			return 0
-		GuitarData.Element.LIGHT:
-			return target_enemy.enemy_data.get_resistance("light")
-		GuitarData.Element.DARK:
-			return target_enemy.enemy_data.get_resistance("dark")
-		GuitarData.Element.PHYSICAL:
-			return target_enemy.enemy_data.get_resistance("physical")
 		_:
-			return 0
+			push_warning("SpellExecutor: Unknown special effect '%s'." % spell.special_effect)
+			return -1
 
-func _get_chord_bonus_damage_for_target(result: SpellResult, target_enemy: Enemy) -> int:
-	var bonus := 0
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data == null:
-			continue
-		bonus += chord_data.bonus_damage * int(chord_entry.get("count", 1))
-		if chord_data.bonus_vs_type == "UNDEAD" and _is_undead(target_enemy):
-			bonus += chord_data.bonus_rolls
-	return bonus
+func _requires_target(spell: SpellData) -> bool:
+	return not spell.is_heal and not spell.is_buff and spell.special_effect.strip_edges().is_empty()
 
-func _is_undead(target_enemy: Enemy) -> bool:
-	if target_enemy == null or target_enemy.enemy_data == null:
+func _can_cast_without_mana(spell: SpellData) -> bool:
+	var special_id := spell.special_effect.strip_edges().to_lower()
+	return special_id in ["torchlight", "torch_light"] and PartyState.is_magic_torch_lit
+
+func _is_reachable_enemy(enemy: Enemy) -> bool:
+	if enemy == null or not is_instance_valid(enemy) or enemy.enemy_data.hp <= 0:
 		return false
-	var name_text := target_enemy.enemy_data.enemy_name.to_lower()
-	return name_text.contains("undead") or name_text.contains("skeleton") or name_text.contains("zombie") or name_text.contains("ghost")
+	var player: Node3D = World.get_player()
+	if player == null:
+		return false
+	var difference = (player.grid_position - enemy.grid_position).abs()
+	return max(difference.x, difference.y) <= SPELL_RANGE and World.has_line_of_sight(player.grid_position, enemy.grid_position)
 
-func _has_damage_component(result: SpellResult) -> bool:
-	for roll_data in result.element_rolls.values():
-		if not bool(roll_data.get("healing", false)):
-			return true
-	return false
-
-func _get_spell_target_distance(target_enemy: Enemy) -> int:
-	var player_node = World.get_player()
-	if player_node == null or target_enemy == null or not is_instance_valid(target_enemy):
-		return 999999
-
-	var grid_diff = (player_node.grid_position - target_enemy.grid_position).abs()
-	return int(max(grid_diff.x, grid_diff.y))
-
-func _cleanup_enemy_if_dead(enemy: Enemy) -> void:
-	if enemy == null or not is_instance_valid(enemy) or enemy.enemy_data.hp > 0:
+func _play_projectile(spell: SpellData, targets: Array) -> void:
+	if spell.projectile_scene_path.is_empty() or targets.is_empty() or not targets[0] is Enemy:
 		return
-	GameEvents.message_logged.emit("[color=red]%s[/color] dies!" % enemy.enemy_data.enemy_name)
-	LootDistributor.distribute_enemy_loot(enemy)
-	LootDistributor.distribute_xp(enemy.enemy_data.xp)
-	World.remove_enemy(enemy)
-
-func _is_torchlight_spell(result: SpellResult) -> bool:
-	# Check if any chord in the spell is the TorchLight chord
-	for chord_entry in result.chord_entries:
-		var chord_data := chord_entry.get("data") as ChordData
-		if chord_data != null and chord_data.chord_id == "TorchLight":
-			return true
-	return false
-
-func _execute_torchlight_spell(caster: ClassData, result: SpellResult, outcome: Dictionary) -> Dictionary:
-	# For TorchLight spell, we don't deduct the normal spell cost
-	# Instead, toggle_magic_torch will handle the mana cost
-	outcome["success"] = false
-	outcome["spent_mana"] = 0
-
-	# Toggle the magic torch
-	var torch_was_lit = PartyState.is_magic_torch_lit
-	var success = PartyState.toggle_magic_torch(caster)
-	
-	if success:
-		outcome["success"] = true
-		outcome["spent_mana"] = 1
-		if torch_was_lit:
-			GameEvents.message_logged.emit("[color=cyan]%s[/color] extinguishes the [color=green]magic torch[/color]." % caster.member_name)
-		else:
-			GameEvents.message_logged.emit("[color=cyan]%s[/color] summons a [color=green]magic torch[/color] with a surge of mana!" % caster.member_name)
-	else:
-		GameEvents.message_logged.emit("[color=red]%s[/color] lacks the mana to sustain a magic torch." % caster.member_name)
-	
-	return outcome
+	var player: Node3D = World.get_player()
+	if player != null:
+		GameEvents.spell_projectile_cast.emit(player.global_position, targets[0].global_position, spell.projectile_scene_path)

@@ -925,7 +925,7 @@ func get_spell_complexity_bonus() -> int:
 	return total
 
 func get_spell_element_roll_bonus(element: int) -> int:
-	return _get_spell_mastery_bonus(element) + _get_guitar_tuning_bonus(element)
+	return _get_spell_mastery_bonus(element)
 
 func _get_spell_mastery_bonus(element: int) -> int:
 	var total := 0
@@ -933,28 +933,6 @@ func _get_spell_mastery_bonus(element: int) -> int:
 		if _get_mastery_target_element(skill) == element:
 			total += max(1, skill.extra_damage_roll if skill.extra_damage_roll > 0 else 1)
 	return total
-
-func _get_guitar_tuning_bonus(element: int) -> int:
-	var guitar_instance := get_equipped_guitar()
-	if guitar_instance == null or not guitar_instance.item_data is GuitarData:
-		return 0
-
-	var guitar_data := guitar_instance.item_data as GuitarData
-	if guitar_data.tuning_modifiers.is_empty():
-		return 0
-
-	var possible_keys := [
-		element,
-		str(element),
-		GuitarData.Element.keys()[element],
-		String(GuitarData.Element.keys()[element]).to_lower()
-	]
-
-	for key in possible_keys:
-		if guitar_data.tuning_modifiers.has(key):
-			return int(guitar_data.tuning_modifiers[key])
-
-	return 0
 
 func _get_mastery_target_element(skill: SkillData) -> int:
 	if skill == null:
@@ -966,42 +944,42 @@ func _get_mastery_target_element(skill: SkillData) -> int:
 	var skill_text := "%s %s" % [skill.skill_id, skill.display_name]
 	var normalized := skill_text.to_lower()
 	if normalized.contains("physical"):
-		return GuitarData.Element.PHYSICAL
+		return SpellData.Element.PHYSICAL
 	if normalized.contains("fire"):
-		return GuitarData.Element.FIRE
-	if normalized.contains("ice"):
-		return GuitarData.Element.ICE
+		return SpellData.Element.FIRE
+	if normalized.contains("ice") or normalized.contains("water"):
+		return SpellData.Element.WATER
 	if normalized.contains("electric"):
-		return GuitarData.Element.ELECTRIC
+		return SpellData.Element.ELECTRIC
 	if normalized.contains("earth"):
-		return GuitarData.Element.EARTH
+		return SpellData.Element.EARTH
 	if normalized.contains("spirit"):
-		return GuitarData.Element.SPIRIT
+		return SpellData.Element.SPIRIT
 	if normalized.contains("light"):
-		return GuitarData.Element.LIGHT
+		return SpellData.Element.LIGHT
 	if normalized.contains("dark"):
-		return GuitarData.Element.DARK
+		return SpellData.Element.DARK
 
 	return -1
 
 func _convert_skill_element_to_guitar_element(skill_element: SkillData.Element) -> int:
 	match skill_element:
 		SkillData.Element.PHYSICAL:
-			return GuitarData.Element.PHYSICAL
+			return SpellData.Element.PHYSICAL
 		SkillData.Element.FIRE:
-			return GuitarData.Element.FIRE
+			return SpellData.Element.FIRE
 		SkillData.Element.ICE:
-			return GuitarData.Element.ICE
+			return SpellData.Element.WATER
 		SkillData.Element.ELECTRIC:
-			return GuitarData.Element.ELECTRIC
+			return SpellData.Element.ELECTRIC
 		SkillData.Element.EARTH:
-			return GuitarData.Element.EARTH
+			return SpellData.Element.EARTH
 		SkillData.Element.SPIRIT:
-			return GuitarData.Element.SPIRIT
+			return SpellData.Element.SPIRIT
 		SkillData.Element.LIGHT:
-			return GuitarData.Element.LIGHT
+			return SpellData.Element.LIGHT
 		SkillData.Element.DARK:
-			return GuitarData.Element.DARK
+			return SpellData.Element.DARK
 		_:
 			return -1
 
@@ -1029,6 +1007,13 @@ func clear_combat_buffs() -> void:
 	if combat_buffs.is_empty():
 		return
 	combat_buffs.clear()
+	recalculate_derived_stats(false)
+
+func clear_combat_buff(stat_name: String) -> void:
+	var normalized := _normalize_combat_buff_key(stat_name)
+	if normalized.is_empty() or not combat_buffs.has(normalized):
+		return
+	combat_buffs.erase(normalized)
 	recalculate_derived_stats(false)
 
 func tick_combat_buff_durations() -> void:
@@ -1222,12 +1207,3 @@ func get_combat_movement() -> int:
 	if has_skill("quick_step") and not quick_step_used:
 		base += 1
 	return base
-
-# ===== GUITAR/INSTRUMENT TRACKING =====
-func has_guitar_equipped() -> bool:
-	"""Check if a guitar is equipped in the GUITAR slot."""
-	return is_slot_equipped(ItemData.Equip_Slot.GUITAR)
-
-func get_equipped_guitar() -> ItemInstance:
-	"""Get the equipped guitar ItemInstance from the GUITAR slot."""
-	return get_equipped_item(ItemData.Equip_Slot.GUITAR)

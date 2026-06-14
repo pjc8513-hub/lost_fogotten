@@ -79,6 +79,7 @@ func _apply_poison_effects():
 				World.remove_enemy(enemy)
 
 func _tick_combat_effect_durations() -> void:
+	SpellEffectTracker.tick_combat_round()
 	for member in PartyState.active_party:
 		if member.has_method("tick_combat_buff_durations"):
 			member.tick_combat_buff_durations()

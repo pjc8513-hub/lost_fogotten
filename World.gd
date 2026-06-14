@@ -4,6 +4,7 @@ signal selected_enemy_changed(enemy)
 signal player_stepped(total_steps: int)
 
 var total_steps_taken: int = 0
+var active_world_effects: Dictionary = {}
 
 var selected_enemy: Enemy = null
 var selected_dungeon: Dungeon = null
@@ -58,6 +59,7 @@ func reset_world_state() -> void:
 	selected_trigger = null
 	selected_exit = null
 	selected_npc = null
+	active_world_effects.clear()
 
 func is_walkable(pos: Vector2i) -> bool:
 	# First check if the tile exists in the map
@@ -464,4 +466,26 @@ func are_adjacent(a: Node3D, b: Node3D) -> bool:
 
 func increment_step_count() -> void:
 	total_steps_taken += 1
+	_tick_world_effects()
 	player_stepped.emit(total_steps_taken)
+
+func set_world_effect(effect_id: String, duration_steps: int) -> void:
+	var normalized := effect_id.strip_edges().to_lower()
+	if normalized.is_empty():
+		return
+	active_world_effects[normalized] = max(0, duration_steps)
+
+func has_world_effect(effect_id: String) -> bool:
+	return active_world_effects.has(effect_id.strip_edges().to_lower())
+
+func _tick_world_effects() -> void:
+	for effect_id in active_world_effects.keys():
+		var remaining := int(active_world_effects[effect_id])
+		if remaining <= 0:
+			continue
+		remaining -= 1
+		if remaining <= 0:
+			active_world_effects.erase(effect_id)
+			GameEvents.message_logged.emit("[color=gray]%s fades.[/color]" % String(effect_id).capitalize())
+		else:
+			active_world_effects[effect_id] = remaining

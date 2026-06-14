@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://cabk3qqx8l3ro"]
+
+[ext_resource type="Texture2D" uid="uid://c2ymxpryfq0b4" path="res://UI/Casting/Music_Staff_Blank.png" id="1_js6kl"]
+[ext_resource type="Script" uid="uid://csw72pj6jhq6n" path="res://UI/Casting/casting_scene.gd" id="1_x0eo3"]
+[ext_resource type="Texture2D" uid="uid://c4upvjmdrut2y" path="res://UI/Casting/Music_Fire_Button.png" id="2_kyifw"]
+[ext_resource type="Texture2D" uid="uid://10k0t3pjk2q4" path="res://UI/Casting/Music_Button_Electric.png" id="3_m6orr"]
+[ext_resource type="Texture2D" uid="uid://bsk0arh62xt3j" path="res://UI/Casting/Music_Button_Dark.png" id="3_ourmt"]
+[ext_resource type="Texture2D" uid="uid://cfgrt7pq8vxm7" path="res://UI/Casting/Music_Button_Spirit.png" id="4_20jg1"]
+[ext_resource type="Texture2D" uid="uid://cw7hlfs2r8ue0" path="res://UI/Casting/Music_Button_Light.png" id="5_ackqg"]
+[ext_resource type="Texture2D" uid="uid://b75jr8dhxtcox" path="res://UI/Casting/Music_Button_Water.png" id="6_jaf4m"]
+[ext_resource type="Texture2D" uid="uid://djoag7bf6b28u" path="res://UI/Casting/Music_Button_Physical.png" id="8_nm2cd"]
+[ext_resource type="Texture2D" uid="uid://bjte4edkw15vh" path="res://UI/Casting/Music_Button_Earth.png" id="9_nm2cd"]
+
+[node name="CastingScene" type="Control" unique_id=1802173755]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -207.5
+offset_top = -64.0
+offset_right = 207.5
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x0eo3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=294756150]
+layout_mode = 0
+offset_right = 415.0
+offset_bottom = 108.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1845686958]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer" unique_id=1384505277]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 7
+
+[node name="StaffContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer" unique_id=136355019]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Phrase_1" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer/StaffContainer" unique_id=759531032]
+layout_mode = 2
+texture = ExtResource("1_js6kl")
+
+[node name="Phrase_2" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer/StaffContainer" unique_id=1546268403]
+layout_mode = 2
+texture = ExtResource("1_js6kl")
+
+[node name="Phrase_3" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer/StaffContainer" unique_id=643591740]
+layout_mode = 2
+texture = ExtResource("1_js6kl")
+
+[node name="Phrase_4" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer/StaffContainer" unique_id=168359906]
+layout_mode = 2
+texture = ExtResource("1_js6kl")
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/VBoxContainer" unique_id=309606630]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+
+[node name="NoteButtonContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer2" unique_id=954316031]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+
+[node name="FireNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=108919123]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("2_kyifw")
+flat = true
+
+[node name="ElectricNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=647528101]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("3_m6orr")
+flat = true
+
+[node name="SpiritNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=983035184]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("4_20jg1")
+flat = true
+
+[node name="DarkNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1243385938]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("3_ourmt")
+flat = true
+
+[node name="LightNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1147985652]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("5_ackqg")
+flat = true
+
+[node name="WaterNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1267817532]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("6_jaf4m")
+flat = true
+
+[node name="PhysicalNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=584583366]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("8_nm2cd")
+flat = true
+
+[node name="EarthNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1881058196]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("9_nm2cd")
+flat = true
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=1240136794]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/MarginContainer" unique_id=1903405260]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="CastButton" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer2" unique_id=1213216347]
+layout_mode = 2
+text = "Cast"
+
+[node name="CloseButton" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer2" unique_id=112213375]
+layout_mode = 2
+text = "Close"

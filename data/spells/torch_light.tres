@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dcl3bvxmlf2xh"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spell_id = "torch_light"
+display_name = "TorchLight"
+description = "Summons or extinguishes a mana-fed light."
+spellbook = 7
+element_notes = Array[int]([7, 0, 7])
+mana = 1
+special_effect = "torchlight"

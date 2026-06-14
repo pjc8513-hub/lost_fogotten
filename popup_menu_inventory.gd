@@ -125,9 +125,6 @@ func _toggle_equip(inst: ItemInstance) -> void:
 	else:
 		InventoryManager.equip_item(owner_char, inst)
 
-	# Notify if a guitar was unequipped
-	if was_equipped and inst.item_data.equip_slot == ItemData.Equip_Slot.GUITAR:
-		GameEvents.message_logged.emit("[color=gray]%s unequipped %s.[/color]" % [owner_char.member_name, inst.item_data.name])
 
 func _use_item(inst: ItemInstance) -> void:
 	var owner_char := PartyState.get_selected()

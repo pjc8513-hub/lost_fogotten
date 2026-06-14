@@ -478,31 +478,6 @@ func execute_debug_command(text: String) -> void:
 			if success:
 				GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Gave [color=yellow]%s[/color] x%d to [color=cyan]%s[/color]" % [item_instance.item_data.name, amount, target_member.member_name])
 				
-		"giveguitar":
-			var item_id := "THRONE"
-			if not args.is_empty():
-				item_id = args[0]
-				
-			var target_member = PartyState.get_selected()
-			if target_member == null:
-				target_member = PartyState.active_party[0] if not PartyState.active_party.is_empty() else null
-				
-			if target_member == null:
-				GameEvents.message_logged.emit("[color=red]No active party members to give guitar.[/color]")
-				return
-				
-			var item_instance = LootManager.create_item_instance(item_id)
-			if item_instance == null:
-				GameEvents.message_logged.emit("[color=red]Guitar not found: %s[/color]" % item_id)
-				return
-				
-			if not item_instance.item_data is GuitarData:
-				GameEvents.message_logged.emit("[color=red]Item %s is not a Guitar.[/color]" % item_instance.item_data.name)
-				return
-				
-			if InventoryManager.add_item(target_member, item_instance):
-				GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Gave rolled guitar [color=yellow]%s[/color] to [color=cyan]%s[/color]" % [item_instance.item_data.guitar_name, target_member.member_name])
-				
 		"givegold":
 			if args.is_empty():
 				GameEvents.message_logged.emit("[color=red]Usage: GIVEGOLD [Amount][/color]")
@@ -517,18 +492,12 @@ func execute_debug_command(text: String) -> void:
 			
 		"castspell":
 			if args.is_empty():
-				GameEvents.message_logged.emit("[color=red]Usage: CASTSPELL [ChordID][/color]")
+				GameEvents.message_logged.emit("[color=red]Usage: CASTSPELL [SpellID][/color]")
 				return
 			
-			var chord_id := full_arg_string
-			var chord_data: ChordData = null
-			for c in ChordRegistry.get_all_chords():
-				if c.chord_id.to_lower() == chord_id.to_lower() or c.display_name.to_lower() == chord_id.to_lower():
-					chord_data = c
-					break
-					
-			if chord_data == null:
-				GameEvents.message_logged.emit("[color=red]Chord not found: %s[/color]" % chord_id)
+			var spell := SpellRegistry.find_by_id(full_arg_string)
+			if spell == null:
+				GameEvents.message_logged.emit("[color=red]Spell not found: %s[/color]" % full_arg_string)
 				return
 				
 			var caster = PartyState.get_selected()
@@ -539,71 +508,13 @@ func execute_debug_command(text: String) -> void:
 				GameEvents.message_logged.emit("[color=red]No active party members to cast the spell.[/color]")
 				return
 				
-			var guitar = caster.equipped_guitar if caster.get("equipped_guitar") != null else null
-			if guitar == null:
-				guitar = GuitarData.new()
-				guitar.guitar_name = "Spectral Lute"
-				guitar.min_strings = 3
-				guitar.max_strings = 8
-				guitar.rolled_string_count = 6
-				guitar.rolled_string_elements = [GuitarData.Element.PHYSICAL]
-				
-			var spell_data = SpellData.new()
-			spell_data.caster = caster
-			spell_data.guitar = guitar
-			spell_data.guitar_name = guitar.guitar_name
-			
-			var result = SpellResult.new()
-			result.spell_data = spell_data
-			result.mana_cost = 0
-			result.mana_sufficient = true
-			result.chord_success_chance = 100
-			result.chord_fail_chance = 0
-			result.caster_current_mp = caster.current_mp
-			
-			result.chord_entries.append({
-				"name": chord_data.display_name,
-				"count": 1,
-				"data": chord_data,
-				"summary": chord_data.get_summary_text()
-			})
-			
-			for element in chord_data.required_elements:
-				if SpellResolver.ELEMENT_RULES.has(element):
-					var rule = SpellResolver.ELEMENT_RULES[element]
-					result.element_rolls[element] = {
-						"name": rule["name"],
-						"die": int(rule["die"]),
-						"rolls": 3,
-						"mana_per_roll": int(rule["mana"]),
-						"healing": bool(rule.get("healing", false)),
-						"splash": bool(rule.get("splash", false)),
-						"base_rolls": 3,
-						"bonus_rolls": 0,
-					}
-			
-			if chord_data.required_elements.is_empty() and chord_data.bonus_damage > 0:
-				var physical_rule = SpellResolver.ELEMENT_RULES[GuitarData.Element.PHYSICAL]
-				result.element_rolls[GuitarData.Element.PHYSICAL] = {
-					"name": physical_rule["name"],
-					"die": int(physical_rule["die"]),
-					"rolls": 1,
-					"mana_per_roll": int(physical_rule["mana"]),
-					"healing": false,
-					"splash": false,
-					"base_rolls": 1,
-					"bonus_rolls": 0,
-				}
-				
-			var request = SpellCastRequest.new()
-			request.spell_data = spell_data
-			request.spell_result = result
-			request.caster = caster
-			request.guitar = guitar
-			request.is_valid = true
-			
-			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Casting [color=gold]%s[/color] ignoring requirements..." % chord_data.display_name)
-			await SpellExecutor.execute_request(request)
+			var request := SpellExecutor.build_request(spell, caster)
+			if not request.is_valid:
+				GameEvents.message_logged.emit("[color=red]%s[/color]" % request.get_primary_error())
+				return
+
+			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Casting [color=gold]%s[/color]..." % spell.get_display_name())
+			await SpellExecutor.execute_request(request, CombatState.targeted_enemy)
 			
 		_:
 			GameEvents.message_logged.emit("[color=red]Unknown debug command: %s[/color]" % cmd_name)

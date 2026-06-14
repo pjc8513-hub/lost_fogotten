@@ -9,15 +9,14 @@ enum ItemType {
 }
 
 enum Equip_Slot {
-	NONE,
-	WEAPON,
-	RANGE,
-	ARMOR,
-	GUITAR,
-	HELMET,
-	BOOTS,
-	GLOVES,
-	ACCESSORY
+	NONE = 0,
+	WEAPON = 1,
+	RANGE = 2,
+	ARMOR = 3,
+	HELMET = 5,
+	BOOTS = 6,
+	GLOVES = 7,
+	ACCESSORY = 8
 }
 
 @export var item_id: String
