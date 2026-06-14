@@ -81,48 +81,56 @@ theme_override_constants/separation = 1
 [node name="FireNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=108919123]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Fire"
 icon = ExtResource("2_kyifw")
 flat = true
 
 [node name="ElectricNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=647528101]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Electric"
 icon = ExtResource("3_m6orr")
 flat = true
 
 [node name="SpiritNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=983035184]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Spirit"
 icon = ExtResource("4_20jg1")
 flat = true
 
 [node name="DarkNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1243385938]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Dark"
 icon = ExtResource("3_ourmt")
 flat = true
 
 [node name="LightNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1147985652]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Light"
 icon = ExtResource("5_ackqg")
 flat = true
 
 [node name="WaterNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1267817532]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Water"
 icon = ExtResource("6_jaf4m")
 flat = true
 
 [node name="PhysicalNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=584583366]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Physical"
 icon = ExtResource("8_nm2cd")
 flat = true
 
 [node name="EarthNoteButton" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer" unique_id=1881058196]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Earth"
 icon = ExtResource("9_nm2cd")
 flat = true
 

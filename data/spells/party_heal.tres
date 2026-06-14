@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://slh3ji20b5ve"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_giv5n"]
+
+[resource]
+script = ExtResource("1_giv5n")
+spell_id = "party_heal"
+display_name = "Party Heal"
+description = "Heal for the whole party"
+spellbook = 4
+element_notes = Array[int]([4, 5, 4, 5])
+mana = 11
+damage = "2d8"
+is_aoe = true
+is_heal = true

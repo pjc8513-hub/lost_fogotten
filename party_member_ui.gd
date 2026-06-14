@@ -149,3 +149,7 @@ func update_status_icon(status: CombatStatus):
 			status_icon.texture = turn_texture
 		CombatStatus.STUN:
 			status_icon.texture = stun_texture
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	pass # Replace with function body.

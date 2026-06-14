@@ -78,3 +78,5 @@ show_percentage = false
 material = SubResource("CanvasItemMaterial_t3qfy")
 layout_mode = 2
 size_flags_horizontal = 3
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
