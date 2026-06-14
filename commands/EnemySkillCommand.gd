@@ -181,7 +181,12 @@ func _play_projectile(target) -> void:
 	if target_pos == Vector3.INF:
 		return
 
-	GameEvents.spell_projectile_cast.emit(actor.global_position, target_pos, skill.projectile_scene_path)
+	GameEvents.spell_projectile_cast.emit(
+		actor.global_position,
+		target_pos,
+		skill.projectile_scene_path,
+		skill.projectile_travel_time
+	)
 	var wait_time: float = max(float(skill.projectile_travel_time), 0.0) + max(float(skill.impact_delay), 0.0)
 	if wait_time > 0.0:
 		await actor.get_tree().create_timer(wait_time).timeout

@@ -207,7 +207,7 @@ func _do_ranged_or_skip(attacker: ClassData, target: Enemy, dist: float, sequenc
 
 	var p = player_node
 	if p != null:
-		GameEvents.spell_projectile_cast.emit(p.global_position, target.global_position, "res://ArrowScene.tscn")
+		GameEvents.spell_projectile_cast.emit(p.global_position, target.global_position, "res://ArrowScene.tscn", 0.5)
 		await p.get_tree().create_timer(0.5).timeout
 
 	if outcome == "crit_miss":

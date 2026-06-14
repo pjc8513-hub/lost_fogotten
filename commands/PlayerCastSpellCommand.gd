@@ -3,6 +3,7 @@ class_name PlayerCastSpellCommand
 
 var cast_request: SpellCastRequest
 var target_enemy: Enemy = null
+var target_party_member: ClassData = null
 
 func execute() -> void:
 	var caster: ClassData = actor
@@ -21,7 +22,7 @@ func execute() -> void:
 		emit_signal("finished")
 		return
 
-	var result := await SpellExecutor.execute_request(cast_request, target_enemy)
+	var result := await SpellExecutor.execute_request(cast_request, target_enemy, target_party_member)
 	if result.success:
 		caster.cooldown = 2
 	emit_signal("finished")

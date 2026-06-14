@@ -2,6 +2,8 @@ extends Node
 
 const SPELL_RANGE := 6
 
+var _pending_party_request: SpellCastRequest = null
+
 func build_request(spell: SpellData, caster: ClassData) -> SpellCastRequest:
 	var request := SpellCastRequest.new()
 	request.spell_data = spell
@@ -19,7 +21,61 @@ func build_request(spell: SpellData, caster: ClassData) -> SpellCastRequest:
 	request.is_valid = request.validation_errors.is_empty()
 	return request
 
-func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> SpellResult:
+func has_pending_party_target() -> bool:
+	return _pending_party_request != null
+
+func begin_party_targeting(request: SpellCastRequest) -> bool:
+	if request == null or not request.is_valid or request.spell_data == null:
+		return false
+	if not request.spell_data.requires_individual_party_target():
+		return false
+	_pending_party_request = request
+	GameEvents.message_logged.emit("[color=cyan]Choose a party member for %s.[/color]" % request.spell_data.get_display_name())
+	return true
+
+func cancel_party_targeting() -> void:
+	_pending_party_request = null
+
+func try_target_party_member(target: ClassData) -> bool:
+	if _pending_party_request == null:
+		return false
+
+	var request := build_request(_pending_party_request.spell_data, _pending_party_request.caster)
+	if not request.is_valid:
+		_pending_party_request = null
+		GameEvents.message_logged.emit("[color=red]%s[/color]" % request.get_primary_error())
+		return true
+	var error := get_party_target_error(request.spell_data, target)
+	if not error.is_empty():
+		GameEvents.message_logged.emit("[color=red]%s[/color]" % error)
+		return true
+
+	_pending_party_request = null
+	var command := PlayerCastSpellCommand.new()
+	command.actor = request.caster
+	command.cast_request = request
+	command.target_party_member = target
+	CommandQueue.add_command(command)
+	TurnStateMachine.last_action_was_party_wide = false
+	TurnStateMachine.set_state(TurnStateMachine.State.PLAYER_ACTION)
+	return true
+
+func get_party_target_error(spell: SpellData, target: ClassData) -> String:
+	if spell == null or target == null or not PartyState.active_party.has(target):
+		return "That is not a valid party target."
+	if spell.is_resurrection:
+		if target.current_hp > 0:
+			return "%s is not defeated." % target.member_name
+		return ""
+	if target.current_hp <= 0:
+		return "%s is defeated and cannot be targeted by this spell." % target.member_name
+	return ""
+
+func execute_request(
+	request: SpellCastRequest,
+	target_enemy: Enemy = null,
+	target_party_member: ClassData = null
+) -> SpellResult:
 	var result := SpellResult.new()
 	if request == null or not request.is_valid:
 		return result
@@ -32,17 +88,19 @@ func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> S
 		var mana_already_spent := _execute_special_effect(spell, caster)
 		if mana_already_spent < 0:
 			return result
+		_play_cast_presentation(spell)
 		var remaining_mana_cost: int = maxi(0, spell.mana - mana_already_spent)
 		caster.current_mp -= remaining_mana_cost
 		result.success = true
 		result.mana_spent = spell.mana
 		return result
 
-	var targets := _resolve_targets(spell, caster, target_enemy)
+	var targets := _resolve_targets(spell, caster, target_enemy, target_party_member)
 	if _requires_target(spell) and targets.is_empty():
 		GameEvents.message_logged.emit("[color=gray]The spell needs a valid target.[/color]")
 		return result
 
+	_play_cast_presentation(spell)
 	caster.current_mp -= spell.mana
 	result.mana_spent = spell.mana
 	GameEvents.message_logged.emit("[color=cyan]%s[/color] casts [color=gold]%s[/color] for [color=skyblue]%d[/color] mana." % [
@@ -51,8 +109,9 @@ func execute_request(request: SpellCastRequest, target_enemy: Enemy = null) -> S
 		spell.mana
 	])
 
-	_play_projectile(spell, targets)
+	await _play_projectile(spell, targets)
 	for target in targets:
+		_play_target_presentation(spell, target)
 		_apply_spell_to_target(spell, caster, target)
 		result.affected_targets.append(target)
 
@@ -100,11 +159,20 @@ func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
 	elif target is ClassData:
 		target.take_damage(final_damage)
 
-func _resolve_targets(spell: SpellData, caster: ClassData, target_enemy: Enemy) -> Array:
-	if spell.is_heal or spell.is_buff:
+func _resolve_targets(
+	spell: SpellData,
+	caster: ClassData,
+	target_enemy: Enemy,
+	target_party_member: ClassData
+) -> Array:
+	if spell.targets_party_members():
 		if spell.is_aoe:
+			if spell.is_resurrection:
+				return PartyState.active_party.filter(func(member): return member != null and member.current_hp <= 0)
 			return PartyState.active_party.filter(func(member): return member != null and member.current_hp > 0)
-		return [caster]
+		if not get_party_target_error(spell, target_party_member).is_empty():
+			return []
+		return [target_party_member]
 
 	var resolved_target := target_enemy
 	if resolved_target == null and CombatState.has_valid_target():
@@ -121,6 +189,19 @@ func _resolve_targets(spell: SpellData, caster: ClassData, target_enemy: Enemy) 
 	return targets
 
 func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void:
+	if spell.is_resurrection:
+		if target is ClassData and target.current_hp <= 0:
+			var restored_hp := roll_spell_damage(spell, caster)
+			if restored_hp <= 0:
+				restored_hp = max(1, spell.amount)
+			target.current_hp = clampi(restored_hp, 1, target.get_max_hp())
+			target.apply_status_effect("weakness")
+			GameEvents.message_logged.emit("[color=green]%s returns to life with %d HP and is afflicted with weakness.[/color]" % [
+				target.member_name,
+				target.current_hp
+			])
+		return
+
 	if spell.is_heal:
 		if target is ClassData and not target.blocks_hp_healing():
 			var heal_amount := roll_spell_damage(spell, caster)
@@ -128,7 +209,20 @@ func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void
 				heal_amount = max(0, spell.amount)
 			target.current_hp = min(target.get_max_hp(), target.current_hp + heal_amount)
 			GameEvents.message_logged.emit("[color=green]%s recovers %d HP.[/color]" % [target.member_name, heal_amount])
-		return
+
+	if not spell.remove_status_effect.strip_edges().is_empty() and target is ClassData:
+		var status_id := StatusEffects.normalize_id(spell.remove_status_effect)
+		if target.has_status_effect(status_id):
+			target.clear_status_effect(status_id)
+			GameEvents.message_logged.emit("[color=green]%s is cleansed of %s.[/color]" % [
+				target.member_name,
+				StatusEffects.get_display_name(StatusEffects.from_string(status_id)).to_lower()
+			])
+		else:
+			GameEvents.message_logged.emit("[color=gray]%s is not afflicted with %s.[/color]" % [
+				target.member_name,
+				spell.remove_status_effect.to_lower()
+			])
 
 	if spell.is_buff:
 		for stat_name in spell.stats.keys():
@@ -147,6 +241,9 @@ func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void
 				)
 		if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS:
 			SpellEffectTracker.add_step_buff(spell, target)
+
+	if spell.targets_party_members():
+		return
 
 	var damage := roll_spell_damage(spell, caster)
 	if damage > 0 and not spell.is_dot:
@@ -174,7 +271,7 @@ func _execute_special_effect(spell: SpellData, caster: ClassData) -> int:
 			return -1
 
 func _requires_target(spell: SpellData) -> bool:
-	return not spell.is_heal and not spell.is_buff and spell.special_effect.strip_edges().is_empty()
+	return spell.special_effect.strip_edges().is_empty()
 
 func _can_cast_without_mana(spell: SpellData) -> bool:
 	var special_id := spell.special_effect.strip_edges().to_lower()
@@ -189,9 +286,31 @@ func _is_reachable_enemy(enemy: Enemy) -> bool:
 	var difference = (player.grid_position - enemy.grid_position).abs()
 	return max(difference.x, difference.y) <= SPELL_RANGE and World.has_line_of_sight(player.grid_position, enemy.grid_position)
 
+func _play_cast_presentation(spell: SpellData) -> void:
+	var sound_effect := spell.get_sound_effect()
+	if not sound_effect.is_empty():
+		SfxManager.play_sfx(sound_effect)
+	if spell.shake_screen:
+		GameEvents.camera_shake_requested.emit(spell.shake_intensity, spell.shake_decay)
+
+func _play_target_presentation(spell: SpellData, target) -> void:
+	if not target is ClassData:
+		return
+	var animation_name := spell.get_party_target_animation()
+	if not animation_name.is_empty():
+		GameEvents.party_spell_animation_requested.emit(target, animation_name)
+
 func _play_projectile(spell: SpellData, targets: Array) -> void:
 	if spell.projectile_scene_path.is_empty() or targets.is_empty() or not targets[0] is Enemy:
 		return
 	var player: Node3D = World.get_player()
 	if player != null:
-		GameEvents.spell_projectile_cast.emit(player.global_position, targets[0].global_position, spell.projectile_scene_path)
+		GameEvents.spell_projectile_cast.emit(
+			player.global_position,
+			targets[0].global_position,
+			spell.projectile_scene_path,
+			spell.projectile_travel_time
+		)
+		var wait_time: float = maxf(0.0, spell.projectile_travel_time) + maxf(0.0, spell.impact_delay)
+		if wait_time > 0.0:
+			await get_tree().create_timer(wait_time).timeout

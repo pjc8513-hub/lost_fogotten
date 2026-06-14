@@ -14,6 +14,7 @@ func _ready():
 	GameEvents.open_chest_animation_started.connect(_on_open_chest_started)
 	GameEvents.pull_lever_animation_started.connect(_on_lever_pull_started)
 	GameEvents.spell_projectile_cast.connect(_on_spell_projectile_cast)
+	GameEvents.party_spell_animation_requested.connect(_on_party_spell_animation_requested)
 	GameEvents.camera_shake_requested.connect(_on_camera_shake_requested)
 
 func _process(delta: float) -> void:
@@ -64,7 +65,7 @@ func _on_open_chest_started(chest):
 	if chest and chest.has_method("play_open_animation"):
 		chest.play_open_animation()
 
-func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String) -> void:
+func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String, travel_time: float) -> void:
 	if anim_path.is_empty():
 		return
 		
@@ -81,7 +82,23 @@ func _on_spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_pa
 				# Fallback to root if Main/SubViewport not found
 				get_tree().root.add_child(fireball)
 			if fireball.has_method("launch"):
-				fireball.launch(caster_pos, target_pos, 0.5)
+				fireball.launch(caster_pos, target_pos, max(0.01, travel_time))
+
+func _on_party_spell_animation_requested(member: ClassData, animation_name: String) -> void:
+	if member == null or animation_name.strip_edges().is_empty():
+		return
+
+	var main := get_tree().root.get_node_or_null("Main")
+	if main == null:
+		return
+	var party_list := main.get_node_or_null("Control/MarginContainer/VBoxContainer")
+	if party_list == null:
+		return
+
+	for member_ui in party_list.get_children():
+		if member_ui.get("my_member_data") == member and member_ui.has_method("play_combat_fx"):
+			member_ui.play_combat_fx(animation_name)
+			return
 
 func _on_camera_shake_requested(intensity: float, decay: float) -> void:
 	var camera: Camera3D = _get_shake_camera()

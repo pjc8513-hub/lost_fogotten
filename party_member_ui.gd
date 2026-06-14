@@ -8,6 +8,12 @@ extends PanelContainer
 @onready var label = $HBoxContainer/VBoxContainer/Label
 @onready var status_icon = $HBoxContainer/StatusIcon
 
+# combatFX layer for animation
+@onready var flash_overlay: ColorRect = $HBoxContainer/PortraitOne/CombatFX/FlashOverlay
+@onready var fx_sprite: Sprite2D = $HBoxContainer/PortraitOne/CombatFX/FXSprite
+@onready var damage_label: Label = $HBoxContainer/PortraitOne/CombatFX/DamageLabel
+@onready var animation_player: AnimationPlayer = $HBoxContainer/PortraitOne/CombatFX/AnimationPlayer
+
 
 var my_member_data: ClassData
 var member_index: int = -1
@@ -150,6 +156,44 @@ func update_status_icon(status: CombatStatus):
 		CombatStatus.STUN:
 			status_icon.texture = stun_texture
 
+func play_combat_fx(animation_name: String) -> void:
+	if animation_player == null or not animation_player.has_animation(animation_name):
+		push_warning("Party member combat FX animation not found: %s" % animation_name)
+		return
+
+	var combat_fx := animation_player.get_parent() as Control
+	if combat_fx != null:
+		combat_fx.show()
+	fx_sprite.show()
+	animation_player.stop()
+	animation_player.play(animation_name)
+	await animation_player.animation_finished
+	fx_sprite.hide()
+	if combat_fx != null:
+		combat_fx.hide()
+
 
 func _on_gui_input(event: InputEvent) -> void:
-	pass # Replace with function body.
+	if not event is InputEventMouseButton:
+		return
+	var mouse_event := event as InputEventMouseButton
+	if not mouse_event.pressed or mouse_event.button_index != MOUSE_BUTTON_LEFT:
+		return
+	if my_member_data == null:
+		return
+
+	if SpellExecutor.try_target_party_member(my_member_data):
+		accept_event()
+		return
+
+	if PartyState.select_member(member_index):
+		accept_event()
+		return
+
+	if CombatState.is_in_combat():
+		var acting_member := CombatState.get_acting_member()
+		if acting_member != null:
+			GameEvents.message_logged.emit("[color=gray]You cannot change characters during combat. It is %s's turn.[/color]" % acting_member.member_name)
+		else:
+			GameEvents.message_logged.emit("[color=gray]You cannot change characters during combat.[/color]")
+	accept_event()

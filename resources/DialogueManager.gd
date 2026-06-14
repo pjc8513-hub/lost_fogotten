@@ -514,7 +514,8 @@ func execute_debug_command(text: String) -> void:
 				return
 
 			GameEvents.message_logged.emit("[color=magenta][Cheat][/color] Casting [color=gold]%s[/color]..." % spell.get_display_name())
-			await SpellExecutor.execute_request(request, CombatState.targeted_enemy)
+			var party_target: ClassData = caster if spell.requires_individual_party_target() else null
+			await SpellExecutor.execute_request(request, CombatState.targeted_enemy, party_target)
 			
 		_:
 			GameEvents.message_logged.emit("[color=red]Unknown debug command: %s[/color]" % cmd_name)

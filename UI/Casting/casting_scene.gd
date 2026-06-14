@@ -39,6 +39,7 @@ func _ready() -> void:
 	_reset_composition()
 
 func open() -> void:
+	SpellExecutor.cancel_party_targeting()
 	var caster := PartyState.get_selected()
 	if caster == null:
 		return
@@ -68,6 +69,11 @@ func _on_cast_pressed() -> void:
 	var request := SpellExecutor.build_request(spell, caster)
 	if not request.is_valid:
 		GameEvents.message_logged.emit("[color=red]%s[/color]" % request.get_primary_error())
+		return
+
+	if spell.requires_individual_party_target():
+		if SpellExecutor.begin_party_targeting(request):
+			close()
 		return
 
 	var command := PlayerCastSpellCommand.new()

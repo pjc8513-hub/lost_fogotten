@@ -80,7 +80,7 @@ func _perform_single_ranged_attack(target) -> void:
 		var p = World.get_player()
 		if p != null:
 			target_pos = p.global_position
-	GameEvents.spell_projectile_cast.emit(actor.global_position, target_pos, "res://ArrowScene.tscn")
+	GameEvents.spell_projectile_cast.emit(actor.global_position, target_pos, "res://ArrowScene.tscn", 0.5)
 	await actor.get_tree().create_timer(0.5).timeout
 
 	# 2. Accuracy roll

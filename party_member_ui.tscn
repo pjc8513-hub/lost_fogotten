@@ -1,9 +1,96 @@
 [gd_scene format=3 uid="uid://c2osn80j6saxq"]
 
 [ext_resource type="Script" uid="uid://bhdj7ejekuvtb" path="res://party_member_ui.gd" id="1_t3qfy"]
+[ext_resource type="Texture2D" uid="uid://6jrj76f1ynxh" path="res://assets/portraits/combat_fx.png" id="2_t3qfy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qui0h"]
 bg_color = Color(0.08078333, 0.08078336, 0.08078327, 1)
+
+[sub_resource type="Animation" id="Animation_aoqp7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cr37w"]
+resource_name = "block"
+length = 0.76666665
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_t3qfy"]
+resource_name = "cleanse"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_yljw0"]
+resource_name = "debuff"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_5drr7"]
+resource_name = "heal"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yljw0"]
+_data = {
+&"RESET": SubResource("Animation_aoqp7"),
+&"block": SubResource("Animation_cr37w"),
+&"cleanse": SubResource("Animation_t3qfy"),
+&"debuff": SubResource("Animation_yljw0"),
+&"heal": SubResource("Animation_5drr7")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27c8x"]
 bg_color = Color(0.043137256, 0, 0, 1)
@@ -37,16 +124,53 @@ script = ExtResource("1_t3qfy")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1055544252]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PortraitOne" type="TextureRect" parent="HBoxContainer" unique_id=2061576124]
 custom_minimum_size = Vector2(69, 60)
 layout_mode = 2
+mouse_filter = 2
 expand_mode = 1
 flip_h = true
+
+[node name="CombatFX" type="Control" parent="HBoxContainer/PortraitOne" unique_id=1312627460]
+visible = false
+custom_minimum_size = Vector2(69, 0)
+anchors_preset = 0
+offset_right = 69.0
+offset_bottom = 100.0
+mouse_filter = 2
+
+[node name="FlashOverlay" type="ColorRect" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=1108951565]
+visible = false
+layout_mode = 0
+offset_right = 69.0
+offset_bottom = 69.0
+color = Color(1, 1, 1, 0.8666667)
+
+[node name="FXSprite" type="Sprite2D" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=455538879]
+visible = false
+position = Vector2(38.42, 50)
+scale = Vector2(2.4737499, 2.8125002)
+texture = ExtResource("2_t3qfy")
+hframes = 4
+vframes = 4
+
+[node name="DamageLabel" type="Label" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=838936285]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_top = 23.0
+offset_right = 74.0
+offset_bottom = 46.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=581984411]
+libraries/ = SubResource("AnimationLibrary_yljw0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=323270362]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1432678078]
 layout_mode = 2
@@ -54,6 +178,7 @@ layout_mode = 2
 [node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1425417927]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_27c8x")
 theme_override_styles/fill = SubResource("StyleBoxFlat_i1vam")
 value = 100.0
@@ -62,6 +187,7 @@ show_percentage = false
 [node name="ProgressBar2" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1937807228]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_q77pa")
 theme_override_styles/fill = SubResource("StyleBoxFlat_n8582")
 value = 100.0
@@ -70,6 +196,7 @@ show_percentage = false
 [node name="ProgressBar3" type="ProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=312715790]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_t3qfy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_aoqp7")
 show_percentage = false
@@ -78,5 +205,6 @@ show_percentage = false
 material = SubResource("CanvasItemMaterial_t3qfy")
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

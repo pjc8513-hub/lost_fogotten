@@ -12,3 +12,7 @@ element_notes = Array[int]([1, 1, 1])
 mana = 10
 damage = "3d8"
 is_aoe = true
+sound_effect = "thud"
+shake_screen = true
+shake_intensity = 0.08
+shake_decay = 5.0

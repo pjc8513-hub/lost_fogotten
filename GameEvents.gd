@@ -34,8 +34,9 @@ signal pull_lever_animation_finished(trigger)
 #signal particle_restart(element)
 
 # Spell projectile animations
-signal spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String)
+signal spell_projectile_cast(caster_pos: Vector3, target_pos: Vector3, anim_path: String, travel_time: float)
 signal spell_impact_animation_finished
+signal party_spell_animation_requested(member: ClassData, animation_name: String)
 signal camera_shake_requested(intensity: float, decay: float)
 
 #signal level_increase(character)
