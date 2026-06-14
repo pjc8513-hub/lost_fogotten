@@ -302,7 +302,10 @@ func _get_skill_stat_bonus(stat: String) -> float:
 @export_group("Resistances")
 @export var resist_fire: int = 0
 @export var resist_cold: int = 0
+@export var resist_earth: int = 0
+@export var resist_electric: int = 0
 @export var resist_dark: int = 0
+@export var resist_light: int = 0
 
 @export_group("Combat")
 @export var movement: int = 5
@@ -931,7 +934,9 @@ func _get_spell_mastery_bonus(element: int) -> int:
 	var total := 0
 	for skill in get_learned_skill_resources():
 		if _get_mastery_target_element(skill) == element:
-			total += max(1, skill.extra_damage_roll if skill.extra_damage_roll > 0 else 1)
+			var rank := get_skill_rank_value(skill.skill_id)
+			var rolls_per_rank = max(1, skill.extra_damage_roll)
+			total += rank * rolls_per_rank
 	return total
 
 func _get_mastery_target_element(skill: SkillData) -> int:
@@ -939,7 +944,7 @@ func _get_mastery_target_element(skill: SkillData) -> int:
 		return -1
 
 	if skill.element_mastery != SkillData.Element.NONE:
-		return _convert_skill_element_to_guitar_element(skill.element_mastery)
+		return _convert_skill_element_to_spell_element(skill.element_mastery)
 
 	var skill_text := "%s %s" % [skill.skill_id, skill.display_name]
 	var normalized := skill_text.to_lower()
@@ -962,7 +967,7 @@ func _get_mastery_target_element(skill: SkillData) -> int:
 
 	return -1
 
-func _convert_skill_element_to_guitar_element(skill_element: SkillData.Element) -> int:
+func _convert_skill_element_to_spell_element(skill_element: SkillData.Element) -> int:
 	match skill_element:
 		SkillData.Element.PHYSICAL:
 			return SpellData.Element.PHYSICAL

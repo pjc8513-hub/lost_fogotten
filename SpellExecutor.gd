@@ -66,7 +66,16 @@ func roll_spell_damage(spell: SpellData, caster: ClassData) -> int:
 	if dice.x <= 0 or dice.y <= 0:
 		return max(0, spell.amount)
 	var magic_bonus := caster.get_magic_amp() if caster != null else 0
-	return CombatLogic.roll_dice(dice.x, dice.y, magic_bonus)
+	return CombatLogic.roll_dice(get_spell_dice_rolls(spell, caster), dice.y, magic_bonus)
+
+func get_spell_dice_rolls(spell: SpellData, caster: ClassData) -> int:
+	if spell == null:
+		return 0
+	var dice := spell.get_damage_dice()
+	if dice.x <= 0:
+		return 0
+	var mastery_rolls := caster.get_spell_element_roll_bonus(spell.spellbook) if caster != null else 0
+	return dice.x + mastery_rolls
 
 func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
 	if raw_damage <= 0:
