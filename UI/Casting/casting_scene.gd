@@ -23,16 +23,21 @@ const BLANK_STAFF := preload("res://UI/Casting/Music_Staff_Blank.png")
 @onready var close_button: Button = $HBoxContainer/MarginContainer/VBoxContainer2/CloseButton
 
 var notes: Array[int] = []
+var note_buttons: Dictionary = {}
 
 func _ready() -> void:
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/FireNoteButton.pressed.connect(_add_note.bind(SpellData.Element.FIRE))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/ElectricNoteButton.pressed.connect(_add_note.bind(SpellData.Element.ELECTRIC))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/SpiritNoteButton.pressed.connect(_add_note.bind(SpellData.Element.SPIRIT))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/DarkNoteButton.pressed.connect(_add_note.bind(SpellData.Element.DARK))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/LightNoteButton.pressed.connect(_add_note.bind(SpellData.Element.LIGHT))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/WaterNoteButton.pressed.connect(_add_note.bind(SpellData.Element.WATER))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/PhysicalNoteButton.pressed.connect(_add_note.bind(SpellData.Element.PHYSICAL))
-	$HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/EarthNoteButton.pressed.connect(_add_note.bind(SpellData.Element.EARTH))
+	note_buttons = {
+		SpellData.Element.FIRE: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/FireNoteButton,
+		SpellData.Element.ELECTRIC: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/ElectricNoteButton,
+		SpellData.Element.SPIRIT: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/SpiritNoteButton,
+		SpellData.Element.DARK: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/DarkNoteButton,
+		SpellData.Element.LIGHT: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/LightNoteButton,
+		SpellData.Element.WATER: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/WaterNoteButton,
+		SpellData.Element.PHYSICAL: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/PhysicalNoteButton,
+		SpellData.Element.EARTH: $HBoxContainer/VBoxContainer/MarginContainer2/NoteButtonContainer/EarthNoteButton,
+	}
+	for element in note_buttons:
+		(note_buttons[element] as Button).pressed.connect(_add_note.bind(element))
 	cast_button.pressed.connect(_on_cast_pressed)
 	close_button.pressed.connect(close)
 	visibility_changed.connect(_on_visibility_changed)
@@ -46,7 +51,12 @@ func open() -> void:
 	if caster.blocks_spell_casting():
 		GameEvents.message_logged.emit("[color=purple]%s is prevented from casting.[/color]" % caster.member_name)
 		return
+	var available_spellbooks := caster.get_available_spellbooks()
+	if available_spellbooks.is_empty():
+		GameEvents.message_logged.emit("[color=gray]%s has not learned any spell mastery skills.[/color]" % caster.member_name)
+		return
 	_reset_composition()
+	_show_available_spellbooks(available_spellbooks)
 	show()
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	move_to_front()
@@ -61,6 +71,8 @@ func _add_note(element: int) -> void:
 		return
 	notes.append(element)
 	phrases[notes.size() - 1].texture = STAFF_TEXTURES[element]
+	if notes.size() == 1:
+		_show_all_note_buttons()
 	_update_cast_button()
 
 func _on_cast_pressed() -> void:
@@ -89,7 +101,16 @@ func _reset_composition() -> void:
 	notes.clear()
 	for phrase in phrases:
 		phrase.texture = BLANK_STAFF
+	_show_all_note_buttons()
 	_update_cast_button()
+
+func _show_available_spellbooks(available_spellbooks: Array[int]) -> void:
+	for element in note_buttons:
+		(note_buttons[element] as Button).visible = available_spellbooks.has(int(element))
+
+func _show_all_note_buttons() -> void:
+	for button in note_buttons.values():
+		(button as Button).show()
 
 func _update_cast_button() -> void:
 	cast_button.disabled = notes.is_empty()

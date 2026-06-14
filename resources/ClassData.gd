@@ -43,6 +43,13 @@ const CLASS_TEMPLATE_PATHS := {
 	Class_Names.ROGUE: "res://data/classes/rogue.tres",
 	Class_Names.MONK: "res://data/classes/monk.tres",
 }
+const CLASS_STARTING_SKILLS := {
+	Class_Names.SORCERER: ["FireMastery"],
+	Class_Names.CLERIC: ["SpiritMastery"],
+	Class_Names.BARD: ["SpiritMastery"],
+	Class_Names.DRUID: ["EarthMastery"],
+	Class_Names.MONK: ["PhysicalMastery"],
+}
 const CLASS_STAT_MAP = {
 	Class_Names.KNIGHT: {
 		"base_might": 12, "base_endurance": 12, "base_wisdom": 6, "base_dexterity": 8, "base_willpower": 5,
@@ -305,6 +312,14 @@ func get_spell_mastery_rank(element: int) -> int:
 			highest_rank = maxi(highest_rank, get_skill_rank_value(skill.skill_id))
 	return highest_rank
 
+func get_available_spellbooks() -> Array[int]:
+	var spellbooks: Array[int] = []
+	for skill in get_learned_skill_resources():
+		var element := _get_mastery_target_element(skill)
+		if element >= 0 and get_skill_rank_value(skill.skill_id) > 0 and not spellbooks.has(element):
+			spellbooks.append(element)
+	return spellbooks
+
 func _find_learned_skill_key(skill_id: String) -> String:
 	var normalized := skill_id.strip_edges().to_lower()
 	for learned_key in learned_skills.keys():
@@ -393,6 +408,7 @@ func create_party_member_instance() -> ClassData:
 	var member := duplicate(true) as ClassData
 	member.status_effects = []
 	member.cooldown = 0
+	member.ensure_starting_skills()
 	member.initialize_from_class_map(true)
 	return member
 
@@ -431,9 +447,16 @@ static func create_custom_member(class_id: Class_Names, member_name_value: Strin
 	member.base_dexterity = int(base_stats.get("dexterity", base_stats.get("Dexterity", member.base_dexterity)))
 	member.base_willpower = int(base_stats.get("willpower", base_stats.get("Willpower", member.base_willpower)))
 
+	member.ensure_starting_skills()
 	member.initialize_from_class_map(true)
 	member.suppress_stat_signal = false
 	return member
+
+func ensure_starting_skills() -> void:
+	var starting_skills: Array = CLASS_STARTING_SKILLS.get(get_resolved_class_name(), [])
+	for skill_id in starting_skills:
+		if _find_learned_skill_key(String(skill_id)).is_empty():
+			learned_skills[String(skill_id)] = 1
 
 static func get_class_display_name(class_id: Class_Names) -> String:
 	for key in Class_Names.keys():
