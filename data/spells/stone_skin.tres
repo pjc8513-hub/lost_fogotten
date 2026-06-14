@@ -13,5 +13,8 @@ element_notes = Array[int]([1, 5, 4])
 mana = 12
 is_aoe = true
 is_buff = true
+stats = {
+"armor_class": -2
+}
 sound_effect = "thud"
 shake_screen = true
