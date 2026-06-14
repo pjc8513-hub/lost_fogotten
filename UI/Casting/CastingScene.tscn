@@ -26,6 +26,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x0eo3")
 
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1911339398]
+layout_mode = 0
+offset_right = 414.0
+offset_bottom = 115.0
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=294756150]
 layout_mode = 0
 offset_right = 415.0
