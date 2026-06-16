@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://tpqttsqiiu8q"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_66poc"]
+
+[resource]
+script = ExtResource("1_66poc")
+spell_id = "RemoveParalysis"
+display_name = "Remove Paralysis"
+spell_level = 3
+description = "Cures paralysis from party member"
+spellbook = 5
+element_notes = Array[int]([5, 4, 3])
+mana = 7
+remove_status_effect = "paralyze"
+party_target_animation = "cleanse"
+sound_effect = "heal"

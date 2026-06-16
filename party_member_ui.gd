@@ -9,7 +9,8 @@ extends PanelContainer
 @onready var status_icon = $HBoxContainer/StatusIcon
 
 # combatFX layer for animation
-@onready var flash_overlay: ColorRect = $HBoxContainer/PortraitOne/CombatFX/FlashOverlay
+
+@onready var combat_fx: Control = $HBoxContainer/PortraitOne/CombatFX
 @onready var fx_sprite: Sprite2D = $HBoxContainer/PortraitOne/CombatFX/FXSprite
 @onready var damage_label: Label = $HBoxContainer/PortraitOne/CombatFX/DamageLabel
 @onready var animation_player: AnimationPlayer = $HBoxContainer/PortraitOne/CombatFX/AnimationPlayer
@@ -120,6 +121,11 @@ func update_ui():
 		portrait.texture = preload("res://assets/portraits/dead_p.png")
 	else:
 		portrait.texture = my_member_data.sprite_texture
+	_sync_status_overlay()
+
+func _sync_status_overlay() -> void:
+	if combat_fx != null and combat_fx.has_method("set_statuses"):
+		combat_fx.call("set_statuses", my_member_data.status_effects)
 
 func _flash_portrait_on_damage() -> void:
 	if portrait == null:
@@ -170,7 +176,10 @@ func play_combat_fx(animation_name: String) -> void:
 	await animation_player.animation_finished
 	fx_sprite.hide()
 	if combat_fx != null:
-		combat_fx.hide()
+		if combat_fx.has_method("_refresh_visibility"):
+			combat_fx.call("_refresh_visibility")
+		else:
+			combat_fx.hide()
 
 
 func _on_gui_input(event: InputEvent) -> void:

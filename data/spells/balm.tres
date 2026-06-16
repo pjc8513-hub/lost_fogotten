@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cd4mag74foi5h"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_1hto8"]
+
+[resource]
+script = ExtResource("1_1hto8")
+spell_id = "balm"
+display_name = "Balm"
+description = "Removes burn from party member"
+spellbook = 2
+element_notes = Array[int]([2, 5, 4])
+mana = 9
+damage = "1d9"
+is_heal = true
+remove_status_effect = "burn"
+party_target_animation = "cleanse"
+sound_effect = "heal"

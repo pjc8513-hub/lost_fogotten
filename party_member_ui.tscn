@@ -1,10 +1,19 @@
 [gd_scene format=3 uid="uid://c2osn80j6saxq"]
 
 [ext_resource type="Script" uid="uid://bhdj7ejekuvtb" path="res://party_member_ui.gd" id="1_t3qfy"]
+[ext_resource type="Script" uid="uid://bx3l47fy3drep" path="res://combat_fx.gd" id="2_aoqp7"]
 [ext_resource type="Texture2D" uid="uid://6jrj76f1ynxh" path="res://assets/portraits/combat_fx.png" id="2_t3qfy"]
+[ext_resource type="Shader" uid="uid://b7n2jpbdo7g27" path="res://data/shaders/status_overlay.gdshader" id="4_dapd0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qui0h"]
 bg_color = Color(0.08078333, 0.08078336, 0.08078327, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dapd0"]
+shader = ExtResource("4_dapd0")
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/line_count = 15.0
+shader_parameter/line_thickness = 0.3
+shader_parameter/speed = 1.0
 
 [sub_resource type="Animation" id="Animation_aoqp7"]
 length = 0.001
@@ -137,15 +146,21 @@ flip_h = true
 visible = false
 custom_minimum_size = Vector2(69, 0)
 anchors_preset = 0
-offset_right = 69.0
-offset_bottom = 100.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("2_aoqp7")
 
-[node name="FlashOverlay" type="ColorRect" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=1108951565]
+[node name="StatusOverlay" type="ColorRect" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=1108951565]
 visible = false
+material = SubResource("ShaderMaterial_dapd0")
 layout_mode = 0
-offset_right = 69.0
-offset_bottom = 69.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(1, 1, 1, 0.8666667)
 
 [node name="FXSprite" type="Sprite2D" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=455538879]

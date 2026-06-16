@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://f1yu3e8doury"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_onsdn"]
+
+[resource]
+script = ExtResource("1_onsdn")
+spell_id = "RestoreVision"
+display_name = "Restore Vision"
+spell_level = 2
+description = "Restores vision to a party member"
+spellbook = 7
+element_notes = Array[int]([7, 5, 4, 3])
+mana = 11
+remove_status_effect = "blind"
+party_target_animation = "cleanse"
+sound_effect = "heal"

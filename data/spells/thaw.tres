@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ck3osdtivcvpm"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_wdfqv"]
+
+[resource]
+script = ExtResource("1_wdfqv")
+spell_id = "thaw"
+display_name = "Thaw"
+spell_level = 2
+description = "Thaw a frozen party member"
+element_notes = Array[int]([0, 4, 5])
+mana = 12
+remove_status_effect = "frozen"
+party_target_animation = "cleanse"
+sound_effect = "heal"

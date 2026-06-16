@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bb1eqyeov67o5"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_uf1i7"]
+
+[resource]
+script = ExtResource("1_uf1i7")
+spell_id = "Remedy"
+display_name = "Remedy"
+spell_level = 3
+description = "Cures disease from party member"
+spellbook = 5
+element_notes = Array[int]([5, 4, 2, 1])
+mana = 15
+remove_status_effect = "disease"
+party_target_animation = "cleanse"
+sound_effect = "heal"

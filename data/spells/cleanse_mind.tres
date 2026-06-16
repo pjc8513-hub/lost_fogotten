@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bi37vefuelu0i"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_5mnwr"]
+
+[resource]
+script = ExtResource("1_5mnwr")
+spell_id = "CleanseMind"
+display_name = "Cleanse Mind"
+spell_level = 3
+description = "Removes confusion from party member"
+spellbook = 2
+element_notes = Array[int]([2, 4, 7])
+mana = 15
+remove_status_effect = "confusion"
+party_target_animation = "cleanse"
+sound_effect = "heal"

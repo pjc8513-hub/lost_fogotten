@@ -16,5 +16,5 @@ is_buff = true
 stats = {
 "armor_class": -2
 }
-sound_effect = "thud"
-shake_screen = true
+party_target_animation = "block"
+sound_effect = "buff"
