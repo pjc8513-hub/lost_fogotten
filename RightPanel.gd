@@ -4,6 +4,7 @@ extends VBoxContainer
 
 # Direct references to your child sub-views inside the TabContainer
 @onready var skills_view = $TabContainer/SkillsView 
+@onready var spells_view = $TabContainer/SpellsView
 
 var current_character: ClassData = null
 
@@ -32,6 +33,8 @@ func _on_skills():
 func _on_spells():
 	tabs.current_tab = 2
 	_set_active_button($ButtonBar/SpellButton)
+	if current_character and spells_view.has_method("update_ui"):
+		spells_view.update_ui()
 
 func _on_stats():
 	tabs.current_tab = 3
@@ -52,3 +55,5 @@ func _on_character_changed(character: ClassData):
 	# Inform the skills sub-panel who the new active party member is
 	if skills_view and skills_view.has_method("set_character"):
 		skills_view.set_character(character)
+	if spells_view and spells_view.has_method("set_character"):
+		spells_view.set_character(character)

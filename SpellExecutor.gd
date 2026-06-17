@@ -16,7 +16,7 @@ func build_request(spell: SpellData, caster: ClassData) -> SpellCastRequest:
 		request.validation_errors.append("%s cannot cast while defeated." % caster.member_name)
 	elif caster.blocks_spell_casting():
 		request.validation_errors.append("%s is prevented from casting." % caster.member_name)
-	elif caster.get_spell_mastery_rank(spell.spellbook) < spell.spell_level:
+	elif not meets_mastery_requirement(spell, caster):
 		request.validation_errors.append(
 			"%s needs %s Mastery rank %d to cast %s." % [
 				caster.member_name,
@@ -102,6 +102,7 @@ func execute_request(
 		caster.current_mp -= remaining_mana_cost
 		result.success = true
 		result.mana_spent = spell.mana
+		PartyState.discover_spell(spell)
 		return result
 
 	var targets := _resolve_targets(spell, caster, target_enemy, target_party_member)
@@ -125,6 +126,7 @@ func execute_request(
 		result.affected_targets.append(target)
 
 	result.success = true
+	PartyState.discover_spell(spell)
 	return result
 
 func roll_spell_damage(spell: SpellData, caster: ClassData) -> int:
@@ -144,6 +146,9 @@ func get_spell_dice_rolls(spell: SpellData, caster: ClassData) -> int:
 		return 0
 	var mastery_rolls := caster.get_spell_element_roll_bonus(spell.spellbook) if caster != null else 0
 	return dice.x + mastery_rolls
+
+func meets_mastery_requirement(spell: SpellData, caster: ClassData) -> bool:
+	return spell != null and caster != null and caster.get_spell_mastery_rank(spell.spellbook) >= spell.spell_level
 
 func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
 	if raw_damage <= 0:

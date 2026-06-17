@@ -130,11 +130,16 @@ metadata/_tab_index = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/SpellsView" unique_id=1326981512]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="SpellList" type="ItemList" parent="TabContainer/SpellsView/ScrollContainer" unique_id=821974933]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="StatsView" type="VBoxContainer" parent="TabContainer" unique_id=27764257]
 layout_mode = 2

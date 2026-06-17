@@ -3,6 +3,7 @@ extends Node
 
 signal roster_changed
 signal active_party_changed
+signal discovered_spells_changed
 signal magic_torch_toggled(is_active: bool)  # Emitted when magic torch turns on/off
 
 const DEFAULT_PARTY_TEMPLATES: Array[ClassData] = [
@@ -54,6 +55,7 @@ var party_torches: int = 2:
 		party_torches = max(0, value)
 		GameEvents.torch_changed.emit(party_torches)
 var is_torch_lit: bool = false # Defaults to off when entering the first zone
+var discovered_spell_ids: Array[String] = []
 
 # Magic Torch (Mana-based) tracking
 var is_magic_torch_lit: bool = false
@@ -98,6 +100,7 @@ func select_member_by_reference(member: ClassData, allow_during_combat: bool = f
 func reset_default_party() -> void:
 	roster.clear()
 	active_party.clear()
+	clear_discovered_spells()
 
 	for template in DEFAULT_PARTY_TEMPLATES:
 		if template == null:
@@ -170,7 +173,36 @@ func can_set_out() -> bool:
 func clear_all_party_data() -> void:
 	roster.clear()
 	active_party.clear()
+	clear_discovered_spells()
 	_emit_party_state_changed()
+
+func discover_spell(spell: SpellData) -> bool:
+	if spell == null:
+		return false
+	var spell_id := spell.spell_id.strip_edges()
+	if spell_id.is_empty() or discovered_spell_ids.has(spell_id):
+		return false
+
+	discovered_spell_ids.append(spell_id)
+	discovered_spells_changed.emit()
+	return true
+
+func has_discovered_spell(spell: SpellData) -> bool:
+	return spell != null and discovered_spell_ids.has(spell.spell_id.strip_edges())
+
+func get_discovered_spells() -> Array[SpellData]:
+	var spells: Array[SpellData] = []
+	for spell_id in discovered_spell_ids:
+		var spell := SpellRegistry.find_by_id(spell_id)
+		if spell != null:
+			spells.append(spell)
+	return spells
+
+func clear_discovered_spells() -> void:
+	if discovered_spell_ids.is_empty():
+		return
+	discovered_spell_ids.clear()
+	discovered_spells_changed.emit()
 
 func _emit_party_state_changed() -> void:
 	roster_changed.emit()
