@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgtlm45gpqfim"
-path="res://.godot/imported/stone.png-98ffe436082848500fd994ae48352304.ctex"
+uid="uid://vogov0laqbe7"
+path="res://.godot/imported/spells.png-5071de0f49909681772985b7ed3d7a9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/stone.png"
-dest_files=["res://.godot/imported/stone.png-98ffe436082848500fd994ae48352304.ctex"]
+source_file="res://assets/icons/spells.png"
+dest_files=["res://.godot/imported/spells.png-5071de0f49909681772985b7ed3d7a9e.ctex"]
 
 [params]
 
