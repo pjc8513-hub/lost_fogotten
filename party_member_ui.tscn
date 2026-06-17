@@ -161,6 +161,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 color = Color(1, 1, 1, 0.8666667)
 
 [node name="FXSprite" type="Sprite2D" parent="HBoxContainer/PortraitOne/CombatFX" unique_id=455538879]

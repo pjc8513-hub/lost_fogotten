@@ -35,6 +35,7 @@ func _enter_tree():
 	
 func _ready():
 	#print("[FRAME ", Engine.get_process_frames(), "] Portrait ", name, " _ready start member_index=", member_index, " pending_index=", _pending_member_index)
+	tooltip_text = "party_member"
 	_create_styles()
 	GameEvents.selected_character_changed.connect(_on_selection_changed)
 	GameEvents.combat_status_changed.connect(_on_combat_status_changed)
@@ -122,10 +123,68 @@ func update_ui():
 	else:
 		portrait.texture = my_member_data.sprite_texture
 	_sync_status_overlay()
+	tooltip_text = _get_tooltip_trigger_text()
 
 func _sync_status_overlay() -> void:
 	if combat_fx != null and combat_fx.has_method("set_statuses"):
 		combat_fx.call("set_statuses", my_member_data.status_effects)
+
+func _get_tooltip_trigger_text() -> String:
+	if my_member_data == null:
+		return ""
+	return "%s_stats" % my_member_data.member_name
+
+func _make_custom_tooltip(_for_text: String) -> Object:
+	if my_member_data == null:
+		return null
+
+	var panel := PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.07, 0.09, 0.95)
+	style.border_color = Color(0.75, 0.65, 0.35, 1.0)
+	style.border_width_left = 1
+	style.border_width_top = 1
+	style.border_width_right = 1
+	style.border_width_bottom = 1
+	style.content_margin_left = 8
+	style.content_margin_top = 6
+	style.content_margin_right = 8
+	style.content_margin_bottom = 6
+	panel.add_theme_stylebox_override("panel", style)
+
+	var lines := VBoxContainer.new()
+	lines.add_theme_constant_override("separation", 2)
+	panel.add_child(lines)
+
+	_add_tooltip_label(lines, my_member_data.member_name, Color(1.0, 0.86, 0.35, 1.0))
+	_add_tooltip_label(lines, "HP: %d / %d" % [my_member_data.current_hp, my_member_data.get_max_hp()])
+	_add_tooltip_label(lines, "MP: %d / %d" % [my_member_data.current_mp, my_member_data.get_max_mp()])
+	_add_tooltip_label(lines, "Status: %s" % _get_status_tooltip_text())
+
+	return panel
+
+func _add_tooltip_label(parent: VBoxContainer, text: String, color: Color = Color.WHITE) -> void:
+	var tooltip_label := Label.new()
+	tooltip_label.text = text
+	tooltip_label.add_theme_color_override("font_color", color)
+	tooltip_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	tooltip_label.custom_minimum_size.x = 160
+	parent.add_child(tooltip_label)
+
+func _get_status_tooltip_text() -> String:
+	if my_member_data.status_effects.is_empty():
+		return "None"
+
+	var statuses: Array[String] = []
+	for status_name in my_member_data.status_effects:
+		var status_type := StatusEffects.from_string(status_name)
+		if status_type != StatusEffects.Type.NONE:
+			statuses.append(StatusEffects.get_display_name(status_type))
+		else:
+			statuses.append(status_name.capitalize())
+	return ", ".join(statuses)
 
 func _flash_portrait_on_damage() -> void:
 	if portrait == null:
