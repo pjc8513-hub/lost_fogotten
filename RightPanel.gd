@@ -13,6 +13,7 @@ func _ready():
 	$ButtonBar/SkillsButton.pressed.connect(_on_skills)
 	$ButtonBar/StatsButton.pressed.connect(_on_stats)
 	$ButtonBar/QuestButton.pressed.connect(_on_quests)
+	$ButtonBar/SpellButton.pressed.connect(_on_spells)
 	
 	# Default selection look
 	_on_inventory()
@@ -28,12 +29,16 @@ func _on_skills():
 	if current_character and skills_view.has_method("update_ui"):
 		skills_view.update_ui()
 
-func _on_stats():
+func _on_spells():
 	tabs.current_tab = 2
+	_set_active_button($ButtonBar/SpellButton)
+
+func _on_stats():
+	tabs.current_tab = 3
 	_set_active_button($ButtonBar/StatsButton)
 
 func _on_quests():
-	tabs.current_tab = 3
+	tabs.current_tab = 4
 	_set_active_button($ButtonBar/QuestButton)
 
 func _set_active_button(active_button):
