@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://2thvtfqur1ry"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_q7fwh"]
+
+[resource]
+script = ExtResource("1_q7fwh")
+spell_id = "destroy_undead"
+display_name = "Destroy Undead"
+spell_level = 2
+description = "AOE damage against undead enemies"
+spellbook = 4
+element_notes = Array[int]([4, 1, 7, 5])
+mana = 8
+damage = "4d8"
+enemy_types = 1
+is_aoe = true
+sound_effect = "hit"

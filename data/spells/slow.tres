@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bt5nd8kg86qst"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_k6cvs"]
+
+[resource]
+script = ExtResource("1_k6cvs")
+spell_id = "slow"
+display_name = "Slow"
+spell_level = 2
+description = "Slows target"
+spellbook = 1
+element_notes = Array[int]([1, 5, 4, 6])
+mana = 10
+is_debuff = true
+apply_status = "slow"
+stats = {
+"attack_speed": 0
+}
+duration = 5
+sound_effect = "hit"
+buff_icon = null

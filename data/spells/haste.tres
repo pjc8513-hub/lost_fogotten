@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://qjjy2yumwv5e"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_f4lxq"]
+
+[resource]
+script = ExtResource("1_f4lxq")
+spell_id = "haste"
+display_name = "Haste"
+spell_level = 2
+description = "Add temporary bonus to attack speed for 30 steps"
+spellbook = 5
+element_notes = Array[int]([5, 0, 4, 3])
+mana = 11
+is_aoe = true
+is_buff = true
+stats = {
+"attack_speed": 2
+}
+duration = 30
+duration_mode = 1
+party_target_animation = "heal"
+sound_effect = "buff"
+buff_icon = null

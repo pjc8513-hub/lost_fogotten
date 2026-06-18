@@ -292,8 +292,6 @@ func _can_cast_without_mana(spell: SpellData) -> bool:
 	return special_id in ["torchlight", "torch_light"] and PartyState.is_magic_torch_lit
 
 func _get_spellbook_mastery_name(element: int) -> String:
-	if element == SpellData.Element.WATER:
-		return "Ice"
 	return SpellData.element_name(element)
 
 func _is_reachable_enemy(enemy: Enemy) -> bool:

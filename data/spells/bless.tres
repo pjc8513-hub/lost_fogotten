@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://egbu1dlcvtl"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_37h3m"]
+
+[resource]
+script = ExtResource("1_37h3m")
+spell_id = "bless"
+display_name = "Bless"
+description = "Add temporary bonus to accuracy  for 30 steps"
+spellbook = 7
+element_notes = Array[int]([7, 4, 5])
+mana = 9
+is_aoe = true
+is_buff = true
+stats = {
+"accuracy": 2
+}
+duration = 30
+duration_mode = 1
+party_target_animation = "heal"
+sound_effect = "buff"
+buff_icon = "res://assets/icons/accuracy.png"

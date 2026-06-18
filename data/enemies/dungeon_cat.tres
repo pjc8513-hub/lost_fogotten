@@ -19,7 +19,6 @@ gold = 50
 ai_behavior = "Hunter"
 sprite_texture = ExtResource("2")
 resist_fire = 10
-resist_cold = 10
 resist_dark = 10
 custom_scale = Vector3(0.35, 0.35, 0.35)
 custom_position = Vector3(0, -0.15, 0.1)

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://q5n7qwasxoar"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_yg5l1"]
+
+[resource]
+script = ExtResource("1_yg5l1")
+spell_id = "sleep"
+display_name = "Sleep"
+description = "AOE attempts to  put enemies in range to sleep"
+spellbook = 6
+element_notes = Array[int]([6, 4, 1])
+mana = 10
+is_aoe = true
+is_debuff = true
+apply_status = "sleep"
+stats = {
+"accuracy": 0
+}
+duration = 3
+sound_effect = "hit"
+buff_icon = null

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dssj6x668psk2"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_qb4do"]
+
+[resource]
+script = ExtResource("1_qb4do")
+spell_id = "exorcism"
+display_name = "Exorcism"
+spell_level = 3
+description = "Single target damage against demon enemies"
+spellbook = 7
+element_notes = Array[int]([7, 0, 4, 1])
+mana = 15
+damage = "5d12"
+enemy_types = 4
+sound_effect = "fireball"
+projectile_scene_path = "uid://dsgjuronhrp2d"
+buff_icon = null

@@ -39,7 +39,7 @@ enum Enemy_Type { NONE, UNDEAD, BEAST, HUMANOID, DEMON, DRAGON }
 
 @export var resist_fire: int = 0
 @export var resist_physical: int = 0
-@export var resist_cold: int = 0
+@export var resist_water: int = 0
 @export var resist_earth: int = 0
 @export var resist_electric: int = 0
 @export var resist_light: int = 0
@@ -74,7 +74,7 @@ func get_resistance(element: String) -> int:
 	match element:
 		"fire": return resist_fire
 		"physical": return resist_physical
-		"cold": return resist_cold
+		"water": return resist_water
 		"earth": return resist_earth
 		"electric": return resist_electric
 		"light": return resist_light

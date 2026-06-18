@@ -10,4 +10,5 @@ description = "Summons or extinguishes a mana-fed light."
 spellbook = 7
 element_notes = Array[int]([7, 0, 1])
 mana = 1
+buff_icon = "res://assets/icons/torch.png"
 special_effect = "torchlight"

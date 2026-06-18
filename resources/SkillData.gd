@@ -12,7 +12,7 @@ enum Element {
 	NONE,
 	PHYSICAL,
 	FIRE, 
-	ICE, 
+	WATER, 
 	ELECTRIC, 
 	EARTH, 
 	SPIRIT, 

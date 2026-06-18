@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dejjl0rpcugsq"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_tc12c"]
+
+[resource]
+script = ExtResource("1_tc12c")
+spell_id = "doom_drone"
+display_name = "Doom Drone"
+spell_level = 4
+description = "Deals damage to all party members then deals total damage to single target"
+spellbook = 6
+element_notes = Array[int]([6, 5, 6, 4])
+mana = 10
+is_debuff = true
+apply_status = "blind"
+stats = {
+"accuracy": 0
+}
+duration = 5
+sound_effect = "hit"
+buff_icon = null

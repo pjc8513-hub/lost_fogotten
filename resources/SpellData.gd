@@ -17,6 +17,8 @@ enum DurationMode {
 	WORLD_STEPS
 }
 
+enum Enemy_types { ANY, UNDEAD, BEAST, HUMANOID, DEMON, DRAGON }
+
 @export_group("Identity")
 @export var spell_id: String = ""
 @export var display_name: String = ""
@@ -30,12 +32,15 @@ enum DurationMode {
 
 @export_group("Effects")
 @export_placeholder("3d8") var damage: String = ""
+@export var enemy_types: Enemy_types = 0
 @export var is_aoe: bool = false
 @export var is_dot: bool = false
+@export var is_debuff = false
 @export var is_heal: bool = false
 @export var is_buff: bool = false
 @export var is_resurrection: bool = false
 @export var remove_status_effect: String = ""
+@export var apply_status: String = ""
 @export var stats: Dictionary = {}
 @export var amount: int = 0
 @export_range(0, 999, 1) var duration: int = 0
@@ -45,6 +50,7 @@ enum DurationMode {
 @export_enum("none", "heal", "cleanse", "block", "debuff") var party_target_animation: String = "none"
 @export_enum("none", "heal", "buff", "ui_click", "loot_pickup", "hit", "fireball", "thud") var sound_effect: String = "none"
 @export_file("*.tscn") var projectile_scene_path: String = ""
+@export_file_path("*.png") var buff_icon
 @export_range(0.0, 10.0, 0.05) var projectile_travel_time: float = 0.5
 @export_range(0.0, 10.0, 0.05) var impact_delay: float = 0.0
 @export var shake_screen: bool = false

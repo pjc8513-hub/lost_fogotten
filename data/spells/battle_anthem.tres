@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://h5nfxolk0adg"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_llyw0"]
+
+[resource]
+script = ExtResource("1_llyw0")
+spell_id = "battle_anthem"
+display_name = "Battle Anthem"
+spell_level = 2
+description = "Add temporary bonus to might for 30 steps"
+spellbook = 5
+element_notes = Array[int]([5, 1, 0, 4])
+mana = 9
+is_aoe = true
+is_buff = true
+stats = {
+"might": 10
+}
+duration = 30
+duration_mode = 1
+party_target_animation = "heal"
+sound_effect = "buff"
+buff_icon = "res://assets/icons/might.png"

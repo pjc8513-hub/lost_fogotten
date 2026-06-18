@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://2anx1iw24kyb"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_0q37x"]
+
+[resource]
+script = ExtResource("1_0q37x")
+spell_id = "dov"
+display_name = "DOV"
+spell_level = 4
+description = "Single target damage selecting the enemy's lowest resistance category"
+spellbook = 7
+element_notes = Array[int]([7, 0, 2, 3])
+mana = 15
+damage = "1d100"
+sound_effect = "hit"
+buff_icon = null

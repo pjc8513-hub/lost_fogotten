@@ -7,7 +7,7 @@ script = ExtResource("1_kr2ha")
 spell_id = "stoneskin"
 display_name = "Stone Skin"
 spell_level = 2
-description = "-2 AC for party members for one hour"
+description = "-2 AC for party members for 30 steps"
 spellbook = 1
 element_notes = Array[int]([1, 5, 4])
 mana = 12
@@ -16,5 +16,8 @@ is_buff = true
 stats = {
 "armor_class": -2
 }
+duration = 30
+duration_mode = 1
 party_target_animation = "block"
 sound_effect = "buff"
+buff_icon = "res://assets/icons/stone_skin.png"

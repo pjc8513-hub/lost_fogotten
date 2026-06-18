@@ -348,7 +348,7 @@ func _get_skill_stat_bonus(stat: String) -> float:
 
 @export_group("Resistances")
 @export var resist_fire: int = 0
-@export var resist_cold: int = 0
+@export var resist_water: int = 0
 @export var resist_earth: int = 0
 @export var resist_electric: int = 0
 @export var resist_dark: int = 0
@@ -628,7 +628,7 @@ func get_resistance(element: String) -> int:
 			equipment_resistance += inst.get_resistance(element)
 	match element:
 		"fire": return resist_fire + equipment_resistance
-		"cold", "water": return resist_cold + equipment_resistance
+		"water": return resist_water + equipment_resistance
 		"dark": return resist_dark + equipment_resistance
 		_: return equipment_resistance
 
@@ -1022,7 +1022,7 @@ func _convert_skill_element_to_spell_element(skill_element: SkillData.Element) -
 			return SpellData.Element.PHYSICAL
 		SkillData.Element.FIRE:
 			return SpellData.Element.FIRE
-		SkillData.Element.ICE:
+		SkillData.Element.WATER:
 			return SpellData.Element.WATER
 		SkillData.Element.ELECTRIC:
 			return SpellData.Element.ELECTRIC

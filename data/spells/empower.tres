@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://b0rsru65af2ij"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_aiask"]
+
+[resource]
+script = ExtResource("1_aiask")
+spell_id = "empower"
+display_name = "empower"
+spell_level = 3
+description = "Add temporary bonus to magic  for 30 steps"
+spellbook = 2
+element_notes = Array[int]([2, 3, 4, 0])
+mana = 13
+is_aoe = true
+is_buff = true
+stats = {
+"magic_amp": 10
+}
+duration = 30
+duration_mode = 1
+party_target_animation = "heal"
+sound_effect = "buff"
+buff_icon = "res://assets/icons/empower.png"

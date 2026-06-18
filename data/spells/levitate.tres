@@ -12,4 +12,5 @@ element_notes = Array[int]([4, 5, 3])
 mana = 4
 duration = 20
 duration_mode = 1
+buff_icon = "res://assets/icons/levitate.png"
 special_effect = "levitate"

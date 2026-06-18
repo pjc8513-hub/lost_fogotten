@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dccbu1umqs15n"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_ysiav"]
+
+[resource]
+script = ExtResource("1_ysiav")
+spell_id = "freeze"
+display_name = "Freeze"
+spell_level = 3
+description = "Freezes target"
+spellbook = 2
+element_notes = Array[int]([2, 5, 4, 6])
+mana = 14
+damage = "1d12"
+is_debuff = true
+apply_status = "frozen"
+sound_effect = "hit"
+buff_icon = null

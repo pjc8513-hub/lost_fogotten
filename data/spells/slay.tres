@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bfl08nurk46af"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_4btn6"]
+
+[resource]
+script = ExtResource("1_4btn6")
+spell_id = "slay"
+display_name = "Slay"
+spell_level = 3
+description = "Single target damage against dragon enemies"
+spellbook = 5
+element_notes = Array[int]([5, 2, 3, 7])
+mana = 17
+damage = "5d12"
+enemy_types = 5
+sound_effect = "fireball"
+projectile_scene_path = "uid://dsgjuronhrp2d"
+buff_icon = null
