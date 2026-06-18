@@ -14,7 +14,9 @@ enum Type {
 	BLIND,
 	DISEASE,
 	POISON,
-	BURN
+	BURN,
+	SLOW,
+	SLEEP
 }
 
 # How each status is cleared. Flags are strings so they're easy to check.
@@ -31,6 +33,8 @@ const CLEAR_CONDITIONS: Dictionary = {
 	Type.DISEASE:    ["spell", "item", "temple", "rest", "death"],
 	Type.POISON:     ["spell", "item", "temple", "death"],
 	Type.BURN:       ["rest", "spell", "item", "temple", "death"],
+	Type.SLOW:       ["rest", "spell", "item", "temple", "death"],
+	Type.SLEEP:      ["rest", "spell", "item", "temple", "death"],
 }
 
 const DEFAULT_SAVE_DC := 10
@@ -42,13 +46,18 @@ const BURN_BONUS_DIE_SIZE := 8
 # Stat modifiers each status applies (used by ClassData calculations)
 const STAT_MODIFIERS: Dictionary = {
 	Type.FEAR:    {"armor_class": 5, "accuracy": -3},
-	Type.BLIND:   {"accuracy": -5},
+	Type.BLIND:   {"accuracy": -2},
 	Type.WEAKNESS: {"might": -999},  # treated as "set to 0" in get_might()
+	Type.BURN:    {"armor_class": 2},
 }
+
+const ONE_TURN_STATUSES: Array = [
+	Type.STUN
+]
 
 # Whether a status skips the actor's turn entirely
 const SKIPS_TURN: Array = [
-	Type.STUN, Type.PARALYZE, Type.STONE_SKIN, Type.FROZEN
+	Type.STUN, Type.PARALYZE, Type.STONE_SKIN, Type.FROZEN, Type.SLEEP
 ]
 
 # Whether a status blocks spell casting
@@ -105,6 +114,9 @@ static func blocks_healing(status_name: String) -> bool:
 static func stat_modifier(status_name: String, modifier_name: String) -> int:
 	var modifiers: Dictionary = STAT_MODIFIERS.get(from_string(status_name), {})
 	return int(modifiers.get(modifier_name, 0))
+
+static func expires_after_skipped_turn(status_name: String) -> bool:
+	return ONE_TURN_STATUSES.has(from_string(status_name))
 
 static func calculate_save_dc(base_dc: int, source_level: int = 0) -> int:
 	var dc := base_dc if base_dc > 0 else DEFAULT_SAVE_DC

@@ -26,8 +26,9 @@ func execute():
 	#print("[AttackCommand] chosen target=", target.member_name)
 
 	var attacks = 1
-	if actor.enemy_data.attack_speed > 0:
-		if randi_range(1, 100) <= (actor.enemy_data.attack_speed * 10):
+	var attack_speed = actor.enemy_data.get_attack_speed() if actor.enemy_data.has_method("get_attack_speed") else actor.enemy_data.attack_speed
+	if attack_speed > 0:
+		if randi_range(1, 100) <= (attack_speed * 10):
 			attacks = 2
 	#print("[AttackCommand] attacks=", attacks)
 

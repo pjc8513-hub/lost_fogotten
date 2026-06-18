@@ -189,7 +189,12 @@ const CLASS_STAT_MAP = {
 @export var status_effects: Array[String] = []
 @export var current_hp: int = 0:
 	set(value):
+		var old_hp = current_hp
 		current_hp = clamp(value, 0, get_max_hp())
+		if current_hp < old_hp and old_hp > 0:
+			if has_status_effect("sleep"):
+				clear_status_effect("sleep")
+				GameEvents.message_logged.emit("[color=yellow]%s wakes up from sleep![/color]" % member_name)
 		# Alert the UI that this specific resource changed
 		_emit_stats_changed()
 			

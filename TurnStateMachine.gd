@@ -147,6 +147,8 @@ func _run_enemy_turns(enemies: Array):
 	if enemy.enemy_data.skips_turn_from_status():
 		print("[TurnStateMachine] status-blocked enemy skips turn:", enemy.enemy_data.enemy_name)
 		GameEvents.message_logged.emit("[color=yellow]" + enemy.enemy_data.enemy_name + " cannot act and skips their turn![/color]")
+		if enemy.enemy_data.has_method("expire_statuses_after_skipped_turn"):
+			enemy.enemy_data.expire_statuses_after_skipped_turn()
 		await get_tree().create_timer(0.5).timeout
 		_run_enemy_turns(enemies)
 		return

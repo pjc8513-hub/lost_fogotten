@@ -54,6 +54,8 @@ func _ready():
 	#enemy.global_position = Vector3(spawn_pos.x, 0, spawn_pos.y)
 	#grid_position = World.world_to_grid(global_position)
 	add_to_group("enemies")
+	if not GameEvents.enemy_took_damage.is_connected(_on_any_enemy_took_damage):
+		GameEvents.enemy_took_damage.connect(_on_any_enemy_took_damage)
 	
 	if enemy_data and sprite:
 		_apply_enemy_data()
@@ -508,6 +510,17 @@ func _on_turn_complete() -> void:
 
 func get_accuracy() -> int:
 	return enemy_data.get_accuracy() if enemy_data else 0
+
+func apply_status_effect(status_name: String, duration_rounds: int = -1, persists_after_combat: bool = true, save_dc: int = 0) -> void:
+	if enemy_data != null:
+		enemy_data.apply_status_effect(status_name, duration_rounds, persists_after_combat, save_dc)
+
+func _on_any_enemy_took_damage(enemy: Enemy, damage: int) -> void:
+	if enemy != self or damage <= 0 or enemy_data == null:
+		return
+	if enemy_data.has_status_effect("sleep"):
+		enemy_data.clear_status_effect("sleep")
+		GameEvents.message_logged.emit("[color=yellow]%s wakes up from sleep![/color]" % enemy_data.enemy_name)
 
 
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:

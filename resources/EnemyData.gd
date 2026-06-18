@@ -56,6 +56,8 @@ enum Enemy_Type { NONE, UNDEAD, BEAST, HUMANOID, DEMON, DRAGON }
 var combat_buffs: Dictionary = {}
 var status_metadata: Dictionary = {}
 
+const SAVE_THROW_DIE_SIDES := 20
+
 func get_ai_enum() -> AIBehavior:
 	match ai_behavior:
 		"Hunter": return AIBehavior.HUNTER
@@ -86,6 +88,11 @@ func get_accuracy() -> int:
 
 func get_armor_class() -> int:
 	return armor_class + _get_combat_bonus("armor_class") + _get_status_stat_modifier("armor_class")
+
+func get_attack_speed() -> int:
+	if has_status_effect("slow"):
+		return 0
+	return attack_speed + _get_combat_bonus("attack_speed")
 
 func get_bonus_damage() -> int:
 	return bonus_damage + _get_combat_bonus("bonus_damage")
@@ -159,6 +166,7 @@ func apply_status_effect(status_name: String, duration_rounds: int = -1, persist
 		"persists_after_combat": persists_after_combat,
 		"save_dc": save_dc
 	}
+	GameEvents.enemy_status_changed.emit(self)
 
 func clear_status_effect(status_name: String) -> void:
 	var normalized := StatusEffects.normalize_id(status_name)
@@ -166,6 +174,7 @@ func clear_status_effect(status_name: String) -> void:
 		return
 	status_effects.erase(normalized)
 	status_metadata.erase(normalized)
+	GameEvents.enemy_status_changed.emit(self)
 
 func clear_statuses_by_condition(condition: String) -> void:
 	for status_name in status_effects.duplicate():
@@ -182,6 +191,11 @@ func skips_turn_from_status() -> bool:
 			return true
 	return false
 
+func expire_statuses_after_skipped_turn() -> void:
+	for status_name in status_effects.duplicate():
+		if StatusEffects.expires_after_skipped_turn(status_name):
+			clear_status_effect(status_name)
+
 func clear_temporary_combat_statuses() -> void:
 	for status_name in status_effects.duplicate():
 		var metadata: Dictionary = status_metadata.get(status_name, {})
@@ -191,6 +205,10 @@ func clear_temporary_combat_statuses() -> void:
 func tick_status_durations() -> void:
 	for status_name in status_effects.duplicate():
 		var metadata: Dictionary = status_metadata.get(status_name, {})
+		if _try_clear_status_with_save_roll(status_name, metadata):
+			continue
+		if StatusEffects.expires_after_skipped_turn(status_name):
+			continue
 		var remaining := int(metadata.get("remaining_rounds", -1))
 		if remaining < 0:
 			continue
@@ -200,6 +218,7 @@ func tick_status_durations() -> void:
 		else:
 			metadata["remaining_rounds"] = remaining
 			status_metadata[status_name] = metadata
+			GameEvents.enemy_status_changed.emit(self)
 
 func _get_status_stat_modifier(modifier_name: String) -> int:
 	var total := 0
@@ -214,9 +233,41 @@ func _normalize_combat_buff_key(stat_name: String) -> String:
 			return "accuracy"
 		"ac_bonus", "armor_class":
 			return "armor_class"
+		"attack_speed":
+			return "attack_speed"
 		"bonus_damage", "damage":
 			return "bonus_damage"
 		"magic", "magic_bonus", "magic_amp":
 			return "magic_bonus"
 		_:
 			return ""
+
+func _try_clear_status_with_save_roll(status_name: String, metadata: Dictionary) -> bool:
+	var save_dc := int(metadata.get("save_dc", 0))
+	if save_dc <= 0:
+		return false
+	if not StatusEffects.has_clear_condition(status_name, "willpower_roll"):
+		return false
+
+	var roll := randi_range(1, SAVE_THROW_DIE_SIDES)
+	var success := roll >= save_dc
+	var status_label := StatusEffects.get_display_name(StatusEffects.from_string(status_name))
+	var color := "green" if success else "red"
+	var outcome := "succeeds" if success else "fails"
+	GameEvents.message_logged.emit("[color=%s]%s %s clear roll %s: %d vs DC %d[/color]" % [
+		color,
+		enemy_name,
+		status_label,
+		outcome,
+		roll,
+		save_dc
+	])
+	if not success:
+		return false
+
+	clear_status_effect(status_name)
+	GameEvents.message_logged.emit("[color=green]%s shakes off %s.[/color]" % [
+		enemy_name,
+		status_label.to_lower()
+	])
+	return true

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://gh4uoor871j"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_ewm5n"]
+
+[resource]
+script = ExtResource("1_ewm5n")
+spell_id = "shock"
+display_name = "Shock"
+description = "AOE small jolt and a chance to stun."
+spellbook = 3
+element_notes = Array[int]([3, 5, 2])
+mana = 6
+damage = "1d5"
+is_aoe = true
+is_debuff = true
+apply_status = "stun"
+duration = 1
+sound_effect = "fireball"
+projectile_scene_path = "res://FireballScene.tscn"
+buff_icon = null
+shake_screen = true

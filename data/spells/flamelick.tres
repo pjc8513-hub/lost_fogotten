@@ -6,7 +6,7 @@
 script = ExtResource("1_lx3cp")
 spell_id = "FlameLick"
 display_name = "Flame Lick"
-description = "A concentrated eruption of flame on a single target"
+description = "A concentrated eruption of flame on a single target and gives AC penalty"
 element_notes = Array[int]([0, 0])
 mana = 4
 damage = "1d6"

@@ -290,6 +290,49 @@ func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void
 		apply_damage_to_target(target, damage, spell)
 	if spell.is_dot:
 		SpellEffectTracker.add_damage_over_time(spell, caster, target)
+	_apply_debuff_status_to_enemy(spell, caster, target)
+
+
+func _apply_debuff_status_to_enemy(spell: SpellData, caster: ClassData, target) -> void:
+	if spell == null or not target is Enemy:
+		return
+	var status_id := StatusEffects.normalize_id(spell.apply_status)
+	if status_id.is_empty():
+		return
+
+	var save_dc := _get_enemy_debuff_save_dc(spell, caster, status_id)
+	if save_dc > 0 and _enemy_resists_debuff(target, status_id, save_dc):
+		return
+
+	var duration_rounds := spell.duration + 1 if spell.duration > 0 else -1
+	target.enemy_data.apply_status_effect(status_id, duration_rounds, true, save_dc)
+	GameEvents.message_logged.emit("[color=yellow]%s is afflicted with %s![/color]" % [
+		target.enemy_data.enemy_name,
+		StatusEffects.get_display_name(StatusEffects.from_string(status_id)).to_lower()
+	])
+
+func _get_enemy_debuff_save_dc(spell: SpellData, caster: ClassData, status_id: String) -> int:
+	match status_id:
+		"blind", "frozen", "sleep", "stun":
+			return 10 + (caster.get_spell_mastery_rank(spell.spellbook) if caster != null else 0)
+		_:
+			return 0
+
+func _enemy_resists_debuff(target: Enemy, status_id: String, save_dc: int) -> bool:
+	var roll := randi_range(1, 20)
+	var success := roll >= save_dc
+	var status_label := StatusEffects.get_display_name(StatusEffects.from_string(status_id))
+	var color := "green" if success else "red"
+	var outcome := "resists" if success else "fails to resist"
+	GameEvents.message_logged.emit("[color=%s]%s %s %s: d20 %d vs DC %d[/color]" % [
+		color,
+		target.enemy_data.enemy_name,
+		outcome,
+		status_label.to_lower(),
+		roll,
+		save_dc
+	])
+	return success
 
 func _execute_special_effect(spell: SpellData, caster: ClassData) -> int:
 	match spell.special_effect.strip_edges().to_lower():

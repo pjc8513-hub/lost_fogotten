@@ -11,6 +11,8 @@ func _ready() -> void:
 	# Listen for damage updates so the HP bar stays in sync.
 	if not GameEvents.is_connected("enemy_took_damage", Callable(self, "_on_enemy_took_damage")):
 		GameEvents.connect("enemy_took_damage", Callable(self, "_on_enemy_took_damage"))
+	if not GameEvents.is_connected("enemy_status_changed", Callable(self, "_on_enemy_status_changed")):
+		GameEvents.connect("enemy_status_changed", Callable(self, "_on_enemy_status_changed"))
 
 	# Listen for selection changes from the world state.
 	if not World.is_connected("selected_enemy_changed", Callable(self, "_on_selected_enemy_changed")):
@@ -52,6 +54,20 @@ func _update_card_display() -> void:
 	
 	progress_bar.max_value = max_hp
 	progress_bar.value = current_hp
+	status_label.text = _format_statuses(current_enemy.enemy_data.status_effects)
+	status_label.visible = not status_label.text.is_empty()
+
+func _format_statuses(status_effects: Array[String]) -> String:
+	if status_effects.is_empty():
+		return ""
+	var statuses: Array[String] = []
+	for status_name in status_effects:
+		var status_type := StatusEffects.from_string(status_name)
+		if status_type != StatusEffects.Type.NONE:
+			statuses.append(StatusEffects.get_display_name(status_type))
+		else:
+			statuses.append(status_name.capitalize())
+	return "Status: %s" % ", ".join(statuses)
 
 func _on_selected_enemy_changed(enemy) -> void:
 	set_enemy(enemy)
@@ -59,6 +75,11 @@ func _on_selected_enemy_changed(enemy) -> void:
 func _on_enemy_selected(enemy: Enemy) -> void:
 	if enemy != current_enemy:
 		set_enemy(enemy)
+
+func _on_enemy_status_changed(enemy_data: EnemyData) -> void:
+	if current_enemy == null or current_enemy.enemy_data != enemy_data:
+		return
+	_update_card_display()
 
 func _on_enemy_took_damage(enemy: Enemy, damage: int) -> void:
 	if enemy != current_enemy or current_enemy == null:
