@@ -157,23 +157,28 @@ func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
 		return
 	var element := SpellData.element_name(spell.spellbook).to_lower()
 	var resistance := 0
-	if target is Enemy:
+	if target is Enemy and not _spell_ignores_enemy_resistance(spell):
 		resistance = target.enemy_data.get_resistance(element)
 	var final_damage := CombatLogic.apply_resistance(raw_damage, resistance)
 	if target is Enemy:
-		final_damage = CombatLogic.apply_damage_status_bonuses(target, final_damage)
-		target.enemy_data.hp -= final_damage
-		GameEvents.enemy_took_damage.emit(target, final_damage)
-		GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] %s damage." % [
-			target.enemy_data.enemy_name, final_damage, element
-		])
-		if target.enemy_data.hp <= 0:
-			GameEvents.message_logged.emit("[color=red]%s dies![/color]" % target.enemy_data.enemy_name)
-			LootDistributor.distribute_enemy_loot(target)
-			LootDistributor.distribute_xp(target.enemy_data.xp)
-			World.remove_enemy(target)
+		_apply_damage_to_enemy(target, final_damage, element)
 	elif target is ClassData:
 		target.take_damage(final_damage)
+
+func _apply_damage_to_enemy(target: Enemy, damage: int, element: String, apply_status_bonuses: bool = true) -> void:
+	if target == null or damage <= 0:
+		return
+	var final_damage := CombatLogic.apply_damage_status_bonuses(target, damage) if apply_status_bonuses else damage
+	target.enemy_data.hp -= final_damage
+	GameEvents.enemy_took_damage.emit(target, final_damage)
+	GameEvents.message_logged.emit("[color=red]%s[/color] takes [color=orange]%d[/color] %s damage." % [
+		target.enemy_data.enemy_name, final_damage, element
+	])
+	if target.enemy_data.hp <= 0:
+		GameEvents.message_logged.emit("[color=red]%s dies![/color]" % target.enemy_data.enemy_name)
+		LootDistributor.distribute_enemy_loot(target)
+		LootDistributor.distribute_xp(target.enemy_data.xp)
+		World.remove_enemy(target)
 
 func _resolve_targets(
 	spell: SpellData,
@@ -294,13 +299,63 @@ func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void
 	if spell.targets_party_members():
 		return
 
+	if _apply_custom_enemy_spell(spell, caster, target):
+		_apply_debuff_status_to_enemy(spell, caster, target)
+		return
+
 	var damage := roll_spell_damage(spell, caster)
+	if spell.spell_id == "unholy_strike":
+		damage += _get_unholy_strike_bonus(caster)
 	if damage > 0 and not spell.is_dot:
 		apply_damage_to_target(target, damage, spell)
 	if spell.is_dot:
 		SpellEffectTracker.add_damage_over_time(spell, caster, target)
 	_apply_debuff_status_to_enemy(spell, caster, target)
 
+
+func _apply_custom_enemy_spell(spell: SpellData, caster: ClassData, target) -> bool:
+	if spell == null or not target is Enemy:
+		return false
+	match spell.spell_id:
+		"doom_drone":
+			var total_damage := _damage_party_for_doom_drone()
+			if total_damage > 0:
+				_apply_damage_to_enemy(target, total_damage, SpellData.element_name(spell.spellbook).to_lower(), false)
+			else:
+				GameEvents.message_logged.emit("[color=gray]Doom Drone finds no life force to drain.[/color]")
+			return true
+		_:
+			return false
+
+func _damage_party_for_doom_drone() -> int:
+	var total_damage := 0
+	for member in PartyState.active_party:
+		if member == null or member.current_hp <= 0:
+			continue
+		var damage = max(1, int(ceil(float(member.get_max_hp()) * 0.1)))
+		var hp_before := member.current_hp
+		if PartyState.god_mode_active:
+			member.current_hp = max(1, member.current_hp - damage)
+		else:
+			member.current_hp -= damage
+		var damage_dealt = max(0, hp_before - member.current_hp)
+		total_damage += damage_dealt
+		GameEvents.message_logged.emit("[color=purple]%s takes %d doom damage![/color]" % [member.member_name, damage_dealt])
+		if member.current_hp <= 0:
+			member.clear_statuses_by_condition("death")
+			GameEvents.message_logged.emit("[color=red]%s dies![/color]" % member.member_name)
+	return total_damage
+
+func _get_unholy_strike_bonus(caster: ClassData) -> int:
+	if caster == null:
+		return 0
+	var bonus = max(0, caster.get_max_hp() - caster.current_hp)
+	if bonus > 0:
+		GameEvents.message_logged.emit("[color=purple]Unholy Strike draws %d bonus damage from %s's missing health.[/color]" % [bonus, caster.member_name])
+	return bonus
+
+func _spell_ignores_enemy_resistance(spell: SpellData) -> bool:
+	return spell != null and spell.spell_id == "pure_light"
 
 func _apply_debuff_status_to_enemy(spell: SpellData, caster: ClassData, target) -> void:
 	if spell == null or not target is Enemy:

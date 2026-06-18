@@ -11,6 +11,6 @@ description = "Single target damage ignore enemy's resistance"
 spellbook = 7
 element_notes = Array[int]([7, 0, 2, 3])
 mana = 15
-damage = "1d100"
+damage = "1d50"
 sound_effect = "hit"
 buff_icon = null
