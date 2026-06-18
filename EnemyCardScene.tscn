@@ -13,7 +13,8 @@ bg_color = Color(0.7529412, 0.043137256, 0.13725491, 1)
 [node name="EnemyDisplayCard" type="Control" unique_id=2122221609]
 visible = false
 custom_minimum_size = Vector2(160, 52)
-layout_mode = 0
+layout_mode = 3
+anchors_preset = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 160.0
@@ -46,3 +47,6 @@ size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_oauen")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tfnjp")
 show_percentage = false
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1746442348]
+layout_mode = 2

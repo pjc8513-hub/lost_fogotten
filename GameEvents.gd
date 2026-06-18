@@ -15,6 +15,8 @@ signal chest_trap_triggered(chest: TreasureChest, damage: int)
 signal gold_changed(new_amount: int)
 signal food_changed(new_amount: int)
 signal torch_changed(new_amount: int)
+signal active_buffs_changed()
+
 
 # Animation events
 

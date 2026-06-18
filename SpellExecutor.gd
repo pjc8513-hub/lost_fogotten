@@ -239,22 +239,48 @@ func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void
 			])
 
 	if spell.is_buff:
-		for stat_name in spell.stats.keys():
-			var stat_amount := int(spell.stats[stat_name])
-			if target is ClassData:
-				target.apply_combat_buff(
-					str(stat_name),
-					stat_amount,
-					-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
-				)
-			elif target is Enemy:
-				target.enemy_data.apply_combat_buff(
-					str(stat_name),
-					stat_amount,
-					-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
-				)
-		if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS:
-			SpellEffectTracker.add_step_buff(spell, target)
+		if spell.spell_id == "magic_shield":
+			var light_mastery_rank := caster.get_skill_rank("LightMastery") if caster != null else 0
+			var resist_val := 10 + 5 * light_mastery_rank
+			var shield_stats := {
+				"resist_fire": resist_val,
+				"resist_water": resist_val,
+				"resist_earth": resist_val,
+				"resist_electric": resist_val
+			}
+			for stat_name in shield_stats.keys():
+				var stat_amount := int(shield_stats[stat_name])
+				if target is ClassData:
+					target.apply_combat_buff(
+						str(stat_name),
+						stat_amount,
+						-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
+					)
+				elif target is Enemy:
+					target.enemy_data.apply_combat_buff(
+						str(stat_name),
+						stat_amount,
+						-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
+					)
+			if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS:
+				SpellEffectTracker.add_step_buff(spell, target)
+		else:
+			for stat_name in spell.stats.keys():
+				var stat_amount := int(spell.stats[stat_name])
+				if target is ClassData:
+					target.apply_combat_buff(
+						str(stat_name),
+						stat_amount,
+						-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
+					)
+				elif target is Enemy:
+					target.enemy_data.apply_combat_buff(
+						str(stat_name),
+						stat_amount,
+						-1 if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS else spell.duration
+					)
+			if spell.duration_mode == SpellData.DurationMode.WORLD_STEPS:
+				SpellEffectTracker.add_step_buff(spell, target)
 
 	if spell.targets_party_members():
 		return

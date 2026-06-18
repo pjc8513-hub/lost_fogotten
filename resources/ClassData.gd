@@ -626,11 +626,15 @@ func get_resistance(element: String) -> int:
 	for inst in inventory:
 		if inst.is_equipped:
 			equipment_resistance += inst.get_resistance(element)
-	match element:
-		"fire": return resist_fire + equipment_resistance
-		"water": return resist_water + equipment_resistance
-		"dark": return resist_dark + equipment_resistance
-		_: return equipment_resistance
+	var base_resistance := 0
+	match element.to_lower().strip_edges():
+		"fire": base_resistance = resist_fire + _get_combat_bonus("resist_fire")
+		"water": base_resistance = resist_water + _get_combat_bonus("resist_water")
+		"earth": base_resistance = resist_earth + _get_combat_bonus("resist_earth")
+		"electric": base_resistance = resist_electric + _get_combat_bonus("resist_electric")
+		"light": base_resistance = resist_light + _get_combat_bonus("resist_light")
+		"dark": base_resistance = resist_dark + _get_combat_bonus("resist_dark")
+	return base_resistance + equipment_resistance
 
 func get_accuracy() -> int:
 	return _calculate_accuracy()
@@ -1056,12 +1060,22 @@ func apply_combat_buff(stat_name: String, value: int, duration_rounds: int = -1)
 			combat_buffs[normalized] = new_entry
 
 	recalculate_derived_stats(false)
+	GameEvents.active_buffs_changed.emit()
 
 func clear_combat_buffs() -> void:
 	if combat_buffs.is_empty():
 		return
-	combat_buffs.clear()
+	var to_erase := []
+	for stat_name in combat_buffs.keys():
+		var entry := _get_combat_buff_entry(stat_name)
+		if int(entry.get("remaining_rounds", -1)) >= 0:
+			to_erase.append(stat_name)
+	if to_erase.is_empty():
+		return
+	for stat_name in to_erase:
+		combat_buffs.erase(stat_name)
 	recalculate_derived_stats(false)
+	GameEvents.active_buffs_changed.emit()
 
 func clear_combat_buff(stat_name: String) -> void:
 	var normalized := _normalize_combat_buff_key(stat_name)
@@ -1069,6 +1083,7 @@ func clear_combat_buff(stat_name: String) -> void:
 		return
 	combat_buffs.erase(normalized)
 	recalculate_derived_stats(false)
+	GameEvents.active_buffs_changed.emit()
 
 func tick_combat_buff_durations() -> void:
 	if combat_buffs.is_empty():
@@ -1091,6 +1106,7 @@ func tick_combat_buff_durations() -> void:
 
 	if changed:
 		recalculate_derived_stats(false)
+		GameEvents.active_buffs_changed.emit()
 
 func _get_combat_bonus(stat_name: String) -> int:
 	var normalized := _normalize_combat_buff_key(stat_name)
@@ -1231,6 +1247,18 @@ func _normalize_combat_buff_key(stat_name: String) -> String:
 			return "movement"
 		"bonus_damage":
 			return "bonus_damage"
+		"resist_fire", "fire_resistance":
+			return "resist_fire"
+		"resist_water", "water_resistance":
+			return "resist_water"
+		"resist_earth", "earth_resistance":
+			return "resist_earth"
+		"resist_electric", "electric_resistance":
+			return "resist_electric"
+		"resist_light", "light_resistance":
+			return "resist_light"
+		"resist_dark", "dark_resistance":
+			return "resist_dark"
 		_:
 			return ""
 

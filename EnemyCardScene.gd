@@ -2,6 +2,7 @@ extends Control
 
 @onready var enemy_name_label: Label = $PanelContainer/VBoxContainer/EnemyNameLabel
 @onready var progress_bar: ProgressBar = $PanelContainer/VBoxContainer/EnemyHPBar
+@onready var status_label: Label = $PanelContainer/VBoxContainer/StatusLabel
 
 var current_enemy: Enemy = null
 var tween: Tween = null

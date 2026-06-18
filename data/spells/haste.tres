@@ -20,4 +20,4 @@ duration = 30
 duration_mode = 1
 party_target_animation = "heal"
 sound_effect = "buff"
-buff_icon = null
+buff_icon = "res://assets/icons/haste.png"

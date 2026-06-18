@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://diqa7nvpruydl"]
+
+[ext_resource type="Script" uid="uid://dr8ahk58saqtb" path="res://resources/SpellData.gd" id="1_l8vkq"]
+
+[resource]
+script = ExtResource("1_l8vkq")
+spell_id = "magic_shield"
+display_name = "Magic Shield"
+spell_level = 2
+description = "Add temporary bonus to magic reistance  for 30 steps"
+spellbook = 7
+element_notes = Array[int]([7, 1, 2, 4])
+mana = 16
+is_aoe = true
+is_buff = true
+duration = 30
+duration_mode = 1
+party_target_animation = "heal"
+sound_effect = "buff"
+buff_icon = "res://assets/icons/magic_shield.png"

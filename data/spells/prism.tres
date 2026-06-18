@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_0q37x")
-spell_id = "dov"
-display_name = "DOV"
+spell_id = "prism"
+display_name = "Prism"
 spell_level = 4
 description = "Single target damage selecting the enemy's lowest resistance category"
 spellbook = 7
