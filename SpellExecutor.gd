@@ -153,6 +153,8 @@ func meets_mastery_requirement(spell: SpellData, caster: ClassData) -> bool:
 func apply_damage_to_target(target, raw_damage: int, spell: SpellData) -> void:
 	if raw_damage <= 0:
 		return
+	if target is Enemy and not _enemy_matches_spell_type(spell, target):
+		return
 	var element := SpellData.element_name(spell.spellbook).to_lower()
 	var resistance := 0
 	if target is Enemy:
@@ -194,13 +196,20 @@ func _resolve_targets(
 	if not _is_reachable_enemy(resolved_target):
 		return []
 	if not spell.is_aoe:
-		return [resolved_target]
+		return [resolved_target] if _enemy_matches_spell_type(spell, resolved_target) else []
 
 	var targets: Array = []
 	for enemy in CombatState.get_engaged_enemies():
-		if _is_reachable_enemy(enemy):
+		if _is_reachable_enemy(enemy) and _enemy_matches_spell_type(spell, enemy):
 			targets.append(enemy)
 	return targets
+
+func _enemy_matches_spell_type(spell: SpellData, enemy: Enemy) -> bool:
+	if spell == null or enemy == null or enemy.enemy_data == null:
+		return false
+	if int(spell.enemy_types) == int(SpellData.Enemy_types.ANY):
+		return true
+	return int(enemy.enemy_data.enemy_type) == int(spell.enemy_types)
 
 func _apply_spell_to_target(spell: SpellData, caster: ClassData, target) -> void:
 	if spell.is_resurrection:
