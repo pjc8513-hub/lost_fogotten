@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bjp4kylnb4775"]
+
+[ext_resource type="PackedScene" uid="uid://bds404u4185qf" path="res://Enemy.tscn" id="1_amufq"]
+[ext_resource type="Texture2D" uid="uid://cdj1ot48ainua" path="res://assets/sprites/enemies/Toadstool_C.png" id="2_spdl2"]
+
+[sub_resource type="Animation" id="Animation_spdl2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_pabd5"]
+resource_name = "attack"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.2, 0.25, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e1gqr"]
+_data = {
+&"RESET": SubResource("Animation_spdl2"),
+&"attack": SubResource("Animation_pabd5")
+}
+
+[node name="Enemy" unique_id=1461009798 instance=ExtResource("1_amufq")]
+
+[node name="Sprite3D" parent="." index="0" unique_id=727538149]
+texture_filter = 0
+texture = ExtResource("2_spdl2")
+hframes = 2
+vframes = 3
+
+[node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
+libraries/ = SubResource("AnimationLibrary_e1gqr")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2" unique_id=1736543539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21928787, 0, 0.6388353)
+light_color = Color(0.97647244, 0.00085422455, 0.986852, 1)
+light_energy = 0.4
+omni_range = 1.0
+omni_attenuation = 0.6

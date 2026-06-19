@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DoorData" format=3 uid="uid://86xyvcge70ch"]
+
+[ext_resource type="Script" uid="uid://cqlc30nwctr2" path="res://resources/DoorData.gd" id="1_jvah7"]
+
+[resource]
+script = ExtResource("1_jvah7")
+DoorID = "northdoor2"
+scene_path = "res://assets/models/DoorScene.tscn"
+rotation = 90
+is_locked = true
+switchID = "bonepit2"
+metadata/_custom_type_script = "uid://cqlc30nwctr2"

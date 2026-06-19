@@ -43,6 +43,8 @@ _data = {
 [node name="Enemy" unique_id=1461009798 instance=ExtResource("1_f21mo")]
 
 [node name="Sprite3D" parent="." index="0" unique_id=727538149]
+shaded = false
+texture_filter = 2
 texture = ExtResource("2_j7kl6")
 hframes = 2
 vframes = 3
@@ -52,6 +54,7 @@ libraries/ = SubResource("AnimationLibrary_lffpq")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Sprite3D" index="1" unique_id=1871289631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5388232, 0.68108916, 0)
+visible = false
 light_color = Color(0.3137255, 0.6039216, 1, 1)
 light_energy = 4.0
 shadow_enabled = true

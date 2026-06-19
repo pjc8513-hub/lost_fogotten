@@ -6,7 +6,7 @@ uniform sampler2D palette_texture : filter_nearest;
 
 uniform float pixel_size : hint_range(1.0, 16.0) = 8.0;
 uniform float dither_strength : hint_range(0.0, 1.0) = 0.15;
-uniform float contrast : hint_range(0.5, 3.0) = 1.4;
+uniform float contrast : hint_range(0.5, 3.0) = 0.8;
 
 const mat4 bayer_matrix = mat4(
     vec4(0.0/16.0, 8.0/16.0, 2.0/16.0, 10.0/16.0),
@@ -62,8 +62,8 @@ void fragment() {
     color = mix(vec3(lum), color, 1.25);
     
     // Optional brightness quantization
-    color = floor(color * 12.0) / 12.0;
-    
+     color = floor(color * 12.0) / 12.0;
+	// color = max(color, vec3(0.08));    
     // Bayer dithering
     ivec2 pixel_coord = ivec2(mod(FRAGCOORD.xy / pixel_size, 4.0));
     float threshold = bayer_matrix[pixel_coord.x][pixel_coord.y];

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://datexs6wv1gm"]
+
+[ext_resource type="PackedScene" uid="uid://c8g0ycv2ysr82" path="res://LeverScene.tscn" id="1_mr8xu"]
+[ext_resource type="Resource" uid="uid://b2qxthaj1dloi" path="res://data/maps/dungeons/BonePit/floor_2/levers/BonePit_Lever.tres" id="2_wafmp"]
+
+[node name="Node3D" unique_id=47624282 instance=ExtResource("1_mr8xu")]
+trigger_data = ExtResource("2_wafmp")
+
+[node name="Sprite3D" parent="." index="0" unique_id=1488633657]
+shaded = false
