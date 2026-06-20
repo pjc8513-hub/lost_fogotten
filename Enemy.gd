@@ -34,7 +34,10 @@ const SELECTION_ANIM_OFFSET_PIXELS: float = 5.0
 const SELECTION_ANIM_TILT_DEGREES: float = 3.5
 const SELECTION_ANIM_BLEND_SPEED: float = 6.0
 
-
+# fake billboarding lighting
+const FAKE_LIGHT_MIN: float = 0.04        # darkest the enemy can get (not pure black)
+const FAKE_LIGHT_MAX: float = 1.0         # fully lit
+const FAKE_LIGHT_RADIUS: float = 10.0     # matches torch_omni_range in MapTheme
 
 func _ready():
 	print("My viewport: ", get_viewport())
@@ -111,11 +114,15 @@ func _process(delta: float) -> void:
 	var tilt := deg_to_rad(SELECTION_ANIM_TILT_DEGREES) * sway * _selection_anim_blend
 	sprite.offset = _selection_rest_offset + Vector2(offset_x, 0.0)
 	sprite.rotation.z = _selection_rest_rotation_z + tilt
+	
+	# --- Fake torch lighting ---
+	_update_fake_lighting()
 
 	if not _is_selected_enemy and is_zero_approx(_selection_anim_blend):
 		sprite.offset = _selection_rest_offset
 		sprite.rotation.z = _selection_rest_rotation_z
-		set_process(false)
+		#set_process(false)
+	
 
 func _capture_selection_rest_pose() -> void:
 	if sprite == null:
@@ -129,6 +136,52 @@ func _on_selected_enemy_changed(enemy) -> void:
 	if _is_selected_enemy and not was_selected:
 		_capture_selection_rest_pose()
 	set_process(true)
+	
+func _update_fake_lighting() -> void:
+	var torch := _get_torch()
+	
+	# No torch node found — leave sprite at full bright so it's never invisible
+	if torch == null:
+		sprite.modulate = Color.WHITE
+		return
+
+	# If nothing is lit, go dark (but not pure black — keep a sliver visible)
+	if not torch.is_currently_lit():
+		sprite.modulate = Color(FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, 1.0)
+		return
+
+	# Distance from player to this enemy
+	var player = World.get_player()
+	if player == null:
+		sprite.modulate = Color.WHITE
+		return
+
+	var dist := float((grid_position - player.grid_position).length())
+	
+	# Inverse-square falloff, normalized to torch radius
+	var normalized = clamp(dist / FAKE_LIGHT_RADIUS, 0.0, 1.0)
+	var falloff = 1.0 - (normalized * normalized)   # quadratic drop
+	
+	# Scale by actual torch energy so a dying torch dims enemies too
+	var energy_scale = clamp(torch.light_energy / max(torch.theme_ref.torch_base_energy, 0.001), 0.0, 1.5)
+	
+	var brightness = clamp(falloff * energy_scale, FAKE_LIGHT_MIN, FAKE_LIGHT_MAX)
+	
+	# Tint slightly warm for torch, cool-neutral for magic torch
+	var tint: Color
+	if torch.is_magic_torch:
+		tint = Color(0.7 * brightness, brightness, 0.7 * brightness, 1.0)   # greenish magic
+	else:
+		tint = Color(brightness, brightness * 0.88, brightness * 0.72, 1.0) # warm torch
+	
+	sprite.modulate = tint
+
+
+func _get_torch() -> OmniLight3D:
+	var torches := get_tree().get_nodes_in_group("player_torch")
+	if torches.is_empty():
+		return null
+	return torches[0] as OmniLight3D
 
 func _queue_command(cmd) -> void:
 	_pending_commands += 1

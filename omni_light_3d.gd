@@ -11,6 +11,7 @@ var time: float = 0.0
 var is_magic_torch: bool = false  # True when magic torch is active
 
 func _ready() -> void:
+	add_to_group("player_torch")
 	World.player_stepped.connect(_on_player_stepped)
 	PartyState.magic_torch_toggled.connect(_on_magic_torch_toggled)
 
