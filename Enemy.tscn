@@ -16,7 +16,7 @@ enemy_data = SubResource("Resource_2hac7")
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=727538149]
 offset = Vector2(0, 1)
 billboard = 2
-shaded = true
+shaded = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D" unique_id=22620138]
 

@@ -34,10 +34,15 @@ const SELECTION_ANIM_OFFSET_PIXELS: float = 5.0
 const SELECTION_ANIM_TILT_DEGREES: float = 3.5
 const SELECTION_ANIM_BLEND_SPEED: float = 6.0
 
-# fake billboarding lighting
-const FAKE_LIGHT_MIN: float = 0.04        # darkest the enemy can get (not pure black)
-const FAKE_LIGHT_MAX: float = 1.0         # fully lit
-const FAKE_LIGHT_RADIUS: float = 10.0     # matches torch_omni_range in MapTheme
+# Fake billboard lighting. The sprite itself is unshaded; nearby OmniLight3D nodes
+# are sampled here so billboards do not receive the renderer's directional shadows.
+const FAKE_LIGHT_MIN: float = 0.04
+const FAKE_LIGHT_MAX: float = 1.0
+const FAKE_LIGHT_REFERENCE_ENERGY: float = 1.5
+const FAKE_LIGHT_CACHE_INTERVAL: float = 0.25
+
+var _fake_lights: Array[OmniLight3D] = []
+var _fake_light_cache_time: float = 0.0
 
 func _ready():
 	print("My viewport: ", get_viewport())
@@ -65,7 +70,8 @@ func _ready():
 		
 	_capture_selection_rest_pose()
 	World.selected_enemy_changed.connect(_on_selected_enemy_changed)
-	set_process(false)
+	# Lighting must update even before this enemy has ever been selected.
+	set_process(true)
 	if World.selected_enemy == self:
 		_on_selected_enemy_changed(self)
 		
@@ -115,7 +121,9 @@ func _process(delta: float) -> void:
 	sprite.offset = _selection_rest_offset + Vector2(offset_x, 0.0)
 	sprite.rotation.z = _selection_rest_rotation_z + tilt
 	
-	# --- Fake torch lighting ---
+	_fake_light_cache_time -= delta
+	if _fake_light_cache_time <= 0.0:
+		_refresh_fake_lights()
 	_update_fake_lighting()
 
 	if not _is_selected_enemy and is_zero_approx(_selection_anim_blend):
@@ -138,50 +146,40 @@ func _on_selected_enemy_changed(enemy) -> void:
 	set_process(true)
 	
 func _update_fake_lighting() -> void:
-	var torch := _get_torch()
-	
-	# No torch node found — leave sprite at full bright so it's never invisible
-	if torch == null:
-		sprite.modulate = Color.WHITE
-		return
+	var combined := Color(FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, 1.0)
 
-	# If nothing is lit, go dark (but not pure black — keep a sliver visible)
-	if not torch.is_currently_lit():
-		sprite.modulate = Color(FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, FAKE_LIGHT_MIN, 1.0)
-		return
+	for light in _fake_lights:
+		if not is_instance_valid(light) or not light.is_visible_in_tree() or light.light_energy <= 0.0:
+			continue
 
-	# Distance from player to this enemy
-	var player = World.get_player()
-	if player == null:
-		sprite.modulate = Color.WHITE
-		return
+		var radius = max(light.omni_range, 0.001)
+		var distance := global_position.distance_to(light.global_position)
+		if distance >= radius:
+			continue
 
-	var dist := float((grid_position - player.grid_position).length())
-	
-	# Inverse-square falloff, normalized to torch radius
-	var normalized = clamp(dist / FAKE_LIGHT_RADIUS, 0.0, 1.0)
-	var falloff = 1.0 - (normalized * normalized)   # quadratic drop
-	
-	# Scale by actual torch energy so a dying torch dims enemies too
-	var energy_scale = clamp(torch.light_energy / max(torch.theme_ref.torch_base_energy, 0.001), 0.0, 1.5)
-	
-	var brightness = clamp(falloff * energy_scale, FAKE_LIGHT_MIN, FAKE_LIGHT_MAX)
-	
-	# Tint slightly warm for torch, cool-neutral for magic torch
-	var tint: Color
-	if torch.is_magic_torch:
-		tint = Color(0.7 * brightness, brightness, 0.7 * brightness, 1.0)   # greenish magic
-	else:
-		tint = Color(brightness, brightness * 0.88, brightness * 0.72, 1.0) # warm torch
-	
-	sprite.modulate = tint
+		var normalized_distance = distance / radius
+		var falloff = 1.0 - normalized_distance * normalized_distance
+		var strength = falloff * light.light_energy / FAKE_LIGHT_REFERENCE_ENERGY
+		combined.r += light.light_color.r * strength
+		combined.g += light.light_color.g * strength
+		combined.b += light.light_color.b * strength
+
+	# Preserve alpha so the death fade can still make the sprite disappear.
+	sprite.modulate = Color(
+		clamp(combined.r, FAKE_LIGHT_MIN, FAKE_LIGHT_MAX),
+		clamp(combined.g, FAKE_LIGHT_MIN, FAKE_LIGHT_MAX),
+		clamp(combined.b, FAKE_LIGHT_MIN, FAKE_LIGHT_MAX),
+		sprite.modulate.a
+	)
 
 
-func _get_torch() -> OmniLight3D:
-	var torches := get_tree().get_nodes_in_group("player_torch")
-	if torches.is_empty():
-		return null
-	return torches[0] as OmniLight3D
+func _refresh_fake_lights() -> void:
+	_fake_light_cache_time = FAKE_LIGHT_CACHE_INTERVAL
+	_fake_lights.clear()
+	for node in get_viewport().find_children("*", "OmniLight3D", true, false):
+		var light := node as OmniLight3D
+		if light != null:
+			_fake_lights.append(light)
 
 func _queue_command(cmd) -> void:
 	_pending_commands += 1
