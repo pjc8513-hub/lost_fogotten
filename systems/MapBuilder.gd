@@ -453,8 +453,9 @@ static func _spawn_brazier(grid_pos: Vector2i, data_path: String,
 static func _spawn_blackout(pos: Vector2i, parent: Node) -> void:
 	var blackout_scene: PackedScene = load("res://black_out.tscn")
 	var blackout = blackout_scene.instantiate()
-	parent.add_child(blackout)
+	blackout.grid_position = pos
 	blackout.position = Vector3(pos.x, 0, pos.y)
+	parent.add_child(blackout)
 
 static func _spawn_blackout_trigger(grid_pos: Vector2i, data_path: String,
 									 parent: Node) -> void:

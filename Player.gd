@@ -24,17 +24,21 @@ func _ready():
 
 func move_to(target: Vector2i):
 	#print('moving')
+	var previous_position := grid_position
 	grid_position = target
 	global_position.x = target.x
 	global_position.z = target.y
+	World.notify_actor_moved(previous_position, grid_position)
 
 	emit_signal("player_moved", grid_position)
 	emit_signal("movement_done")
 
 func apply_spawn(spawn_grid_position: Vector2i, spawn_data: PlayerSpawnData = null) -> void:
+	var previous_position := grid_position
 	grid_position = spawn_grid_position
 	global_position.x = spawn_grid_position.x
 	global_position.z = spawn_grid_position.y
+	World.notify_actor_moved(previous_position, grid_position)
 
 	if spawn_data != null:
 		_apply_facing_rotation(spawn_data.rotation)

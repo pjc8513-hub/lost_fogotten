@@ -23,6 +23,9 @@ var step_triggers: Array = []
 var step_triggers_by_position: Dictionary = {}
 var _last_step_event_position: Variant = null
 
+# --- Blackout tiles ---
+var blackout_tiles_by_position: Dictionary = {}
+
 # --- NPCs ---
 var npcs: Array[NPC] = []
 var selected_npc: NPC = null
@@ -43,6 +46,7 @@ func set_map_data(data: Dictionary) -> void:
 
 func reset_world_state() -> void:
 	enemies.clear()
+	npcs.clear()
 	treasure_chests.clear()
 	dungeons.clear()
 	exits.clear()
@@ -52,6 +56,7 @@ func reset_world_state() -> void:
 	doors_by_switch_id.clear()
 	step_triggers.clear()
 	step_triggers_by_position.clear()
+	blackout_tiles_by_position.clear()
 	_last_step_event_position = null
 	selected_enemy = null
 	selected_chest = null
@@ -87,11 +92,23 @@ func is_walkable(pos: Vector2i) -> bool:
 	if is_occupied_by_exit(pos):
 		return false
 
+	if is_occupied_by_npc(pos):
+		return false
+
 	return true
 
 
 func register_enemy(enemy):
-	enemies.append(enemy)
+	if not enemies.has(enemy):
+		enemies.append(enemy)
+	_refresh_blackout_at(enemy.grid_position)
+
+func unregister_enemy(enemy) -> void:
+	if enemy == null:
+		return
+	var position: Vector2i = enemy.grid_position
+	enemies.erase(enemy)
+	_refresh_blackout_at(position)
 
 func get_enemies() -> Array:
 	return enemies.duplicate()
@@ -99,7 +116,7 @@ func get_enemies() -> Array:
 func remove_enemy(enemy) -> void:
 	if selected_enemy == enemy:
 		set_selected_enemy(null)
-	enemies.erase(enemy)
+	unregister_enemy(enemy)
 	CombatState.disengage_enemy(enemy)
 	enemy.queue_free()
 	
@@ -107,6 +124,53 @@ func register_npc(npc: NPC):
 	if not npcs.has(npc):
 		npcs.append(npc)
 	NPCManager.register_npc(npc)
+
+func is_occupied_by_npc(pos: Vector2i) -> bool:
+	for npc in npcs:
+		if is_instance_valid(npc) and npc.grid_position == pos:
+			return true
+	return false
+
+func register_blackout_tile(tile) -> void:
+	if tile == null or not is_instance_valid(tile):
+		return
+	var tiles: Array = blackout_tiles_by_position.get(tile.grid_position, [])
+	if not tiles.has(tile):
+		tiles.append(tile)
+	blackout_tiles_by_position[tile.grid_position] = tiles
+	_refresh_blackout_at(tile.grid_position)
+
+func unregister_blackout_tile(tile) -> void:
+	if tile == null:
+		return
+	var tiles: Array = blackout_tiles_by_position.get(tile.grid_position, [])
+	tiles.erase(tile)
+	if tiles.is_empty():
+		blackout_tiles_by_position.erase(tile.grid_position)
+	else:
+		blackout_tiles_by_position[tile.grid_position] = tiles
+
+func notify_actor_moved(from_pos: Vector2i, to_pos: Vector2i) -> void:
+	_refresh_blackout_at(from_pos)
+	if to_pos != from_pos:
+		_refresh_blackout_at(to_pos)
+
+func _refresh_blackout_at(pos: Vector2i) -> void:
+	if not blackout_tiles_by_position.has(pos):
+		return
+	var occupied := is_occupied_by_player(pos) or is_occupied_by_enemy(pos)
+	var valid_tiles: Array = []
+	for tile in blackout_tiles_by_position[pos]:
+		if is_instance_valid(tile):
+			valid_tiles.append(tile)
+			tile.set_occupied(occupied)
+	if valid_tiles.is_empty():
+		blackout_tiles_by_position.erase(pos)
+	else:
+		blackout_tiles_by_position[pos] = valid_tiles
+
+func is_occupied_by_player(pos: Vector2i) -> bool:
+	return player_ref != null and is_instance_valid(player_ref) and player_ref.grid_position == pos
 
 func set_selected_npc(npc: NPC):
 	selected_npc = npc
@@ -138,6 +202,7 @@ func world_to_grid(pos: Vector3) -> Vector2i:
 
 func register_player(p):
 	player_ref = p
+	_refresh_blackout_at(p.grid_position)
 
 func register_door(door: DungeonDoor) -> void:
 	if door == null or not is_instance_valid(door):
@@ -311,7 +376,7 @@ func can_see_player(enemy_pos: Vector2i, vision_range: int) -> bool:
 
 func is_occupied_by_enemy(pos: Vector2i) -> bool:
 	for e in enemies:
-		if e.grid_position == pos:
+		if is_instance_valid(e) and e.grid_position == pos:
 			return true
 	return false
 

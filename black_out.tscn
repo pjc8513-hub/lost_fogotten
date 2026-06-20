@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://boldufcksfrly"]
 
 [ext_resource type="PackedScene" uid="uid://cdelfpb7l0bpf" path="res://assets/models/black_out.glb" id="1_c80u4"]
+[ext_resource type="Script" path="res://systems/BlackoutTile.gd" id="2_blackout"]
 
 [node name="black_out" unique_id=1713434276 instance=ExtResource("1_c80u4")]
+script = ExtResource("2_blackout")
 
 [node name="Cube" parent="." index="0" unique_id=162792156]
 transform = Transform3D(0.8341143, 0, 0, 0, 1.5, 0, 0, 0, 0.7, 0, 0, 0)

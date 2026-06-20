@@ -190,10 +190,15 @@ func _queue_command(cmd) -> void:
 
 
 func move_to(target: Vector2i):
+	var previous_position := grid_position
 	grid_position = target
 	global_position = Vector3(target.x, global_position.y, target.y)
+	World.notify_actor_moved(previous_position, grid_position)
 	GameEvents.emit_signal("movement_animation_started", self, target)
 	emit_signal("movement_done")
+
+func _exit_tree() -> void:
+	World.unregister_enemy(self)
 
 func take_turn():
 	movement_remaining = max(0, enemy_data.movement)

@@ -29624,6 +29624,14 @@
 				18,
 				35
 			]
+		},
+		{
+			"data_resource": "res://data/misc/Mushroom.tres",
+			"light_type": "brazier",
+			"pos": [
+				25,
+				58
+			]
 		}
 	]
 }
