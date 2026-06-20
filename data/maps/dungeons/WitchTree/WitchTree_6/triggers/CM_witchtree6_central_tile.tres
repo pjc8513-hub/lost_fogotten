@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_1l1im")
-trigger_id = "res://data/maps/dungeons/WitchTree/WitchTree_5/triggers/CM_witchtree5_central.tres"
+trigger_id = "res://data/maps/dungeons/WitchTree/WitchTree_5/triggers/CM_witchtree6_central.tres"
 scene_path = "res://data/maps/bump_tile.tscn"
 effects = Array[ExtResource("1_0lcno")]([ExtResource("2_0ba1b")])
 metadata/_custom_type_script = "uid://3c1a7cylutet"
