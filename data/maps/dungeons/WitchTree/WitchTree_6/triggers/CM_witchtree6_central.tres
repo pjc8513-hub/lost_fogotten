@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChangeMapEffect" format=3 uid="uid://cpw0ylg88gm4s"]
+
+[ext_resource type="Script" uid="uid://ejph31qi1gss" path="res://resources/effects/ChangeMapEffect.gd" id="1_lr2l4"]
+
+[resource]
+script = ExtResource("1_lr2l4")
+target_map_path = "res://data/maps/locations/swamp/SwampCentral/Swamp_Central.json"
+target_spawn_id = "FaceSouth5"
+target_theme_path = "res://data/maps/themes/swamp_theme.tres"
+prompt_text = "Exit the dungeon?"
+metadata/_custom_type_script = "uid://ejph31qi1gss"

@@ -50,10 +50,3 @@ vframes = 3
 
 [node name="AnimationPlayer" parent="Sprite3D" index="0" unique_id=22620138]
 libraries/ = SubResource("AnimationLibrary_e1gqr")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." index="2" unique_id=1736543539]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21928787, 0, 0.6388353)
-light_color = Color(0.97647244, 0.00085422455, 0.986852, 1)
-light_energy = 0.4
-omni_range = 1.0
-omni_attenuation = 0.6
