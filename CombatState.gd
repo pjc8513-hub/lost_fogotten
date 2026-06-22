@@ -16,6 +16,7 @@ var current_actor: Variant = null: get = get_current_actor
 var combatants: Array = []
 var engaged_enemies: Array[Enemy] = []
 var turn_index: int = 0
+var _combat_end_pending: bool = false
 
 func get_acting_member() -> ClassData:
 	if PartyState.active_party.is_empty():
@@ -24,6 +25,10 @@ func get_acting_member() -> ClassData:
 	return PartyState.active_party[acting_member_index]
 
 func advance_party_member() -> bool:
+	if not is_in_combat():
+		clear_party_combat_statuses()
+		return false
+
 	acting_member_index += 1
 	var size = PartyState.active_party.size()
 	while acting_member_index < size:
@@ -32,6 +37,8 @@ func advance_party_member() -> bool:
 			if member.skips_turn_from_status():
 				GameEvents.combat_status_changed.emit(member, CombatStatus.STUN)
 				GameEvents.message_logged.emit("[color=yellow]" + member.member_name + " cannot act and skips their turn![/color]")
+				if member.has_method("expire_statuses_after_skipped_turn"):
+					member.expire_statuses_after_skipped_turn()
 				GameEvents.combat_status_changed.emit(member, CombatStatus.DONE)
 				acting_member_index += 1
 				continue
@@ -43,6 +50,11 @@ func advance_party_member() -> bool:
 	return false
 
 func reset_party_turn():
+	if not is_in_combat():
+		acting_member_index = 0
+		clear_party_combat_statuses()
+		return
+
 	acting_member_index = -1
 	advance_party_member()
 
@@ -74,11 +86,14 @@ func engage_enemy(enemy: Enemy) -> void:
 		_sync_selected_to_acting_member()
 
 func disengage_enemy(enemy: Enemy) -> void:
+	var was_in_combat := is_in_combat()
 	if engaged_enemies.has(enemy):
 		engaged_enemies.erase(enemy)
 		rebuild_combatants()
 	if targeted_enemy == enemy:
 		clear_target()
+	if was_in_combat and not is_in_combat():
+		_combat_end_pending = true
 
 func refresh_combat_state() -> bool:
 	var was_in_combat := is_in_combat()
@@ -101,10 +116,17 @@ func refresh_combat_state() -> bool:
 		World.set_selected_enemy(null)
 
 	rebuild_combatants()
+	if was_in_combat and not is_in_combat():
+		_combat_end_pending = true
 	if not was_in_combat and is_in_combat():
 		_refresh_party_combat_statuses()
 		_sync_selected_to_acting_member()
 	return was_in_combat and not is_in_combat()
+
+func consume_combat_end_transition() -> bool:
+	var ended := _combat_end_pending and not is_in_combat()
+	_combat_end_pending = false
+	return ended
 
 func mark_current_member_done() -> void:
 	if not is_in_combat():
@@ -127,6 +149,7 @@ func reset() -> void:
 	engaged_enemies.clear()
 	turn_index = 0
 	acting_member_index = 0
+	_combat_end_pending = false
 	clear_party_combat_statuses()
 
 func get_current_actor():

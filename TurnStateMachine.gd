@@ -47,13 +47,12 @@ func _player_action_complete():
 			set_state(State.WORLD_UPDATE)
 
 func _on_world_update():
-	var was_in_combat := CombatState.is_in_combat()
 	World.process_step_events()
 	CombatState.refresh_combat_state()
 	_apply_poison_effects()
 	if CombatState.is_in_combat():
 		_tick_combat_effect_durations()
-	combat_just_ended = was_in_combat and not CombatState.is_in_combat()
+	combat_just_ended = CombatState.consume_combat_end_transition()
 	if CombatState.is_in_combat():
 		set_state(State.ENEMY_TURN)
 	else:

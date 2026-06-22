@@ -1175,6 +1175,11 @@ func has_any_status_matching(predicate: Callable) -> bool:
 func skips_turn_from_status() -> bool:
 	return has_any_status_matching(func(status_name): return StatusEffects.skips_turn(status_name))
 
+func expire_statuses_after_skipped_turn() -> void:
+	for status_name in status_effects.duplicate():
+		if StatusEffects.expires_after_skipped_turn(status_name):
+			clear_status_effect(status_name)
+
 func blocks_spell_casting() -> bool:
 	return has_any_status_matching(func(status_name): return StatusEffects.blocks_spells(status_name))
 
@@ -1208,6 +1213,8 @@ func tick_status_durations() -> void:
 	for status_name in status_effects.duplicate():
 		var metadata: Dictionary = status_metadata.get(status_name, {})
 		if _try_clear_status_with_willpower_roll(status_name, metadata):
+			continue
+		if StatusEffects.expires_after_skipped_turn(status_name):
 			continue
 		var remaining := int(metadata.get("remaining_rounds", -1))
 		if remaining < 0:
