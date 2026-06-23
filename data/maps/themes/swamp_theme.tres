@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="MapTheme" format=3 uid="uid://btwnl8622op54"]
 
 [ext_resource type="Shader" uid="uid://bttobv1aca8tc" path="res://data/shaders/day_sky.gdshader" id="1_1f2vf"]
+[ext_resource type="PackedScene" uid="uid://dq0vv1t7n6k0s" path="res://outdoor_light_day.tscn" id="1_diyux"]
 [ext_resource type="Script" uid="uid://bxbgg1cuuqxex" path="res://resources/MapTheme.gd" id="1_xf5sl"]
 [ext_resource type="Material" uid="uid://cc7ao0wqhp2bi" path="res://assets/textures/swamp_floor_st.tres" id="2_diyux"]
 [ext_resource type="PackedScene" uid="uid://citsomkx0f8di" path="res://data/maps/locations/swamp/SwampSouth/FloorMarsh.tscn" id="4_qcl7j"]
@@ -33,18 +34,16 @@ fog_light_color = Color(0.7411765, 0.8509804, 0.60784316, 1)
 fog_sky_affect = 0.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
-volumetric_fog_albedo = Color(0.89650995, 0.99999994, 0.8860793, 1)
-volumetric_fog_emission_energy = 0.5
-volumetric_fog_gi_inject = 0.5
 volumetric_fog_sky_affect = 0.0
 
 [resource]
 script = ExtResource("1_xf5sl")
 palette_texture = ExtResource("5_diyux")
-pixel_size = 6.0
+pixel_size = 2.0
 dither_strength = 0.05
 contrast = 1.0
 environment = SubResource("Environment_877u2")
+big_light = ExtResource("1_diyux")
 wall_scene = ExtResource("6_peojr")
 wall_materials = Array[Material]([ExtResource("6_diyux")])
 random_wall_variation = true

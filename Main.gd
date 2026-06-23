@@ -133,6 +133,19 @@ func apply_world_environment(theme: MapTheme) -> void:
 		return
 
 	_apply_environment_to_viewports(runtime_environment)
+	# Add directionallight3d
+	if theme.big_light:
+		var viewport = $SubViewportContainer/SubViewport
+		var new_light = theme.big_light.instantiate()
+		if viewport:
+			viewport.add_child(new_light)
+			print("Directional light added")
+		else:
+			push_error("No viewport for Big Light")
+		
+	else:
+		print("No Directional light found")
+
 	_debug_world_environment_state("after apply immediate")
 
 func _apply_environment_to_viewports(environment: Environment) -> void:

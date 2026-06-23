@@ -27,7 +27,7 @@ volumetric_fog_albedo = Color(0.080574594, 0.06028749, 0.14508155, 1)
 [resource]
 script = ExtResource("1_1aard")
 palette_texture = ExtResource("4_2t777")
-pixel_size = 4.0
+pixel_size = 2.0
 dither_strength = 0.08
 contrast = 1.2
 environment = SubResource("Environment_jn8y4")

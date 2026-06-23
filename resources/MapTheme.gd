@@ -10,6 +10,8 @@ class_name MapTheme
 @export_group("World Environment")
 ## Holds the custom sky, fog, ambient light, and tonemapping for this theme.
 @export var environment: Environment
+#for directional light 3D scene
+@export var big_light: PackedScene
 
 @export_group("Player Torch Settings")
 @export var enable_flicker: bool = true

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dq0vv1t7n6k0s"]
+
+[node name="Node3D" type="DirectionalLight3D" unique_id=1330883554]
+light_energy = 0.9
+sky_mode = 1
