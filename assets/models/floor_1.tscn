@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://daaf0m63joqx4"]
 
 [ext_resource type="PackedScene" uid="uid://ems1o7hdqm6d" path="res://assets/models/floor1.glb" id="1_ry03a"]
+[ext_resource type="Material" uid="uid://bk15g2oxfncsr" path="res://assets/textures/tile_floor.tres" id="2_8rdo4"]
 
 [node name="floor1" unique_id=190735109 instance=ExtResource("1_ry03a")]
 
 [node name="Cube" parent="." index="0" unique_id=1555464207]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_8rdo4")
+surface_material_override/1 = ExtResource("2_8rdo4")
+surface_material_override/2 = ExtResource("2_8rdo4")

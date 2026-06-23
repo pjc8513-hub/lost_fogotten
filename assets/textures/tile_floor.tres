@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bk15g2oxfncsr"]
+
+[ext_resource type="Texture2D" uid="uid://dwi8esaejxehw" path="res://assets/textures/tile_floor_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dtwxg60xc7wl0" path="res://assets/textures/tile_floor_orm.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bkai2y5ebjb37" path="res://assets/textures/tile_floor_normal.png" id="3"]
+
+[resource]
+albedo_texture = ExtResource("1")
+roughness_texture = ExtResource("2")
+roughness_texture_channel = 1
+normal_texture = ExtResource("3")
+uv1_triplanar = true
